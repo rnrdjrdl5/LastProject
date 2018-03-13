@@ -1,0 +1,436 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.20506</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{9C14FD22-4DE9-1754-AC45-29A3903D3879}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AssemblyName>Assembly-CSharp</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
+    <CompilerResponseFile></CompilerResponseFile>
+    <UnityProjectType>Game:1</UnityProjectType>
+    <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
+    <UnityVersion>2017.2.0f3</UnityVersion>
+    <RootNamespace></RootNamespace>
+    <LangVersion>4</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Temp\UnityVS_bin\Debug\</OutputPath>
+    <IntermediateOutputPath>Temp\UnityVS_obj\Debug\</IntermediateOutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DefineConstants>DEBUG;TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_2_0;UNITY_2017_2;UNITY_2017;PLATFORM_ARCH_64;UNITY_64;UNITY_ANALYTICS;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_GENERICS;ENABLE_PVR_GI;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_GRID;ENABLE_TILEMAP;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_DIRECTOR;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_TIMELINE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;ENABLE_NATIVE_ARRAY;ENABLE_SPRITE_MASKING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;ENABLE_MONO_BDWGC;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;INCLUDE_PUBNUB;ENABLE_PLAYMODE_TESTS_RUNNER;ENABLE_VIDEO;ENABLE_RMGUI;ENABLE_PACKMAN;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_STYLE_SHEETS;PLATFORM_STANDALONE_WIN;PLATFORM_STANDALONE;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_EVENT_QUEUE;ENABLE_CLUSTERINPUT;ENABLE_VR;ENABLE_AR;ENABLE_SPATIALTRACKING;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;NET_2_0_SUBSET;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_NATIVE_ARRAY_CHECKS;UNITY_TEAM_LICENSE;ENABLE_VSTU;CROSS_PLATFORM_INPUT</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Temp\UnityVS_bin\Release\</OutputPath>
+    <IntermediateOutputPath>Temp\UnityVS_obj\Release\</IntermediateOutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DefineConstants>TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_2_0;UNITY_2017_2;UNITY_2017;PLATFORM_ARCH_64;UNITY_64;UNITY_ANALYTICS;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_GENERICS;ENABLE_PVR_GI;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_GRID;ENABLE_TILEMAP;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_DIRECTOR;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_TIMELINE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;ENABLE_NATIVE_ARRAY;ENABLE_SPRITE_MASKING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;ENABLE_MONO_BDWGC;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;INCLUDE_PUBNUB;ENABLE_PLAYMODE_TESTS_RUNNER;ENABLE_VIDEO;ENABLE_RMGUI;ENABLE_PACKMAN;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_STYLE_SHEETS;PLATFORM_STANDALONE_WIN;PLATFORM_STANDALONE;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_EVENT_QUEUE;ENABLE_CLUSTERINPUT;ENABLE_VR;ENABLE_AR;ENABLE_SPATIALTRACKING;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;NET_2_0_SUBSET;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_NATIVE_ARRAY_CHECKS;UNITY_TEAM_LICENSE;ENABLE_VSTU;CROSS_PLATFORM_INPUT</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.XML" />
+    <Reference Include="System.Core" />
+    <Reference Include="Boo.Lang" />
+    <Reference Include="UnityScript.Lang" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="UnityEditor">
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AccessibilityModule">
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.AccessibilityModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ParticleSystemModule">
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.ParticleSystemModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.PhysicsModule">
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.PhysicsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.VehiclesModule">
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.VehiclesModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ClothModule">
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.ClothModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AIModule">
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AnimationModule">
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.AnimationModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TextRenderingModule">
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.TextRenderingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UIModule">
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.UIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TerrainPhysicsModule">
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.TerrainPhysicsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.IMGUIModule">
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.IMGUIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestModule">
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestAudioModule">
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestAudioModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestTextureModule">
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestTextureModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestWWWModule">
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestWWWModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ClusterInputModule">
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.ClusterInputModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ClusterRendererModule">
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.ClusterRendererModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UNETModule">
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.UNETModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.DirectorModule">
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.DirectorModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityAnalyticsModule">
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.UnityAnalyticsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CrashReportingModule">
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.CrashReportingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.PerformanceReportingModule">
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.PerformanceReportingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityConnectModule">
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.UnityConnectModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.WebModule">
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.WebModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ARModule">
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.ARModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.VRModule">
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.VRModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UIElementsModule">
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.UIElementsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.StyleSheetsModule">
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.StyleSheetsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AudioModule">
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.AudioModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.GameCenterModule">
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.GameCenterModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.GridModule">
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.GridModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ImageConversionModule">
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.ImageConversionModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.InputModule">
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.InputModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.JSONSerializeModule">
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.JSONSerializeModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ParticlesLegacyModule">
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.ParticlesLegacyModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Physics2DModule">
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.Physics2DModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ScreenCaptureModule">
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.ScreenCaptureModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SpriteMaskModule">
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.SpriteMaskModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TerrainModule">
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.TerrainModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TilemapModule">
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.TilemapModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.VideoModule">
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.VideoModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.WindModule">
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.WindModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Networking">
+      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TestRunner">
+      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/TestRunner/UnityEngine.TestRunner.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/TestRunner/net35/unity-custom/nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Timeline">
+      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Timeline/RuntimeEditor/UnityEngine.Timeline.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UIAutomation">
+      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UIAutomation/UnityEngine.UIAutomation.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.GoogleAudioSpatializer">
+      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityGoogleAudioSpatializer/RuntimeEditor/UnityEngine.GoogleAudioSpatializer.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.HoloLens">
+      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SpatialTracking">
+      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
+    </Reference>
+    <Reference Include="Photon3Unity3D">
+      <HintPath>Assets/Plugins/Photon3Unity3D.dll</HintPath>
+    </Reference>
+    <Reference Include="websocket-sharp">
+      <HintPath>Assets/Plugins/WebSocket/websocket-sharp.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Analytics">
+      <HintPath>C:/Users/INFY/AppData/LocalLow/Unity/cache/packages/packages.unity.com/com.unity.analytics@1.0.1/UnityEngine.Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Purchasing">
+      <HintPath>C:/Users/INFY/AppData/LocalLow/Unity/cache/packages/packages.unity.com/com.unity.purchasing@1.0.1/UnityEngine.Purchasing.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="ProjectTeam.Plugins.csproj">
+      <Project>{3D7CA279-FDBB-7FC0-EC1A-BAA0FE37DFAC}</Project>
+      <Name>ProjectTeam.Plugins</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\CustomTypes.cs" />
+    <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\Enums.cs" />
+    <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\Extensions.cs" />
+    <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\FriendInfo.cs" />
+    <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\GizmoType.cs" />
+    <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\LoadbalancingPeer.cs" />
+    <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\NetworkingPeer.cs" />
+    <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\PhotonClasses.cs" />
+    <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\PhotonHandler.cs" />
+    <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\PhotonLagSimulationGui.cs" />
+    <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\PhotonNetwork.cs" />
+    <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\PhotonPlayer.cs" />
+    <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\PhotonStatsGui.cs" />
+    <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\PhotonStreamQueue.cs" />
+    <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\PhotonView.cs" />
+    <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\PingCloudRegions.cs" />
+    <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\Room.cs" />
+    <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\RoomInfo.cs" />
+    <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\RPC.cs" />
+    <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\ServerSettings.cs" />
+    <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\SocketUdp.cs" />
+    <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\SocketWebTcp.cs" />
+    <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\Views\PhotonAnimatorView.cs" />
+    <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\Views\PhotonRigidbody2DView.cs" />
+    <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\Views\PhotonRigidbodyView.cs" />
+    <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\Views\PhotonTransformView.cs" />
+    <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\Views\PhotonTransformViewPositionControl.cs" />
+    <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\Views\PhotonTransformViewPositionModel.cs" />
+    <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\Views\PhotonTransformViewRotationControl.cs" />
+    <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\Views\PhotonTransformViewRotationModel.cs" />
+    <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\Views\PhotonTransformViewScaleControl.cs" />
+    <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\Views\PhotonTransformViewScaleModel.cs" />
+    <Compile Include="Assets\Photon Unity Networking\UtilityScripts\ConnectAndJoinRandom.cs" />
+    <Compile Include="Assets\Photon Unity Networking\UtilityScripts\CullArea.cs" />
+    <Compile Include="Assets\Photon Unity Networking\UtilityScripts\InputToEvent.cs" />
+    <Compile Include="Assets\Photon Unity Networking\UtilityScripts\InRoomChat.cs" />
+    <Compile Include="Assets\Photon Unity Networking\UtilityScripts\ManualPhotonViewAllocator.cs" />
+    <Compile Include="Assets\Photon Unity Networking\UtilityScripts\MoveByKeys.cs" />
+    <Compile Include="Assets\Photon Unity Networking\UtilityScripts\NetworkCullingHandler.cs" />
+    <Compile Include="Assets\Photon Unity Networking\UtilityScripts\OnClickDestroy.cs" />
+    <Compile Include="Assets\Photon Unity Networking\UtilityScripts\OnClickInstantiate.cs" />
+    <Compile Include="Assets\Photon Unity Networking\UtilityScripts\OnJoinedInstantiate.cs" />
+    <Compile Include="Assets\Photon Unity Networking\UtilityScripts\OnStartDelete.cs" />
+    <Compile Include="Assets\Photon Unity Networking\UtilityScripts\PhotonPlayer\PlayerRoomIndexing.cs" />
+    <Compile Include="Assets\Photon Unity Networking\UtilityScripts\PickupItem.cs" />
+    <Compile Include="Assets\Photon Unity Networking\UtilityScripts\PickupItemSimple.cs" />
+    <Compile Include="Assets\Photon Unity Networking\UtilityScripts\PickupItemSyncer.cs" />
+    <Compile Include="Assets\Photon Unity Networking\UtilityScripts\PointedAtGameObjectInfo.cs" />
+    <Compile Include="Assets\Photon Unity Networking\UtilityScripts\PunPlayerScores.cs" />
+    <Compile Include="Assets\Photon Unity Networking\UtilityScripts\PunTeams.cs" />
+    <Compile Include="Assets\Photon Unity Networking\UtilityScripts\PunTurnManager.cs" />
+    <Compile Include="Assets\Photon Unity Networking\UtilityScripts\QuitOnEscapeOrBack.cs" />
+    <Compile Include="Assets\Photon Unity Networking\UtilityScripts\ShowStatusWhenConnecting.cs" />
+    <Compile Include="Assets\Photon Unity Networking\UtilityScripts\SmoothSyncMovement.cs" />
+    <Compile Include="Assets\Photon Unity Networking\UtilityScripts\SupportLogger.cs" />
+    <Compile Include="Assets\Photon Unity Networking\UtilityScripts\TimeKeeper.cs" />
+    <Compile Include="Assets\Photon Unity Networking\UtilityScripts\UI\ButtonInsideScrollList.cs" />
+    <Compile Include="Assets\Photon Unity Networking\UtilityScripts\UI\TextButtonTransition.cs" />
+    <Compile Include="Assets\Photon Unity Networking\UtilityScripts\UI\TextToggleIsOnTransition.cs" />
+    <Compile Include="Assets\PhotonChatApi\ChatChannel.cs" />
+    <Compile Include="Assets\PhotonChatApi\ChatClient.cs" />
+    <Compile Include="Assets\PhotonChatApi\ChatDisconnectCause.cs" />
+    <Compile Include="Assets\PhotonChatApi\ChatEventCode.cs" />
+    <Compile Include="Assets\PhotonChatApi\ChatOperationCode.cs" />
+    <Compile Include="Assets\PhotonChatApi\ChatParameterCode.cs" />
+    <Compile Include="Assets\PhotonChatApi\ChatPeer.cs" />
+    <Compile Include="Assets\PhotonChatApi\ChatState.cs" />
+    <Compile Include="Assets\PhotonChatApi\ChatUserStatus.cs" />
+    <Compile Include="Assets\PhotonChatApi\IChatClientListener.cs" />
+    <Compile Include="Assets\ProjectData\AnimatorScripts\12Box\BoxBlink.cs" />
+    <Compile Include="Assets\ProjectData\AnimatorScripts\12Box\BoxDamageAni.cs" />
+    <Compile Include="Assets\ProjectData\AnimatorScripts\12Box\BoxIdleRun.cs" />
+    <Compile Include="Assets\ProjectData\AnimatorScripts\12Box\BoxJangPung.cs" />
+    <Compile Include="Assets\ProjectData\AnimatorScripts\12Box\BoxSealCharmAni.cs" />
+    <Compile Include="Assets\ProjectData\AnimatorScripts\12Box\BoxStun.cs" />
+    <Compile Include="Assets\ProjectData\AnimatorScripts\12Rion\StateMachine\RionAttack1.cs" />
+    <Compile Include="Assets\ProjectData\AnimatorScripts\12Rion\StateMachine\RionAttack2.cs" />
+    <Compile Include="Assets\ProjectData\AnimatorScripts\12Rion\StateMachine\RionAttack3.cs" />
+    <Compile Include="Assets\ProjectData\AnimatorScripts\12Rion\StateMachine\RionDamage.cs" />
+    <Compile Include="Assets\ProjectData\AnimatorScripts\12Rion\StateMachine\RionIdle.cs" />
+    <Compile Include="Assets\ProjectData\AnimatorScripts\12Rion\StateMachine\RionRionRoar.cs" />
+    <Compile Include="Assets\ProjectData\AnimatorScripts\12Rion\StateMachine\RionRionRush.cs" />
+    <Compile Include="Assets\ProjectData\AnimatorScripts\12Rion\StateMachine\RionRun.cs" />
+    <Compile Include="Assets\ProjectData\AnimatorScripts\12Tiger\TigerDamage.cs" />
+    <Compile Include="Assets\ProjectData\AnimatorScripts\12Tiger\TigerIdle.cs" />
+    <Compile Include="Assets\ProjectData\AnimatorScripts\12Tiger\TigerRun.cs" />
+    <Compile Include="Assets\ProjectData\AnimatorScripts\12Tiger\TigerSealCharm.cs" />
+    <Compile Include="Assets\ProjectData\AnimatorScripts\12Tiger\TigerStun.cs" />
+    <Compile Include="Assets\ProjectData\AnimatorScripts\12Tiger\TigerWindBlast.cs" />
+    <Compile Include="Assets\ProjectData\LobbySystem\Scripts\MainButton.cs" />
+    <Compile Include="Assets\ProjectData\LobbySystem\Scripts\PanelSizeup.cs" />
+    <Compile Include="Assets\ProjectData\LobbySystem\Scripts\PhotonLobbyManager.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Cameras\PlayerCamera.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\ConsoleTestAPI\Console.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Network\PhotonManager.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Objects\Bullet.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Objects\CharmBullet.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Objects\CheckRionRoar.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Objects\CollisionMove\CollisionMove.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Objects\CollisionMove\CollisionMoveFunc.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Objects\CollisionMove\CollisionMoveVar.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Objects\CollisionObject\CollisionDebuffBuff\CollisionDefaultDebuff.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Objects\CollisionObject\CollisionDebuffBuff\DamagedDebuff\CollisionDamagedDebuff.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Objects\CollisionObject\CollisionDebuffBuff\NotMoveDebuff\CollisionNotMoveDebuff.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Objects\CollisionObject\CollisionDebuffBuff\PoisionDebuff\CollisionPoisionDebuff.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Objects\CollisionObject\CollisionDebuffBuff\PushDebuff\CollisionPushDebuff.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Objects\CollisionObject\CollisionDebuffBuff\StunDebuff\CollisionStunDebuff.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Objects\CollisionObject\CollisionObject\CollisionObject.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Objects\CollisionObject\CollisionObject\CollisionObjectFunc.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Objects\CollisionObject\CollisionObject\CollisionObjectVar.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Objects\CollisionObject\CollisionObjectDamage\CollisionObjectDamage.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Objects\CollisionObject\CollisionObjectTime\CollisionObjectTime.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Objects\CollisionObject\CollisionReCheck\CollisionReCheck.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Objects\CollisionObject\NumberOfCollisions\NumberOfCollisions.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\DefaultPlayer\PlayerCheckCollision\Collisions\BaseCollision.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\DefaultPlayer\PlayerCheckCollision\PlayerCheckCollision.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\DefaultPlayer\PlayerDebuffBuffState\PlayerDamagedDebuff\PlayerDamagedDebuff.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\DefaultPlayer\PlayerDebuffBuffState\PlayerDefaultDebuff.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\DefaultPlayer\PlayerDebuffBuffState\PlayerInvincibiliyBuff\PlayerInvincibilityBuff.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\DefaultPlayer\PlayerDebuffBuffState\PlayerNotMoveDebuff\PlayerNotMoveDebuff.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\DefaultPlayer\PlayerDebuffBuffState\PlayerPushDebuff\PlayerPushDebuff.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\DefaultPlayer\PlayerDebuffBuffState\PlayerStunDebuff\PlayerStunDebuff.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\DefaultPlayer\PlayerHealth\PlayerHealth.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\DefaultPlayer\PlayerHealth\PlayerHealthFunc.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\DefaultPlayer\PlayerHealth\PlayerHealthVar.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\DefaultPlayer\PlayerManager\PlayerManager.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\DefaultPlayer\PlayerManager\PlayerManagerFunc.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\DefaultPlayer\PlayerManager\PlayerManagerVar.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\DefaultPlayer\PlayerMove\BoxPlayerMove\BoxPlayerMove.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\DefaultPlayer\PlayerMove\BoxPlayerMove\BoxPlayerMoveFunc.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\DefaultPlayer\PlayerMove\BoxPlayerMove\BoxPlayerMoveVar.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\DefaultPlayer\PlayerMove\PlayerMove.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\DefaultPlayer\PlayerMove\PlayerMoveFunc.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\DefaultPlayer\PlayerMove\PlayerMoveVar.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\DefaultPlayer\PlayerState\PlayerState.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\DefaultPlayer\PlayerState\PlayerStateFunc.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\DefaultPlayer\PlayerState\PlayerStateVar.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\DefaultPlayer\PlayerUI\PlayerUI.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\DefaultPlayer\PlayerUI\PlayerUIFunc.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\DefaultPlayer\PlayerUI\PlayerUIVar.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\LegacyCode\DefaultPlayer\DefaultPlayer.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\LegacyCode\DefaultPlayer\DefaultPlayerFunc.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\LegacyCode\DefaultPlayer\DefaultPlayerVar.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\LegacyCode\DefaultPlayer\DefaultRPC.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\LegacyCode\Player\Player.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\LegacyCode\Tiger\TigerFunc.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\LegacyCode\Tiger\TigerRPC.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\LegacyCode\Tiger\TigerScript.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\LegacyCode\Tiger\TigerVar.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\Rion\RionFunc.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\Rion\RionRPC.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\Rion\RionScript.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\Rion\RionVar.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\Skills\DefaultSkill.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\Skills\PlayerAroundSkill\AroundStun\AroundStunPInvincibility\DefaultAroundStunPInvincibility.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\Skills\PlayerAroundSkill\AroundStun\AroundStunPInvincibility\RionRoar\NewRionRoar.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\Skills\PlayerAroundSkill\AroundStun\DefaultAroundStun.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\Skills\PlayerAroundSkill\DefaultAroundSkill.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\Skills\PlayerAutoPlaceSkill\ArrivePlaceAroundSkill\DamageGroggyScript\DefaultDamageGroggyScript.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\Skills\PlayerAutoPlaceSkill\ArrivePlaceAroundSkill\DamageGroggyScript\RionRush\RionRush.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\Skills\PlayerAutoPlaceSkill\ArrivePlaceAroundSkill\DefaultArrivePlaceAroundSkill.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\Skills\PlayerAutoPlaceSkill\DefaultPlayerAutoPlaceSkill.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\Skills\PlayerMeleeAttack\DefaultMeleeAttack.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\Skills\PlayerMeleeAttack\MeleeGroggy\ComboAttack\ComboAttack.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\Skills\PlayerMeleeAttack\MeleeGroggy\DefaultMeleeGroggy.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\Skills\PlayerPublicSkill\Blink\Blink.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\Skills\PlayerPublicSkill\Blink\BlinkFunc.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\Skills\PlayerPublicSkill\Blink\BlinkVar.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\Skills\PlayerSetPlaceSkill\Blink\BoxBlink\BoxNewBlink.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\Skills\PlayerSetPlaceSkill\Blink\NewBlink.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\Skills\PlayerSetPlaceSkill\DefaultSetPlaceSkill.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\Skills\ProjectileSkill\DefaultProjectileSkill.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\Skills\ProjectileSkill\ProjectileNotMove\DefaultDefaultProjectileNotMove.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\Skills\ProjectileSkill\ProjectileNotMove\SealCharm\BoxSealCharm\BoxSealCharm.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\Skills\ProjectileSkill\ProjectileNotMove\SealCharm\BoxSealCharm\BoxSealCharmFunc.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\Skills\ProjectileSkill\ProjectileNotMove\SealCharm\BoxSealCharm\BoxSealCharmVar.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\Skills\ProjectileSkill\ProjectileNotMove\SealCharm\SealCharm.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\Skills\ProjectileSkill\ProjectileNotMove\SealCharm\SealCharmFunc.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\Skills\ProjectileSkill\ProjectileNotMove\SealCharm\SealCharmVar.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\Skills\ProjectileSkill\ProjectilePushGroggy\DefaultProjectilePushGroggy.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\Skills\ProjectileSkill\ProjectilePushGroggy\WindBlast\BoxWindBlast\BoxWindBlast.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\Skills\ProjectileSkill\ProjectilePushGroggy\WindBlast\BoxWindBlast\BoxWindBlastFunc.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\Skills\ProjectileSkill\ProjectilePushGroggy\WindBlast\BoxWindBlast\BoxWindBlastVar.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\Skills\ProjectileSkill\ProjectilePushGroggy\WindBlast\WindBlast.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\Skills\ProjectileSkill\ProjectilePushGroggy\WindBlast\WindBlastFunc.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\Skills\ProjectileSkill\ProjectilePushGroggy\WindBlast\WindBlastVar.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Utility\AutoDestroyParticle\AutoDestroyParticle.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Utility\CollisionCheckScripts\OnceAttackRange.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Utility\PointToLocation\PointToLocation.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Photon Unity Networking\changelog.txt" />
+    <None Include="Assets\Photon Unity Networking\link.xml" />
+    <None Include="Assets\Photon Unity Networking\readme.txt" />
+    <None Include="Assets\Plugins\Photon3Unity3D.xml" />
+    <None Include="Assets\Plugins\release_history.txt" />
+    <None Include="Assets\ProjectData\Prefab\Effects\WindBlastEffect\Shader\Custom_blend.shader" />
+    <None Include="Assets\ProjectData\Prefab\Effects\WindBlastEffect\Shader\Flame_mask.shader" />
+    <None Include="Assets\ProjectData\Prefab\Effects\WindBlastEffect\Shader\UVmove_mask.shader" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="GenerateTargetFrameworkMonikerAttribute" />
+</Project>
