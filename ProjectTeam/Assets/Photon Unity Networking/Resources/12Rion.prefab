@@ -168,6 +168,7 @@ GameObject:
   - component: {fileID: 114576830044647862}
   - component: {fileID: 114673438517978128}
   - component: {fileID: 114686879574469554}
+  - component: {fileID: 114869787980834940}
   m_Layer: 0
   m_Name: 12Rion
   m_TagString: Boss
@@ -1572,6 +1573,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab2ffa64c176b6b4bada4db6221cf9ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114869787980834940
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1255717705645986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd58e4c97e5b967428c5b083c6a8f4f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ManaRetimePoint: 5
 --- !u!135 &135271233641483576
 SphereCollider:
   m_ObjectHideFlags: 1

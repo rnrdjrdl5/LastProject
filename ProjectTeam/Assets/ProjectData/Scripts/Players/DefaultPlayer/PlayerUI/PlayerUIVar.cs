@@ -18,6 +18,11 @@ public partial class PlayerUI{
     public Image GetHPBar() { return HPBar; }
     public void SetHPBar(Image hp) { HPBar = hp; }
 
+
+    private Image MPBar;
+    public Image GetMPBar() { return MPBar; }
+    public void SetMPBar(Image i) { MPBar = i; }
+
     private GameObject PhotonManager;
 
     private Text TimerText;

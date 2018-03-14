@@ -9,7 +9,7 @@ using UnityEngine;
 public class PlayerCheckCollision : Photon.PunBehaviour , IPunObservable {
 
     private BaseCollision baseCollision;
-
+    
 	// Use this for initialization
 	void Start () {
         baseCollision = gameObject.AddComponent<BaseCollision>();

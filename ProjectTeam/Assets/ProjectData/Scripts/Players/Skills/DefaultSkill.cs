@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DefaultSkill : Photon.PunBehaviour {
 
-    public enum EnumSkillKey { LEFTMOUSE , RIGHTMOUSE , LEFTSHIFT , RIGHTSHIFT , SPACE , Q , E}
+    public enum EnumSkillKey { LEFTMOUSE , RIGHTMOUSE , LEFTSHIFT , RIGHTSHIFT , SPACE , Q , E , PUSHINGLEFTSHIFT}
 
     [Header(" - 키 설정")]
     [Tooltip(" - 해당 기술 사용 시 키 입력")]
@@ -89,6 +89,11 @@ public class DefaultSkill : Photon.PunBehaviour {
             case EnumSkillKey.LEFTSHIFT:
                 ReturnType = Input.GetKeyUp(KeyCode.LeftShift);
                 break;
+
+            case EnumSkillKey.PUSHINGLEFTSHIFT:
+                ReturnType = Input.GetKey(KeyCode.LeftShift);
+                break;
+
             case EnumSkillKey.SPACE:
                 ReturnType = Input.GetKeyUp(KeyCode.Space);
                 break;

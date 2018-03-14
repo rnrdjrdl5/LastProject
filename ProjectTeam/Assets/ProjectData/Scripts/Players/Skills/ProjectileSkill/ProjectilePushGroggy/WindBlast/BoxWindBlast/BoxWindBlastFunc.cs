@@ -43,7 +43,7 @@ public partial class BoxWindBlast
 
     void CreateWindBlast()
     {
-            float BulletDistance = 1.0f;
+          /*  float BulletDistance = 1.0f;
             float CharacterHeight = 1.2f;
 
             Vector3 BulletDefaultPlace = transform.forward * BulletDistance;
@@ -51,7 +51,7 @@ public partial class BoxWindBlast
 
             GameObject TGO = Instantiate(BulletPrefab, transform.position + (BulletDefaultPlace), Quaternion.identity);
 
-            SetCollisionData(TGO, this);
+            SetCollisionData(TGO, this);*/
     }
 
 }

@@ -218,10 +218,10 @@
       <HintPath>Assets/Plugins/WebSocket/websocket-sharp.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Analytics">
-      <HintPath>C:/Users/INFY/AppData/LocalLow/Unity/cache/packages/packages.unity.com/com.unity.analytics@1.0.1/UnityEngine.Analytics.dll</HintPath>
+      <HintPath>C:/Users/400-125/AppData/LocalLow/Unity/cache/packages/packages.unity.com/com.unity.analytics@1.0.1/UnityEngine.Analytics.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Purchasing">
-      <HintPath>C:/Users/INFY/AppData/LocalLow/Unity/cache/packages/packages.unity.com/com.unity.purchasing@1.0.1/UnityEngine.Purchasing.dll</HintPath>
+      <HintPath>C:/Users/400-125/AppData/LocalLow/Unity/cache/packages/packages.unity.com/com.unity.purchasing@1.0.1/UnityEngine.Purchasing.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -359,6 +359,9 @@
     <Compile Include="Assets\ProjectData\Scripts\Players\DefaultPlayer\PlayerManager\PlayerManager.cs" />
     <Compile Include="Assets\ProjectData\Scripts\Players\DefaultPlayer\PlayerManager\PlayerManagerFunc.cs" />
     <Compile Include="Assets\ProjectData\Scripts\Players\DefaultPlayer\PlayerManager\PlayerManagerVar.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\DefaultPlayer\PlayerManaPoint\PlayerManaPoint.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\DefaultPlayer\PlayerManaPoint\PlayerManaPointFunc.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\DefaultPlayer\PlayerManaPoint\PlayerManaPointVar.cs" />
     <Compile Include="Assets\ProjectData\Scripts\Players\DefaultPlayer\PlayerMove\BoxPlayerMove\BoxPlayerMove.cs" />
     <Compile Include="Assets\ProjectData\Scripts\Players\DefaultPlayer\PlayerMove\BoxPlayerMove\BoxPlayerMoveFunc.cs" />
     <Compile Include="Assets\ProjectData\Scripts\Players\DefaultPlayer\PlayerMove\BoxPlayerMove\BoxPlayerMoveVar.cs" />
@@ -396,6 +399,10 @@
     <Compile Include="Assets\ProjectData\Scripts\Players\Skills\PlayerMeleeAttack\DefaultMeleeAttack.cs" />
     <Compile Include="Assets\ProjectData\Scripts\Players\Skills\PlayerMeleeAttack\MeleeGroggy\ComboAttack\ComboAttack.cs" />
     <Compile Include="Assets\ProjectData\Scripts\Players\Skills\PlayerMeleeAttack\MeleeGroggy\DefaultMeleeGroggy.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\Skills\PlayerOnOff\DefaultPlayerOnOff.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\Skills\PlayerOnOff\SpeedRun\SpeedRun.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\Skills\PlayerOnOff\SpeedRun\SpeedRunFunc.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Players\Skills\PlayerOnOff\SpeedRun\SpeedRunVar.cs" />
     <Compile Include="Assets\ProjectData\Scripts\Players\Skills\PlayerPublicSkill\Blink\Blink.cs" />
     <Compile Include="Assets\ProjectData\Scripts\Players\Skills\PlayerPublicSkill\Blink\BlinkFunc.cs" />
     <Compile Include="Assets\ProjectData\Scripts\Players\Skills\PlayerPublicSkill\Blink\BlinkVar.cs" />

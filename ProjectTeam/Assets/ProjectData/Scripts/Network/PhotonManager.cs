@@ -10,7 +10,7 @@ public class PhotonManager : Photon.PunBehaviour {
     public GameObject UICanvas; // UI 삭제용
 
 
-    public string Version = "4";
+    public string Version = "ffffqqqq";
 
     public bool isGameStart = false;
 
@@ -44,10 +44,10 @@ public class PhotonManager : Photon.PunBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-        
         //Debug.Log(PhotonNetwork.isMasterClient);
         if (PhotonNetwork.isMasterClient)
         {
+           
             if (Input.GetKeyDown(KeyCode.T) && !isGameStart)
             {
                 
@@ -206,10 +206,8 @@ public class PhotonManager : Photon.PunBehaviour {
     public override void OnJoinedLobby()
 
     {
-
-
         // 일단은 자동으로 로비에 가게 되어있음.
-        PhotonNetwork.JoinRoom("INFY3Room");
+        PhotonNetwork.JoinRoom("INFY10Room");
 
         // 해당 함수로 랜덤이 아닌 지정해서 갈 수 있음.
 
@@ -222,7 +220,7 @@ public class PhotonManager : Photon.PunBehaviour {
 
     public override void OnPhotonJoinRoomFailed(object[] codeAndMsg)
     {
-        PhotonNetwork.CreateRoom("INFY3Room");
+        PhotonNetwork.CreateRoom("INFY10Room");
 
         // expectedUsers 멤버변수 : 예약석을 위한 도구, 친구 자리 마련 등.
     }

@@ -586,9 +586,9 @@ GameObject:
   - component: {fileID: 136043270524377356}
   - component: {fileID: 114246949895559414}
   - component: {fileID: 114157180068329666}
-  - component: {fileID: 114612925529837416}
-  - component: {fileID: 114788791203776876}
-  - component: {fileID: 114202824536083520}
+  - component: {fileID: 114153399905045738}
+  - component: {fileID: 114614784889629064}
+  - component: {fileID: 114541171986210926}
   m_Layer: 0
   m_Name: 12Box
   m_TagString: Teams
@@ -1249,6 +1249,29 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114153399905045738
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1951893664694718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bf225f844d155a42aec5ef505befc5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SkillKeyType: 0
+  BulletPrefab: {fileID: 1971521765549752, guid: 5eb74e2ee02a2dc40b69155be0b84595,
+    type: 2}
+  ObjectDamage: 10
+  ObjectDamageNumber: 10
+  CollisionNumber: 1
+  ReCheckTime: 1000
+  DestroyTime: 3
+  ObjectSpeed: 3
+  MovePushSpeed: 3
+  MovePushTime: 2
+  GroggyTime: 2
 --- !u!114 &114157180068329666
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1271,27 +1294,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb39f4a4a8b6fbd4580e28e4c3933fb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114202824536083520
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1951893664694718}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1973ff1625003f54b81fdc14833b0ccc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SkillKeyType: 2
-  BulletPrefab: {fileID: 1481689551146190, guid: 249f1de88d846944b97a2490b371d9db,
-    type: 2}
-  ObjectDamage: 0
-  ObjectDamageNumber: 1
-  CollisionNumber: 1
-  ReCheckTime: 1000
-  DestroyTime: 1
-  ObjectSpeed: 10
-  NotMoveTime: 3
 --- !u!114 &114246949895559414
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1354,7 +1356,7 @@ MonoBehaviour:
   instantiationId: -1
   currentMasterID: -1
   isRuntimeInstantiated: 0
---- !u!114 &114612925529837416
+--- !u!114 &114541171986210926
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -1362,14 +1364,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1951893664694718}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e05a59c81cfa84846b837670e2b89d82, type: 3}
+  m_Script: {fileID: 11500000, guid: e1bbcd4d665feb841bd852e0f664faf0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SkillKeyType: 4
-  PlaceObject: {fileID: 1428710627149168, guid: 109aaf8fdad50c4438dd5b40e7ee0dc2,
-    type: 2}
-  MaxTargetDistance: 20
---- !u!114 &114788791203776876
+  SkillKeyType: 7
+  CostSpeedRun: 10
+  SpeedRunSpeed: 25
+--- !u!114 &114614784889629064
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -1377,21 +1378,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1951893664694718}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5bf225f844d155a42aec5ef505befc5b, type: 3}
+  m_Script: {fileID: 11500000, guid: dd58e4c97e5b967428c5b083c6a8f4f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SkillKeyType: 0
-  BulletPrefab: {fileID: 1971521765549752, guid: 5eb74e2ee02a2dc40b69155be0b84595,
-    type: 2}
-  ObjectDamage: 0
-  ObjectDamageNumber: 10
-  CollisionNumber: 1
-  ReCheckTime: 1000
-  DestroyTime: 0.3
-  ObjectSpeed: 12
-  MovePushSpeed: 80
-  MovePushTime: 0.2
-  GroggyTime: 0.2
+  ManaRetimePoint: 5
 --- !u!114 &114825200481705262
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -11,6 +11,8 @@ public partial class BoxPlayerMove
 
         RecvDirectionX = 0.0f;
         RecvDirectionY = 0.0f;
+
+        SavePlayerSpeed = PlayerSpeed;
     }
 
     void SendTransform(PhotonStream stream)

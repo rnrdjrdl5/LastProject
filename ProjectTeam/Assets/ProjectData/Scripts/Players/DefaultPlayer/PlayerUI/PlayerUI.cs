@@ -15,6 +15,7 @@ public partial class PlayerUI : Photon.PunBehaviour
     private void Update()
     {
         SetHPBar();
+        SetMPBar();
         SetTimerText();
 
     }
