@@ -16,5 +16,7 @@ public partial class PlayerMove
     public float PlayerSpeed = 10.0f;       // 캐릭터 이동속도
     public float RotationSpeed = 100.0f;        // 캐릭터 회전속도
 
-   
+    private float gravity = 20.0f;
+
+
 }

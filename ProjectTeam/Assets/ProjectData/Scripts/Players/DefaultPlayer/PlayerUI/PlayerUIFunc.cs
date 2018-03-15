@@ -13,7 +13,12 @@ public partial class PlayerUI
         if(gameObject.GetComponent<PhotonView>().isMine)
         {
             UIObject = Instantiate(UIPrefab) as GameObject;
-            GameObject.Find("PhotonManager").GetComponent<PhotonManager>().UICanvas = UIObject;
+            if (GameObject.Find("PhotonManager") != null)
+            {
+                GameObject.Find("PhotonManager").GetComponent<PhotonManager>().UICanvas = UIObject;
+            }
+           
+        
             HPBar = UIObject.transform.Find("HPMPPanel/HP_Bar").gameObject.GetComponent<Image>();
             MPBar = UIObject.transform.Find("HPMPPanel/MP_Bar").gameObject.GetComponent<Image>();
 
@@ -50,6 +55,7 @@ public partial class PlayerUI
     {
         if(gameObject.GetComponent<PhotonView>().isMine)
         {
+            if(PhotonManager!=null)
             TimerText.text = Mathf.Floor(PhotonManager.GetComponent<PhotonManager>().GetTimeCount()).ToString();
         }
     }

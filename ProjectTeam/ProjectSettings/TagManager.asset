@@ -13,6 +13,7 @@ TagManager:
   - CheckCollision
   - Teams
   - Boss
+  - Interaction
   layers:
   - Default
   - TransparentFX

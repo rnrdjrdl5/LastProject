@@ -4,10 +4,11 @@ using UnityEngine;
 
 public partial class SpeedRun
 {
-    override public bool CheckState()
+    
+
+    public override bool CheckState()
     {
-        if ((EqualState(PlayerState.ConditionEnum.RUN) ||
-            EqualState(PlayerState.ConditionEnum.IDLE)))
+        if ((EqualState(PlayerState.ConditionEnum.RUN)))
         {
             return true;
         }
@@ -15,23 +16,60 @@ public partial class SpeedRun
             return false;
     }
 
-
     public override void UseSkill()
     {
-        // 스피드 조절. 
-        // 마나감소시작.
-
-        gameObject.GetComponent<PlayerManaPoint>().SetisReTimeMana(false);
-        gameObject.GetComponent<PlayerManaPoint>().SetManaDecreasePoint(CostSpeedRun);
         gameObject.GetComponent<BoxPlayerMove>().PlayerSpeed = SpeedRunSpeed;
+        gameObject.GetComponent<Animator>().SetFloat("SpeedRun",
+            SpeedRunSpeed / gameObject.GetComponent<BoxPlayerMove>().GetOriginalPlayerSpeed());
+
+        SpeedRunEffectObject = Instantiate(SpeedRunEffectPrefab, transform.position, transform.rotation);
+        SpeedRunEffectObject.transform.Rotate(0, 180, 0);
+
+        photonView.RPC("RPCCreateEffect", PhotonTargets.Others);
+
+
+
     }
 
-    protected override void OffUseSkill()
+    protected override void UseOffSkill()
     {
-        Debug.Log("스킬오프감.");
-        gameObject.GetComponent<PlayerManaPoint>().SetisReTimeMana(true);
-
         gameObject.GetComponent<BoxPlayerMove>().PlayerSpeed =
-            gameObject.GetComponent<BoxPlayerMove>().GetSavePlayerSpeed();
+    gameObject.GetComponent<BoxPlayerMove>().GetOriginalPlayerSpeed();
+
+        gameObject.GetComponent<Animator>().SetFloat("SpeedRun", 1.0f);
+
+        Destroy(SpeedRunEffectObject);
+
+        photonView.RPC("RPCDestroyEffect", PhotonTargets.Others);
+    }
+
+    protected override void ChannelingSkill()
+    {
+        if (SpeedRunEffectObject != null)
+        {
+            SpeedRunEffectObject.transform.position = transform.position;
+            SpeedRunEffectObject.transform.rotation = transform.rotation;
+            SpeedRunEffectObject.transform.Rotate(0, 180, 0);
+        }
+    }
+
+    // 아래부터는 RPC입니다.
+    [PunRPC]
+    void RPCCreateEffect()
+    {
+        gameObject.GetComponent<Animator>().SetFloat("SpeedRun",
+            SpeedRunSpeed / gameObject.GetComponent<BoxPlayerMove>().GetOriginalPlayerSpeed());
+
+        SpeedRunEffectObject = Instantiate(SpeedRunEffectPrefab, transform.position, transform.rotation);
+        SpeedRunEffectObject.transform.Rotate(0, 180, 0);
+
+        isSkillOnOff = true;
+    }
+
+    [PunRPC]
+    void RPCDestroyEffect()
+    {
+        gameObject.GetComponent<Animator>().SetFloat("SpeedRun", 1.0f);
+        Destroy(SpeedRunEffectObject);
     }
 }

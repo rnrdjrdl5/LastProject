@@ -90,4 +90,6 @@ MonoBehaviour:
   - CallSetisGameStart
   - ResetBossTeams
   - BlinkAnimation
+  - RPCCreateEffect
+  - RPCDestroyEffect
   DisableAutoOpenWizard: 1

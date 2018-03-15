@@ -36,11 +36,22 @@ public class PlayerCheckCollision : Photon.PunBehaviour , IPunObservable {
     {
 
     }
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("충돌체크테스트");
+    }
+
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        // 캐릭터 콜라이더는 해당 함수로 collision 종류의 이벤트를 대체함.
+        // trigger형은 그대로 사용함.
+    }
 
 
     // 클라이언트, 서버 모두 실시합니다.
     void CheckCollision(GameObject go , Collider other)
     {
+        //Debug.Log("충돌체크`" + go.name);
           if (other.tag == "CheckCollision")
           {
              // other : 충돌체크용 오브젝트, 

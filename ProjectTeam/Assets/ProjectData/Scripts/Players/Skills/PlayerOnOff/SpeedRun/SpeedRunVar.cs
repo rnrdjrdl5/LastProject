@@ -4,14 +4,14 @@ using UnityEngine;
 
 public partial class SpeedRun
 {
-    [Header(" - 마나 감속속도")]
-    [Tooltip(" - 초당 마나 감속속도입니다. ")]
-    public float CostSpeedRun = 0.0f;
-
-
-
-    [Header(" - 이동속도 증가")]
-    [Tooltip(" - 이동속도 증가입니다. ")]
+    [Header(" - 대쉬 속도")]
+    [Tooltip(" - 대쉬 속도량입니다. ")]
     public float SpeedRunSpeed = 0.0f;
 
+
+    [Header(" - 이펙트")]
+    [Tooltip(" - 대쉬 이펙트입니다. ")]
+    public GameObject SpeedRunEffectPrefab;
+
+    private GameObject SpeedRunEffectObject;
 }

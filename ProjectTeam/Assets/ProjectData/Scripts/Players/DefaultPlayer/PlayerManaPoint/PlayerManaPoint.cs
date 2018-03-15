@@ -7,6 +7,5 @@ public partial class PlayerManaPoint : MonoBehaviour{
     private void Update()
     {
         ReTimeMana();
-        DecreaseMana();
     }
 }

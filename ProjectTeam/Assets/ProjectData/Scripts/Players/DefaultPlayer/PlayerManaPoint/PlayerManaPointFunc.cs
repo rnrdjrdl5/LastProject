@@ -18,19 +18,4 @@ public partial class PlayerManaPoint
             }
         }
     }
-
-    void DecreaseMana()
-    {
-        if(!isReTimeMana)
-        {
-            if(NowManaPoint>0)
-            {
-                NowManaPoint -= Time.deltaTime * ManaDecreasePoint;
-                if(NowManaPoint <= 0)
-                {
-                    NowManaPoint = 0;
-                }
-            }
-        }
-    }
 }

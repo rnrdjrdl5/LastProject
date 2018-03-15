@@ -22,9 +22,6 @@ public partial class PlayerMove : Photon.PunBehaviour, IPunObservable
 
         PlayerMoveAnimation();
 
-        SyncTransform();
-
-        SyncMoveAnimation();
 
     }
 

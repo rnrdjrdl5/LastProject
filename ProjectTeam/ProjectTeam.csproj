@@ -326,6 +326,7 @@
     <Compile Include="Assets\ProjectData\Scripts\Cameras\PlayerCamera.cs" />
     <Compile Include="Assets\ProjectData\Scripts\ConsoleTestAPI\Console.cs" />
     <Compile Include="Assets\ProjectData\Scripts\Network\PhotonManager.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Network\TestPhotonManager.cs" />
     <Compile Include="Assets\ProjectData\Scripts\Objects\Bullet.cs" />
     <Compile Include="Assets\ProjectData\Scripts\Objects\CharmBullet.cs" />
     <Compile Include="Assets\ProjectData\Scripts\Objects\CheckRionRoar.cs" />
@@ -425,6 +426,7 @@
     <Compile Include="Assets\ProjectData\Scripts\Players\Skills\ProjectileSkill\ProjectilePushGroggy\WindBlast\WindBlastFunc.cs" />
     <Compile Include="Assets\ProjectData\Scripts\Players\Skills\ProjectileSkill\ProjectilePushGroggy\WindBlast\WindBlastVar.cs" />
     <Compile Include="Assets\ProjectData\Scripts\Utility\AutoDestroyParticle\AutoDestroyParticle.cs" />
+    <Compile Include="Assets\ProjectData\Scripts\Utility\Collision Interaction\ActionTest.cs" />
     <Compile Include="Assets\ProjectData\Scripts\Utility\CollisionCheckScripts\OnceAttackRange.cs" />
     <Compile Include="Assets\ProjectData\Scripts\Utility\PointToLocation\PointToLocation.cs" />
   </ItemGroup>

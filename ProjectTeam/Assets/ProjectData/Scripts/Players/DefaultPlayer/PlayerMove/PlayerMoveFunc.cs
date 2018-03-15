@@ -57,27 +57,40 @@ public partial class PlayerMove
         }
     }
 
-
+    Vector3 MoveDir = Vector3.zero;
     void PlayerTransform()
     {
         if (gameObject.GetComponent<PhotonView>().isMine)
         {
             PlayerState ps = gameObject.GetComponent<PlayerState>();
 
-            if ( (gameObject.GetComponent<PlayerState>().GetplayerNotMoveDebuff() == null) && 
-                       ( ps.EqualPlayerCondition(PlayerState.ConditionEnum.RUN) ||
+            if ((gameObject.GetComponent<PlayerState>().GetplayerNotMoveDebuff() == null) &&
+                       (ps.EqualPlayerCondition(PlayerState.ConditionEnum.RUN) ||
                         ps.EqualPlayerCondition(PlayerState.ConditionEnum.IDLE) ||
-                        ps.EqualPlayerCondition(PlayerState.ConditionEnum.BLINK) || 
-                        ps.EqualPlayerCondition(PlayerState.ConditionEnum.ATTACK ) ))
+                        ps.EqualPlayerCondition(PlayerState.ConditionEnum.BLINK) ||
+                        ps.EqualPlayerCondition(PlayerState.ConditionEnum.ATTACK)))
             {
-                PlayerHorizontal = Input.GetAxisRaw("Horizontal");
-                PlayerVertical = Input.GetAxisRaw("Vertical");
-                transform.Translate(new Vector3(PlayerHorizontal, 0, PlayerVertical) * Time.deltaTime * PlayerSpeed, Space.Self);
+                if (gameObject.GetComponent<CharacterController>().isGrounded)
+                {
+                    // 위, 아래 움직임 셋팅. 
+                    MoveDir = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+
+                    // 벡터를 로컬 좌표계 기준에서 월드 좌표계 기준으로 변환한다.
+                    MoveDir = transform.TransformDirection(MoveDir);
+
+                    // 스피드 증가.
+                    MoveDir *= PlayerSpeed;
+
+                }
+                // 캐릭터에 중력 적용.
+                MoveDir.y -= gravity * Time.deltaTime;
+
+                // 캐릭터 움직임.
+                gameObject.GetComponent<CharacterController>().Move(MoveDir * Time.deltaTime);
             }
 
-
-
             transform.Rotate(Vector3.up * Time.deltaTime * RotationSpeed * Input.GetAxis("Mouse X"));
+        
         }
 
     }
@@ -93,20 +106,21 @@ public partial class PlayerMove
             if (gameObject.GetComponent<PlayerNotMoveDebuff>() == null)
             {
 
-                if ((PlayerHorizontal != 0 || PlayerVertical != 0) &&
+                if (
                  (ps.EqualPlayerCondition(PlayerState.ConditionEnum.IDLE) ||
-                 ps.EqualPlayerCondition(PlayerState.ConditionEnum.RUN)))
+                 ps.EqualPlayerCondition(PlayerState.ConditionEnum.RUN) ) )
                 {
                     if ((Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0))
                     {
                         gameObject.GetComponent<Animator>().SetBool("isIdleRun", true);
                     }
+
+                    else
+                    {
+                        gameObject.GetComponent<Animator>().SetBool("isIdleRun", false);
+                    }
                 }
 
-                else
-                {
-                    gameObject.GetComponent<Animator>().SetBool("isIdleRun", false);
-                }
             }
         }
     }

@@ -4,9 +4,4 @@ using UnityEngine;
 
 public partial class SpeedRun : DefaultPlayerOnOff {
 
-    // Use this foinitializatio
-
-
-
-
 }

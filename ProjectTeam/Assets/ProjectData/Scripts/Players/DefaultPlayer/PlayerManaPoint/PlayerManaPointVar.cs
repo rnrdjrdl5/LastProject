@@ -20,17 +20,18 @@ public partial class PlayerManaPoint
     public void SetisReTimeMana(bool s) { isReTimeMana = s; }
     public bool GetisReTimeMana() { return isReTimeMana; }
 
+    public void DecreaseMana(float MP)
+    {
+        NowManaPoint -= MP;
+        if (NowManaPoint < 0)
+            NowManaPoint = 0;
+    }
+
 
     [Header(" - 마나 리젠속도")]
     [Tooltip(" - 마나 리젠속도입니다. ")]
     public float ManaRetimePoint = 5.0f;
 
-
-    // 마나 감소 속도  , 외부로부터 받아옵니다. 
-    private float ManaDecreasePoint = 0.0f;
-
-    public void SetManaDecreasePoint(float MP) { ManaDecreasePoint = MP; }
-    public float GetManaDecreasePoint() { return ManaDecreasePoint; }
 
 
 

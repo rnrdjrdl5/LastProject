@@ -22,11 +22,14 @@ public partial class BoxPlayerMove
     public float PlayerSpeed = 10.0f;       // 캐릭터 이동속도
     public float RotationSpeed = 100.0f;        // 캐릭터 회전속도
 
-
-    private float SavePlayerSpeed = 0.0f;
+    // 저장용 스피드.
+    private float OriginalPlayerSpeed = 0.0f;
     
-    public float GetSavePlayerSpeed() { return SavePlayerSpeed; }
-    public void SetSavePlayerSpeed(float SPS) { SavePlayerSpeed = SPS; }
+    public float GetOriginalPlayerSpeed() { return OriginalPlayerSpeed; }
+    public void SetOriginalPlayerSpeed(float SPS) { OriginalPlayerSpeed = SPS; }
+
+
+    float gravity = 20.0f;
 
 
 }
