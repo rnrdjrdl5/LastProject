@@ -173,14 +173,6 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.28381962
-        functionName: CreateRionRush
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: 37d47ca9a64e7be44aa6728e218ab6a0,
-          type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
       - time: 0.36728394
         functionName: CreateComboAttack
         data: 
@@ -193,14 +185,6 @@ ModelImporter:
         functionName: ResetInputAttack
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: ce34aa032be3e444a9de393bf29f66c1,
-          type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.60476804
-        functionName: DeleteRionRush
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: 37d47ca9a64e7be44aa6728e218ab6a0,
           type: 3}
         floatParameter: 0
         intParameter: 0

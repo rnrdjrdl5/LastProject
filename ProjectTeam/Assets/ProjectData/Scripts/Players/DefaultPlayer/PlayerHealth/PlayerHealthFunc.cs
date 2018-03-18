@@ -69,12 +69,55 @@ public partial class PlayerHealth
 
         GameObject.Find("PlayerCamera").GetComponent<PlayerCamera>().isPlayerSpawn = false;
 
+
+
+
+
+        Transform[] EnemyTransforms = EnemyObject.GetComponentsInParent<Transform>();
+        GameObject EnemyMainObject = null;
+
+        for(int i = 0; i < EnemyTransforms.Length; i++)
+        {
+            Debug.Log("찾는중");
+            Debug.Log(EnemyTransforms[i]);
+            if (EnemyTransforms[i].gameObject.tag == "Boss")
+            {
+                EnemyMainObject = EnemyTransforms[i].gameObject;
+                Debug.Log("찾았다.");
+            }
+        }
+
+
+
+        if (EnemyMainObject != null)
+        {
+            if (EnemyMainObject.tag == "Boss")
+            {
+                Debug.Log("a");
+                EnemyMainObject.GetComponent<PlayerHealth>().photonView.RPC("BossAddScore", PhotonTargets.All);
+            }
+        }
+        else
+            Debug.Log("오류, 나와서는 안됨.");
+
+
         PhotonNetwork.Destroy(gameObject);
 
         Destroy(gameObject.GetComponent<PlayerUI>().GetUIObject());
 
 
 
+    }
+
+    // 보스용 rpc입니다. 보스가 전달받습니다.
+    [PunRPC]
+    void BossAddScore()
+    {
+        if(photonView.isMine)
+        {
+            Debug.Log(gameObject);
+            PhotonNetwork.player.AddScore(5);
+        }
     }
 
     // 밑의 두 함수는 임시용 함수. 수정해야함.
@@ -113,6 +156,8 @@ public partial class PlayerHealth
             Debug.Log(" 남은 체력 : " + NowHealth);
         }
     }
+
+    
 
     
 }

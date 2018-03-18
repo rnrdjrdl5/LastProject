@@ -595,6 +595,7 @@ GameObject:
   - component: {fileID: 114975575812801596}
   - component: {fileID: 114317575945771226}
   - component: {fileID: 114719414601433992}
+  - component: {fileID: 114884088626421510}
   m_Layer: 0
   m_Name: 12Box
   m_TagString: Teams
@@ -1375,10 +1376,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a26cfe2c93898447ae710b7d12e90b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Teas: []
-  XZPower: 2
-  YPower: 10
-  TorquePower: 1000
+  XZPower: 10
+  YPower: 50
+  TorquePower: 100000
 --- !u!114 &114521906058432614
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1447,10 +1447,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a26cfe2c93898447ae710b7d12e90b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Teas: []
-  XZPower: 2
-  YPower: 10
-  TorquePower: 1000
+  XZPower: 10
+  YPower: 50
+  TorquePower: 100000
 --- !u!114 &114825200481705262
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1463,6 +1462,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlaceObject: {fileID: 0}
+--- !u!114 &114884088626421510
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1951893664694718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50dff2830c8550b4083d72079596192b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxLocationDistnace: 10
+  PressUIPrefabs: {fileID: 1477620128745670, guid: 3229e72fca1609d4ab02708ef370cb1c,
+    type: 2}
+  UILocation: 2
 --- !u!114 &114975575812801596
 MonoBehaviour:
   m_ObjectHideFlags: 1

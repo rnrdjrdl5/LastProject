@@ -19,9 +19,14 @@ public partial class PlayerHealth
     public float GetNowHealth() { return NowHealth; }
 
 
+
+    private GameObject EnemyObject;
+
+    public GameObject GetEnemyObject() { return EnemyObject; }
+    public void SetEnemyObject(GameObject s) { EnemyObject = s; }
     /* 아래부터는 인스펙터에서 편집 가능한 public형 변수입니다.*/
 
-    
-    
+
+
 
 }

@@ -21,6 +21,11 @@ public class PointToLocation{
     private float           RaycastInfinity             = 10000.0f;
 
 
+    private GameObject PlayerCamera;
+
+    public GameObject GetPlayerCamera() { return PlayerCamera; }
+    public void SetPlayerCamera(GameObject go) { PlayerCamera = go; }
+
 
 
     public Vector3 GetPointToLocation(GameObject UseObject , GameObject PlayerCamera , float MaxLocationDistance)
@@ -59,6 +64,19 @@ public class PointToLocation{
       
     }
 
+    public GameObject FindObject(GameObject UseObject , float MaxLocationDistance)
+    {
+        Vector3 MouseVector3 = FindMouseCursorPosition(UseObject, PlayerCamera);
+
+        RaycastHit hit;
+
+        if (Physics.Raycast(PlayerCamera.transform.position, MouseVector3, out hit, MaxLocationDistance, 1 << LayerMask.NameToLayer("MainObject")))
+        {
+            return hit.collider.gameObject;
+        }
+        else
+            return null;
+    }
 
     
     private Vector3 FindMouseCursorPosition(GameObject UseObject , GameObject PlayerCamera)
@@ -78,19 +96,4 @@ public class PointToLocation{
         return MouseVector3;
     }
 
-   /* private Transform UpdateBlinkPosition()
-    {
-        if (gameObject.GetComponent<PhotonView>().isMine)
-        {
-            if (isBlinkOn)
-            {
-                Vector3 BlinkObjectPosition = SetBlinkPosition();
-                BlinkObject.transform.position = BlinkObjectPosition;
-                BlinkObject.transform.rotation = transform.rotation;
-
-            }
-        }
-
-        
-    }*/
 }

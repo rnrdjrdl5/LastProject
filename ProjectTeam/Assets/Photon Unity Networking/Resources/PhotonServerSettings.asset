@@ -92,4 +92,8 @@ MonoBehaviour:
   - BlinkAnimation
   - RPCCreateEffect
   - RPCDestroyEffect
+  - RPCDestroyResultUI
+  - RPCInstantiateResult
+  - BossAddScore
+  - ThrowFryingPanAnimation
   DisableAutoOpenWizard: 1

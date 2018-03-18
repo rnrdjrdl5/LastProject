@@ -17,6 +17,7 @@ public partial class PlayerUI : Photon.PunBehaviour
         SetHPBar();
         SetMPBar();
         SetTimerText();
+        SetScore();
 
     }
 

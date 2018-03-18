@@ -7,7 +7,6 @@ public class PlayerDamagedDebuff : PlayerDefaultDebuff
     protected override void Update()
     {
         base.Update();
-        Debug.Log(NowDebuffTime);
     }
 
     protected override void ExitDebuff()

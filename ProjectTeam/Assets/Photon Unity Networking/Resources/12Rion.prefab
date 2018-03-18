@@ -164,12 +164,11 @@ GameObject:
   - component: {fileID: 114349988193505086}
   - component: {fileID: 114702340104366032}
   - component: {fileID: 114576830044647862}
-  - component: {fileID: 114673438517978128}
-  - component: {fileID: 114686879574469554}
   - component: {fileID: 114869787980834940}
   - component: {fileID: 143523356907073238}
   - component: {fileID: 114236012043648676}
   - component: {fileID: 114559526482137142}
+  - component: {fileID: 114726272823691554}
   m_Layer: 0
   m_Name: 12Rion
   m_TagString: Boss
@@ -1443,18 +1442,9 @@ MonoBehaviour:
   - Type: 4
     SynchronizeType: 0
     Name: isAttack
-  - Type: 9
-    SynchronizeType: 0
-    Name: isRionRoar
   - Type: 3
     SynchronizeType: 0
     Name: DamageOnOff
-  - Type: 9
-    SynchronizeType: 0
-    Name: RionRushTrigger
-  - Type: 9
-    SynchronizeType: 0
-    Name: RionRushAttackTrigger
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0
@@ -1578,55 +1568,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SkillKeyType: 0
   SkillMaxWaitingTime: 0
+  SkillManaCost: 0
   MeleeAttackDamage: 20
   GroggyTime: 0.5
---- !u!114 &114673438517978128
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1255717705645986}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 425345d0724a9b842a321745defda78f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SkillKeyType: 5
-  SkillMaxWaitingTime: 0
-  AroundObject: {fileID: 1574724322026970, guid: 8d80f1745cfa00f40ab3d3196ef1569a,
-    type: 2}
-  AroundObjectRadius: 4
-  ObjectDamage: 0
-  ObjectDamageNumber: -1
-  CollisionNumber: -1
-  ReCheckTime: 0.1
-  StunTime: 3
-  InvincibilityTime: 2
---- !u!114 &114686879574469554
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1255717705645986}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 37d47ca9a64e7be44aa6728e218ab6a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SkillKeyType: 6
-  SkillMaxWaitingTime: 0
-  MaxTargetDistance: 40
-  PlayerMoveSpeed: 20
-  TestGameObject: {fileID: 1428710627149168, guid: 109aaf8fdad50c4438dd5b40e7ee0dc2,
-    type: 2}
-  BulletPrefab: {fileID: 1009999752932228, guid: 4a82e4af940784749add7ed9a17da1b3,
-    type: 2}
-  AroundObjectRadius: 8
-  ObjectDamage: 10
-  ObjectDamageNumber: 1000
-  ReCheckTime: 1000
-  GroggyTime: 2
-  DestroyTime: 3
 --- !u!114 &114702340104366032
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1638,6 +1582,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8890246b9397f024c8551e6199d038e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114726272823691554
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1255717705645986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dd785d87168943499d9d1d3d634445e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SkillKeyType: 2
+  SkillMaxWaitingTime: 0
+  SkillManaCost: 0
+  BulletPrefab: {fileID: 1023685096185302, guid: b64f962fb79dc874e910ba8ec12d09cd,
+    type: 2}
+  ObjectDamage: 10
+  ObjectDamageNumber: 10
+  CollisionNumber: 1
+  ReCheckTime: 1000
+  DestroyTime: 3
+  ObjectSpeed: 3
+  StunTime: 1
 --- !u!114 &114795488955395628
 MonoBehaviour:
   m_ObjectHideFlags: 1

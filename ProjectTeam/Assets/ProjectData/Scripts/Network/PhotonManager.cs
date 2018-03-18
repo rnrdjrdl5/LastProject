@@ -5,9 +5,14 @@ using UnityEngine.UI;
 
 public class PhotonManager : Photon.PunBehaviour {
 
-
+    
     public GameObject PlayerObject; // 플레이어 객체의 함수를 사용하기 위해 사용. 생성 시 할당
     public GameObject UICanvas; // UI 삭제용
+
+    public GameObject ResultPanel; // UI 생성, 결과창 용.
+    public GameObject ResultObject; // 확인용
+    /// </summary>
+
 
 
     public string Version = "ffffqqqq";
@@ -33,6 +38,7 @@ public class PhotonManager : Photon.PunBehaviour {
         PhotonNetwork.ConnectUsingSettings(Version);
         TeamsPlayerCount = 0;
         BossPlayerCount = 0;
+        
     }
 
     // Use this for initialization
@@ -68,20 +74,31 @@ public class PhotonManager : Photon.PunBehaviour {
                         {
                             PP.SetCustomProperties(isNotBossPlayer);
                         }
+                        // 마스터에서 다른애들로 변경불가인거같네.
+                        //PP.NickName = "Player 1";
                     }
                     
 
                     photonView.RPC("CallSetisGameStart", PhotonTargets.All, true);
                     photonView.RPC("CreateGamePlayer", PhotonTargets.All,BossPlayerNumber);
                     photonView.RPC("SetCount", PhotonTargets.All , PlayerTime);
-                 
-                    
+
+                    photonView.RPC("RPCDestroyResultUI", PhotonTargets.All);
+
+                  /*  if (ResultObject!= null)
+                    {
+                        Destroy(ResultObject);
+                    }*/
+
+
+
                 }
                 
             }
             if(Input.GetKeyDown(KeyCode.Delete))
             {
-                Debug.Log("보스승리!");
+
+
                 photonView.RPC("DestroyAllPlayer", PhotonTargets.All);
                 photonView.RPC("CallSetisGameStart", PhotonTargets.All, false);
                 photonView.RPC("ResetBossTeams", PhotonTargets.All);
@@ -101,15 +118,17 @@ public class PhotonManager : Photon.PunBehaviour {
 
         if (PhotonNetwork.isMasterClient)
         {
-            if (TimeCount > 0 && TimeCount < 90)
+            if (TimeCount > 0 && TimeCount < 95)
             {
                 if(TeamsPlayerCount <= 0)
                 {
-                    Debug.Log("보스승리!");
                     photonView.RPC("DestroyAllPlayer", PhotonTargets.All);
                     photonView.RPC("CallSetisGameStart", PhotonTargets.All, false);
                     photonView.RPC("ResetBossTeams", PhotonTargets.All);
 
+
+                    //photonView.RPC("RPCInstantiateResult", PhotonTargets.All);
+                    StartCoroutine("WaitTime");
 
                     //photonView.RPC("SetCount", PhotonTargets.All, 0);
                     //  isGameStart = false;
@@ -117,19 +136,32 @@ public class PhotonManager : Photon.PunBehaviour {
                 }
                 else if(BossPlayerCount <= 0)
                 {
-                    Debug.Log("플레이어승리!");
                     photonView.RPC("DestroyAllPlayer", PhotonTargets.All);
                     photonView.RPC("CallSetisGameStart", PhotonTargets.All, false);
                     photonView.RPC("ResetBossTeams", PhotonTargets.All);
+
+
+                    StartCoroutine("WaitTime");
+
+                    //photonView.RPC("RPCInstantiateResult", PhotonTargets.All);
+
                     // photonView.RPC("SetCount", PhotonTargets.All, 0);
                     //  isGameStart = false;
                 }
+
             }
         }
 
         
         
 	}
+
+    IEnumerator WaitTime()
+    {
+        yield return new WaitForSeconds(1.0f);
+        photonView.RPC("RPCInstantiateResult", PhotonTargets.All);
+        yield return null;
+    }
 
     [PunRPC]
     void ResetBossTeams()
@@ -207,7 +239,7 @@ public class PhotonManager : Photon.PunBehaviour {
 
     {
         // 일단은 자동으로 로비에 가게 되어있음.
-        PhotonNetwork.JoinRoom("INFY10Room");
+        PhotonNetwork.JoinRandomRoom();
 
         // 해당 함수로 랜덤이 아닌 지정해서 갈 수 있음.
 
@@ -220,7 +252,6 @@ public class PhotonManager : Photon.PunBehaviour {
 
     public override void OnPhotonJoinRoomFailed(object[] codeAndMsg)
     {
-        PhotonNetwork.CreateRoom("INFY10Room");
 
         // expectedUsers 멤버변수 : 예약석을 위한 도구, 친구 자리 마련 등.
     }
@@ -230,11 +261,16 @@ public class PhotonManager : Photon.PunBehaviour {
         //PhotonNetwork.CreateRoom("TestRoom");
         // 만들 때 룸 정보를 설정할 수 있고 해시테이블을 이용해서 속성 설정가능
         // 룸을 찾을 때 해시테이블을 이용해서 확인 가능.
+        PhotonNetwork.CreateRoom("INFY10Room");
     }
 
     public override void OnJoinedRoom()
     {
+
         Debug.Log("룸입장성공");
+
+        PhotonNetwork.player.NickName = (System.Security.Principal.WindowsIdentity.GetCurrent().Name).Split('\\')[1];
+        Debug.Log(PhotonNetwork.player.NickName);
 
         gameObject.AddComponent<PhotonView>();
 
@@ -426,6 +462,21 @@ public class PhotonManager : Photon.PunBehaviour {
     public void CallSetTeamsCount(int BC)
     {
         photonView.RPC("IncreaseTeamsCount", PhotonTargets.All, BC);
+    }
+
+    [PunRPC]
+    void RPCInstantiateResult()
+    {
+        ResultObject = Instantiate(ResultPanel);
+    }
+
+    [PunRPC]
+    void RPCDestroyResultUI()
+    {
+        if (ResultObject != null)
+        {
+            Destroy(ResultObject);
+        }
     }
 
    

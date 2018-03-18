@@ -14,6 +14,7 @@ TagManager:
   - Teams
   - Boss
   - Interaction
+  - Hand
   layers:
   - Default
   - TransparentFX
@@ -24,8 +25,8 @@ TagManager:
   - 
   - 
   - Floor
-  - 
-  - 
+  - MainObject
+  - SubObject
   - 
   - 
   - 

@@ -96,6 +96,9 @@ public class BaseCollision : Photon.PunBehaviour {
         if (other.gameObject.GetComponent<CollisionObjectDamage>() != null)
         {
 
+            // 누가 때렸는지 등록함.
+            gameObject.GetComponent<PlayerHealth>().SetEnemyObject(other.gameObject);
+
             // 데미지 주기는 Master만.
             if (PhotonNetwork.isMasterClient)
             {

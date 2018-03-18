@@ -5,11 +5,11 @@ using UnityEngine;
 public partial class CollisionMove : MonoBehaviour
 {
 
-    // Use this for initialization
-    void Start()
+    virtual protected void Start()
     {
 
     }
+
 
     // Update is called once per frame
     void FixedUpdate()

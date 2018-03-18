@@ -46,7 +46,10 @@ public class TestPhotonManager : Photon.PunBehaviour
             if (Input.GetKeyDown(KeyCode.Z))
             {
                 Debug.Log("a");
-                PhotonNetwork.Destroy(CurrentPlayer);
+                if (CurrentPlayer != null)
+                {
+                    PhotonNetwork.Destroy(CurrentPlayer);
+                }
                 CurrentPlayer = PhotonNetwork.Instantiate("12Rion", Vector3.one * 3, Quaternion.identity, 0);
             }
 
@@ -55,7 +58,10 @@ public class TestPhotonManager : Photon.PunBehaviour
             else if (Input.GetKeyDown(KeyCode.X))
             {
                 Debug.Log("a");
-                PhotonNetwork.Destroy(CurrentPlayer);
+                if (CurrentPlayer != null)
+                {
+                    PhotonNetwork.Destroy(CurrentPlayer);
+                }
                 CurrentPlayer = PhotonNetwork.Instantiate("12Box", Vector3.one * 3, Quaternion.identity, 0);
             }
         }

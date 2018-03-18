@@ -7,7 +7,6 @@ public partial class PlayerUI
 {
 
 
-
     void SetUI()
     {
         if(gameObject.GetComponent<PhotonView>().isMine)
@@ -27,6 +26,9 @@ public partial class PlayerUI
             PhotonManager = GameObject.Find("PhotonManager");
 
             TimerText = UIObject.transform.Find("TimePanel/TimeValue").gameObject.GetComponent<Text>();
+
+            ScoreText = UIObject.transform.Find("ScorePanel/ScoreNumber").gameObject.GetComponent<Text>();
+
         }
 
     }
@@ -57,6 +59,14 @@ public partial class PlayerUI
         {
             if(PhotonManager!=null)
             TimerText.text = Mathf.Floor(PhotonManager.GetComponent<PhotonManager>().GetTimeCount()).ToString();
+        }
+    }
+
+    void SetScore()
+    {
+        if (gameObject.GetComponent<PhotonView>().isMine)
+        {
+            ScoreText.text = PhotonNetwork.player.GetScore().ToString();
         }
     }
 }

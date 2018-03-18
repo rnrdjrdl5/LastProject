@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public partial class PlayerUI{
 
+    private GameObject OwnerPlayer;
+
     public GameObject UIPrefab;         // UI 프리팹을 통해서 동적생성하기 위한 변수
 
 
@@ -26,6 +28,9 @@ public partial class PlayerUI{
     private GameObject PhotonManager;
 
     private Text TimerText;
+
+    
+    private Text ScoreText;
 
 
 

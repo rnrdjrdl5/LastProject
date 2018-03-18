@@ -3,7 +3,7 @@ guid: 2d80b216992cf464da2e7a647f9fd234
 timeCreated: 1518281289
 licenseType: Free
 ModelImporter:
-  serializedVersion: 21
+  serializedVersion: 22
   fileIDToRecycleName:
     100000: Bip001
     100002: Bip001 Footsteps
@@ -112,10 +112,22 @@ ModelImporter:
     13700006: Object005
     13700008: Object006
     13700010: Object007
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 'Material #26'
+    second: {fileID: 2100000, guid: 2023317be8bac6141ab6827e30cb7f89, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: default
+    second: {fileID: 2100000, guid: 08ea953a94741c5428e732a2fe964435, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
     materialSearch: 1
+    materialLocation: 0
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
@@ -128,6 +140,7 @@ ModelImporter:
     animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
     animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
@@ -160,18 +173,10 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.18971062
-        functionName: CreateRionRoar
+      - time: 0.31797236
+        functionName: CreateFryingPan
         data: 
-        objectReferenceParameter: {fileID: 11500000, guid: 425345d0724a9b842a321745defda78f,
-          type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.82098764
-        functionName: DeleteRionRoar
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: 425345d0724a9b842a321745defda78f,
+        objectReferenceParameter: {fileID: 11500000, guid: 4dd785d87168943499d9d1d3d634445e,
           type: 3}
         floatParameter: 0
         intParameter: 0

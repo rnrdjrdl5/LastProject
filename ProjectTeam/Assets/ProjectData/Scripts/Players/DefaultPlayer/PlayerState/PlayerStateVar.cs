@@ -9,8 +9,8 @@ public partial class PlayerState
     { NONE , NOTUSINGSKILL , 
         IDLE, RUN,
         WINDBLAST, BLINK,
-        DAMAGE, ATTACK , SEALCHARM , RIONROAR , RIONRUSH,
-        STUN};
+        DAMAGE, ATTACK , SEALCHARM ,STUN
+     , THROW_FRYING_PAN};
 
     private ConditionEnum   PlayerCondition         = ConditionEnum.IDLE;
 

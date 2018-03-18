@@ -17,11 +17,6 @@ public class RionDamage : StateMachineBehaviour {
             Destroy(CA.GetCDD());
         }
 
-        else if(PS.EqualPlayerCondition(PlayerState.ConditionEnum.RIONRUSH))
-        {
-            Destroy(animator.gameObject.GetComponent<RionRush>().GetCheckGameObject());
-        }
-
         PS.SetPlayerCondition(PlayerState.ConditionEnum.DAMAGE);
         animator.SetInteger("DamageOnOff", 0);
 
