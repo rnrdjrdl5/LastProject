@@ -64,8 +64,17 @@ public partial class BoxPlayerMove
                     // 벡터를 로컬 좌표계 기준에서 월드 좌표계 기준으로 변환한다.
                     MoveDir = transform.TransformDirection(MoveDir);
 
+                    if (Input.GetAxis("Vertical") > 0)
+                    {
+                        MoveDir *= PlayerSpeed;
+                    }
+
                     // 스피드 증가.
-                    MoveDir *= PlayerSpeed;
+                    else
+                    {
+                       
+                           MoveDir *= PlayerBackSpeed;
+                    }
 
                 }
                 // 캐릭터에 중력 적용.
@@ -79,6 +88,8 @@ public partial class BoxPlayerMove
         }
     }
 
+    public float AniSpeed = 3.0f;
+
     void PlayerMoveAnimation()
     {
         if (gameObject.GetComponent<PhotonView>().isMine)
@@ -87,15 +98,124 @@ public partial class BoxPlayerMove
 
             if (gameObject.GetComponent<PlayerNotMoveDebuff>() == null)
             {
-                float h = Input.GetAxis("Horizontal");
-                float v = Input.GetAxis("Vertical");
+                // 1. 가로입력
+                if (Input.GetAxisRaw("Horizontal") > 0)
+                {
+                    // 가로입력 더할때 1이상못나가도록.
+                    if (HSpeed + Time.deltaTime * AniSpeed >= 1)
+                    {
+                        HSpeed = 1;
+                    }
+
+                    else
+                    {
+                        HSpeed += Time.deltaTime * AniSpeed;
+                    }
+                }
+
+                else if (Input.GetAxisRaw("Horizontal") < 0)
+                {
+                    if (HSpeed - Time.deltaTime * AniSpeed <= -1)
+                    {
+                        HSpeed = -1;
+                    }
+                    else
+                    {
+                        HSpeed -= Time.deltaTime * AniSpeed;
+                    }
+                }
+
+                // 키값 없을경우 원래로 돌아가야지.
+                else
+                {
+                    if (HSpeed > 0)
+                    {
+                        if (HSpeed - Time.deltaTime * AniSpeed < 0)
+                        {
+                            HSpeed = 0;
+                        }
+                        else
+                        {
+                            HSpeed -= Time.deltaTime * AniSpeed;
+                        }
+                    }
+
+                    else if (HSpeed < 0)
+                    {
+                        if (HSpeed + Time.deltaTime * AniSpeed > 0)
+                        {
+                            HSpeed = 0;
+                        }
+                        else
+                        {
+                            HSpeed += Time.deltaTime * AniSpeed;
+                        }
+                    }
+                }
+
+
+
+
+                if (Input.GetAxisRaw("Vertical") > 0)
+                {
+                    // 가로입력 더할때 1이상못나가도록.
+                    if (VSpeed + Time.deltaTime * AniSpeed >= 1)
+                    {
+                        VSpeed = 1;
+                    }
+
+                    else
+                    {
+                        VSpeed += Time.deltaTime * AniSpeed;
+                    }
+                }
+
+                else if (Input.GetAxisRaw("Vertical") < 0)
+                {
+                    if (VSpeed - Time.deltaTime * AniSpeed <= -1)
+                    {
+                        VSpeed = -1;
+                    }
+                    else
+                    {
+                        VSpeed -= Time.deltaTime * AniSpeed;
+                    }
+                }
+
+                // 키값 없을경우 원래로 돌아가야지.
+                else
+                {
+                    if (VSpeed > 0)
+                    {
+                        if (VSpeed - Time.deltaTime * AniSpeed < 0)
+                        {
+                            VSpeed = 0;
+                        }
+                        else
+                        {
+                            VSpeed -= Time.deltaTime * AniSpeed;
+                        }
+                    }
+
+                    else if (VSpeed < 0)
+                    {
+                        if (VSpeed + Time.deltaTime * AniSpeed > 0)
+                        {
+                            VSpeed = 0;
+                        }
+                        else
+                        {
+                            VSpeed += Time.deltaTime * AniSpeed;
+                        }
+                    }
+                }
 
                 Animator animator = gameObject.GetComponent<Animator>();
-                animator.SetFloat("DirectionX", h);
-                animator.SetFloat("DirectionY", v);
-            
-             }
+                animator.SetFloat("DirectionX", HSpeed);
+                animator.SetFloat("DirectionY", VSpeed);
+            }
 
         }
     }
+
 }

@@ -50,7 +50,8 @@ public class TestPhotonManager : Photon.PunBehaviour
                 {
                     PhotonNetwork.Destroy(CurrentPlayer);
                 }
-                CurrentPlayer = PhotonNetwork.Instantiate("12Rion", Vector3.one * 3, Quaternion.identity, 0);
+                //CurrentPlayer = PhotonNetwork.Instantiate("12Rion", Vector3.one * 3, Quaternion.identity, 0);
+                CurrentPlayer = PhotonNetwork.Instantiate("CatBoss", Vector3.one * 3, Quaternion.identity, 0);
             }
 
 
