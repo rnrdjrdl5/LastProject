@@ -65,7 +65,7 @@ public class PointToLocation{
     }
 
     public GameObject FindObject(GameObject UseObject , float MaxLocationDistance)
-    {
+    { 
         Vector3 MouseVector3 = FindMouseCursorPosition(UseObject, PlayerCamera);
 
         RaycastHit hit;

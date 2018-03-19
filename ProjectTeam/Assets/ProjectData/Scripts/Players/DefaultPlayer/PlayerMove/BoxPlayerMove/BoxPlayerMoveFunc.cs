@@ -51,15 +51,33 @@ public partial class BoxPlayerMove
             if ((gameObject.GetComponent<PlayerState>().GetplayerNotMoveDebuff() == null) &&
                (ps.EqualPlayerCondition(PlayerState.ConditionEnum.RUN) ||
                 ps.EqualPlayerCondition(PlayerState.ConditionEnum.IDLE) ||
-                ps.EqualPlayerCondition(PlayerState.ConditionEnum.BLINK) ||
-                ps.EqualPlayerCondition(PlayerState.ConditionEnum.ATTACK)))
+                ps.EqualPlayerCondition(PlayerState.ConditionEnum.ATTACK) ||
+                ps.EqualPlayerCondition(PlayerState.ConditionEnum.INTERACTION)))
             {
 
 
                 if (gameObject.GetComponent<CharacterController>().isGrounded)
                 {
+
+
+
                     // 위, 아래 움직임 셋팅. 
                     MoveDir = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+
+                    if (ps.EqualPlayerCondition(PlayerState.ConditionEnum.INTERACTION) && 
+                        MoveDir != Vector3.zero)
+                    {
+                        gameObject.GetComponent<Animator>().SetBool("isInteraction", false);
+                        gameObject.GetComponent<Animator>().SetInteger("InteractionType", 0);
+
+
+
+                        gameObject.GetComponent<FindObject>().SetisFindObject(true);
+
+                        gameObject.GetComponent<TimeBar>().DestroyObjects();
+
+
+                    }
 
                     // 벡터를 로컬 좌표계 기준에서 월드 좌표계 기준으로 변환한다.
                     MoveDir = transform.TransformDirection(MoveDir);

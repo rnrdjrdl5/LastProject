@@ -10,7 +10,8 @@ public partial class PlayerState
         IDLE, RUN,
         WINDBLAST, BLINK,
         DAMAGE, ATTACK , SEALCHARM ,STUN
-     , THROW_FRYING_PAN};
+     , THROW_FRYING_PAN
+    , INTERACTION , };
 
     private ConditionEnum   PlayerCondition         = ConditionEnum.IDLE;
 

@@ -96,4 +96,5 @@ MonoBehaviour:
   - RPCInstantiateResult
   - BossAddScore
   - ThrowFryingPanAnimation
+  - RPCInteraction
   DisableAutoOpenWizard: 1

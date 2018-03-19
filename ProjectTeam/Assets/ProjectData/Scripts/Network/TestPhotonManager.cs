@@ -8,7 +8,7 @@ public class TestPhotonManager : Photon.PunBehaviour
 
     private bool isJoinRoom = false;
 
-    string Version = "test";
+    string Version = "test1";
 
     public GameObject CurrentPlayer;
 
@@ -40,7 +40,6 @@ public class TestPhotonManager : Photon.PunBehaviour
 
     // Update is called once per frame
     void Update() {
-
         if (photonView.isMine)
         {
             if (Input.GetKeyDown(KeyCode.Z))

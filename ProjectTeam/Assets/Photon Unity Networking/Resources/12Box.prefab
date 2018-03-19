@@ -594,8 +594,11 @@ GameObject:
   - component: {fileID: 143885399246383964}
   - component: {fileID: 114975575812801596}
   - component: {fileID: 114317575945771226}
+  - component: {fileID: 114938638006444960}
   - component: {fileID: 114719414601433992}
   - component: {fileID: 114884088626421510}
+  - component: {fileID: 114347650917578356}
+  - component: {fileID: 114572171988371112}
   m_Layer: 0
   m_Name: 12Box
   m_TagString: Teams
@@ -1319,15 +1322,6 @@ MonoBehaviour:
   - Type: 1
     SynchronizeType: 2
     Name: DirectionY
-  - Type: 4
-    SynchronizeType: 0
-    Name: isBlink
-  - Type: 9
-    SynchronizeType: 0
-    Name: WindBlastTrigger
-  - Type: 9
-    SynchronizeType: 0
-    Name: SealCharmTrigger
   - Type: 3
     SynchronizeType: 0
     Name: DamageOnOff
@@ -1337,9 +1331,28 @@ MonoBehaviour:
   - Type: 1
     SynchronizeType: 0
     Name: SpeedRun
+  - Type: 4
+    SynchronizeType: 0
+    Name: isInteraction
+  - Type: 3
+    SynchronizeType: 0
+    Name: InteractionType
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0
+--- !u!114 &114347650917578356
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1951893664694718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36f840acdee920f48b8e7d2ceaac408a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TimeBarPanelPrefab: {fileID: 1799781259668540, guid: cfadefa0a35baa54bb19352de6d561e0,
+    type: 2}
 --- !u!114 &114384540549383076
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1403,11 +1416,26 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 114975575812801596}
   - {fileID: 114317575945771226}
+  - {fileID: 114938638006444960}
   ObservedComponentsFoldoutOpen: 1
   viewIdField: 0
   instantiationId: -1
   currentMasterID: -1
   isRuntimeInstantiated: 0
+--- !u!114 &114572171988371112
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1951893664694718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a04b31f320213754b99669908013ed77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  XZPower: 30
+  YPower: 4
+  TorquePower: 50
 --- !u!114 &114614784889629064
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1476,9 +1504,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxLocationDistnace: 10
-  PressUIPrefabs: {fileID: 1477620128745670, guid: 3229e72fca1609d4ab02708ef370cb1c,
+  MaxInteractionDistance: 1
+  PressUIPrefabs: {fileID: 1823746571623634, guid: 84d535288324adb4482be5de7f0381a7,
     type: 2}
-  UILocation: 2
+  ScoreTimeUIPrefabs: {fileID: 1382168443246624, guid: 4003a20043dcdb54d96f40184e86878b,
+    type: 2}
+--- !u!114 &114938638006444960
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1951893664694718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f0680b706193254f97aec3f125439c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SkillKeyType: 1
+  InteractiveKeyType: 1
 --- !u!114 &114975575812801596
 MonoBehaviour:
   m_ObjectHideFlags: 1
