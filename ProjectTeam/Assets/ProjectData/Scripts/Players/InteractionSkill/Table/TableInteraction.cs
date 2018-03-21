@@ -34,7 +34,6 @@ public class TableInteraction : DefaultInteraction
     [PunRPC]
     void RPCInteraction(int Interac)
     {
-        animator.SetBool("isInteraction", true);
         animator.SetInteger("InteractionType", Interac);
 
     }
@@ -44,7 +43,6 @@ public class TableInteraction : DefaultInteraction
     void OffTableInteraction()
     {
         // 원래 idlerun으로 돌아간다.
-        animator.SetBool("isInteraction", false);
         animator.SetInteger("InteractionType", 0);
 
         //다시 상호작용 물체를 찾는다.
@@ -55,6 +53,11 @@ public class TableInteraction : DefaultInteraction
 
         //카메라를 재설정한다.
         PlayerCamera.SetCameraModeType(PlayerCamera.EnumCameraMode.FOLLOW);
+
+        //다음번에 상호작용을 못하도록 막는다.
+        GetInteractiveObject().GetComponent<InteractiveState>().SetCanUseObject(false);
+
+
     }
 
     void SetPhysics()

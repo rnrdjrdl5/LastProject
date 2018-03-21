@@ -299,6 +299,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1432435459398140
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4900437947214272}
+  - component: {fileID: 135143278005609052}
+  - component: {fileID: 114301347931585574}
+  m_Layer: 0
+  m_Name: FindUsedObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1449413565410080
 GameObject:
   m_ObjectHideFlags: 1
@@ -677,6 +694,7 @@ Transform:
   - {fileID: 4517399148839768}
   - {fileID: 4873147087610460}
   - {fileID: 4526612039741224}
+  - {fileID: 4900437947214272}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1142,6 +1160,19 @@ Transform:
   m_Father: {fileID: 4039007471208572}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4900437947214272
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1432435459398140}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4039007471208572}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4933250247673696
 Transform:
   m_ObjectHideFlags: 1
@@ -1302,6 +1333,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab2ffa64c176b6b4bada4db6221cf9ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114301347931585574
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1432435459398140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 874bc75339a318442879ee3d1afdc88f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114317575945771226
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1322,6 +1364,9 @@ MonoBehaviour:
   - Type: 1
     SynchronizeType: 2
     Name: DirectionY
+  - Type: 3
+    SynchronizeType: 0
+    Name: InteractionType
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0
@@ -1584,6 +1629,18 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!135 &135143278005609052
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1432435459398140}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 2.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!135 &135537045241657604
 SphereCollider:

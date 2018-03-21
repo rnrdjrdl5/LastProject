@@ -54,6 +54,7 @@ public partial class DefaultInteraction : Photon.PunBehaviour {
                         FindObjectScript.BackDefault();
 
                         //카메라 설정 변경
+                        PlayerCamera.SetCameraRadX(-transform.eulerAngles.y);
                         PlayerCamera.SetCameraModeType(PlayerCamera.EnumCameraMode.FREE);
 
                         // 타임바 기본설정

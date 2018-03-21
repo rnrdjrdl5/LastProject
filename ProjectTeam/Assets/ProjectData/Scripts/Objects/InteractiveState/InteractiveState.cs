@@ -9,8 +9,26 @@ public class InteractiveState : MonoBehaviour {
     public float InteractiveTime = 0.0f;
 
 
-	// Use this for initialization
-	void Start () {
+    // 사용자가 이미 한번 뒤집었는지 판단하는 용도.
+    private bool CanUseObject;
+
+    public bool GetCanUseObject()
+    {
+        return CanUseObject;
+    }
+
+    public void SetCanUseObject(bool s)
+    {
+        CanUseObject = s;
+    }
+
+    // Use this for initialization
+
+    private void Awake()
+    {
+        CanUseObject = true;
+    }
+    void Start () {
 		
 	}
 	

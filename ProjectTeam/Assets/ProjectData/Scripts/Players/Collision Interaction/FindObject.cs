@@ -40,7 +40,7 @@ public class FindObject : MonoBehaviour {
     public void SetObjectState(InteractiveState IS) { ObjectState = IS; }
 
 
-    // 상호작용이 가능한지 여부, 2m내에서만 승락시킨다.
+    // 상호작용이 가능한지 여부,
 
     // 사용한 곳 : 상호작용 스킬.
     private bool IsInteraction;
@@ -229,38 +229,47 @@ public class FindObject : MonoBehaviour {
         GameObject Interaction = null;
 
 
+
+        // 상호작용이 사용 가능한가?
         if (isUseFindObject)
         {
             Interaction = PTL.FindObject(gameObject, MaxLocationDistnace);
         }
+
+        // 사용 불가능하면 무조건 못찾게 한다.
         else
             Interaction = null;
 
         // 발견 했을 경우
         if (Interaction != null)
-        { 
-            // 거리 상황에 따라 UI를 생성한다.
-            CreateFarObject(Interaction);
+        {
 
-            CreateMeleeObject(Interaction);
+            // 상호작용 물체가 넘길 수 있는 상태라면
+            if (Interaction.GetComponent<InteractiveState>().GetCanUseObject() == true)
+            {
+                // 거리 상황에 따라 UI를 생성한다.
+                CreateFarObject(Interaction);
 
-
-            //스킬에서 사용하는 조건문을 설정한다.
-            ChooseIsInteraction(Interaction);
-
-
-            //상호작용 오브젝트에게서 시간을 받아온다.
-            SetObjectState(Interaction.GetComponent<InteractiveState>());
+                CreateMeleeObject(Interaction);
 
 
+                //스킬에서 사용하는 조건문을 설정한다.
+                ChooseIsInteraction(Interaction);
 
 
-            //시간에 비례해서 색상을 정합니다.
-            ChooseMaterialColor(Interaction);
+                //상호작용 오브젝트에게서 시간을 받아온다.
+                SetObjectState(Interaction.GetComponent<InteractiveState>());
 
 
-            // 레이캐스트로 맞은 상호작용 대상을 ObjectTarget에 저장합니다.
-            ObjectTarget = Interaction;
+
+
+                //시간에 비례해서 색상을 정합니다.
+                ChooseMaterialColor(Interaction);
+
+
+                // 레이캐스트로 맞은 상호작용 대상을 ObjectTarget에 저장합니다.
+                ObjectTarget = Interaction;
+            }
         }
 
 

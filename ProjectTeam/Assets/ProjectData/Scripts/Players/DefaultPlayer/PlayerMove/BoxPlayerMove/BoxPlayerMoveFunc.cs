@@ -74,14 +74,20 @@ public partial class BoxPlayerMove
                     if (ps.EqualPlayerCondition(PlayerState.ConditionEnum.INTERACTION) && 
                         MoveDir != Vector3.zero)
                     {
-                        gameObject.GetComponent<Animator>().SetBool("isInteraction", false);
+                        
+                        // 플레이어 다시 이동으로 변경
                         gameObject.GetComponent<Animator>().SetInteger("InteractionType", 0);
 
 
-
+                        // FIndObject의 활성화 탐지 시작
                         gameObject.GetComponent<FindObject>().SetisUseFindObject(true);
 
+
+                        // TimeBar 관련 UI 모두 삭제
                         gameObject.GetComponent<TimeBar>().DestroyObjects();
+
+                        // 카메라 다시 follow 설정
+                        PlayerCamera.SetCameraModeType(PlayerCamera.EnumCameraMode.FOLLOW);
 
 
                     }
@@ -125,6 +131,10 @@ public partial class BoxPlayerMove
         {
             PlayerState ps = gameObject.GetComponent<PlayerState>();
 
+            gameObject.GetComponent<Animator>().SetFloat("DirectionX", Input.GetAxisRaw("Horizontal"));
+            gameObject.GetComponent<Animator>().SetFloat("DirectionY", Input.GetAxisRaw("Vertical"));
+
+            /*
             if (gameObject.GetComponent<PlayerNotMoveDebuff>() == null)
             {
                 // 1. 가로입력
@@ -240,9 +250,12 @@ public partial class BoxPlayerMove
                 }
 
                 Animator animator = gameObject.GetComponent<Animator>();
-                animator.SetFloat("DirectionX", HSpeed);
-                animator.SetFloat("DirectionY", VSpeed);
+                animator.SetInteger("DirectionX", HSpeed);
+                animator.SetInteger("DirectionY", VSpeed);
             }
+            */
+
+
 
         }
     }

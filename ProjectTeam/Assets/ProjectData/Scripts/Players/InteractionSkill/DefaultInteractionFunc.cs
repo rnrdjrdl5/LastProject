@@ -50,7 +50,7 @@ public partial class DefaultInteraction
 
     protected void UseAnimation()
     {
-        animator.SetBool("isInteraction", true);
+        
 
         animator.SetInteger("InteractionType", (int)InteractiveKeyType);
 

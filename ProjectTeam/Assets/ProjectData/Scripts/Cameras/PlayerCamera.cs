@@ -56,7 +56,12 @@ public class PlayerCamera : MonoBehaviour {
 
     // 추가 x회전
     public float CameraRightLeftSpeed = 50.0f;
-    public float CameraRadX = 0.0f;
+
+    //-PlayerObject.transform.eulerAngles.y
+    private float CameraRadX = 0.0f;
+
+    public float GetCameraRadX() { return CameraRadX; }
+    public void SetCameraRadX(float SCR) { CameraRadX = SCR; }
 
     public float CameraMaxRadX = 90.0f;
     public float CameraMinRadX = -90.0f;
@@ -159,7 +164,7 @@ public class PlayerCamera : MonoBehaviour {
         float CameraPlayerDistanceX = Mathf.Cos(Mathf.Deg2Rad * CameraRad) * CameraDistanceTriangle;
         float CameraPlayerDistanceY = Mathf.Sin(Mathf.Deg2Rad * CameraRad) * CameraDistanceTriangle;
 
-
+        //CaemraRadX
         float CameraPlayerDistanceX_X = Mathf.Cos(Mathf.Deg2Rad * CameraRadX) * CameraPlayerDistanceX;
         float CameraPlayerDistanceZ =   Mathf.Sin(Mathf.Deg2Rad * CameraRadX) * CameraPlayerDistanceX;
 
@@ -168,9 +173,6 @@ public class PlayerCamera : MonoBehaviour {
         transform.LookAt(PlayerObject.transform);
 
         transform.position = new Vector3(transform.position.x, transform.position.y + CameraHeightFromFloor, transform.position.z);
-
-        Debug.Log(CameraPlayerDistanceX_X);
-        Debug.Log(CameraPlayerDistanceZ);
 
 
     }
