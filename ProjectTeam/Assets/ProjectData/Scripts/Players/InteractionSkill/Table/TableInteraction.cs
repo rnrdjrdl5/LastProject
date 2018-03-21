@@ -48,10 +48,13 @@ public class TableInteraction : DefaultInteraction
         animator.SetInteger("InteractionType", 0);
 
         //다시 상호작용 물체를 찾는다.
-        GetFindObjectScript().SetisFindObject(true);
+        GetFindObjectScript().SetisUseFindObject(true);
 
         //타임바를 파괴한다.
         GetTimeBarScript().DestroyObjects();
+
+        //카메라를 재설정한다.
+        PlayerCamera.SetCameraModeType(PlayerCamera.EnumCameraMode.FOLLOW);
     }
 
     void SetPhysics()

@@ -1236,7 +1236,7 @@ Animator:
   m_GameObject: {fileID: 1951893664694718}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: b01e34dd80497164f81ffac5f08fa773, type: 3}
-  m_Controller: {fileID: 9100000, guid: 2b92f04d980eed245b4fb9236ddf270a, type: 2}
+  m_Controller: {fileID: 9100000, guid: 0b2fc4cbe751d8649bf31e8e0cb06cd5, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1322,21 +1322,6 @@ MonoBehaviour:
   - Type: 1
     SynchronizeType: 2
     Name: DirectionY
-  - Type: 3
-    SynchronizeType: 0
-    Name: DamageOnOff
-  - Type: 4
-    SynchronizeType: 0
-    Name: StunOnOff
-  - Type: 1
-    SynchronizeType: 0
-    Name: SpeedRun
-  - Type: 4
-    SynchronizeType: 0
-    Name: isInteraction
-  - Type: 3
-    SynchronizeType: 0
-    Name: InteractionType
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0
@@ -1380,6 +1365,7 @@ MonoBehaviour:
   PlayerSpeed: 10
   RotationSpeed: 100
   PlayerBackSpeed: 5
+  PlayerCamera: {fileID: 0}
 --- !u!114 &114512199993746538
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1463,7 +1449,7 @@ MonoBehaviour:
   SkillMaxWaitingTime: 3
   SkillManaCost: 10
   SkillOffKeyType: 7
-  SpeedRunSpeed: 10
+  SpeedRunSpeed: 30
   SpeedRunEffectPrefab: {fileID: 1960263755607954, guid: 1aac324be0a278f4fbd77eded012de27,
     type: 2}
 --- !u!114 &114739656786173776

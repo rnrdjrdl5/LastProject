@@ -56,10 +56,10 @@ public partial class DefaultInteraction
     public void SetInteractiveObject(GameObject IO) { InteractiveObject = IO; }
 
 
-    protected GameObject PlayerCamera;
+    protected PlayerCamera PlayerCamera;
 
-    public GameObject GetPlayerCamera() { return PlayerCamera; }
-    public void SetPlayerCamera(GameObject GO) { PlayerCamera = GO; }
+    public PlayerCamera GetPlayerCamera() { return PlayerCamera; }
+    public void SetPlayerCamera(PlayerCamera GO) { PlayerCamera = GO; }
 
 
 

@@ -38,4 +38,11 @@ public partial class BoxPlayerMove
     float VSpeed;
 
 
+    public PlayerCamera PlayerCamera;
+
+
+
+
+
+
 }

@@ -22,7 +22,7 @@ public partial class DefaultInteraction : Photon.PunBehaviour {
 
         FindObjectScript = gameObject.GetComponent<FindObject>();
 
-        PlayerCamera = GameObject.Find("PlayerCamera");
+        PlayerCamera = GameObject.Find("PlayerCamera").GetComponent<PlayerCamera>();
 
         
 
@@ -50,14 +50,23 @@ public partial class DefaultInteraction : Photon.PunBehaviour {
                         InteractiveObject = FindObjectScript.GetObjectTarget();
 
                         //상호작용 탐지 스크립트 해제, 상호작용 ui 삭제
-                        FindObjectScript.SetisFindObject(false);
+                        FindObjectScript.SetisUseFindObject(false);
                         FindObjectScript.BackDefault();
+
+                        //카메라 설정 변경
+                        PlayerCamera.SetCameraModeType(PlayerCamera.EnumCameraMode.FREE);
 
                         // 타임바 기본설정
                         BaseTimeBarScript();
 
                         // 애니메이션 재생
                         UseAnimation();
+
+
+                        // 해제조건
+                        //    1. 애니메이션이 끝날 때
+                        //    2. 플레이어가 이동했을 때
+
                     }
 
                 }

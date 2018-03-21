@@ -48,16 +48,16 @@ public class FindObject : MonoBehaviour {
     public bool GetIsInteraction() { return IsInteraction; }
     public void SetIsInteraction(bool SI) { IsInteraction = SI; }
 
-    private bool isFindObject = true;
+    private bool isUseFindObject = true;
 
-    public bool GetisFindObject() { return isFindObject; }
-    public void SetisFindObject(bool FO) { isFindObject = FO; }
+    public bool GetisUseFindObject() { return isUseFindObject; }
+    public void SetisUseFindObject(bool FO) { isUseFindObject = FO; }
 
 
     private void Awake()
     {
         IsInteraction = false;
-        isFindObject = true;
+        isUseFindObject = true;
     }
 
     void Start() {
@@ -227,7 +227,9 @@ public class FindObject : MonoBehaviour {
     // Update is called once per frame
     void Update () {
         GameObject Interaction = null;
-        if (isFindObject)
+
+
+        if (isUseFindObject)
         {
             Interaction = PTL.FindObject(gameObject, MaxLocationDistnace);
         }

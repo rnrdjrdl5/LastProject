@@ -194,8 +194,8 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 16361215}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 408, y: 229.5, z: 0}
-  m_LocalScale: {x: 0.425, y: 0.425, z: 0.425}
+  m_LocalPosition: {x: 468.5, y: 222.5, z: 0}
+  m_LocalScale: {x: 0.48802084, y: 0.48802084, z: 0.48802084}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 10
@@ -453,12 +453,12 @@ Prefab:
     - target: {fileID: 224693236442381188, guid: f0cae6947a3ca9a4a9d56b84b701a367,
         type: 2}
       propertyPath: m_LocalPosition.x
-      value: 408
+      value: 468.5
       objectReference: {fileID: 0}
     - target: {fileID: 224693236442381188, guid: f0cae6947a3ca9a4a9d56b84b701a367,
         type: 2}
       propertyPath: m_LocalPosition.y
-      value: 229.5
+      value: 222.5
       objectReference: {fileID: 0}
     - target: {fileID: 224693236442381188, guid: f0cae6947a3ca9a4a9d56b84b701a367,
         type: 2}
@@ -1264,6 +1264,16 @@ Prefab:
         type: 2}
       propertyPath: CameraUpDownSpeed
       value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 114187862902219886, guid: 48222199ff3ccd24a84ad64746daeb71,
+        type: 2}
+      propertyPath: CameraMaxRadX
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 114187862902219886, guid: 48222199ff3ccd24a84ad64746daeb71,
+        type: 2}
+      propertyPath: CameraMinRadX
+      value: 90
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 48222199ff3ccd24a84ad64746daeb71, type: 2}

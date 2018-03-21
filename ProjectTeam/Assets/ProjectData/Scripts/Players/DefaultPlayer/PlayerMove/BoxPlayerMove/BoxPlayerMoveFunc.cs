@@ -13,6 +13,13 @@ public partial class BoxPlayerMove
         RecvDirectionY = 0.0f;
 
         OriginalPlayerSpeed = PlayerSpeed;
+
+        PlayerCamera = GameObject.Find("PlayerCamera").GetComponent<PlayerCamera>(); ;
+        if(PlayerCamera == null)
+        {
+            Debug.Log(" 카메라 못찾음.에러.");
+        }
+
     }
 
     void SendTransform(PhotonStream stream)
@@ -72,7 +79,7 @@ public partial class BoxPlayerMove
 
 
 
-                        gameObject.GetComponent<FindObject>().SetisFindObject(true);
+                        gameObject.GetComponent<FindObject>().SetisUseFindObject(true);
 
                         gameObject.GetComponent<TimeBar>().DestroyObjects();
 
@@ -102,7 +109,11 @@ public partial class BoxPlayerMove
                 gameObject.GetComponent<CharacterController>().Move(MoveDir * Time.deltaTime);
             }
 
-            transform.Rotate(Vector3.up * Time.deltaTime * RotationSpeed * Input.GetAxis("Mouse X"));
+
+
+            
+
+            PlayerRotateX();
         }
     }
 
@@ -233,6 +244,15 @@ public partial class BoxPlayerMove
                 animator.SetFloat("DirectionY", VSpeed);
             }
 
+        }
+    }
+
+    // 플레이어가 마우스 x축으로 이동하는지에 대한 여부.
+    void PlayerRotateX()
+    {
+        if (PlayerCamera.GetCameraModeType() == PlayerCamera.EnumCameraMode.FOLLOW)
+        {
+            transform.Rotate(Vector3.up * Time.deltaTime * RotationSpeed * Input.GetAxis("Mouse X"));
         }
     }
 
