@@ -50,6 +50,7 @@ public partial class PlayerUI
               MPBar.fillAmount =
                   GetComponent<PlayerManaPoint>().GetNowManaPoint() /
                   GetComponent<PlayerManaPoint>().GetMaxManaPoint();
+            Debug.Log(MPBar.fillAmount);
         }
     }
 

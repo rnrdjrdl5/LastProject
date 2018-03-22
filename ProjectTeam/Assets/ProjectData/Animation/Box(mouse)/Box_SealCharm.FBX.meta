@@ -149,10 +149,10 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.48961422
-        functionName: CreateCharm
+      - time: 0.50980395
+        functionName: CreateFryingPan
         data: 
-        objectReferenceParameter: {fileID: 11500000, guid: 1973ff1625003f54b81fdc14833b0ccc,
+        objectReferenceParameter: {fileID: 11500000, guid: 4de302fec19e47f4bbde63a6116eaa2a,
           type: 3}
         floatParameter: 0
         intParameter: 0

@@ -20,4 +20,9 @@ public partial class PlayerManaPoint
             }
         }
     }
+
+    public void CalcManaPoint(float manapoint)
+    {
+        NowManaPoint -= manapoint;
+    }
 }

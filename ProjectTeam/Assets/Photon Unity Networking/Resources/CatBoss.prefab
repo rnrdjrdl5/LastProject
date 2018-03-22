@@ -377,6 +377,7 @@ GameObject:
   - component: {fileID: 114254353571102590}
   - component: {fileID: 114802804578177232}
   - component: {fileID: 143422843006765888}
+  - component: {fileID: 114357614290760568}
   m_Layer: 0
   m_Name: CatBoss
   m_TagString: Boss
@@ -1389,6 +1390,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UIPrefab: {fileID: 1390711569190694, guid: f0cae6947a3ca9a4a9d56b84b701a367, type: 2}
+--- !u!114 &114357614290760568
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1586992145430558}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4de302fec19e47f4bbde63a6116eaa2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coolDown:
+    MaxCoolDown: 0
+  ManaCost: 10
+  skillState:
+    ProjectileObject: {fileID: 1023685096185302, guid: b64f962fb79dc874e910ba8ec12d09cd,
+      type: 2}
+    ObjectDamage: 10
+    ObjectDamageNumber: 10
+    CollisionNumber: 1
+    ReCheckTime: 1000
+    DestroyTime: 3
+    ObjectSpeed: 3
+  photonView: {fileID: 0}
+  playerState: {fileID: 0}
+  manaPoint: {fileID: 0}
+  animator: {fileID: 0}
+  InputKey:
+    SkillKeyType: 0
+  oneKeyInput:
+    SkillKeyType: 5
 --- !u!114 &114653989256010816
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1491,6 +1523,7 @@ MonoBehaviour:
   PlayerSpeed: 10
   RotationSpeed: 100
   PlayerBackSpeed: 5
+  PlayerCamera: {fileID: 0}
 --- !u!137 &137442111257862960
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

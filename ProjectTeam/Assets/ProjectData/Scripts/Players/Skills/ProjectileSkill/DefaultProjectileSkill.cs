@@ -71,7 +71,6 @@ public class DefaultProjectileSkill : DefaultSkill {
     override protected void Update()
     {
         base.Update();
-        // 아래부터 추가합시다.
     }
 
 

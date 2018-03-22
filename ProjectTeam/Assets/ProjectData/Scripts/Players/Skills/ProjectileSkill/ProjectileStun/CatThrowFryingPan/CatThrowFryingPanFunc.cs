@@ -22,6 +22,7 @@ public partial class CatThrowFryingPan
     }
 
 
+
     //// RPC입니다.
 
     [PunRPC]
@@ -30,23 +31,6 @@ public partial class CatThrowFryingPan
         gameObject.GetComponent<Animator>().SetTrigger("ThrowFryingPanTrigger");
     }
 
-
-
-    //// 애니메이션 이벤트입니다.
-
-    void CreateFryingPan()
-    {
-        // 위치 똑바로 잡아주기. 손하고 연결해서. 나중에.
-        float BulletDistance = 1.0f;
-        float CharacterHeight = 1.2f;
-
-        Vector3 BulletDefaultPlace = transform.forward * BulletDistance;
-        BulletDefaultPlace.y += CharacterHeight;
-
-        GameObject TGO = Instantiate(BulletPrefab, transform.position + (BulletDefaultPlace), Quaternion.identity);
-
-        SetCollisionData(TGO, this);
-    }
 
 
 }
