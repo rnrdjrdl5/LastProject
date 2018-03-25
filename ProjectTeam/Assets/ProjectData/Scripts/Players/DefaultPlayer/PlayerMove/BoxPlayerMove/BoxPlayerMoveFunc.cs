@@ -77,18 +77,7 @@ public partial class BoxPlayerMove
                         
                         // 플레이어 다시 이동으로 변경
                         gameObject.GetComponent<Animator>().SetInteger("InteractionType", 0);
-
-
-                        // FIndObject의 활성화 탐지 시작
-                        gameObject.GetComponent<FindObject>().SetisUseFindObject(true);
-
-
-                        // TimeBar 관련 UI 모두 삭제
-                        gameObject.GetComponent<TimeBar>().DestroyObjects();
-
-                        // 카메라 다시 follow 설정
-                        PlayerCamera.SetCameraModeType(PlayerCamera.EnumCameraMode.FOLLOW);
-
+                        
 
                     }
 

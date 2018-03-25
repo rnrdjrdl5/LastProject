@@ -97,4 +97,13 @@ MonoBehaviour:
   - BossAddScore
   - ThrowFryingPanAnimation
   - RPCInteraction
+  - RPCisAttack
+  - RPCThrowFryingPanTrigger
+  - SetCanUseObject
+  - RPCOffCanUseObject
+  - RPCUseFirstInterObject
+  - RPCUseFirstInterObjectOther
+  - RPCTurnOffLight
+  - SpawnObject
+  - DestroyObject
   DisableAutoOpenWizard: 1

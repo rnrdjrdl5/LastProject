@@ -9,6 +9,8 @@ using UnityEngine;
 
 public class DefaultNewSkill : MonoBehaviour {
 
+
+
     // 외부에서 수정할 수 있는 목록들입니다.
     // 모든 스킬에 포함됩니다.
 
@@ -18,32 +20,45 @@ public class DefaultNewSkill : MonoBehaviour {
     // 스킬의 비용을 결정합니다.
     public float ManaCost;
 
-    // 스킬의 옵션이 결정됩니다.
-    // 스킬에서 사용하지 않는 옵션은 조정해봤자 의미 없습니다.
-    public SkillState skillState;
+    // 스킬의 유지 비용을 결정합니다. 초당 비용입니다.
+    public float CtnManaCost;
 
 
     // 스크립트내에서 사용할 변수를 선언합니다.
-    public PhotonView photonView;
-    public PlayerState playerState;
-    public PlayerManaPoint manaPoint;
-    public Animator animator;
+    protected PhotonView photonView;
+    public PhotonView GetphotonView() { return photonView; }
+    public void SetphotonView(PhotonView pv) { photonView = pv; }
+
+    protected PlayerState playerState;
+    public PlayerState GetplayerState() { return playerState; }
+    public void SetplayerState(PlayerState ps) { playerState = ps; }
+
+    protected PlayerManaPoint manaPoint;
+    public PlayerManaPoint GetmanaPoint() { return manaPoint; }
+    public void SetmanaPoint(PlayerManaPoint mp) { manaPoint = mp; }
+
+    protected Animator animator;
 
     // 스킬 조건을 가지는 스크립트입니다.
-    protected DefaultSkillCondition skillCondition;
+    public SkillConditionOption skillConditionOption;
+
+    // 지속형 조건을 가지는 스크립트입니다.
+    public SkillContinueConditionOption skillContinueConditionOption;
 
 
 
-    /****************************************************************************
-    *
-    * 해당 속성들은 스크립트로 설정해야합니다. 인스펙터에서 설정이 불가능합니다.
-    * 키입력의 형태입니다. 하위에서 설정합시다.
-    * 
-    * ***********************************************************************/
+    // 키 값의 종류를 가지는 스크립트입니다.
+    // 조건 스크립트에서 이 변수로 키를 확인합니다.
     public DefaultInput InputKey;
-    
 
-    protected List<DefaultSkillDebuff> SkillDebuffs;
+    // 키 값의 종류를 가지는 스크립트입니다.
+    // 조건 스크립트에서 이 변수로 키를 확인합니다.
+    public DefaultInput ExitInputKey;
+
+
+    // 디버프 종류입니다.
+    // 리스트 내의 디버프에 따라 투사체나 근접공격에 효과를 부여합니다.
+    public List<DefaultPlayerSkillDebuff> PlayerSkillDebuffs;
 
 
    
@@ -51,111 +66,172 @@ public class DefaultNewSkill : MonoBehaviour {
 
     virtual protected void Awake()
     {
-        // 기본설정을 합니다.
-        photonView = gameObject.GetComponent<PhotonView>();
-        playerState = gameObject.GetComponent<PlayerState>();
-        manaPoint = gameObject.GetComponent<PlayerManaPoint>();
-        animator = gameObject.GetComponent<Animator>();
-
         
+        // 기본설정을 합니다.
+        SettingBaseOption();
+
+
+        // 스킬 조건을 판단하는 스크립트에 이 스크립트를 전달합니다.
+        // ( 조건 문 사용 시 변수 사용 용도 )
+        skillConditionOption.InitSkillConditionOption(this);
+        skillContinueConditionOption.InitSkillConditionOption(this);
+
+
     }
+
+
 
     protected void Update()
     {
         // 해당 조건에 맞는다면 , 
-        if (skillCondition.SkillCondition())
+        if (skillConditionOption.CheckCondition())
         {
 
             //5. 상태가 맞을 때
             if (CheckState())
             {
                 // 스킬 사용.
-                UseSkill();
+                // 쭉 누르는 스킬같은 경우 UseSkill이 계속 작동됨
+                // 그래서 막아버림.
+                if (skillContinueConditionOption.GetskillConditionContinueOption().GetisUseCtnSkill() == false)
+                {
 
-                /******************************************
-                // 스킬 오브젝트에 디버프 적용시키기.
-                // 리스트로 관리하자.
+                    UseSkill();
 
-                // + 일반 오브젝트 데이터도 리스트로 관리 가능할꺼다. 
-                /*********************************************/
+
+                    // 지속형 스킬을 on 합니다.
+                    // 지속형 스킬 if문을 돌아가게 합니다.
+                    // 지속형 스킬인경우만.
+
+                    if ((skillContinueConditionOption.skillContinueConditionType !=
+                        SkillContinueConditionOption.EnumSkillContinueConditionOption.NONE))
+
+                    {
+                        skillContinueConditionOption.GetskillConditionContinueOption().SetisUseCtnSkill(true);
+                    }
+                }
+
 
                 // 쿨타임을 적용합니다.
                 // 재사용 대기시간 감소 효과 등을 고려해서 
                 // 함수로 사용합니다.
 
-                coolDown.CalcCoolDown();
-                coolDown.SetisUseCoolDown(true);
+                // 단, 채널링 기술 사용 시 쿨타임이 적용되지 않습니다.
+                if (skillContinueConditionOption.skillContinueConditionType ==
+                    SkillContinueConditionOption.EnumSkillContinueConditionOption.NONE)
+                {
+                    coolDown.CalcCoolDown();
 
-                // 마나 감소를 적용합니다.
-                // 마나감소 효과를 고려해서
-                // 함수로 사용합니다.
-                manaPoint.CalcManaPoint(ManaCost);
+                    coolDown.SetisUseCoolDown(true); // 쿨타임 돌아갈지 여부 판단
+
+                    // 마나 감소를 적용합니다.
+                    // 마나감소 효과를 고려해서
+                    // 함수로 사용합니다.
+                    manaPoint.CalcManaPoint(ManaCost);
+                }
             }
+
+
         }
 
-        // 쿨타임을 줄여나간다.
-        coolDown.DecreaseCoolDown();
-    }
-
-
-
-    // SkillType에서 필요한 데이터를 골라 오브젝트 데이터를 설정합니다.
-    protected void SetObjectData(GameObject CollisionGameObject)
-    {
-        if (skillState.GetSkillRangeType() == SkillState.SkillType.Projectile)
+        // 해당 지속형 조건에 맞는다면 
+        if (skillContinueConditionOption.CheckContinueCondition())
         {
-            CollisionObject CollisionObjectScript = CollisionGameObject.GetComponent<CollisionObject>();
-
-            CollisionObjectDamage CollisionObjectDamageScript = CollisionGameObject.GetComponent<CollisionObjectDamage>();
-
-            CollisionObjectTime CollisionObjectTimeScript = CollisionGameObject.GetComponent<CollisionObjectTime>();
-
-            NumberOfCollisions NumberOfCollisionsScript = CollisionGameObject.GetComponent<NumberOfCollisions>();
-
-            CollisionMove CollisionMoveScript = CollisionGameObject.GetComponent<CollisionMove>();
-
-            if (CollisionObjectScript != null)
+            // 지속형 스킬을 사용 하는  데 플레이어 상태가 맞다면.
+            if (CheckCtnState())
             {
-                CollisionObjectScript.SetCollisionReCheckTime(skillState.ReCheckTime);
-                CollisionObjectScript.SetUsePlayer("Player" + photonView.viewID);
+                // 지속형 스킬을 사용합니다. 
+                UseCtnSkill();
+
+                //마나감소
+                manaPoint.CalcManaPoint(CtnManaCost * Time.deltaTime);
+                Debug.Log("채널링중");
+            }
+            else
+            {
+                ExitCtnSkill();
+                skillContinueConditionOption.GetskillConditionContinueOption().SetisUseCtnSkill(false);
             }
 
-            if (CollisionObjectDamageScript != null)
-            {
-                CollisionObjectDamageScript.SetObjectDamage(skillState.ObjectDamage);
-                CollisionObjectDamageScript.SetObjectDamageNumber(skillState.ObjectDamageNumber);
-            }
 
-            if (CollisionObjectTimeScript != null)
-            {
-                CollisionObjectTimeScript.SetObjectTime(skillState.DestroyTime);
-            }
+        }
 
-            if (NumberOfCollisionsScript != null)
-            {
-                NumberOfCollisionsScript.SetNumberOfCollisions(skillState.CollisionNumber);
-            }
 
-            if (CollisionMoveScript)
+        //지속형 스킬을 사용할 때 마나가 충분한가
+        if (skillContinueConditionOption.skillContinueConditionType !=
+             SkillContinueConditionOption.EnumSkillContinueConditionOption.NONE)
+        {
+            if (photonView.isMine)
             {
-                CollisionMoveScript.SetCollisionMoveSpeed(skillState.ObjectSpeed);
-                CollisionMoveScript.SetCollisionMoveDirect(transform.forward.normalized);
+                if (!CanChannelingSkillMana())
+                {
+                    ExitCtnSkill();
+                    skillContinueConditionOption.GetskillConditionContinueOption().SetisUseCtnSkill(false);
+
+
+                    coolDown.CalcCoolDown();
+
+                    coolDown.SetisUseCoolDown(true); // 쿨타임 돌아갈지 여부 판단
+                }
             }
         }
 
-        else
-            Debug.Log("오류");
+        // 해제 조건을 체크합니다.
+        // 에러발견
 
+        if (skillContinueConditionOption.GetskillConditionContinueOption().GetisUseCtnSkill() == true)
+        {
+            if (skillContinueConditionOption.CheckContinueExit())
+            {
+                if (CheckCtnState())
+                {
+                    ExitCtnSkill();
+                    skillContinueConditionOption.GetskillConditionContinueOption().SetisUseCtnSkill(false);
+                }
+            }
+        }
+            // 쿨타임을 줄여나간다.
+            coolDown.DecreaseCoolDown();
+    }
 
-
+    // 기본 설정을 합니다.
+    void SettingBaseOption()
+    {
+        // 사용에 필요한 변수들 게임오브젝트로부터 받아옵니다.
+        photonView = gameObject.GetComponent<PhotonView>();
+        playerState = gameObject.GetComponent<PlayerState>();
+        manaPoint = gameObject.GetComponent<PlayerManaPoint>();
+        animator = gameObject.GetComponent<Animator>();
     }
 
 
+    bool CanChannelingSkillMana()
+    {
+
+            // 2. 스킬 사용중인가?
+            if (skillContinueConditionOption.GetskillConditionContinueOption().GetisUseCtnSkill() == true)
+            {
+
+                //3. 마나가 다 닳았는가
+                if (GetmanaPoint().GetNowManaPoint() < CtnManaCost * Time.deltaTime)
+                {
+                    return false;
+                }
+            }
+        return true;
+    }
 
     /************************  아래부터는 재정의 해야 할 목록 *******************/
 
     // 현재 상태를 체크합니다.
     protected virtual bool CheckState()
+    {
+        Debug.Log("부모");
+        return false;
+    }
+
+    // 현재 지속형 스킬을 위한 상태를 체크합니다.
+    protected virtual bool CheckCtnState()
     {
         Debug.Log("부모");
         return false;
@@ -168,6 +244,42 @@ public class DefaultNewSkill : MonoBehaviour {
         Debug.Log("부모");
     }
 
+    // 지속형 스킬 사용입니다.
+    protected virtual void UseCtnSkill()
+    {
+        Debug.Log("부모");
+    }
+
+    // 지속형 스킬 사용의 해제입니다.
+    protected virtual void ExitCtnSkill()
+    {
+        Debug.Log("부모");
+    }
+
+
+
+
+    // 디버프를 해당 오브젝트에 추가한다.
+
+    // 
+    protected void AddDebuffComponent(GameObject CollisionObject)
+    {
+        for(int i = 0; i < PlayerSkillDebuffs.Count; i++)
+        {
+            if (PlayerSkillDebuffs[i].EqualSkillDebuffType(DefaultPlayerSkillDebuff.EnumSkillDebuff.STUN))
+            {
+                CollisionStunDebuff CSD = CollisionObject.AddComponent<CollisionStunDebuff>();
+                CSD.SetMaxTime(PlayerSkillDebuffs[i].GetMaxTime());
+            }
+
+            else if(PlayerSkillDebuffs[i].EqualSkillDebuffType(DefaultPlayerSkillDebuff.EnumSkillDebuff.DAMAGED))
+            {
+                CollisionDamagedDebuff CDD = CollisionObject.AddComponent<CollisionDamagedDebuff>();
+                CDD.SetMaxTime(PlayerSkillDebuffs[i].GetMaxTime());
+            }
+                
+        }
+    }
 
 
 

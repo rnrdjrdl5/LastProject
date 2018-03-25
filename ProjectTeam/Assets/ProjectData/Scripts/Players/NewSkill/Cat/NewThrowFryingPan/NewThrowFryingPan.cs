@@ -6,32 +6,9 @@ using UnityEngine;
 // DefaultNewSkill을 상속받습니다.
 public class NewThrowFryingPan : DefaultNewSkill
 {
-    public OneKeyInput oneKeyInput;
-
-    public ActiveSkillCondition ac;
-
-    // 버프 주기
-
-    // 해당 스킬의 속성을 결정합니다.
-    override protected void Awake()
-    {
-        ac = new ActiveSkillCondition();
-
-        base.Awake();
-
-        //키 인식 방법을 적용합니다.
-        InputKey = oneKeyInput;
-
-        //스킬 정보들 중 투사체 정보만 사용합니다.
-        skillState.SetSkillRangeType(SkillState.SkillType.Projectile);
-
-        // 스킬 조건 클래스를 등록
-        skillCondition = ac;
-
-        //스킬 조건에 필요한 정보를 등록합니다.
-        skillCondition.SettingState(photonView, InputKey, ManaCost, manaPoint, coolDown);
-        
-    }
+    // 스킬의 옵션이 결정됩니다.
+    // 스킬에서 사용하지 않는 옵션은 조정해봤자 의미 없습니다.
+    public ProjectileState projectileState;
 
 
     // 재정의
@@ -53,8 +30,18 @@ public class NewThrowFryingPan : DefaultNewSkill
     protected override void UseSkill()
     {
         animator.SetTrigger("ThrowFryingPanTrigger");
+        photonView.RPC("RPCThrowFryingPanTrigger",PhotonTargets.Others);
     }
 
+
+    // RPC입니다.
+    [PunRPC]
+    void RPCThrowFryingPanTrigger()
+    {
+        animator.SetTrigger("ThrowFryingPanTrigger");
+    }
+
+    // 애니메이션 이벤트입니다.
     void CreateFryingPan()
     {
 
@@ -65,10 +52,15 @@ public class NewThrowFryingPan : DefaultNewSkill
 
         BulletDefaultPlace.y += CharacterHeight;
 
-        GameObject CharmBullet = Instantiate(skillState.ProjectileObject, transform.position + (BulletDefaultPlace), Quaternion.identity);
+        GameObject CharmBullet = Instantiate(projectileState.ProjectileObject, transform.position + (BulletDefaultPlace), Quaternion.identity);
 
-        SetObjectData(CharmBullet);
+        projectileState.SetData(CharmBullet,gameObject);
+
+        // 발사체에 디버프를 넣습니다.
+        AddDebuffComponent(CharmBullet);
     }
+
+
 
     //[PunRPC]
 

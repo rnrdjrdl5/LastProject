@@ -5,6 +5,12 @@ using UnityEngine;
 
 public class TestPhotonManager : Photon.PunBehaviour
 {
+    public GameObject PlayerSpawnLocation;
+
+    public GameObject InteractionPrefab;
+    public GameObject InteractionObject;
+
+    private PhotonView pv;
 
     private bool isJoinRoom = false;
 
@@ -16,6 +22,8 @@ public class TestPhotonManager : Photon.PunBehaviour
     private void Awake()
     {
         PhotonNetwork.ConnectUsingSettings(Version);
+
+        pv = gameObject.GetComponent<PhotonView>();
     }
 
     public override void OnJoinedLobby()
@@ -31,6 +39,11 @@ public class TestPhotonManager : Photon.PunBehaviour
     {
         isJoinRoom = true;
         Debug.Log("방접속완료");
+
+        if (PhotonNetwork.isMasterClient)
+        {
+            SpawnObject();
+        }
     }
 
     // Use this for initialization
@@ -44,13 +57,12 @@ public class TestPhotonManager : Photon.PunBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Z))
             {
-                Debug.Log("a");
                 if (CurrentPlayer != null)
                 {
                     PhotonNetwork.Destroy(CurrentPlayer);
                 }
                 //CurrentPlayer = PhotonNetwork.Instantiate("12Rion", Vector3.one * 3, Quaternion.identity, 0);
-                CurrentPlayer = PhotonNetwork.Instantiate("CatBoss", Vector3.one * 3, Quaternion.identity, 0);
+                CurrentPlayer = PhotonNetwork.Instantiate("CatBoss", PlayerSpawnLocation.transform.position, Quaternion.identity, 0);
             }
 
 
@@ -62,11 +74,38 @@ public class TestPhotonManager : Photon.PunBehaviour
                 {
                     PhotonNetwork.Destroy(CurrentPlayer);
                 }
-                CurrentPlayer = PhotonNetwork.Instantiate("12Box", Vector3.one * 3, Quaternion.identity, 0);
+                CurrentPlayer = PhotonNetwork.Instantiate("12Box", PlayerSpawnLocation.transform.position, Quaternion.identity, 0);
+            }
+
+
+
+            if (PhotonNetwork.isMasterClient)
+            {
+                if (Input.GetKeyUp(KeyCode.End))
+                {
+                    ResetInteraction();
+                }
             }
         }
         
 
 
 	}
+
+
+    void ResetInteraction()
+    {
+        DestroyObject();    
+        SpawnObject();
+    }
+
+    void SpawnObject()
+    {
+        InteractionObject = PhotonNetwork.Instantiate("Interactions", Vector3.zero, Quaternion.identity, 0);
+    }
+
+    void DestroyObject()
+    {
+        PhotonNetwork.Destroy(InteractionObject);
+    }
 }

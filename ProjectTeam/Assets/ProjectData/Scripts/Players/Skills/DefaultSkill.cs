@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DefaultSkill : Photon.PunBehaviour {
+public class DefaultSkill : Photon.PunBehaviour{
 
     public enum EnumSkillKey { LEFTMOUSE , RIGHTMOUSE , LEFTSHIFT , RIGHTSHIFT , SPACE , Q , E ,
         LEFTSHIFTUP , LEFTSHIFTDOWN , PUSINGLEFTSHIFT}

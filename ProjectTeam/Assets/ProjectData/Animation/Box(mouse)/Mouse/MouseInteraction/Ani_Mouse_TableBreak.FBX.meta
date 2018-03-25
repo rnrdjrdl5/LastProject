@@ -164,6 +164,14 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
+      - time: 0.73775214
+        functionName: StartAcion
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 3f0680b706193254f97aec3f125439c2,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       - time: 0.97619045
         functionName: OffTableInteraction
         data: 
@@ -172,8 +180,8 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.73489934
-        functionName: SetPhysics
+      - time: 0.7915568
+        functionName: EndAction
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 3f0680b706193254f97aec3f125439c2,
           type: 3}

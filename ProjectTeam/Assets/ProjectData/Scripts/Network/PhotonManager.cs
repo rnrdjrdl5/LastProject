@@ -15,7 +15,7 @@ public class PhotonManager : Photon.PunBehaviour {
 
 
 
-    public string Version = "ffffqqqq";
+    public string Version = "ffffqqqqqqq";
 
     public bool isGameStart = false;
 
@@ -418,7 +418,7 @@ public class PhotonManager : Photon.PunBehaviour {
         if (PhotonNetwork.player.CustomProperties["Boss"] as string == "True")
         {
 
-            PlayerObject = PhotonNetwork.Instantiate("12Rion", new Vector3(Random.Range(-30, 25), 0, Random.Range(-30, 25)), Quaternion.identity, 0);
+            PlayerObject = PhotonNetwork.Instantiate("CatBoss", new Vector3(Random.Range(-30, 25), 0, Random.Range(-30, 25)), Quaternion.identity, 0);
             PhotonNetwork.player.SetTeam(PunTeams.Team.red);
 
             photonView.RPC("IncreaseBossCount", PhotonTargets.All, 1);

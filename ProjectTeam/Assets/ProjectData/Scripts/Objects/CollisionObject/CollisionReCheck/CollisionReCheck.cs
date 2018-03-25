@@ -23,7 +23,6 @@ public class CollisionReCheck : MonoBehaviour {
 		if(playerReCheckTime>0)
         {
             playerReCheckTime -= Time.deltaTime;
-
             if(playerReCheckTime <=0)
             {
                 Destroy(this);

@@ -9,10 +9,11 @@ public class DefaultInput{
     public enum EnumSkillKey
     {
         LEFTMOUSE, RIGHTMOUSE, LEFTSHIFT, RIGHTSHIFT, SPACE, Q, E,
-        LEFTSHIFTUP, LEFTSHIFTDOWN, PUSINGLEFTSHIFT
+        LEFTSHIFTUP, LEFTSHIFTDOWN, PUSINGLEFTSHIFT , NOTPUSHINGLEFTSHIFT
     }
 
     public EnumSkillKey SkillKeyType;
+
 
     // 키 코드가 현재 변수값이랑 같은지 판단.
     protected bool EqualSkillKeyType()
@@ -53,6 +54,10 @@ public class DefaultInput{
             case EnumSkillKey.PUSINGLEFTSHIFT:
                 ReturnType = Input.GetKey(KeyCode.LeftShift);
                 break;
+            case EnumSkillKey.NOTPUSHINGLEFTSHIFT:
+                ReturnType = !Input.GetKey(KeyCode.LeftShift);
+                break;
+
         }
         return ReturnType;
     }
@@ -60,6 +65,6 @@ public class DefaultInput{
     //키를 눌렀는지 판단합니다.
     virtual public bool IsUseKey()
     {
-        return false;
+        return EqualSkillKeyType();
     }
 }

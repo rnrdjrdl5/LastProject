@@ -53,19 +53,29 @@ public class BaseCollision : Photon.PunBehaviour {
 
     private bool ReCheck(Collider other)
     {
+            
+        // 충돌체의 recheck를 모두 받아옵니다.
             CollisionReCheck[] CRCs = other.gameObject.GetComponents<CollisionReCheck>();
 
+         // 루프를 돌립니다.
             foreach (CollisionReCheck crc in CRCs)
             {
+
+            // 충돌체의 플레이어 오브젝트와 이 오브젝트와 동일하다면
                 if (crc.GetPlayerObject() == gameObject)
                 {
-                //Debug.Log("충돌체크 대기중.");
+                // 이미 있다.
+                Debug.Log("충돌체크 대기중.");
                     return true;
                 }
             }
+
+            // 이후에 없으니까, 리체크 했다는 의미로 recheck등록해준다.
           CollisionReCheck CRC = other.gameObject.AddComponent<CollisionReCheck>();
 
+        // 등록한 리체크의 정보를 등록합니다.
         CRC.SetPlayerObject(gameObject);
+        // 시간도 설정합니다.
         CRC.SetPlayerReCheckTime(other.gameObject.GetComponent<CollisionObject>().GetCollisionReCheckTime());
 
         Debug.Log("충돌체크 등록성공");
