@@ -70,6 +70,9 @@ public class FindObject : MonoBehaviour {
         PTL = new PointToLocation();
         PTL.SetPlayerCamera(GameObject.Find("PlayerCamera"));
         InGameCanvas = GameObject.Find("InGameCanvas");
+
+        PTL.SetcameraScript(PTL.GetPlayerCamera().GetComponent<PlayerCamera>());
+        
     }
 
 
@@ -248,6 +251,7 @@ public class FindObject : MonoBehaviour {
             // 상호작용이 사용 가능한가?
             if (isUseFindObject)
             {
+
                 // 사용 가능하면 레이를 쏴서 물체를 찾습니다.
                 Interaction = PTL.FindObject(gameObject, MaxLocationDistnace);
 
@@ -284,6 +288,18 @@ public class FindObject : MonoBehaviour {
                     ChooseMaterialColor(Interaction);
 
 
+                    // 물체를 발견했을 때, 이미 지정했던 오브젝트가 있는 경우 ,
+                     // 기존에 물체를 발견한 적이 있다면.
+                    if(Interaction != ObjectTarget && 
+                        ObjectTarget != null )
+                    {
+
+                        // 기존 오브젝트 색을 돌린다.
+                        ResetMaterialColor(ObjectTarget);
+
+                    }
+
+
                     // 레이캐스트로 맞은 상호작용 대상을 ObjectTarget에 저장합니다.
                     ObjectTarget = Interaction;
                 }
@@ -297,6 +313,9 @@ public class FindObject : MonoBehaviour {
                 // 타겟한상태 + 발견하지 못했다면.
                 // 사용 한 곳 : 1 갑자기 다른 곳으로 커서를 돌릴때 ( max , melee 상황에서 다른 곳으로 돌릴 때 .)
                 //              2 거리가 멀어질 때  ( max 이후로 멀어지는 경우 ) 
+
+
+
                 if (Interaction == null)
                 {
                     // 오브젝트 색상을 원래대로 돌려준다.

@@ -26,6 +26,11 @@ public class PointToLocation{
     public GameObject GetPlayerCamera() { return PlayerCamera; }
     public void SetPlayerCamera(GameObject go) { PlayerCamera = go; }
 
+    private PlayerCamera cameraScript;
+
+    public PlayerCamera GetcameraScript() { return cameraScript; }
+    public void SetcameraScript(PlayerCamera ps) { cameraScript = ps; }
+
 
 
     public Vector3 GetPointToLocation(GameObject UseObject , GameObject PlayerCamera , float MaxLocationDistance)
@@ -70,9 +75,12 @@ public class PointToLocation{
 
         RaycastHit hit;
 
-        if (Physics.Raycast(PlayerCamera.transform.position, MouseVector3, out hit, MaxLocationDistance, 1 << LayerMask.NameToLayer("MainObject")))
+        //CameraDistanceTriangle
+
+        if (Physics.Raycast(PlayerCamera.transform.position + MouseVector3.normalized * cameraScript.CameraDistanceTriangle, MouseVector3, out hit, MaxLocationDistance, 1 << LayerMask.NameToLayer("MainObject")))
         {
             return hit.collider.gameObject;
+            
         }
         else
             return null;

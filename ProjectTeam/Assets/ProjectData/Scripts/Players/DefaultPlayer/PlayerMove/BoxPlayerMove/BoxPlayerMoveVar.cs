@@ -4,7 +4,9 @@ using UnityEngine;
 
 public partial class BoxPlayerMove
 {
-    
+
+    private Animator animator;
+
     private Vector3 RecvPosition;
     private Quaternion RecvRotation;
 
@@ -26,22 +28,36 @@ public partial class BoxPlayerMove
 
     // 저장용 스피드.
     private float OriginalPlayerSpeed = 0.0f;
-    
+
     public float GetOriginalPlayerSpeed() { return OriginalPlayerSpeed; }
     public void SetOriginalPlayerSpeed(float SPS) { OriginalPlayerSpeed = SPS; }
 
 
     float gravity = 20.0f;
 
-    // idlerun 애니메이션을 위한변수입니다. 
-    float HSpeed;
-    float VSpeed;
 
 
     public PlayerCamera PlayerCamera;
 
 
+    // 애니메이션의 배수값입니다. 
+    public float SpeedMulti;
 
+
+
+    public enum EnumSpeedLocation { PLUS, NONE, MINUS};
+    EnumSpeedLocation SpeedLocationTypeX = EnumSpeedLocation.NONE;
+    EnumSpeedLocation SpeedLocationTypeY = EnumSpeedLocation.NONE;
+
+    public enum EnumSpeedMulti { MULTI , NONE};
+    EnumSpeedMulti SpeedMultiTypeX = EnumSpeedMulti.NONE;
+    EnumSpeedMulti SpeedMultiTypeY = EnumSpeedMulti.NONE;
+
+    private float HSpeed = 0;
+    private float VSpeed = 0;
+
+    // 애니메이션 재생 배율.
+    public float AniSpeedUp = 2.0f;
 
 
 

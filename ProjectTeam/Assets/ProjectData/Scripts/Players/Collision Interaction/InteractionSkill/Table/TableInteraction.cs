@@ -25,6 +25,12 @@ public class TableInteraction : DefaultInteraction
         animator.SetInteger("InteractionType", (int)InteractiveKeyType);
     }
     
+    // 상호작용 넘길 때 위치 알아내기위해서 사용.
+    [PunRPC]
+    void RPCCameraPosition(Vector3 cameraOriginal)
+    {       
+        defaultPushObject.SetOriginalCameraPosition(cameraOriginal);
+    }
 
 
     void OffTableInteraction()

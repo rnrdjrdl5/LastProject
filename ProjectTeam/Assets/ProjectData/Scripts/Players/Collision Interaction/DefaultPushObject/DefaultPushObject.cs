@@ -41,19 +41,17 @@ public class DefaultPushObject
     public void SetPlayerObject(GameObject playerObject) { PlayerObject = playerObject; }
 
 
-    // 카메라입니다.
-    private GameObject PlayerCamera;
 
-    public GameObject GetPlayerCamera() { return PlayerCamera; }
-    public void SetPlayerCamera(GameObject playerCamera) { PlayerCamera = playerCamera; }
+    // 카메라 오리지널 위치입니다.
+    private Vector3 OriginalCameraPosition;
 
-
+    public Vector3 GetOriginalCameraPosition() { return OriginalCameraPosition; }
+    public void SetOriginalCameraPosition(Vector3 v3) { OriginalCameraPosition = v3; }
 
     // 플레이어 정보를 새로 적용합니다.
-    public void InitData(GameObject playerObject, GameObject playerCamera)
+    public void InitData(GameObject playerObject)
     {
         PlayerObject = playerObject;
-        PlayerCamera = playerCamera;
     }
 
     public void InitInterData(GameObject interObject)

@@ -51,11 +51,10 @@ public partial class DefaultInteraction
     //중요, 해당 스크립트를 상속받아서 사용하는 객체들을 밑의 RPC를 반드시 구현해야합니다.
     protected void UseAnimation()
     {
-        
-
         animator.SetInteger("InteractionType", (int)InteractiveKeyType);
 
         pv.RPC("RPCInteraction", PhotonTargets.Others);
+
     }
 
     virtual protected void BaseTimeBarScript()
@@ -85,7 +84,7 @@ public partial class DefaultInteraction
 
     protected void InitPushObject()
     {
-        defaultPushObject.InitData(gameObject, PlayerCamera.gameObject);
+        defaultPushObject.InitData(gameObject);
 
         defaultPushObject.SetXZPower(XZPower);
         defaultPushObject.SetYPower(YPower);

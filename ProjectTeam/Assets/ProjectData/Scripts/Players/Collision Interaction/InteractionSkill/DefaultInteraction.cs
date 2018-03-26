@@ -77,8 +77,11 @@ public partial class DefaultInteraction : Photon.PunBehaviour {
                         // 애니메이션 재생
                         UseAnimation();
 
+                        // 카메라의 기존 위치를 Push용 클래스에 보내줍니다.
+                        defaultPushObject.SetOriginalCameraPosition(PlayerCamera.transform.position);
 
-
+                        // 다른 클라이언트에 정보를 보냅니다.
+                        pv.RPC("RPCCameraPosition", PhotonTargets.Others, PlayerCamera.transform.position);
                         // 해제조건
                         //    1. 애니메이션이 끝날 때
                         //    2. 플레이어가 이동했을 때

@@ -13,8 +13,9 @@ public class InteractiveState : MonoBehaviour {
     public DefaultInteraction.EnumInteractiveKey InterObjectType;
    
 
-
+    
     // 사용자가 이미 한번 뒤집었는지 판단하는 용도.
+    // 한번 뒤집었다면 반투명으로 보여줍니다.
     private bool CanUseObject;
 
     public bool GetCanUseObject()

@@ -25,7 +25,15 @@ public class HandInterCollision : DefaultPartCollisionCondition
                 // 공격이 한번도 사용되지 않았다면
                 if (GetisCanInterAction() == true && isUseInterAction == false)
                 {
+                    // 해당 오브젝트가 이미 사용되었다고 설정합니다.
                     interactiveState.SetCanUseObject(false);
+
+                    // 레이어를 변경함으로써 다음번부터 충돌체크를 하지 않습니다.
+                    other.gameObject.layer = LayerMask.NameToLayer("NoCollisionPlayer");
+
+                    //other.gameObject.GetComponent<MeshRenderer>().material.color = new Color(1.0f, 1.0f, 1.0f, 0.3f);
+
+
                     // 공격을 시작합니다.
                     GetDefaultInteraction().StartInterAction(other.gameObject);
 

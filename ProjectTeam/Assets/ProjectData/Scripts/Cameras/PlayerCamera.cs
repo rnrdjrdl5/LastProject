@@ -43,7 +43,7 @@ public class PlayerCamera : MonoBehaviour {
     
 
     // 카메라와 플레이어가 떨어져 있는 거리
-    private float CameraDistanceTriangle = 2.4f;
+    public float CameraDistanceTriangle = 3.5f;
 
     // 최대 , 최소 떨어지는 거리
     public float MinCameraDistanceTriangle = 3.0f;
@@ -71,6 +71,8 @@ public class PlayerCamera : MonoBehaviour {
     public float GetCameraRadX() { return CameraRadX; }
     public void SetCameraRadX(float SCR) { CameraRadX = SCR; }
 
+    // 자연스럽게 흘러가는 시간.
+    public float NaturePlayeCameraRotation;
     // Use this for initialization
 
     private void Awake()
@@ -150,7 +152,7 @@ public class PlayerCamera : MonoBehaviour {
 
             // 플레이어의 y축 회전을 받아옴.
              // 보간값을 맞춰서 조절할 예정
-            float LerpAngle = Mathf.LerpAngle(transform.eulerAngles.y, PlayerObject.transform.eulerAngles.y, 1.0f);
+            float LerpAngle = Mathf.LerpAngle(transform.eulerAngles.y, PlayerObject.transform.eulerAngles.y, NaturePlayeCameraRotation * Time.deltaTime);
 
             
             Quaternion QuatTypeLerpAngle = Quaternion.Euler(0, LerpAngle, 0);

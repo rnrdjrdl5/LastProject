@@ -14,7 +14,7 @@ public class TestPhotonManager : Photon.PunBehaviour
 
     private bool isJoinRoom = false;
 
-    string Version = "test1";
+    string Version = "tes2t1";
 
     public GameObject CurrentPlayer;
 
@@ -42,7 +42,7 @@ public class TestPhotonManager : Photon.PunBehaviour
 
         if (PhotonNetwork.isMasterClient)
         {
-            SpawnObject();
+          //  SpawnObject();
         }
     }
 

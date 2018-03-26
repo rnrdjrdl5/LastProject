@@ -80,5 +80,7 @@ public partial class DefaultInteraction
     // 상호작용 쓸 때 어느부위에서 일어나는 지 적용하는 스크립트. 손이면 손, 발이면 발.
     public DefaultPartCollisionCondition[] defaultPartCollisionConditions;
 
+
+
 }
 

@@ -19,9 +19,11 @@ public partial class BoxPlayerMove : Photon.PunBehaviour, IPunObservable
     void Update()
     {
 
+        PlayerMoveAnimation();
+
         PlayerTransform();
 
-        PlayerMoveAnimation();
+        //PlayerMoveAnimation();
     }
 
     void IPunObservable.OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

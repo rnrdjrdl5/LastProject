@@ -14,10 +14,10 @@ public class TablePushObject : DefaultPushObject
 
             if (pt != null)
             {
-                Vector3 CameraPosition = GetPlayerCamera().transform.position;
+
                 Vector3 PlayerPosition = GetPlayerObject().transform.position;
 
-                Vector3 v3 = (PlayerPosition - CameraPosition).normalized;
+                Vector3 v3 = (PlayerPosition - GetOriginalCameraPosition()).normalized;
 
 
                 v3.y = YPower;
