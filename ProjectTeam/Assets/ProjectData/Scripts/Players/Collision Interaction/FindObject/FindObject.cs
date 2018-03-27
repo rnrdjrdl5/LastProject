@@ -249,6 +249,8 @@ public class FindObject : MonoBehaviour {
 
 
             // 상호작용이 사용 가능한가?
+            // 스킬에서 해제하고 
+            // 스킬을 빠져나가면 다시 true가 된다.
             if (isUseFindObject)
             {
 
@@ -275,6 +277,8 @@ public class FindObject : MonoBehaviour {
 
 
                     //스킬에서 사용하는 조건문을 설정한다.
+                    //일정 거리 내에 있다면 IsInteraction을 true로 처리해서
+                    // 스킬을 사용 가능하도록 만듭니다.
                     ChooseIsInteraction(Interaction);
 
 
@@ -375,7 +379,6 @@ public class FindObject : MonoBehaviour {
         // 상호작용이
         IsInteraction = false;
 
-        IsInteraction = false;
     }
 
     

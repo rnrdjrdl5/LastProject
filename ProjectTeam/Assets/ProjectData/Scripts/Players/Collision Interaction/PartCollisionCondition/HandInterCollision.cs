@@ -26,7 +26,7 @@ public class HandInterCollision : DefaultPartCollisionCondition
                 if (GetisCanInterAction() == true && isUseInterAction == false)
                 {
                     // 해당 오브젝트가 이미 사용되었다고 설정합니다.
-                    interactiveState.SetCanUseObject(false);
+                 //   interactiveState.SetCanUseObject(false);
 
                     // 레이어를 변경함으로써 다음번부터 충돌체크를 하지 않습니다.
                     other.gameObject.layer = LayerMask.NameToLayer("NoCollisionPlayer");
@@ -49,7 +49,7 @@ public class HandInterCollision : DefaultPartCollisionCondition
                     {
                         interactiveState.CallOffCanUseObject();
                     }
-
+                    
                 }
             }
         }

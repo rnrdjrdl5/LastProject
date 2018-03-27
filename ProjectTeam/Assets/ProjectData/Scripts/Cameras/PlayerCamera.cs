@@ -49,8 +49,6 @@ public class PlayerCamera : MonoBehaviour {
     public float MinCameraDistanceTriangle = 3.0f;
     public float MaxCameraDistanceTriangle = 10.0f;
 
-    // 카메라 휠의 이동속도
-    public float CameraWheelSpeed = 30000.0f;
 
     // 카메라가 땅에서 떨어져 있는 최소 거리
     public float CameraHeightFromFloor = 1.0f;
@@ -63,6 +61,7 @@ public class PlayerCamera : MonoBehaviour {
     /********* 추가 x회전 ***********/
 
     // 좌우 회전 속도
+    // 일반 follow에서는 플레이어의 회전에 영향
     public float CameraRightLeftSpeed = 50.0f;
 
     // 카메라의 좌우 각도
@@ -139,8 +138,6 @@ public class PlayerCamera : MonoBehaviour {
     {
         if (isPlayerSpawn)
         {
-            // 휠에 따라서 카메라의 거리를 조절함.
-            CameraDistanceTriangle = CameraDistanceTriangle - Time.deltaTime * Input.GetAxis("Mouse ScrollWheel") * CameraWheelSpeed;
 
             // 최대 거리 , 최소거리 유지
             if (CameraDistanceTriangle < MinCameraDistanceTriangle) CameraDistanceTriangle = MinCameraDistanceTriangle;
@@ -171,8 +168,6 @@ public class PlayerCamera : MonoBehaviour {
     // 플레이어를 따라가나, 시점은 마음대로 변경이 가능합니다.
     void FreeCamera()
     {
-        // 휠에 따라서 카메라의 거리를 조절함.
-        CameraDistanceTriangle = CameraDistanceTriangle - Time.deltaTime * Input.GetAxis("Mouse ScrollWheel") * CameraWheelSpeed;
 
         // 최대 거리 , 최소거리 유지
         if (CameraDistanceTriangle < MinCameraDistanceTriangle) CameraDistanceTriangle = MinCameraDistanceTriangle;

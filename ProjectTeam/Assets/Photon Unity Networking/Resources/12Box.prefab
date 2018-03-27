@@ -1359,6 +1359,9 @@ MonoBehaviour:
   - Type: 4
     SynchronizeType: 0
     Name: StunOnOff
+  - Type: 1
+    SynchronizeType: 0
+    Name: SpeedRun
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0

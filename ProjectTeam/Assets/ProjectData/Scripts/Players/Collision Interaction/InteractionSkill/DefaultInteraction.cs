@@ -65,6 +65,8 @@ public partial class DefaultInteraction : Photon.PunBehaviour {
 
                         //상호작용 탐지 스크립트 해제, 상호작용 ui 삭제
                         FindObjectScript.SetisUseFindObject(false);
+
+                        // 상호작용의  상태를 처음으로 돌려놓습니다.
                         FindObjectScript.BackDefault();
 
                         //카메라 설정 변경

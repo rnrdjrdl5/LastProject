@@ -42,7 +42,7 @@ public class TestPhotonManager : Photon.PunBehaviour
 
         if (PhotonNetwork.isMasterClient)
         {
-          //  SpawnObject();
+           // SpawnObject();
         }
     }
 

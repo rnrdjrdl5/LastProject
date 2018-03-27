@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InteractiveState : MonoBehaviour {
+public class InteractiveState : Photon.MonoBehaviour , IPunObservable {
 
     [Header(" - 상호작용 시전시간")]
     [Tooltip(" - 상호작용이 완료되기 까지의 시간입니다.(게이지에 사용)")]
@@ -45,8 +45,14 @@ public class InteractiveState : MonoBehaviour {
 
     public void CallOffCanUseObject()
     {
-        
-        gameObject.GetComponent<PhotonView>().RPC("RPCOffCanUseObject", PhotonTargets.All);
+        if (PhotonNetwork.isMasterClient)
+        {
+            CanUseObject = false;
+        }
+        else
+        {
+            gameObject.GetComponent<PhotonView>().RPC("RPCOffCanUseObject", PhotonTargets.MasterClient);
+        }
     }
 
     // Use this for initialization
@@ -56,11 +62,24 @@ public class InteractiveState : MonoBehaviour {
         CanUseObject = true;
     }
     void Start () {
-		
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+
+    }
+
+    void IPunObservable.OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+            if (stream.isWriting)
+            {
+                stream.SendNext(CanUseObject);
+            }
+
+            if(stream.isReading)
+            {   
+                CanUseObject = (bool)stream.ReceiveNext();
+            }
+    }
 }

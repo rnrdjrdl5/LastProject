@@ -31,6 +31,7 @@ public class TablePushObject : DefaultPushObject
 
                     GetInteractionObject().gameObject.GetComponent<Rigidbody>().AddForce(v3, ForceMode.Impulse);
 
+                    GetInteractionObject().gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
 
                     Quaternion QuatY = Quaternion.Euler(0.0f, 90.0f, 0.0f);
 
