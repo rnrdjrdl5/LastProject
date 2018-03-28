@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class PlayerCamera : MonoBehaviour {
 
+    public float WallCrashZoom;
+
+
+
+    // 1. 카메라 레이캐스트를 쓰기 위해서
+    private PointToLocation PTL;
+
     // 카메라 뷰의 설정.
     public enum EnumCameraMode { FOLLOW , FREE };
 
@@ -78,6 +85,9 @@ public class PlayerCamera : MonoBehaviour {
     {
         // 기본 설정.
         CameraModeType = EnumCameraMode.FOLLOW;
+        PTL = new PointToLocation();
+        PTL.SetPlayerCamera(gameObject);
+        PTL.SetcameraScript(this);
     }
 
     void Start () {
@@ -114,9 +124,13 @@ public class PlayerCamera : MonoBehaviour {
 
     private void LateUpdate()
     {
+        // 1. 초기 카메라 위치를 잡습니다.
         // 플레이어 생성 시
         if (isPlayerSpawn)
         {
+
+            
+
             // 카메라 상태에 따라 카메라를 이동시킨다.
             if (CameraModeType == PlayerCamera.EnumCameraMode.FOLLOW)
             {
@@ -129,6 +143,10 @@ public class PlayerCamera : MonoBehaviour {
                 FreeCamera();
             }
         }
+
+        
+
+
 
     }
 
@@ -157,11 +175,14 @@ public class PlayerCamera : MonoBehaviour {
             // 카메라의 위치를 구한 x축 , y축과 y축회전을 이용해서 위치를 선정함.
             transform.position = PlayerObject.transform.position - (QuatTypeLerpAngle * Vector3.forward * CameraPlayerDistanceX) + (Vector3.up * CameraPlayerDistanceY);
             
+
             // 카메라가 Player를 보도록 함
             transform.LookAt(PlayerObject.transform);
 
-            // 카메라가 기본적으로 가지고 있어야 할 y축 높이를 더해줌
-            transform.position = new Vector3(transform.position.x, transform.position.y + CameraHeightFromFloor, transform.position.z);
+            // 카메라가 기본적으로 가지고 있어야 할 y축 높이를 더해줌  
+                transform.position = new Vector3(transform.position.x, transform.position.y + CameraHeightFromFloor, transform.position.z);
+
+            transform.position = PTL.FindWall(PlayerObject, WallCrashZoom);
         }
     }
 

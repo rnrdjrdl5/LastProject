@@ -78,5 +78,23 @@ public class TableInteraction : DefaultInteraction
         InitEndAction();
     }
 
+    protected override void Update()
+    {
+        base.Update();
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            animator.SetInteger("InteractionType", 2);
+        }
+
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            animator.SetInteger("InteractionType", 3);
+        }
+
+        else if(Input.GetKey(KeyCode.N))
+        {
+            animator.SetInteger("InteractionType", 0);
+        }
+    }
 
 }

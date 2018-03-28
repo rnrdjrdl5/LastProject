@@ -38,10 +38,10 @@ public class EndInterObject : MonoBehaviour
                 // 해당 스크립트를 받아옵니다.
                 InteractiveState IS = other.gameObject.GetComponent<InteractiveState>();
 
+
                 // 사용 불가능하면
                 if (!IS.GetCanUseObject())
                 {
-
                     // 리스트에 없다면 
                     if (!HaveInteraction(IS))
                     {
@@ -58,6 +58,8 @@ public class EndInterObject : MonoBehaviour
                         SI.InterScript = IS;
                         SI.OriginalMaterial = mt;
                         SI.meshRenderer = mr;
+
+                        Debug.Log("@1422151'");
 
 
                         // 리스트를 추가합니다.
@@ -82,10 +84,16 @@ public class EndInterObject : MonoBehaviour
                 if ((Inters[i].InterScript.transform.position - transform.position).magnitude > FindRad)
                 {
                     Inters[i].meshRenderer.material = Inters[i].OriginalMaterial;
+                    Debug.Log("2131'");
                     Inters.Remove(Inters[i]);
                 }
             }
         }
+
+       /* for (int i = Inters.Count - 1; i >= 0; i--)
+        {
+            Debug.Log(Inters[i]);
+        }*/
     }
 
     bool HaveInteraction(InteractiveState IS)

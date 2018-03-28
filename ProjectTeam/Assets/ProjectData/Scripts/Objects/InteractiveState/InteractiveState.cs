@@ -16,7 +16,7 @@ public class InteractiveState : Photon.MonoBehaviour , IPunObservable {
     
     // 사용자가 이미 한번 뒤집었는지 판단하는 용도.
     // 한번 뒤집었다면 반투명으로 보여줍니다.
-    private bool CanUseObject;
+    public bool CanUseObject;
 
     public bool GetCanUseObject()
     {
@@ -48,10 +48,12 @@ public class InteractiveState : Photon.MonoBehaviour , IPunObservable {
         if (PhotonNetwork.isMasterClient)
         {
             CanUseObject = false;
+            Debug.Log("123");
         }
         else
         {
             gameObject.GetComponent<PhotonView>().RPC("RPCOffCanUseObject", PhotonTargets.MasterClient);
+            Debug.Log("456");
         }
     }
 

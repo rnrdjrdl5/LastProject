@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 55e10a70684f683409ec14fb6c12cb1f
-timeCreated: 1521451095
+guid: a2af5f3f0a0c2304f934bad538fca533
+timeCreated: 1522218848
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
@@ -108,7 +108,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: 02 - Default
-    second: {fileID: 2100000, guid: c1fc95623828d8147beef62d807b5f23, type: 2}
+    second: {fileID: 2100000, guid: 3eee28d4f1e5b434c8feb24783ed982e, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
@@ -164,7 +164,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.73775214
+      - time: 0.7327189
         functionName: StartAcion
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 3f0680b706193254f97aec3f125439c2,
@@ -172,7 +172,7 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.97619045
+      - time: 0.961039
         functionName: OffTableInteraction
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 3f0680b706193254f97aec3f125439c2,
@@ -180,7 +180,7 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.7915568
+      - time: 0.864564
         functionName: EndAction
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 3f0680b706193254f97aec3f125439c2,

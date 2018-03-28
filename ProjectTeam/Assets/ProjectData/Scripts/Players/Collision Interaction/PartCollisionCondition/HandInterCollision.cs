@@ -20,7 +20,6 @@ public class HandInterCollision : DefaultPartCollisionCondition
 
             if (interactiveState.InterObjectType == InterObjectType)
             {
-                Debug.Log("2");
                 // 만약 애니메이션 기간 중 특정 구간에서 공격이 가능하고 &&
                 // 공격이 한번도 사용되지 않았다면
                 if (GetisCanInterAction() == true && isUseInterAction == false)
@@ -47,6 +46,7 @@ public class HandInterCollision : DefaultPartCollisionCondition
                     // 이 오브젝트는 공격이 이미 됐다고 알립니다.
                     if(GetDefaultInteraction().photonView.isMine)
                     {
+                        Debug.Log("2151");
                         interactiveState.CallOffCanUseObject();
                     }
                     

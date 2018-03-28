@@ -62,7 +62,8 @@ public class TestPhotonManager : Photon.PunBehaviour
                     PhotonNetwork.Destroy(CurrentPlayer);
                 }
                 //CurrentPlayer = PhotonNetwork.Instantiate("12Rion", Vector3.one * 3, Quaternion.identity, 0);
-                CurrentPlayer = PhotonNetwork.Instantiate("CatBoss", PlayerSpawnLocation.transform.position, Quaternion.identity, 0);
+                //CurrentPlayer = PhotonNetwork.Instantiate("CatBoss", PlayerSpawnLocation.transform.position, Quaternion.identity, 0);
+                CurrentPlayer = PhotonNetwork.Instantiate("NewCatBoss", PlayerSpawnLocation.transform.position, Quaternion.identity, 0);
             }
 
 
@@ -74,7 +75,9 @@ public class TestPhotonManager : Photon.PunBehaviour
                 {
                     PhotonNetwork.Destroy(CurrentPlayer);
                 }
-                CurrentPlayer = PhotonNetwork.Instantiate("12Box", PlayerSpawnLocation.transform.position, Quaternion.identity, 0);
+
+                //CurrentPlayer = PhotonNetwork.Instantiate("12Box", PlayerSpawnLocation.transform.position, Quaternion.identity, 0);
+                CurrentPlayer = PhotonNetwork.Instantiate("MouseRunner", PlayerSpawnLocation.transform.position, Quaternion.identity, 0);
             }
 
 
