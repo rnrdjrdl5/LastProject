@@ -418,7 +418,7 @@ public class PhotonManager : Photon.PunBehaviour {
         if (PhotonNetwork.player.CustomProperties["Boss"] as string == "True")
         {
 
-            PlayerObject = PhotonNetwork.Instantiate("CatBoss", new Vector3(Random.Range(-30, 25), 0, Random.Range(-30, 25)), Quaternion.identity, 0);
+            PlayerObject = PhotonNetwork.Instantiate("NewCatBoss", new Vector3(Random.Range(-30, 25), 0, Random.Range(-30, 25)), Quaternion.identity, 0);
             PhotonNetwork.player.SetTeam(PunTeams.Team.red);
 
             photonView.RPC("IncreaseBossCount", PhotonTargets.All, 1);
@@ -426,7 +426,7 @@ public class PhotonManager : Photon.PunBehaviour {
 
         else if(PhotonNetwork.player.CustomProperties["Boss"] as string == "False")
         {
-            PlayerObject = PhotonNetwork.Instantiate("12Box", new Vector3(Random.Range(-30, 25), 0, Random.Range(-30, 25)), Quaternion.identity, 0);
+            PlayerObject = PhotonNetwork.Instantiate("MouseRunner", new Vector3(Random.Range(-30, 25), 0, Random.Range(-30, 25)), Quaternion.identity, 0);
             PhotonNetwork.player.SetTeam(PunTeams.Team.blue);
 
             photonView.RPC("IncreaseTeamsCount", PhotonTargets.All, 1);

@@ -1074,6 +1074,7 @@ GameObject:
   - component: {fileID: 114081009861296032}
   - component: {fileID: 114434883347523360}
   - component: {fileID: 114848141147648566}
+  - component: {fileID: 114130693748871330}
   m_Layer: 12
   m_Name: MouseRunner
   m_TagString: Teams
@@ -1931,7 +1932,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1907552380474240}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -22.27217, y: 0, z: -5.0630155}
+  m_LocalPosition: {x: -28.884, y: 0, z: 6.384}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4343435972737720}
@@ -2271,7 +2272,13 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
-  m_WarningMessage: 
+  m_WarningMessage: "\nBinding warning: Some generic clip(s) use transforms that are
+    already bound by a Humanoid avatar. These transforms can only be changed by Humanoid
+    clips.\n\tTransform 'Bip001 R Clavicle'\n\tTransform 'Bip001 R UpperArm'\n\tTransform
+    'Bip001 Spine1'\n\tTransform 'Bip001 R Finger11'\n\tTransform 'Bip001 L UpperArm'\n\tTransform
+    'Bip001 R Foot'\n\tTransform 'Bip001 L Clavicle'\n\tTransform 'Bip001 L Finger11'\n\tTransform
+    'Bip001 L Finger1'\n\tTransform 'Bip001 L Hand'\n\tand more ...\n\tFrom animation
+    clip 'Take 001'\n\tFrom animation clip 'Take 001'"
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114081009861296032
@@ -2283,6 +2290,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bb39f4a4a8b6fbd4580e28e4c3933fb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114130693748871330
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1907552380474240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67d834d25c092c246b20d3d482aafb64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114170829396627250
@@ -2354,7 +2372,7 @@ MonoBehaviour:
   m_RotationModel:
     SynchronizeEnabled: 1
     InterpolateOption: 1
-    InterpolateRotateTowardsSpeed: 180
+    InterpolateRotateTowardsSpeed: 540
     InterpolateLerpSpeed: 5
   m_ScaleModel:
     SynchronizeEnabled: 0
@@ -2372,6 +2390,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ac2d4935a4f52441b4b02f9482a8bd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  newInteractionSkill: {fileID: 114130693748871330}
   HideMaterial: {fileID: 2100000, guid: c821bfc8304beb84abe8a2f3b953380e, type: 2}
   FindRad: 5
 --- !u!114 &114238831742735016
@@ -2380,7 +2399,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1907552380474240}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3f0680b706193254f97aec3f125439c2, type: 3}
   m_Name: 
@@ -2420,10 +2439,10 @@ MonoBehaviour:
   ShowParameterInspector: 1
   m_SynchronizeParameters:
   - Type: 1
-    SynchronizeType: 2
+    SynchronizeType: 0
     Name: DirectionX
   - Type: 1
-    SynchronizeType: 2
+    SynchronizeType: 0
     Name: DirectionY
   - Type: 3
     SynchronizeType: 0
@@ -2451,8 +2470,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50dff2830c8550b4083d72079596192b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxLocationDistnace: 10
-  MaxInteractionDistance: 10
+  MaxInteractionDistance: 2
+  MaxFindObjectRayCast: 10
   PressUIPrefabs: {fileID: 1823746571623634, guid: 84d535288324adb4482be5de7f0381a7,
     type: 2}
   ScoreTimeUIPrefabs: {fileID: 1382168443246624, guid: 4003a20043dcdb54d96f40184e86878b,
@@ -2503,6 +2522,7 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 114264987024885528}
   - {fileID: 114186861022700930}
+  - {fileID: 114130693748871330}
   ObservedComponentsFoldoutOpen: 1
   viewIdField: 0
   instantiationId: -1
@@ -2596,6 +2616,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cca313b813b2644cb2ec3dc209574f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rt: {fileID: 0}
   UIPrefab: {fileID: 1390711569190694, guid: f0cae6947a3ca9a4a9d56b84b701a367, type: 2}
 --- !u!135 &135134071691088110
 SphereCollider:
@@ -3437,4 +3458,4 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.48, z: 0}
+  m_Center: {x: 0, y: 0.56, z: 0}

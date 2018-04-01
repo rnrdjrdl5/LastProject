@@ -14,7 +14,7 @@ public class TestPhotonManager : Photon.PunBehaviour
 
     private bool isJoinRoom = false;
 
-    string Version = "tes2t1";
+    string Version = "tes3422t1";
 
     public GameObject CurrentPlayer;
 
@@ -33,13 +33,13 @@ public class TestPhotonManager : Photon.PunBehaviour
 
     public override void OnPhotonRandomJoinFailed(object[] codeAndMsg)
     {
-        PhotonNetwork.CreateRoom("testroom1");
+        PhotonNetwork.CreateRoom("testr343oom1");
     }
     public override void OnJoinedRoom()
     {
         isJoinRoom = true;
         Debug.Log("방접속완료");
-
+        CurrentPlayer = PhotonNetwork.Instantiate("MouseRunner", PlayerSpawnLocation.transform.position, Quaternion.identity, 0);
         if (PhotonNetwork.isMasterClient)
         {
            // SpawnObject();
@@ -53,6 +53,7 @@ public class TestPhotonManager : Photon.PunBehaviour
 
     // Update is called once per frame
     void Update() {
+
         if (photonView.isMine)
         {
             if (Input.GetKeyDown(KeyCode.Z))
@@ -77,7 +78,7 @@ public class TestPhotonManager : Photon.PunBehaviour
                 }
 
                 //CurrentPlayer = PhotonNetwork.Instantiate("12Box", PlayerSpawnLocation.transform.position, Quaternion.identity, 0);
-                CurrentPlayer = PhotonNetwork.Instantiate("MouseRunner", PlayerSpawnLocation.transform.position, Quaternion.identity, 0);
+//                CurrentPlayer = PhotonNetwork.Instantiate("MouseRunner", PlayerSpawnLocation.transform.position, Quaternion.identity, 0);
             }
 
 

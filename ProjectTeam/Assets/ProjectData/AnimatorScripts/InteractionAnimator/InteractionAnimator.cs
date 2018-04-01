@@ -5,36 +5,54 @@ using UnityEngine;
 public class InteractionAnimator : StateMachineBehaviour {
 
     private PlayerCamera playerCamera;
-
     private FindObject findObject;
-
     private TimeBar timeBar;
-
     private PlayerState playerState;
+    private InteractiveState interactiveState;
+    private NewInteractionSkill newInteractionSkill;
+    private PhotonView photonView;
+
+    void InitPhotonView(Animator animator)
+    {
+        photonView = animator.gameObject.GetComponent<PhotonView>();
+    }
 
     void InitScripts(Animator animator)
     {
-        if (playerCamera == null)
             playerCamera = GameObject.Find("PlayerCamera").GetComponent<PlayerCamera>();
 
-        if (findObject == null)
             findObject = animator.gameObject.GetComponent<FindObject>();
 
-        if (timeBar == null)
             timeBar = animator.gameObject.GetComponent<TimeBar>();
 
-        if (playerState == null)
             playerState = animator.gameObject.GetComponent<PlayerState>();
-        
+    }
+
+    void InitinteractiveState(Animator animator)
+    {
+            interactiveState = animator.GetComponent<NewInteractionSkill>().GetinteractiveState();
     }
 
 
 	 // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
 	override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
 
-        InitScripts(animator);
+        // 상호작용 상태 받기
+        InitinteractiveState(animator);
 
-        playerState.SetPlayerCondition(PlayerState.ConditionEnum.INTERACTION);
+        // 포톤뷰 스크립트 받기
+        InitPhotonView(animator);
+
+        // 본인이면
+        if (photonView.isMine)
+        {
+
+            // 다른 각종 스크립트 받기
+            InitScripts(animator);
+
+            // 상태이상 변경
+            playerState.SetPlayerCondition(PlayerState.ConditionEnum.INTERACTION);
+        }
 
     }
 
@@ -46,12 +64,27 @@ public class InteractionAnimator : StateMachineBehaviour {
 	// OnStateExit is called when a transition ends and the state machine finishes evaluating this state
 	override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
 
-        // FIndObject의 활성화 탐지 시작
-        findObject.SetisUseFindObject(true);
+        if (photonView.isMine)
+        {
+            
 
-        timeBar.DestroyObjects();
+            
+            // FIndObject의 활성화 탐지 시작
+            findObject.SetisUseFindObject(true);
 
-        playerCamera.SetCameraModeType(PlayerCamera.EnumCameraMode.FOLLOW);
+            timeBar.DestroyObjects();
+
+            playerCamera.SetCameraModeType(PlayerCamera.EnumCameraMode.FOLLOW);
+
+
+
+            Debug.Log("해제해제해제 , + " + interactiveState.photonView.viewID);
+
+            // 모든 클라이언트에게 RPC전송 하는 함수 콜
+            //interactiveState.SetisCanFirstCheck(true);
+            // ** 마스터에서 처리하기에는 애니메이션 동기화 문제가 있어서 안됨
+            interactiveState.CallOnCanFirstCheck();
+        }
 
     }
 

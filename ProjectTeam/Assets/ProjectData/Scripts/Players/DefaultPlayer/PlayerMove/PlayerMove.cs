@@ -4,25 +4,26 @@ using UnityEngine;
 
 public partial class PlayerMove : Photon.PunBehaviour, IPunObservable
 {
-
     private void Awake()
     {
         SetAwake();
     }
 
     // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    void Start()
+    {
 
-        PlayerTransform();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
 
         PlayerMoveAnimation();
 
+        PlayerTransform();
 
+        //PlayerMoveAnimation();
     }
 
     void IPunObservable.OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

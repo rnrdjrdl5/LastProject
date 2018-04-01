@@ -107,4 +107,11 @@ MonoBehaviour:
   - SpawnObject
   - DestroyObject
   - RPCCameraPosition
+  - RPCInterMessage
+  - RPCReturnSkill
+  - RPCCompleteMessage
+  - RPCTableAction
+  - RPCRetunDontSkill
+  - RPCOnCanFirstCheck
+  - NoCollisionObject
   DisableAutoOpenWizard: 1

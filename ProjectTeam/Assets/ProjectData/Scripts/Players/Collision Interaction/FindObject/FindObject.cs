@@ -6,15 +6,13 @@ public class FindObject : MonoBehaviour {
 
     private PointToLocation PTL;
 
-    [Header("- 상호작용 UI 표시 거리")]
-    [Tooltip(" - 상호작용 기본 UI 거리입니다.")]
-    public float MaxLocationDistnace = 0.0f;
 
     [Header("- 상호작용 액션 거리")]
     [Tooltip(" - 상호작용이 작동할 수 있는 최대거리입니다.")]
     public float MaxInteractionDistance = 0.0f;
 
 
+    public float MaxFindObjectRayCast;
 
     private GameObject ObjectTarget;
 
@@ -255,7 +253,7 @@ public class FindObject : MonoBehaviour {
             {
 
                 // 사용 가능하면 레이를 쏴서 물체를 찾습니다.
-                Interaction = PTL.FindObject(gameObject, MaxLocationDistnace);
+                Interaction = PTL.FindObject(gameObject, MaxFindObjectRayCast);
 
             }
 

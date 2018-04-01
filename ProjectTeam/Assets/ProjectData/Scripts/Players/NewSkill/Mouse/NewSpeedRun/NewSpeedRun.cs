@@ -7,12 +7,12 @@ public class NewSpeedRun : DefaultNewSkill {
     private float PlayerOriginalSpeed;
     public float PlayerRunSpeed;
 
-    BoxPlayerMove BPM;
+    PlayerMove BPM;
 
     protected override void Awake()
     {
         base.Awake();
-        BPM = gameObject.GetComponent<BoxPlayerMove>();
+        BPM = gameObject.GetComponent<PlayerMove>();
     }
 
 

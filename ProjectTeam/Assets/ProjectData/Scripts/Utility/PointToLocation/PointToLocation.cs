@@ -23,6 +23,11 @@ public class PointToLocation{
 
     private float           RaycastInfinity             = 10000.0f;
 
+
+    // 다른 클라이언트용, 카메라 거리와 일치해야 한다.
+    private float Distance = 3.5f;
+
+
     // 카메라의 시야가 막히는 오브젝트를 찾았을 때입니다.
     // 찾았을 때 y축으로 추가 이동을 사용하지 않습니다.
     bool isFindWall = false;
@@ -84,12 +89,12 @@ public class PointToLocation{
 
         RaycastHit hit;
 
-        //CameraDistanceTriangle
-
 
         if (Physics.Raycast(PlayerCamera.transform.position + MouseVector3.normalized * cameraScript.CameraDistanceTriangle,
             MouseVector3, out hit, MaxLocationDistance, 1 << LayerMask.NameToLayer("MainObject")))
         {
+            Debug.DrawRay(PlayerCamera.transform.position + MouseVector3.normalized * Distance,
+MouseVector3 * MaxLocationDistance, Color.red, 1.0f);
             return hit.collider.gameObject;
             
         }
@@ -97,9 +102,11 @@ public class PointToLocation{
             return null;
     }
 
-    public Vector3 FindWall(GameObject UseObject , float CameraZommPer)
+
+
+    public Vector3 FindWall(GameObject UseObject)
     {
-        // 카메라가 마지막에 위치할 자리입니다.
+        // 카메라의 마지막 위치
         Vector3 FindPostCameraPosition = PlayerCamera.transform.position;
 
         // 1. 마우스 위치 , 시점의 위치를 받아옵니다.
@@ -108,33 +115,41 @@ public class PointToLocation{
         // 2. 레이를 쏴버립니다.
         RaycastHit hit;
 
-        // 3 -1 레이를 쏘고 맞는다면?
-        // -1 으로 비트연산자를 실시해서
-        // 해당 레이어이외에 충돌을 다 받는다.
 
+        // -Vector3.up * 0.2f 이유 : 바닥과 너무 달라붙어있어서 바닥이 투명하게 보이는 걸 방지함.
+        // 플레이어의 위치부터 카메라까지 레이를 사용합니다.
+
+        // 플레이어 를 무시한 레이를 발사
         int layerMask = 1 << LayerMask.NameToLayer("Player");
         layerMask = ~layerMask;
         if (Physics.Raycast(
+
             UseObject.transform.position,
+
             (PlayerCamera.transform.position - Vector3.up * 0.2f - UseObject.transform.position).normalized,
             out hit,
+
             cameraScript.CameraDistanceTriangle,
+
             layerMask))
 
         {
 
-            // 3-2 : 카메라를 레이가 맞은 자리로 당기고,
-            //      값을 다시 가공합니다.
+            // 3-2 : 카메라를 레이가 맞춘 자리로 적용
+            FindPostCameraPosition = hit.point;
 
-            FindPostCameraPosition = UseObject.transform.position + (hit.point - UseObject.transform.position) * CameraZommPer;
-
+            // +vector3.up * 0.2f : 바닥과 너무 달라붙어있어서 투명하게 보이는 걸 방지함.
             FindPostCameraPosition += Vector3.up * 0.2f;
+
+            // 벽과 충돌되었다는 것을 적용합니다.
             isFindWall = true;
 
 
         }
+
         else
         {
+            // 레이로 충돌한 경우가 없다면 벽과 충돌되지 않았음을 적용합니다.
             isFindWall = false;
         }
 
@@ -153,7 +168,9 @@ public class PointToLocation{
         Vector3 MouseVector3 = q2 * Vector3.forward;
 
 
-        Quaternion q3 = Quaternion.Euler(PlayerCamera.GetComponent<PlayerCamera>().CameraRad, 0, 0);
+        //Quaternion q3 = Quaternion.Euler(PlayerCamera.GetComponent<PlayerCamera>().CameraRad, 0, 0);
+        Quaternion q3 = Quaternion.Euler(PlayerCamera.transform.rotation.eulerAngles.x, 0, 0);
+
 
         MouseVector3 = MouseVector3 * (q3 * Vector3.forward).z;
         MouseVector3.y = (q3 * Vector3.forward).y;

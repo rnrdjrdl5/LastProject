@@ -4,7 +4,7 @@ using UnityEngine;
 
 public partial class PlayerUI : Photon.PunBehaviour
 {
-
+    public RectTransform rt;
     // Use this for initialization
     void Start () {
         SetUI();
@@ -18,6 +18,10 @@ public partial class PlayerUI : Photon.PunBehaviour
         SetMPBar();
         SetTimerText();
         SetScore();
+
+
+
+       // rt.position += Vector3.up * ( (Input.GetAxis("Mouse Y")) * Time.deltaTime * 30 );
 
     }
 
