@@ -149,11 +149,6 @@ public class PlayerCamera : MonoBehaviour {
             {
                 FreeCamera();
             }
-
-            else if (CameraModeType == PlayerCamera.EnumCameraMode.SPEEDRUN)
-            {
-                SpeedRunCamera();
-            }
         }
 
         
@@ -168,31 +163,29 @@ public class PlayerCamera : MonoBehaviour {
     {
         if (isPlayerSpawn)
         {
-
-          /*  float CameraPlayerDistanceX = Mathf.Cos(Mathf.Deg2Rad * CameraRad) * CameraDistanceTriangle;
+            // 각도로 위치 얻어내기
+            float CameraPlayerDistanceX = Mathf.Cos(Mathf.Deg2Rad * CameraRad) * CameraDistanceTriangle;
             float CameraPlayerDistanceY = Mathf.Sin(Mathf.Deg2Rad * CameraRad) * CameraDistanceTriangle;
 
-            // 보간 사용, 카메라 x,z 위치를 보간으로 서서히 조절
-            //float LerpAngle = Mathf.LerpAngle(transform.eulerAngles.y, PlayerObject.transform.eulerAngles.y, NaturePlayeCameraRotation * Time.deltaTime);
-            float LerpAngle = Mathf.LerpAngle(transform.eulerAngles.y, PlayerObject.transform.eulerAngles.y, 1);
-            //Quaternion 형태로 전환
+            // GetPlayerRotateEuler : 플레이어 y축 변수
+            // 카메라 플레이어 위치로 이동
+            float LerpAngle = Mathf.LerpAngle(transform.eulerAngles.y, playerMove.GetPlayerRotateEuler(), 1);
+
+            // 쿼터니언 변경
             Quaternion QuatTypeLerpAngle = Quaternion.Euler(0, LerpAngle, 0);
 
-            // 보간으로 구한 값과
-            // 카메라 각도로 구한 값으로
-            // 카메라의 위치를 결정함.
+            // 카메라 위치 설정
             transform.position = PlayerObject.transform.position - (QuatTypeLerpAngle * Vector3.forward * CameraPlayerDistanceX) + (Vector3.up * CameraPlayerDistanceY);
             
-
-            // 카메라가 Player를 보도록 함
+            // 플레이어방향으로 전환
             transform.LookAt(PlayerObject.transform);
 
-            // 카메라 위치에서 y값을 추가로 더함
-                transform.position = new Vector3(transform.position.x, transform.position.y + CameraHeightFromFloor, transform.position.z);
+            // y축 오프셋 추가
+            transform.position = new Vector3(transform.position.x, transform.position.y + CameraHeightFromFloor, transform.position.z);
 
             // 오브젝트에 카메라 시야가 가려지면 카메라 위치 재조정
             transform.position = PTL.FindWall(PlayerObject);
-            */
+            
 
 
         }
@@ -202,52 +195,23 @@ public class PlayerCamera : MonoBehaviour {
     void FreeCamera()
     {
 
-        // 카메라의 x와 y 위치를 구함.
+        // 각도로 위치 얻어내기
         float CameraPlayerDistanceX = Mathf.Cos(Mathf.Deg2Rad * CameraRad) * CameraDistanceTriangle;
         float CameraPlayerDistanceY = Mathf.Sin(Mathf.Deg2Rad * CameraRad) * CameraDistanceTriangle;
 
-        /* X축을 추가 연산합니다.
-         * X축 길이를 사용해서 Z축과 X축의 길이를 구해옵니다. */
+        // X축 추가 연산 ( Free 전용 )
         float CameraPlayerDistanceX_X = Mathf.Cos(Mathf.Deg2Rad * CameraRadX) * CameraPlayerDistanceX;
         float CameraPlayerDistanceZ =   Mathf.Sin(Mathf.Deg2Rad * CameraRadX) * CameraPlayerDistanceX;
 
-        // 카메라의 위치를 구한 x,y,z 축을 이용해서 위치를 선정합니다.
+        // 카메라 위치 설정
         transform.position = PlayerObject.transform.position - (Vector3.forward * CameraPlayerDistanceX_X) + Vector3.right * CameraPlayerDistanceZ + Vector3.up * CameraPlayerDistanceY;
 
-        // 카메라가 Player를 보도록 함.
+        // 플레이어방향으로 전환
         transform.LookAt(PlayerObject.transform);
 
-        // 카메라가 기본적으로 가지고 있어야 할 y축 높이를 더해줌.
+        // y축 오프셋 추가
         transform.position = new Vector3(transform.position.x, transform.position.y + CameraHeightFromFloor, transform.position.z);
 
-
-    }
-
-    void SpeedRunCamera()
-    {
-        float CameraPlayerDistanceX = Mathf.Cos(Mathf.Deg2Rad * CameraRad) * CameraDistanceTriangle;
-        float CameraPlayerDistanceY = Mathf.Sin(Mathf.Deg2Rad * CameraRad) * CameraDistanceTriangle;
-
-        // 보간 사용, 카메라 x,z 위치를 보간으로 서서히 조절
-        float LerpAngle = Mathf.LerpAngle(transform.eulerAngles.y, PlayerObject.transform.eulerAngles.y, 1);
-
-        //Quaternion 형태로 전환
-        Quaternion QuatTypeLerpAngle = Quaternion.Euler(0, LerpAngle, 0);
-
-        // 보간으로 구한 값과
-        // 카메라 각도로 구한 값으로
-        // 카메라의 위치를 결정함.
-        transform.position = PlayerObject.transform.position - (QuatTypeLerpAngle * Vector3.forward * CameraPlayerDistanceX) + (Vector3.up * CameraPlayerDistanceY);
-
-
-        // 카메라가 Player를 보도록 함
-        transform.LookAt(PlayerObject.transform);
-
-        // 카메라 위치에서 y값을 추가로 더함
-        transform.position = new Vector3(transform.position.x, transform.position.y + CameraHeightFromFloor, transform.position.z);
-
-        // 오브젝트에 카메라 시야가 가려지면 카메라 위치 재조정
-        transform.position = PTL.FindWall(PlayerObject);
 
     }
 }

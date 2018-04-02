@@ -1252,9 +1252,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4098335407606888}
   - component: {fileID: 137088422963427040}
+  - component: {fileID: 135917992987354584}
   m_Layer: 12
   m_Name: Cylinder001
-  m_TagString: Untagged
+  m_TagString: CheckCollision
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2706,8 +2707,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coolDown:
     MaxCoolDown: 0
-  ManaCost: 0
-  CtnManaCost: 0
   skillConditionOption:
     SkillConditionType: 0
   skillContinueConditionOption:
@@ -2716,6 +2715,8 @@ MonoBehaviour:
     SkillKeyType: 6
   ExitInputKey:
     SkillKeyType: 0
+  ManaCost: 0
+  CtnManaCost: 0
   PlayerSkillDebuffs: []
   turnOffLightState:
     TrunOffPanel: {fileID: 1478077443266326, guid: 2609ca348ce3ba840b05c845eb21ef1d,
@@ -2732,11 +2733,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67576af0c7c79a64289ae1328d86c450, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AniSpeed: 3
-  PlayerSpeed: 10
-  RotationSpeed: 100
-  PlayerBackSpeed: 5
   PlayerCamera: {fileID: 0}
+  PlayerSpeed: 10
+  PlayerBackSpeed: 5
+  RotationSpeed: 100
   SpeedMulti: 0
   AniSpeedUp: 2
 --- !u!114 &114251085692725518
@@ -2786,8 +2786,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coolDown:
     MaxCoolDown: 0
-  ManaCost: 0
-  CtnManaCost: 0
   skillConditionOption:
     SkillConditionType: 0
   skillContinueConditionOption:
@@ -2796,6 +2794,8 @@ MonoBehaviour:
     SkillKeyType: 5
   ExitInputKey:
     SkillKeyType: 0
+  ManaCost: 0
+  CtnManaCost: 0
   PlayerSkillDebuffs: []
   projectileState:
     ProjectileObject: {fileID: 1023685096185302, guid: b64f962fb79dc874e910ba8ec12d09cd,
@@ -2831,8 +2831,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coolDown:
     MaxCoolDown: 0
-  ManaCost: 0
-  CtnManaCost: 0
   skillConditionOption:
     SkillConditionType: 0
   skillContinueConditionOption:
@@ -2841,6 +2839,8 @@ MonoBehaviour:
     SkillKeyType: 0
   ExitInputKey:
     SkillKeyType: 0
+  ManaCost: 0
+  CtnManaCost: 0
   PlayerSkillDebuffs:
   - SkillDebuffType: 1
     MaxTime: 1
@@ -2860,7 +2860,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cca313b813b2644cb2ec3dc209574f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rt: {fileID: 0}
   UIPrefab: {fileID: 1390711569190694, guid: f0cae6947a3ca9a4a9d56b84b701a367, type: 2}
+--- !u!135 &135917992987354584
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1939484723374934}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.27695104
+  m_Center: {x: -0.02273201, y: 0.14640436, z: -0.020010024}
 --- !u!137 &137088422963427040
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

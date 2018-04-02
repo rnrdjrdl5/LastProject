@@ -226,7 +226,7 @@ public class NewInteractionSkill : Photon.MonoBehaviour, IPunObservable {
     // 액션 사용, 물리나 애니를 호출함
     private void CallAction()
     {
-
+        Debug.Log(interactiveState);
         // 물리 일 경우 날라갈 위치의 노말벡터 전달
         interactiveState.UseAction(/*transform.position - playerCamera.transform.position*/transform.position - OriginalCameraPosition);
     }

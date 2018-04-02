@@ -31,8 +31,8 @@ public partial class PlayerMove
 
             if ((gameObject.GetComponent<PlayerState>().GetplayerNotMoveDebuff() == null) &&
                (ps.EqualPlayerCondition(PlayerState.ConditionEnum.RUN) ||
-                ps.EqualPlayerCondition(PlayerState.ConditionEnum.SPEEDRUN) ||
                 ps.EqualPlayerCondition(PlayerState.ConditionEnum.IDLE) ||
+                ps.EqualPlayerCondition(PlayerState.ConditionEnum.SPEEDRUN) ||
                 ps.EqualPlayerCondition(PlayerState.ConditionEnum.ATTACK) ||
                 ps.EqualPlayerCondition(PlayerState.ConditionEnum.INTERACTION)))
             {
@@ -40,12 +40,24 @@ public partial class PlayerMove
                 if (gameObject.GetComponent<CharacterController>().isGrounded)
                 {
 
+                    // 1. 플레이어 이동방향 설정
                     MoveDir = new Vector3(HSpeed, 0, VSpeed);
 
-                    float sqrMag = MoveDir.normalized.sqrMagnitude;
+                    // 2. 노말처리
+                    float NormalsqrMag = MoveDir.normalized.sqrMagnitude;
 
-                    if(MoveDir.sqrMagnitude > sqrMag && 
-                        sqrMag > 0)
+                    // 대쉬가 아닌 경우 방향전환
+                    if (!ps.EqualPlayerCondition(PlayerState.ConditionEnum.SPEEDRUN))
+                        MoveDir = new Vector3(HSpeed, 0, VSpeed);
+
+                    // 대쉬인 경우 직진(회전에서 방향처리)
+                    else {
+                        MoveDir = Vector3.forward * MoveDir.magnitude;
+                    }
+
+                    // 노말벡터 길이 vs 일반벡터 길이
+                    if (MoveDir.sqrMagnitude > NormalsqrMag &&
+                        NormalsqrMag > 0)
                     {
                         MoveDir = MoveDir.normalized; 
                     }
@@ -64,19 +76,20 @@ public partial class PlayerMove
                     // 벡터를 로컬 좌표계 기준에서 월드 좌표계 기준으로 변환한다.
                     MoveDir = transform.TransformDirection(MoveDir);
 
+                    // 앞으로 이동 시
                     if (Input.GetAxisRaw("Vertical") >= 0 && VSpeed >= 0)
                     {
                         MoveDir *= PlayerSpeed;
                     }
 
-                    // 스피드 증가.
+                    // 뒤로 이동 시
                     else
                     {
-
                         MoveDir *= PlayerBackSpeed;
                     }
 
                 }
+
                 // 캐릭터에 중력 적용.
                 MoveDir.y -= gravity * Time.deltaTime;
 
@@ -84,6 +97,7 @@ public partial class PlayerMove
                 gameObject.GetComponent<CharacterController>().Move(MoveDir * Time.deltaTime);
             }
 
+            // 캐릭터 조건부 x방향 회전
             SetPlayerRotateX();
 
         }
@@ -142,26 +156,52 @@ public partial class PlayerMove
         }
     }
 
+    
+    
+
     // 플레이어가 마우스 x축으로 이동하는지에 대한 여부.
     void SetPlayerRotateX()
     {
+       
+        // 시점 자유 여부
         if (PlayerCamera.GetCameraModeType() != PlayerCamera.EnumCameraMode.FREE)
         {
-            float atan2 = 0.0f;
 
+            
             Vector3 v3 = transform.rotation.eulerAngles;
 
+            // 캐릭터 회전값 받기
             PlayerRotateEuler += Input.GetAxis("Mouse X") * RotationSpeed * Time.deltaTime;
-            
 
             // 전력질주 상태
-           // if (ps.GetPlayerCondition() == PlayerState.ConditionEnum.SPEEDRUN)
+            if (ps.GetPlayerCondition() == PlayerState.ConditionEnum.SPEEDRUN)
+            {
+                
+                // 변수 초기화
+                float atan2 = 0.0f;
+                float YRotate = 0.0f;
+
+                // 움직임 여부
+                if (!(animator.GetFloat("DirectionX") == 0 && animator.GetFloat("DirectionY") == 0))
+                {
+                    
+                    // 애니메이션 float으로 각도 구하기
+                    atan2 = Mathf.Atan2(animator.GetFloat("DirectionX"), animator.GetFloat("DirectionY")) * Mathf.Rad2Deg;
+
+                    // 각도 적용한 YROTATE 생성
+                    YRotate = PlayerRotateEuler + atan2;
+                }
+
+                // 갱신값으로 회전
+                transform.rotation = Quaternion.Euler(v3.x, YRotate, v3.z);
+
+            }
+
+            // 전력질주 상태가 아닌 경우
+            else
+                transform.rotation = Quaternion.Euler(v3.x, PlayerRotateEuler, v3.z);
+
             
-                atan2 = Mathf.Atan2(animator.GetFloat("DirectionX"), animator.GetFloat("DirectionY")) * Mathf.Rad2Deg;
-
-            float v4 = PlayerRotateEuler + atan2;
-
-            transform.rotation = Quaternion.Euler(v3.x,v4, v3.z);
         }
     }
 
