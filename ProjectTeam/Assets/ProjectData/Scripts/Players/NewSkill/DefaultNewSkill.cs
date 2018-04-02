@@ -9,22 +9,22 @@ using UnityEngine;
 
 public class DefaultNewSkill : MonoBehaviour {
 
+    /**** private ****/
+
+    public CoolDown coolDown;               // 스킬 쿨타임
+    public SkillConditionOption skillConditionOption;               // 스킬 조건
+    public SkillContinueConditionOption skillContinueConditionOption;       // 지속스킬 조건
+    public DefaultInput InputKey;               // 키 입력 조건
+    public DefaultInput ExitInputKey;           // 키 탈출 조건
+
+    public float ManaCost;              // 스킬 비용
+    public float CtnManaCost;               // 스킬 유지 비용
+
+    public List<DefaultPlayerSkillDebuff> PlayerSkillDebuffs;               // 디버프 종류
 
 
-    // 외부에서 수정할 수 있는 목록들입니다.
-    // 모든 스킬에 포함됩니다.
+    /**** protected ****/
 
-    // 스킬의 쿨타임을 결정합니다.
-    public CoolDown coolDown;
-
-    // 스킬의 비용을 결정합니다.
-    public float ManaCost;
-
-    // 스킬의 유지 비용을 결정합니다. 초당 비용입니다.
-    public float CtnManaCost;
-
-
-    // 스크립트내에서 사용할 변수를 선언합니다.
     protected PhotonView photonView;
     public PhotonView GetphotonView() { return photonView; }
     public void SetphotonView(PhotonView pv) { photonView = pv; }
@@ -39,26 +39,9 @@ public class DefaultNewSkill : MonoBehaviour {
 
     protected Animator animator;
 
-    // 스킬 조건을 가지는 스크립트입니다.
-    public SkillConditionOption skillConditionOption;
-
-    // 지속형 조건을 가지는 스크립트입니다.
-    public SkillContinueConditionOption skillContinueConditionOption;
 
 
 
-    // 키 값의 종류를 가지는 스크립트입니다.
-    // 조건 스크립트에서 이 변수로 키를 확인합니다.
-    public DefaultInput InputKey;
-
-    // 키 값의 종류를 가지는 스크립트입니다.
-    // 조건 스크립트에서 이 변수로 키를 확인합니다.
-    public DefaultInput ExitInputKey;
-
-
-    // 디버프 종류입니다.
-    // 리스트 내의 디버프에 따라 투사체나 근접공격에 효과를 부여합니다.
-    public List<DefaultPlayerSkillDebuff> PlayerSkillDebuffs;
 
 
    
@@ -83,26 +66,23 @@ public class DefaultNewSkill : MonoBehaviour {
 
     protected void Update()
     {
-        // 해당 조건에 맞는다면 , 
+
+        // 플레이어 스킬 사용 조건 ( 다른 스크립트에서 판단 후 사용 )
         if (skillConditionOption.CheckCondition())
         {
 
-            //5. 상태가 맞을 때
+            // 플레이어 상태 확인
             if (CheckState())
             {
-                // 스킬 사용.
-                // 쭉 누르는 스킬같은 경우 UseSkill이 계속 작동됨
-                // 그래서 막아버림.
+
+                // 지속형 스킬 사용중 판단
                 if (skillContinueConditionOption.GetskillConditionContinueOption().GetisUseCtnSkill() == false)
                 {
 
+                    // 스킬 사용
                     UseSkill();
 
-
-                    // 지속형 스킬을 on 합니다.
-                    // 지속형 스킬 if문을 돌아가게 합니다.
-                    // 지속형 스킬인경우만.
-
+                    // 지속형 스킬 사용설정 (사용할 수 있는 경우)
                     if ((skillContinueConditionOption.skillContinueConditionType !=
                         SkillContinueConditionOption.EnumSkillContinueConditionOption.NONE))
 
@@ -112,21 +92,18 @@ public class DefaultNewSkill : MonoBehaviour {
                 }
 
 
-                // 쿨타임을 적용합니다.
-                // 재사용 대기시간 감소 효과 등을 고려해서 
-                // 함수로 사용합니다.
-
-                // 단, 채널링 기술 사용 시 쿨타임이 적용되지 않습니다.
+                // 스킬 쿨타임 마나 소모 적용 (지속형 아닌 경우)
                 if (skillContinueConditionOption.skillContinueConditionType ==
                     SkillContinueConditionOption.EnumSkillContinueConditionOption.NONE)
                 {
+
+                    // 쿨타임 적용
                     coolDown.CalcCoolDown();
 
+                    // 시작
                     coolDown.SetisUseCoolDown(true); // 쿨타임 돌아갈지 여부 판단
 
-                    // 마나 감소를 적용합니다.
-                    // 마나감소 효과를 고려해서
-                    // 함수로 사용합니다.
+                    // 마나 감소
                     manaPoint.CalcManaPoint(ManaCost);
                 }
             }
@@ -176,15 +153,19 @@ public class DefaultNewSkill : MonoBehaviour {
             }
         }
 
-        // 해제 조건을 체크합니다.
-        // 에러발견
-
+        // 스킬 사용중 체크
         if (skillContinueConditionOption.GetskillConditionContinueOption().GetisUseCtnSkill() == true)
         {
+
+            // 지속스킬 해제 체크
             if (skillContinueConditionOption.CheckContinueExit())
             {
+
+                // 지속스킬 해제 상태 체크
                 if (CheckCtnState())
                 {
+
+                    // 스킬해제
                     ExitCtnSkill();
                     skillContinueConditionOption.GetskillConditionContinueOption().SetisUseCtnSkill(false);
                 }

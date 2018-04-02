@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class TestPhotonManager : Photon.PunBehaviour
 {
+    public float yy;
+    public float xx;
+
     public GameObject PlayerSpawnLocation;
 
     public GameObject InteractionPrefab;
@@ -14,7 +17,7 @@ public class TestPhotonManager : Photon.PunBehaviour
 
     private bool isJoinRoom = false;
 
-    string Version = "tes3422t1";
+    string Version = "tes34151522t1";
 
     public GameObject CurrentPlayer;
 
@@ -33,7 +36,7 @@ public class TestPhotonManager : Photon.PunBehaviour
 
     public override void OnPhotonRandomJoinFailed(object[] codeAndMsg)
     {
-        PhotonNetwork.CreateRoom("testr343oom1");
+        PhotonNetwork.CreateRoom("testr34133oom1");
     }
     public override void OnJoinedRoom()
     {

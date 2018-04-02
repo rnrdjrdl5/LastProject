@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class PlayerMove : Photon.PunBehaviour, IPunObservable
+public partial class PlayerMove : Photon.PunBehaviour
 {
     private void Awake()
     {
@@ -22,16 +22,6 @@ public partial class PlayerMove : Photon.PunBehaviour, IPunObservable
         PlayerMoveAnimation();
 
         PlayerTransform();
-
-        //PlayerMoveAnimation();
     }
 
-    void IPunObservable.OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        SendTransform(stream);
-
-        RecvTransform(stream);
-
-
-    }
 }

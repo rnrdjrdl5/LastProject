@@ -5,66 +5,63 @@ using UnityEngine;
 public partial class PlayerMove
 {
 
+    /**** enum ****/
+
+    public enum EnumSpeedLocation { PLUS, NONE, MINUS };                // 애니메이션 블렌딩
+    public enum EnumSpeedMulti { MULTI, NONE };             // 애니메이션 블렌딩
+
+
+
+    /**** public ****/
+
+
+    public PlayerCamera PlayerCamera;               // 카메라 스크립트
+
+    public float PlayerSpeed = 10.0f;               // 캐릭터 이동속도
+    public float PlayerBackSpeed = 5.0f;                // 카메라 뒤로 이동
+    public float RotationSpeed = 100.0f;             // 캐릭터 회전속도
+    public float SpeedMulti;                    // 애니메이션 배수
+    public float AniSpeedUp;                    // 애니메이션 속도
+    
+
+    /**** private ****/
+
+
     private Animator animator;
+    private PlayerState ps;
 
-    private Vector3 RecvPosition;
-    private Quaternion RecvRotation;
+    private Vector3 MoveDir = Vector3.zero;             // 플레이어 이동속도
+    private float OriginalPlayerSpeed = 0.0f;               // SpeedRun) 일반 이동속도 저장함
+    private float HSpeed = 0;               // 플레이어 가로 속도
+    private float VSpeed = 0;               // 플레이어 세로 속도
+    private float gravity = 20.0f;              // 중력
+    private float PlayerRotateEuler = 0;                // 플레이어 오일러 회전값
+    
 
-    // 이동 좌표를 받아서 애니메이션 블랜드 적용 용도.
-    // 다른방법을 알아볼까? 가능할거같은데.
-    private float RecvDirectionX;
-    private float RecvDirectionY;
-
-    public void SetRecvPosition(Vector3 RP) { RecvPosition = RP; }
-
-    private float PlayerVertical = 0.0f;
-    private float PlayerHorizontal = 0.0f;
+    EnumSpeedLocation SpeedLocationTypeX = EnumSpeedLocation.NONE;              // 애니메이션 블렌딩
+    EnumSpeedLocation SpeedLocationTypeY = EnumSpeedLocation.NONE;              // 애니메이션 블렌딩
+    EnumSpeedMulti SpeedMultiTypeX = EnumSpeedMulti.NONE;               // 애니메이션 블렌딩
+    EnumSpeedMulti SpeedMultiTypeY = EnumSpeedMulti.NONE;               // 애니메이션 블렌딩
 
 
-    public float PlayerSpeed = 10.0f;       // 캐릭터 이동속도
-    public float RotationSpeed = 100.0f;        // 캐릭터 회전속도
+    /**** 접근자 ****/
 
-    public float PlayerBackSpeed = 5.0f;
-
-    // 저장용 스피드.
-    private float OriginalPlayerSpeed = 0.0f;
 
     public float GetOriginalPlayerSpeed() { return OriginalPlayerSpeed; }
     public void SetOriginalPlayerSpeed(float SPS) { OriginalPlayerSpeed = SPS; }
-
-
-    float gravity = 20.0f;
-
-
-
-    public PlayerCamera PlayerCamera;
-
-
-    // 애니메이션의 배수값입니다. 
-    public float SpeedMulti;
-
-
-
-    public enum EnumSpeedLocation { PLUS, NONE, MINUS};
-    EnumSpeedLocation SpeedLocationTypeX = EnumSpeedLocation.NONE;
-    EnumSpeedLocation SpeedLocationTypeY = EnumSpeedLocation.NONE;
-
-    public enum EnumSpeedMulti { MULTI , NONE};
-    EnumSpeedMulti SpeedMultiTypeX = EnumSpeedMulti.NONE;
-    EnumSpeedMulti SpeedMultiTypeY = EnumSpeedMulti.NONE;
-
-    private float HSpeed = 0;
-    private float VSpeed = 0;
-
-
-    // 애니메이션 재생 배율.
-    public float AniSpeedUp = 2.0f;
 
     public float GetHSpeed() { return HSpeed; }
     public void SetHSpeed(float HS) { HSpeed = HS; }
 
     public float GetVSpeed() { return VSpeed; }
     public void SetVSpeed(float VS) { VSpeed = VS; }
+
+    public float GetPlayerRotateEuler() { return PlayerRotateEuler; }
+    public void SetPlayerRotateEuler(float RPE) { PlayerRotateEuler = RPE; }
+
+
+
+
 
 
 

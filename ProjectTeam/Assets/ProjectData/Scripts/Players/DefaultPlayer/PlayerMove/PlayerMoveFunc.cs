@@ -4,77 +4,42 @@ using UnityEngine;
 
 public partial class PlayerMove
 {
+
+    // 초기 설정
     void SetAwake()
     {
-        RecvPosition = transform.position;
-        RecvRotation = transform.rotation;
-
-        RecvDirectionX = 0.0f;
-        RecvDirectionY = 0.0f;
-
-        OriginalPlayerSpeed = PlayerSpeed;
 
         animator = gameObject.GetComponent<Animator>();
+        ps = gameObject.GetComponent<PlayerState>();
+        PlayerCamera = GameObject.Find("PlayerCamera").GetComponent<PlayerCamera>();
 
-        PlayerCamera = GameObject.Find("PlayerCamera").GetComponent<PlayerCamera>(); ;
         if (PlayerCamera == null)
         {
             Debug.Log(" 카메라 못찾음.에러.");
         }
 
-    }
-
-    void SendTransform(PhotonStream stream)
-    {
-        if (stream.isWriting)
-        {
-            stream.SendNext(transform.position);
-            stream.SendNext(transform.rotation);
-            stream.SendNext(Input.GetAxis("Horizontal"));
-            stream.SendNext(Input.GetAxis("Vertical"));
-        }
-    }
-
-    void RecvTransform(PhotonStream stream)
-    {
-        if (!stream.isWriting)
-        {
-            RecvPosition = (Vector3)stream.ReceiveNext();
-            RecvRotation = (Quaternion)stream.ReceiveNext();
-            RecvDirectionX = (float)stream.ReceiveNext();
-            RecvDirectionY = (float)stream.ReceiveNext();
-        }
+        OriginalPlayerSpeed = PlayerSpeed;
     }
 
 
 
-
-    Vector3 MoveDir = Vector3.zero;
     void PlayerTransform()
     {
 
         if (photonView.isMine)
         {
-            PlayerState ps = gameObject.GetComponent<PlayerState>();
 
             if ((gameObject.GetComponent<PlayerState>().GetplayerNotMoveDebuff() == null) &&
                (ps.EqualPlayerCondition(PlayerState.ConditionEnum.RUN) ||
+                ps.EqualPlayerCondition(PlayerState.ConditionEnum.SPEEDRUN) ||
                 ps.EqualPlayerCondition(PlayerState.ConditionEnum.IDLE) ||
                 ps.EqualPlayerCondition(PlayerState.ConditionEnum.ATTACK) ||
                 ps.EqualPlayerCondition(PlayerState.ConditionEnum.INTERACTION)))
             {
-
-
+                
                 if (gameObject.GetComponent<CharacterController>().isGrounded)
                 {
 
-
-
-                    // 위, 아래 움  직임 셋팅. 
-                    //MoveDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
-
-
-                    // 소수값이 안들어가서 속도에 에러가 있음.
                     MoveDir = new Vector3(HSpeed, 0, VSpeed);
 
                     float sqrMag = MoveDir.normalized.sqrMagnitude;
@@ -84,16 +49,7 @@ public partial class PlayerMove
                     {
                         MoveDir = MoveDir.normalized; 
                     }
-                    
 
-                    
-
-                    
-
-                    
-                    
-                    
-                    
 
                     if (ps.EqualPlayerCondition(PlayerState.ConditionEnum.INTERACTION) &&
                         MoveDir != Vector3.zero)
@@ -128,15 +84,11 @@ public partial class PlayerMove
                 gameObject.GetComponent<CharacterController>().Move(MoveDir * Time.deltaTime);
             }
 
+            SetPlayerRotateX();
 
-
-
-
-            PlayerRotateX();
         }
     }
 
-    public float AniSpeed = 3.0f;
 
     void PlayerMoveAnimation()
     {
@@ -144,93 +96,72 @@ public partial class PlayerMove
         {
 
 
+                //0. 입력에 따라서 Speed를 결정합니다.
 
-            PlayerState ps = gameObject.GetComponent<PlayerState>();
+                if (HSpeed + SetMoveAnimation(HSpeed, Input.GetAxisRaw("Horizontal")) > -(AniSpeedUp) * Time.deltaTime &&
+                     HSpeed + SetMoveAnimation(HSpeed, Input.GetAxisRaw("Horizontal")) < (AniSpeedUp) * Time.deltaTime)
+                {
+                    HSpeed = 0.0f;
+                }
 
+                else
+                {
+                    HSpeed = HSpeed + SetMoveAnimation(HSpeed, Input.GetAxisRaw("Horizontal"));
+                }
 
-            
-            //0. 입력에 따라서 Speed를 결정합니다.
+                if (VSpeed + SetMoveAnimation(VSpeed, Input.GetAxisRaw("Vertical")) > -(AniSpeedUp) * Time.deltaTime &&
+                     VSpeed + SetMoveAnimation(VSpeed, Input.GetAxisRaw("Vertical")) < (AniSpeedUp) * Time.deltaTime)
+                {
+                    VSpeed = 0.0f;
+                }
 
-            if (HSpeed + SetMoveAnimation(HSpeed, Input.GetAxisRaw("Horizontal")) > -(AniSpeedUp) * Time.deltaTime &&
-                 HSpeed + SetMoveAnimation(HSpeed, Input.GetAxisRaw("Horizontal")) < (AniSpeedUp) * Time.deltaTime)
-            {
-                HSpeed = 0.0f;
-            }
+                else
+                {
+                    VSpeed = VSpeed + SetMoveAnimation(VSpeed, Input.GetAxisRaw("Vertical"));
+                }
 
-            else
-            {
-                HSpeed = HSpeed + SetMoveAnimation(HSpeed, Input.GetAxisRaw("Horizontal"));
-            }
+                // 1. 키 입력을 받습니다.
+                float HKey = Input.GetAxisRaw("Horizontal");
+                float VKey = Input.GetAxisRaw("Vertical");
 
-            if (VSpeed + SetMoveAnimation(VSpeed, Input.GetAxisRaw("Vertical")) > -(AniSpeedUp) * Time.deltaTime &&
-                 VSpeed + SetMoveAnimation(VSpeed, Input.GetAxisRaw("Vertical")) < (AniSpeedUp) * Time.deltaTime)
-            {
-                VSpeed = 0.0f;
-            }
+                // 2. 이동에 따라서 열거형을 설정합니다.
+                CalcKey_X(HSpeed, HKey);
+                CalcKey_Y(VSpeed, VKey);
 
-            else
-            {
-                VSpeed = VSpeed + SetMoveAnimation(VSpeed, Input.GetAxisRaw("Vertical"));
-            }
+                //3. 배수가 있으면 열거형을 수정합니다.
+                HSpeed = CalcPlayerMoveMulti(SpeedMultiTypeX, SpeedLocationTypeX, HSpeed);
+                VSpeed = CalcPlayerMoveMulti(SpeedMultiTypeY, SpeedLocationTypeY, VSpeed);
 
-            // 1. 키 입력을 받습니다.
-            float HKey = Input.GetAxisRaw("Horizontal");
-            float VKey = Input.GetAxisRaw("Vertical");
+                //4. 특정 값 (1)이 넘어가지 못하도록 고정합니다.
+                HSpeed = CalcPlusMinus(HSpeed);
+                VSpeed = CalcPlusMinus(VSpeed);
 
-            // 2. 이동에 따라서 열거형을 설정합니다.
-            CalcKey_X(HSpeed, HKey);
-            CalcKey_Y(VSpeed, VKey);
-
-            //3. 배수가 있으면 열거형을 수정합니다.
-            HSpeed = CalcPlayerMoveMulti(SpeedMultiTypeX, SpeedLocationTypeX, HSpeed);
-            VSpeed = CalcPlayerMoveMulti(SpeedMultiTypeY, SpeedLocationTypeY, VSpeed);
-
-            //4. 특정 값 (1)이 넘어가지 못하도록 고정합니다.
-            HSpeed = CalcPlusMinus(HSpeed);
-            VSpeed = CalcPlusMinus(VSpeed);
-
-            animator.SetFloat("DirectionX", HSpeed);
-            animator.SetFloat("DirectionY", VSpeed);
-
-
-
-
-
-            /* Debug.Log("SpeedLocationTypeX : " + (EnumSpeedLocation)SpeedLocationTypeX);
-             Debug.Log("SpeedLocationTypeY : " + (EnumSpeedLocation)SpeedLocationTypeY);
-             Debug.Log("SpeedMultiX : " + (EnumSpeedMulti)SpeedMultiTypeX);
-             Debug.Log("SpeedMultiY : " + (EnumSpeedMulti)SpeedMultiTypeY);*/
-            
-
-            // 2. 기본 값.
-            // 기존에 + 로 가고있는데 , - 값이 들어오면 반대방향으로 .  + 배속 
-            // none이 들어오면 none으로. + 일반. 
-            // 기존에 +로 가고있는데 , + 로 들어오면 / 기존 유지.
-
-            // 기존에 - 로 가고있는데, +값이 들어오면 반대방향으로, + 배속
-            // none이 들어오면 none으로,  + 일반.
-            // 기존에 - 로 가고있는데, -로 들어오면 기존 유지.
-
-            // 기존에 none 인데, + 들어오면 +으로, 일반
-            // 기존에 none인데, - 들어오면 -으로 , 일반
-            // 기;존에 none인데, none으로 들어오면 ㅇnone. 
-
-            //   사용해야 할 것 :  + - 0  / 배속 여부
-
-            // 반대방향? 
-
-
-
-
+                animator.SetFloat("DirectionX", HSpeed);
+                animator.SetFloat("DirectionY", VSpeed);
+           
         }
     }
 
     // 플레이어가 마우스 x축으로 이동하는지에 대한 여부.
-    void PlayerRotateX()
+    void SetPlayerRotateX()
     {
-        if (PlayerCamera.GetCameraModeType() == PlayerCamera.EnumCameraMode.FOLLOW)
+        if (PlayerCamera.GetCameraModeType() != PlayerCamera.EnumCameraMode.FREE)
         {
-            transform.Rotate(Vector3.up * Time.deltaTime * RotationSpeed * Input.GetAxis("Mouse X"));
+            float atan2 = 0.0f;
+
+            Vector3 v3 = transform.rotation.eulerAngles;
+
+            PlayerRotateEuler += Input.GetAxis("Mouse X") * RotationSpeed * Time.deltaTime;
+            
+
+            // 전력질주 상태
+           // if (ps.GetPlayerCondition() == PlayerState.ConditionEnum.SPEEDRUN)
+            
+                atan2 = Mathf.Atan2(animator.GetFloat("DirectionX"), animator.GetFloat("DirectionY")) * Mathf.Rad2Deg;
+
+            float v4 = PlayerRotateEuler + atan2;
+
+            transform.rotation = Quaternion.Euler(v3.x,v4, v3.z);
         }
     }
 
@@ -291,23 +222,6 @@ public partial class PlayerMove
                 SpeedLocationTypeX = EnumSpeedLocation.MINUS;
             }
         }
-
-        // 2. 기본 값.
-        // 기존에 + 로 가고있는데 , - 값이 들어오면 반대방향으로 .  + 배속 
-        // none이 들어오면 none으로. + 일반. 
-        // 기존에 +로 가고있는데 , + 로 들어오면 / 기존 유지.
-
-        // 기존에 - 로 가고있는데, +값이 들어오면 반대방향으로, + 배속
-        // none이 들어오면 none으로,  + 일반.
-        // 기존에 - 로 가고있는데, -로 들어오면 기존 유지.
-
-        // 기존에 none 인데, + 들어오면 +으로, 일반
-        // 기존에 none인데, - 들어오면 -으로 , 일반
-        // 기;존에 none인데, none으로 들어오면 ㅇnone. 
-
-        //   사용해야 할 것 :  + - 0  / 배속 여부
-
-        // 반대방향? 
     }
 
     void CalcKey_Y(float aniKey, float key)
@@ -370,17 +284,6 @@ public partial class PlayerMove
 
     float SetMoveAnimation(float NowSpeed, float aniKey)
     {
-        //  현재 위치가 + 인데 - 입력이 들어오면 - 
-        // 현재 위치가 + 인데 0 입력이 들어오면 - , 0일경우 0
-        // 현재 위치가 + 인데 + 입력이 들어오면 +
-
-        // 현재 위치가 0 인데 - 입력이 들어오면 -
-        // 현재 위치가 0 인데 0 입력이 들어오면 0
-        // 현재 위치가 0 인데 + 위치가 들어오면 + 
-
-        // 현재 위치가 - 인데 - 입력이 들어오면 -
-        // 현재 위치가 - 인데 0 입력이 들어오면 +
-        // 현재 위치가 - 인데 + 입력이 들어오면 +
 
         if (NowSpeed > 0)
         {
@@ -442,12 +345,6 @@ public partial class PlayerMove
         {
             if (esl == EnumSpeedLocation.PLUS)
             {
-                // AniSpeedUp 애니속도
-                // SpeedUp 추가가속도
-                // Speed 원래가속도
-                // (AniSpeedUp) * Time.deltaTime; 원래공식
-                // (AniSpeedUp) * Time.deltaTime * Speed
-               // AniSpeedUp * SppedMulti
                 Speed += AniSpeedUp * SpeedMulti * Time.deltaTime;
             }
             else if (esl == EnumSpeedLocation.MINUS)

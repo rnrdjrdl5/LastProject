@@ -4,20 +4,6 @@ using UnityEngine;
 
 
 
-public class SinClass
-{
-    public static SinClass instance;
-    public void Awake()
-    {
-        SinClass.instance = this;
-    }
-
-    private CollisionObjectDamage collisionObjectDamage;
-    private CollisionDamagedDebuff collisionDamagedDebuff;
-    private CollisionObject collisionObject;
-
-
-}
 
 public partial class PlayerManager
 {
@@ -40,6 +26,7 @@ public partial class PlayerManager
             GameObject pc = GameObject.Find("PlayerCamera");
             pc.GetComponent<PlayerCamera>().PlayerObject = gameObject;
             pc.GetComponent<PlayerCamera>().isPlayerSpawn = true;
+            pc.GetComponent<PlayerCamera>().SetPlayerMove(gameObject.GetComponent<PlayerMove>());
         }        
 
     }
