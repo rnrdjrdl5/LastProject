@@ -42,7 +42,6 @@ public class TestPhotonManager : Photon.PunBehaviour
     {
         isJoinRoom = true;
         Debug.Log("방접속완료");
-        CurrentPlayer = PhotonNetwork.Instantiate("MouseRunner", PlayerSpawnLocation.transform.position, Quaternion.identity, 0);
         if (PhotonNetwork.isMasterClient)
         {
            // SpawnObject();
@@ -81,7 +80,7 @@ public class TestPhotonManager : Photon.PunBehaviour
                 }
 
                 //CurrentPlayer = PhotonNetwork.Instantiate("12Box", PlayerSpawnLocation.transform.position, Quaternion.identity, 0);
-//                CurrentPlayer = PhotonNetwork.Instantiate("MouseRunner", PlayerSpawnLocation.transform.position, Quaternion.identity, 0);
+                CurrentPlayer = PhotonNetwork.Instantiate("MouseRunner", PlayerSpawnLocation.transform.position, Quaternion.identity, 0);
             }
 
 

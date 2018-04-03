@@ -2519,6 +2519,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cb0fadea2dc7d647b5bd93acf3e956d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerCondition: 2
   PlaceObject: {fileID: 0}
 --- !u!114 &114663676283799120
 MonoBehaviour:
@@ -2533,10 +2534,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coolDown:
     MaxCoolDown: 0
-  skillConditionOption:
-    SkillConditionType: 0
-  skillContinueConditionOption:
-    skillContinueConditionType: 1
   InputKey:
     SkillKeyType: 9
   ExitInputKey:
@@ -2544,7 +2541,7 @@ MonoBehaviour:
   ManaCost: 0
   CtnManaCost: 0
   PlayerSkillDebuffs: []
-  PlayerRunSpeed: 20
+  PlayerRunSpeed: 8
 --- !u!114 &114666046391730084
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2568,8 +2565,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerCamera: {fileID: 0}
-  PlayerSpeed: 10
-  PlayerBackSpeed: 5
+  PlayerSpeed: 7
+  PlayerBackSpeed: 4
   RotationSpeed: 100
   SpeedMulti: 2
   AniSpeedUp: 3

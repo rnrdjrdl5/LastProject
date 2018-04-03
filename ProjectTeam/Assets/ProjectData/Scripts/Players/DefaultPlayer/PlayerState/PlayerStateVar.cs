@@ -13,7 +13,7 @@ public partial class PlayerState
      , THROW_FRYING_PAN
     , INTERACTION , };
 
-    private ConditionEnum   PlayerCondition         = ConditionEnum.IDLE;
+    public ConditionEnum   PlayerCondition         = ConditionEnum.IDLE;
 
 
     public ConditionEnum GetPlayerCondition() { return PlayerCondition; }

@@ -2582,9 +2582,6 @@ MonoBehaviour:
   - Type: 1
     SynchronizeType: 2
     Name: DirectionY
-  - Type: 9
-    SynchronizeType: 0
-    Name: ThrowFryingPanTrigger
   - Type: 4
     SynchronizeType: 0
     Name: isAttack
@@ -2700,17 +2697,13 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1594536913109006}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dd796efe09aa037478c0e9e70a62f9a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   coolDown:
     MaxCoolDown: 0
-  skillConditionOption:
-    SkillConditionType: 0
-  skillContinueConditionOption:
-    skillContinueConditionType: 0
   InputKey:
     SkillKeyType: 6
   ExitInputKey:
@@ -2734,11 +2727,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerCamera: {fileID: 0}
-  PlayerSpeed: 10
+  PlayerSpeed: 9
   PlayerBackSpeed: 5
   RotationSpeed: 100
-  SpeedMulti: 0
-  AniSpeedUp: 2
+  SpeedMulti: 1.5
+  AniSpeedUp: 3
 --- !u!114 &114251085692725518
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2786,17 +2779,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coolDown:
     MaxCoolDown: 0
-  skillConditionOption:
-    SkillConditionType: 0
-  skillContinueConditionOption:
-    skillContinueConditionType: 0
   InputKey:
     SkillKeyType: 5
   ExitInputKey:
     SkillKeyType: 0
   ManaCost: 0
   CtnManaCost: 0
-  PlayerSkillDebuffs: []
+  PlayerSkillDebuffs:
+  - SkillDebuffType: 1
+    MaxTime: 0.1
   projectileState:
     ProjectileObject: {fileID: 1023685096185302, guid: b64f962fb79dc874e910ba8ec12d09cd,
       type: 2}
@@ -2817,6 +2808,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cb0fadea2dc7d647b5bd93acf3e956d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerCondition: 2
   PlaceObject: {fileID: 0}
 --- !u!114 &114770019283035418
 MonoBehaviour:
@@ -2831,21 +2823,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coolDown:
     MaxCoolDown: 0
-  skillConditionOption:
-    SkillConditionType: 0
-  skillContinueConditionOption:
-    skillContinueConditionType: 0
   InputKey:
     SkillKeyType: 0
   ExitInputKey:
     SkillKeyType: 0
   ManaCost: 0
   CtnManaCost: 0
-  PlayerSkillDebuffs:
-  - SkillDebuffType: 1
-    MaxTime: 1
+  PlayerSkillDebuffs: []
   attackState:
-    AttackDamage: 10
+    AttackDamage: 20
     DamageNumber: 10
     RecheckTime: 1
   FryPan: {fileID: 1939484723374934}

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewCatAttack : DefaultNewSkill {
+public class NewCatAttack : DefaultNewSkill{
 
     // 공격에 대한 정보가 있는 스크립트입니다.
     public AttackState attackState;
@@ -24,9 +24,17 @@ public class NewCatAttack : DefaultNewSkill {
     private CollisionObjectDamage collisionObjectDamage;
 
 
+    protected override void Awake()
+    {
+        base.Awake();
+
+        defaultCdtAct = new NormalCdtAct();
+        defaultCdtAct.InitCondition(this);
+    }
+
 
     // 공격 조건을 재정의합니다.
-    protected override bool CheckState()
+    public override bool CheckState()
     {
 
         if ((playerState.EqualPlayerCondition(PlayerState.ConditionEnum.IDLE) ||
@@ -44,17 +52,17 @@ public class NewCatAttack : DefaultNewSkill {
 
 
     // 공격 액션을 재정의합니다.
-    protected override void UseSkill()
+    public override void UseSkill()
     {
+
         isCanAttack = false;
-        animator.SetBool("isAttack", true);
+        animator.SetBool("isAttack", true);                 // 공격은 Animation View에서 처리하지 않음. 빨라서 공격이 씹히는 경우도 있음.
         photonView.RPC("RPCisAttack", PhotonTargets.Others);
 
     }
 
 
     // RPC입니다.
-
     [PunRPC]
     void RPCisAttack()
     {
@@ -65,6 +73,7 @@ public class NewCatAttack : DefaultNewSkill {
     // 애니메이션 이벤트입니다.
     void ResetCanAttack()
     {
+        Debug.Log("초기화");
         isCanAttack = true;
     }
 

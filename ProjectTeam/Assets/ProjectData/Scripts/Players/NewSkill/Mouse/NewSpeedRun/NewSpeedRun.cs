@@ -20,6 +20,23 @@ public class NewSpeedRun : DefaultNewSkill {
     private PlayerMove playerMove;               // 플레이어 이동 스크립트
     private PlayerCamera playerCamera;          // 플레이어 카메라 스크립트
 
+    /**** 접근자 ****/
+
+    public PlayerMove GetplayerMove() { return playerMove; }
+    public void SetplayerMove(PlayerMove PM) { playerMove = PM; }
+
+    public float GetPlayerOriginalSpeed() { return PlayerOriginalSpeed; }
+    public void SetPlayerOriginalSpeed(float OS) { PlayerOriginalSpeed = OS; }
+
+    public float GetPlayerOriginalBackSpeed() { return PlayerOriginalBackSpeed; }
+    public void SetPlayerOriginalBackSpeed(float OB) { PlayerOriginalBackSpeed = OB; }
+
+    public float GetOriginalAniSpeed() { return OriginalAniSpeed; }
+    public void SetOriginalAniSpeed(float AS) { OriginalAniSpeed = AS; }
+
+    public float GetCheckTime() { return CheckTime; }
+    public void SetCheckTime(float CT) { CheckTime = CT; }
+
 
 
     protected override void Awake()
@@ -27,6 +44,10 @@ public class NewSpeedRun : DefaultNewSkill {
 
         // 부모에서 설정
         base.Awake();
+
+        // 스킬 스크립트 설정
+        defaultCdtAct = new RunCdtAct();
+        defaultCdtAct.InitCondition(this);
 
         // 스크립트 설정
         playerMove = gameObject.GetComponent<PlayerMove>();
@@ -37,7 +58,7 @@ public class NewSpeedRun : DefaultNewSkill {
     }
 
 
-    protected override bool CheckState()
+    public override bool CheckState()
     {
         //이동중이거나 가만히 있을 때 가능합니다.
         if (playerState.EqualPlayerCondition(PlayerState.ConditionEnum.RUN))
@@ -49,7 +70,7 @@ public class NewSpeedRun : DefaultNewSkill {
             return false;
     }
 
-    protected override void UseSkill()
+    public override void UseSkill()
     {
         
         // 1. 플레이어 기존 이동속도 저장
@@ -74,7 +95,7 @@ public class NewSpeedRun : DefaultNewSkill {
         animator.SetBool("isSpeedRun", true);
     }
 
-    protected override bool CheckCtnState()
+    public override bool CheckCtnState()
     {
 
 
@@ -94,7 +115,7 @@ public class NewSpeedRun : DefaultNewSkill {
 
     }
 
-    protected override void UseCtnSkill()
+    public override void UseCtnSkill()
     {
         if (animator.GetFloat("DirectionX") == 0 &&
             animator.GetFloat("DirectionY") == 0)
@@ -107,9 +128,9 @@ public class NewSpeedRun : DefaultNewSkill {
         }
     }
 
-    protected override void ExitCtnSkill()
+    public override void ExitCtnSkill()
     {
-
+        Debug.Log("사라짐");
 
         // 1. 이동속도 원래대로 돌림
         playerMove.PlayerSpeed = PlayerOriginalSpeed;

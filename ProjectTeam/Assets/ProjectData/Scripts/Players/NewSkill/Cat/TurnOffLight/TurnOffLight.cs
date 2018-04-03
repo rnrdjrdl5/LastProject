@@ -17,7 +17,7 @@ public class TurnOffLight : DefaultNewSkill
         InGameCanvas = GameObject.Find("InGameCanvas").gameObject;
     }
 
-    protected override bool CheckState()
+    public override bool CheckState()
     {
         //이동중이거나 가만히 있을 때 가능합니다.
         if ((
@@ -31,7 +31,7 @@ public class TurnOffLight : DefaultNewSkill
             return false;
     }
 
-    protected override void UseSkill()
+    public override void UseSkill()
     {
         photonView.RPC("RPCTurnOffLight", PhotonTargets.Others);
         Debug.Log("스킬시작");

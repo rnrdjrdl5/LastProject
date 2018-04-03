@@ -114,4 +114,5 @@ MonoBehaviour:
   - RPCRetunDontSkill
   - RPCOnCanFirstCheck
   - NoCollisionObject
+  - RPCCreateFryingPan
   DisableAutoOpenWizard: 1

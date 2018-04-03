@@ -19,19 +19,11 @@ public class SkillContinueConditionOption{
     private DefaultSkillContinueConditionOption skillConditionContinueOption;
 
     public DefaultSkillContinueConditionOption GetskillConditionContinueOption() { return skillConditionContinueOption; }
-
+    public void SetskillConditionContinueOption(DefaultSkillContinueConditionOption DSCO) { skillConditionContinueOption = DSCO; }
 
     // 처음으로 열거형에 따라서 스킬 조건 스크립트를 초기화합니다.
-    public void InitSkillConditionOption(DefaultNewSkill DS)
+    public void InitDefaultSkill(DefaultNewSkill DS)
     {
-        // 1. 조건 스크립트를 초기화합니다.
-        if (EqualSkillConditionType(EnumSkillContinueConditionOption.NONE))
-            skillConditionContinueOption = new NoneCtnCdtOption();
-
-        else if (EqualSkillConditionType(EnumSkillContinueConditionOption.CHANNELING))
-            skillConditionContinueOption = new ChannelingCtnCdtOption();
-        else
-            Debug.Log("에러");
 
         // 2. 스크립트의 정보값을 대입합니다.
         skillConditionContinueOption.SettingDefaultNewSkill(DS);
