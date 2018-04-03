@@ -184,7 +184,7 @@ public class PlayerCamera : MonoBehaviour {
             transform.position = new Vector3(transform.position.x, transform.position.y + CameraHeightFromFloor, transform.position.z);
 
             // 오브젝트에 카메라 시야가 가려지면 카메라 위치 재조정
-            transform.position = PTL.FindWall(PlayerObject);
+           // transform.position = PTL.FindWall(PlayerObject);
             
 
 

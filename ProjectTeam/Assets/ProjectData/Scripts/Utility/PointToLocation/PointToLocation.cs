@@ -93,8 +93,8 @@ public class PointToLocation{
         if (Physics.Raycast(PlayerCamera.transform.position + MouseVector3.normalized * cameraScript.CameraDistanceTriangle,
             MouseVector3, out hit, MaxLocationDistance, 1 << LayerMask.NameToLayer("MainObject")))
         {
-            Debug.DrawRay(PlayerCamera.transform.position + MouseVector3.normalized * Distance,
-MouseVector3 * MaxLocationDistance, Color.red, 1.0f);
+            /*Debug.DrawRay(PlayerCamera.transform.position + MouseVector3.normalized * Distance,
+MouseVector3 * MaxLocationDistance, Color.red, 1.0f);*/
             return hit.collider.gameObject;
             
         }
@@ -160,7 +160,7 @@ MouseVector3 * MaxLocationDistance, Color.red, 1.0f);
     
 
 
-    private Vector3 FindMouseCursorPosition(GameObject UseObject , GameObject PlayerCamera)
+    public Vector3 FindMouseCursorPosition(GameObject UseObject , GameObject PlayerCamera)
     {
         Quaternion q2 = Quaternion.Euler(0,
             UseObject.transform.eulerAngles.y, 0);

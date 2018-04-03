@@ -7,7 +7,7 @@ public partial class PlayerHealth
     private float MaxHealth = 100.0f;   // 최대체력
     private float NowHealth = 100.0f;   // 현재체력
 
-    private float RecvHealth = 0.0f;      // 다른 클라이언트로부터 받아온 체력
+    private float RecvHealth = 100.0f;      // 다른 클라이언트로부터 받아온 체력
 
 
 

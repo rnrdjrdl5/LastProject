@@ -132,11 +132,18 @@ public class DefaultNewSkill : MonoBehaviour {
                 CSD.SetMaxTime(PlayerSkillDebuffs[i].GetMaxTime());
             }
 
-            else if(PlayerSkillDebuffs[i].EqualSkillDebuffType(DefaultPlayerSkillDebuff.EnumSkillDebuff.DAMAGED))
+            else if (PlayerSkillDebuffs[i].EqualSkillDebuffType(DefaultPlayerSkillDebuff.EnumSkillDebuff.DAMAGED))
             {
                 CollisionDamagedDebuff CDD = CollisionObject.AddComponent<CollisionDamagedDebuff>();
                 CDD.SetMaxTime(PlayerSkillDebuffs[i].GetMaxTime());
             }
+
+            else if (PlayerSkillDebuffs[i].EqualSkillDebuffType(DefaultPlayerSkillDebuff.EnumSkillDebuff.NOTMOVE))
+            {
+                CollisionNotMoveDebuff CNMD = CollisionObject.AddComponent<CollisionNotMoveDebuff>();
+                CNMD.SetMaxTime(PlayerSkillDebuffs[i].GetMaxTime());
+            }
+
                 
         }
     }

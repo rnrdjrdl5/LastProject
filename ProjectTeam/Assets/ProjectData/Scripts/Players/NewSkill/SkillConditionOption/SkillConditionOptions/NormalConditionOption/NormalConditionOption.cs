@@ -18,23 +18,20 @@ public class NormalConditionOption : DefaultSkillConditionOption {
 
                         //4. 쿨타임 사용중이지 않을 때
 
-                      /*  if (!defaultSkill.coolDown.GetisUseCoolDown())
-                        {*/
+                        if (!defaultSkill.coolDown.GetisUseCoolDown())
+                        {
 
                             return true;
 
-                        /*}
+                        }
                         else
                         {
                             Debug.Log("쿨타임중" + defaultSkill.coolDown.GetNowCoolDown());
                             Debug.Log("쿨타임중" + defaultSkill.coolDown.MaxCoolDown);
 
-                        }*/
+                        }
                     }
-                    else
-                        Debug.Log("마나부족");
                 }
-                Debug.Log("키 안눌림");
 
             }
             

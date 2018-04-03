@@ -73,7 +73,6 @@ public class NewCatAttack : DefaultNewSkill{
     // 애니메이션 이벤트입니다.
     void ResetCanAttack()
     {
-        Debug.Log("초기화");
         isCanAttack = true;
     }
 

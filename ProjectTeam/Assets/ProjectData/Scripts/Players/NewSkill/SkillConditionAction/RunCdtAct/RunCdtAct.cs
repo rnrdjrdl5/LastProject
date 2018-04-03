@@ -6,7 +6,7 @@ public class RunCdtAct : DefaultConditionAction
 {
     public override void InitCondition(DefaultNewSkill DNS)
     {
-        // 스킬 조건 스크립트 초기화
+        // 스킬 조건 스크립트 인스턴스화
         base.InitCondition(DNS);
 
         // 스킬 스크립트 설정
@@ -113,5 +113,8 @@ public class RunCdtAct : DefaultConditionAction
                 }
             }
         }
+
+        // 스킬 쿨타임 갱신
+        defaultNewSkill.coolDown.DecreaseCoolDown();
     }
 }

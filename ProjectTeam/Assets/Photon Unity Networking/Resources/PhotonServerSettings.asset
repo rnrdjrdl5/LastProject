@@ -115,4 +115,5 @@ MonoBehaviour:
   - RPCOnCanFirstCheck
   - NoCollisionObject
   - RPCCreateFryingPan
+  - RPCCreateTrap
   DisableAutoOpenWizard: 1

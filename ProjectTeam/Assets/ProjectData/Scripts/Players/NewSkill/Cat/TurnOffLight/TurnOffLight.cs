@@ -15,6 +15,9 @@ public class TurnOffLight : DefaultNewSkill
         base.Awake();
 
         InGameCanvas = GameObject.Find("InGameCanvas").gameObject;
+
+        defaultCdtAct = new NormalCdtAct();
+        defaultCdtAct.InitCondition(this);
     }
 
     public override bool CheckState()

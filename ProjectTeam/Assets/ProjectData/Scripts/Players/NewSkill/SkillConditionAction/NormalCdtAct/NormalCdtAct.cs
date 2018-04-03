@@ -27,7 +27,7 @@ public class NormalCdtAct : DefaultConditionAction
         
         // 플레이어 스킬 사용 조건
 
-        // 이부분이 에러.
+        // 스킬조건
         if(skillConditionOption.CheckCondition())
         {
             // 플레이어 상태 확인
@@ -47,8 +47,9 @@ public class NormalCdtAct : DefaultConditionAction
                 defaultNewSkill.GetmanaPoint().CalcManaPoint(defaultNewSkill.ManaCost);
             }
         }
-        
 
+        // 스킬 쿨타임 갱신
+        defaultNewSkill.coolDown.DecreaseCoolDown();
     }
 
 }

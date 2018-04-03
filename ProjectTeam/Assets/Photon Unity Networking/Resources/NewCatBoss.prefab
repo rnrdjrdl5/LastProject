@@ -749,6 +749,7 @@ GameObject:
   - component: {fileID: 114770019283035418}
   - component: {fileID: 114446830042908978}
   - component: {fileID: 114230956385770906}
+  - component: {fileID: 114055391085282848}
   m_Layer: 12
   m_Name: NewCatBoss
   m_TagString: Boss
@@ -2585,6 +2586,9 @@ MonoBehaviour:
   - Type: 4
     SynchronizeType: 0
     Name: isAttack
+  - Type: 4
+    SynchronizeType: 0
+    Name: isThrowFryingPan
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0
@@ -2653,6 +2657,36 @@ MonoBehaviour:
     InterpolateOption: 0
     InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 0
+--- !u!114 &114055391085282848
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1594536913109006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96bf52e899f27ef49bd8a77d82296754, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coolDown:
+    MaxCoolDown: 0
+  InputKey:
+    SkillKeyType: 1
+  ExitInputKey:
+    SkillKeyType: 0
+  ManaCost: 0
+  CtnManaCost: 0
+  PlayerSkillDebuffs:
+  - SkillDebuffType: 2
+    MaxTime: 3
+  trapState:
+    ProjectileObject: {fileID: 1020411345617866, guid: c01f2e09ade0de44ea70875716367116,
+      type: 2}
+    ObjectDamage: 10
+    ObjectDamageNumber: 1
+    CollisionNumber: 1
+    ReCheckTime: 1000
+    DestroyTime: 3
 --- !u!114 &114081964015991556
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2697,7 +2731,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1594536913109006}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dd796efe09aa037478c0e9e70a62f9a6, type: 3}
   m_Name: 
