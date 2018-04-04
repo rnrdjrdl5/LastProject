@@ -5,27 +5,28 @@ using UnityEngine.UI;
 
 public class PhotonManager : Photon.PunBehaviour {
 
-    
-    public GameObject PlayerObject; // 플레이어 객체의 함수를 사용하기 위해 사용. 생성 시 할당
-    public GameObject UICanvas; // UI 삭제용
+    public List<GameObject> GamePlayers;                // 게임 플레이어들
 
-    public GameObject ResultPanel; // UI 생성, 결과창 용.
-    public GameObject ResultObject; // 확인용
+
+
+    
+    public GameObject PlayerObject;                 // 플레이어 객체의 함수를 사용하기 위해 사용. 생성 시 할당
+    public GameObject UICanvas;                 // UI 삭제용
+    public GameObject ResultPanel;              // UI 생성, 결과창 용.
+    public GameObject ResultObject;              // 확인용
+    public GameObject playerCamera;             // 레이캐스트용 카메라
 
     public PointToLocation PTL;             // 레이캐스트용 
-
-    public GameObject playerCamera;             // 레이캐스트용 카메라
     public PlayerCamera cameraScript;
 
-    public string hitName;               // 맞은사람이름
-    public float hitDistance;           // 맞은거리
+    public string Version = "ffffqqqqqqq";              // 버전
+    public string hitName;                           // 맞은사람이름
+    public float hitDistance;                       // 맞은거리
+    public bool isGameStart = false;                // 게임 시작 여부
 
 
-    public string Version = "ffffqqqqqqq";
 
-    public bool isGameStart = false;
-
-    private float TimeCount = 0;
+    private float TimeCount = 10000;
     public void SetTimeCount(float TC) { TimeCount = TC; }
     public float GetTimeCount() { return TimeCount; }
 
@@ -46,6 +47,8 @@ public class PhotonManager : Photon.PunBehaviour {
         BossPlayerCount = 0;
 
         PTL = new PointToLocation();
+
+        GamePlayers = new List<GameObject>();
         
     }
 
@@ -53,18 +56,44 @@ public class PhotonManager : Photon.PunBehaviour {
     void Start () {
 
     }
-	
+
+
+    [PunRPC]
+    void DestroyAllPlayer()
+    {
+        playerCamera.GetComponent<PlayerCamera>().isPlayerSpawn = false;
+        if (PlayerObject != null)
+        {
+            Destroy(PlayerObject.GetComponent<PlayerUI>().GetUIObject());
+
+            PhotonNetwork.Destroy(PlayerObject);
+        }
+
+
+        TimeCount = 0;
+    }
     
 
-	// Update is called once per frame
-	void Update () {
+    // Update is called once per frame
+    void Update() {
+
+        Debug.Log(GamePlayers.Count);
+
         //Debug.Log(PhotonNetwork.isMasterClient);
         if (PhotonNetwork.isMasterClient)
         {
-           
-            if (Input.GetKeyDown(KeyCode.T) && !isGameStart)
+            if (TimeCount < 95 && TimeCount > 0)
             {
-                
+                if (GamePlayers.Count == 0)
+                {
+                    photonView.RPC("DestroyAllPlayer",PhotonTargets.All);
+                }
+            }
+
+
+                if (Input.GetKeyDown(KeyCode.T) && !isGameStart)
+            {
+
                 if (PhotonNetwork.room.PlayerCount >= 1)
                 {
                     int BossPlayerNumber = Random.Range(0, PhotonNetwork.room.PlayerCount);
@@ -74,7 +103,7 @@ public class PhotonManager : Photon.PunBehaviour {
 
                     foreach (PhotonPlayer PP in PhotonNetwork.playerList)
                     {
-                        if(PP == PhotonNetwork.playerList[BossPlayerNumber])
+                        if (PP == PhotonNetwork.playerList[BossPlayerNumber])
                         {
                             PP.SetCustomProperties(isBossPlayer);
                         }
@@ -85,25 +114,20 @@ public class PhotonManager : Photon.PunBehaviour {
                         // 마스터에서 다른애들로 변경불가인거같네.
                         //PP.NickName = "Player 1";
                     }
-                    
+
 
                     photonView.RPC("CallSetisGameStart", PhotonTargets.All, true);
-                    photonView.RPC("CreateGamePlayer", PhotonTargets.All,BossPlayerNumber);
-                    photonView.RPC("SetCount", PhotonTargets.All , PlayerTime);
+                    photonView.RPC("CreateGamePlayer", PhotonTargets.All, BossPlayerNumber);
+                    photonView.RPC("SetCount", PhotonTargets.All, PlayerTime);
 
                     photonView.RPC("RPCDestroyResultUI", PhotonTargets.All);
-
-                  /*  if (ResultObject!= null)
-                    {
-                        Destroy(ResultObject);
-                    }*/
 
 
 
                 }
-                
+
             }
-            if(Input.GetKeyDown(KeyCode.Delete))
+            if (Input.GetKeyDown(KeyCode.Delete))
             {
 
 
@@ -114,7 +138,7 @@ public class PhotonManager : Photon.PunBehaviour {
         }
 
         // 숫자 카운트
-        if(TimeCount > 0 )
+        if (TimeCount > 0)
         {
             TimeCount -= Time.deltaTime;
             if (TimeCount <= 0)
@@ -124,41 +148,19 @@ public class PhotonManager : Photon.PunBehaviour {
             }
         }
 
-        if (PhotonNetwork.isMasterClient)
-        {
-            if (TimeCount > 0 && TimeCount < 95)
-            {
-                if(TeamsPlayerCount <= 0)
-                {
-                    photonView.RPC("DestroyAllPlayer", PhotonTargets.All);
-                    photonView.RPC("CallSetisGameStart", PhotonTargets.All, false);
-                    photonView.RPC("ResetBossTeams", PhotonTargets.All);
+        /* photonView.RPC("CallSetisGameStart", PhotonTargets.All, false);
+         photonView.RPC("ResetBossTeams", PhotonTargets.All);
 
 
-                    //photonView.RPC("RPCInstantiateResult", PhotonTargets.All);
-                    StartCoroutine("WaitTime");
+         //photonView.RPC("RPCInstantiateResult", PhotonTargets.All);
+         StartCoroutine("WaitTime");*/
 
-                    //photonView.RPC("SetCount", PhotonTargets.All, 0);
-                    //  isGameStart = false;
-
-                }
-                else if(BossPlayerCount <= 0)
-                {
-                    photonView.RPC("DestroyAllPlayer", PhotonTargets.All);
-                    photonView.RPC("CallSetisGameStart", PhotonTargets.All, false);
-                    photonView.RPC("ResetBossTeams", PhotonTargets.All);
+        //photonView.RPC("SetCount", PhotonTargets.All, 0);
+        //  isGameStart = false;
 
 
-                    StartCoroutine("WaitTime");
 
-                    //photonView.RPC("RPCInstantiateResult", PhotonTargets.All);
-
-                    // photonView.RPC("SetCount", PhotonTargets.All, 0);
-                    //  isGameStart = false;
-                }
-
-            }
-        }
+    
 
         // 레이캐스트 발사
         if (Input.GetKeyDown(KeyCode.V))
@@ -192,6 +194,8 @@ public class PhotonManager : Photon.PunBehaviour {
 
 
     }
+    
+
 
     private void OnGUI()
     {
@@ -219,47 +223,8 @@ public class PhotonManager : Photon.PunBehaviour {
         isGameStart = GS;
     }
 
+   
 
-
-    [PunRPC]
-    void DestroyAllPlayer()
-    {
-        GameObject[] Gs=  GameObject.FindGameObjectsWithTag("Teams");
-
-        foreach(GameObject g in Gs)
-        {
-          if(g.GetComponent<PhotonView>().isMine)
-            {
-                GameObject.Find("PlayerCamera").GetComponent<PlayerCamera>().isPlayerSpawn = false;
-
-                PhotonNetwork.Destroy(g);
-
-                Destroy(g.GetComponent<PlayerUI>().GetUIObject());
-            }
-        }
-
-
-        Gs = GameObject.FindGameObjectsWithTag("Boss");
-
-        foreach (GameObject g in Gs)
-        {
-            if (g.GetComponent<PhotonView>().isMine)
-            {
-                GameObject.Find("PlayerCamera").GetComponent<PlayerCamera>().isPlayerSpawn = false;
-
-                PhotonNetwork.Destroy(g);
-
-                Destroy(g.GetComponent<PlayerUI>().GetUIObject());
-            }
-        }
-
-        TimeCount = 0;
-    }
-
-    public void CallDestroyAllPlayer()
-    {
-        photonView.RPC("DestroyAllPlayer", PhotonTargets.All);
-    }
 
 
 
@@ -313,9 +278,7 @@ public class PhotonManager : Photon.PunBehaviour {
         Debug.Log("룸입장성공");
 
         PhotonNetwork.player.NickName = (System.Security.Principal.WindowsIdentity.GetCurrent().Name).Split('\\')[1];
-        Debug.Log(PhotonNetwork.player.NickName);
-
-        gameObject.AddComponent<PhotonView>();
+        Debug.Log(PhotonNetwork.player.NickName);        
 
 
 
@@ -465,6 +428,7 @@ public class PhotonManager : Photon.PunBehaviour {
             PhotonNetwork.player.SetTeam(PunTeams.Team.red);
 
             photonView.RPC("IncreaseBossCount", PhotonTargets.All, 1);
+
         }
 
         else if(PhotonNetwork.player.CustomProperties["Boss"] as string == "False")
@@ -473,10 +437,33 @@ public class PhotonManager : Photon.PunBehaviour {
             PhotonNetwork.player.SetTeam(PunTeams.Team.blue);
 
             photonView.RPC("IncreaseTeamsCount", PhotonTargets.All, 1);
+
+            photonView.RPC("RPCSetPlayerObject", PhotonTargets.All, PlayerObject.GetComponent<PhotonView>().viewID);
         }
 
         
     }
+
+    [PunRPC]
+    void RPCSetPlayerObject(int vID)
+    {
+        
+        // 팀 가진 오브젝트 찾기
+        GameObject[] Gs = GameObject.FindGameObjectsWithTag("MouseTeam");
+
+        for (int i = 0; i < Gs.Length; i++)
+        {
+            Debug.Log(Gs[i]);
+            if (Gs[i].GetComponent<PhotonView>().viewID == vID)
+            {
+                Debug.Log("리스트추가성공");
+                // 리스트에 추가
+                GamePlayers.Add(Gs[i]);
+            }
+        }
+    }
+
+
 
     [PunRPC]
     void SetCount(float time)

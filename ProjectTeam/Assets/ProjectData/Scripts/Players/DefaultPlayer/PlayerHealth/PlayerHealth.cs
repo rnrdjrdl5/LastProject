@@ -5,32 +5,32 @@ using UnityEngine;
 public partial class PlayerHealth : Photon.PunBehaviour, IPunObservable
 {
 
-	// Use this for initialization
-	private void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	private void Update () {
-
-        SyncHealth();
-
-        isDead();
-
-        
-
-    }
-
-    private void FixedUpdate()
+    private void Awake()
     {
+        // 플레이어 카메라 초기화
+        playerCamera = GameObject.Find("PlayerCamera").GetComponent<PlayerCamera>();
+
+        // 플레이어 UI 초기화
+        playerUI = gameObject.GetComponent<PlayerUI>();
+
+        // 포톤 매니저 받아옴.
+        photonManager = GameObject.Find("PhotonManager").GetComponent<PhotonManager>();
+
 
     }
 
     void IPunObservable.OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        SendHealthData(stream);
 
-        RecvHealthData(stream);
+        
+        if (stream.isWriting)
+        {
+            stream.SendNext(NowHealth);
+        }
+
+        else
+            NowHealth = (float)stream.ReceiveNext();
+
     }
 
 

@@ -14,38 +14,68 @@ using UnityEngine;
 // PlayerCheckCollision : 플레이어 충돌체크 컴포넌트.
 
 
+ /************************************
+  * 2018.04.04 갱신
+  *  - 리팩토링 실시
+  *  - GetComponent의 호출 수를 줄임
+  ***********************************/
 
-public class BaseCollision : Photon.PunBehaviour {
+public class BaseCollision : Photon.PunBehaviour{
 
-    // Damage 피격 애니메이션 랜덤 적용 용도, 추가 시 개선 바람.
-    // 0 : 중립
-    // 1~ n  : 랜덤 경우의 수
-    // 10 : 탈출 수.
-    private const int GroggyType = 1;
+
+
+    
+    private const int GroggyType = 1;               // 데미지 피격 타입
+
+    private PlayerHealth playerHealth;              // 플레이어 체력 스크립트
+
+    private PlayerState playerState;                // 플레이어 상태
+
+    private Animator animator;              // 애니메이터 
+
+    private CollisionObject collisionObject;            // 충돌 오브젝트 스크립트
+
+    private void Awake()
+    {
+        
+        // 플레이어 체력 스크립트 받기
+        playerHealth = gameObject.GetComponent<PlayerHealth>();
+
+        // 플레이어 상태 받기
+        playerState = gameObject.GetComponent<PlayerState>();
+        
+        // 애니메이터 받기
+        animator = gameObject.GetComponent<Animator>();
+    }
+
+
 
     public void UseCollision(Collider other)
     {
 
+        // collisionObject 받아오기
+        collisionObject = other.gameObject.GetComponent<CollisionObject>();
 
-        // 충돌체크 있을 때 충돌체크 시도하면.
-        if (gameObject.GetComponent<PlayerInvincibilityBuff>() == null)
+        // 성공적으로 받음
+        if (collisionObject != null)
         {
 
-            if (other.gameObject.GetComponent<CollisionObject>() != null)
+            // 충돌체 주인 확인
+            if (collisionObject.GetUsePlayer() != "Player" + photonView.viewID)
             {
-                if (other.gameObject.GetComponent<CollisionObject>().GetUsePlayer() != "Player" + gameObject.GetComponent<PhotonView>().viewID)
+                
+                // 충돌 된적 없는 경우
+                if (!ReCheck(other))
                 {
-                    if (!ReCheck(other))
-                    {
+                   
+                    // 데미지 체크
+                    LeftApplyDamage(other);
 
-                        Debug.Log("충돌성공.");
+                    // 디버프 체크
+                    LeftDebuff(other);
 
-                        LeftApplyDamage(other);
-
-                        LeftDebuff(other);
-
-                        LeftNumberOfCollision(other);
-                    }
+                    // 최대 충돌횟수 체크
+                    LeftNumberOfCollision(other);
                 }
             }
         }
@@ -53,48 +83,51 @@ public class BaseCollision : Photon.PunBehaviour {
 
     private bool ReCheck(Collider other)
     {
-            
-        // 충돌체의 recheck를 모두 받아옵니다.
-            CollisionReCheck[] CRCs = other.gameObject.GetComponents<CollisionReCheck>();
 
-         // 루프를 돌립니다.
-            foreach (CollisionReCheck crc in CRCs)
+        // ReCheck 스크립트 받아옴
+        CollisionReCheck[] CRCs = other.gameObject.GetComponents<CollisionReCheck>();
+
+        // 충돌 이미 있는지 판단
+        foreach (CollisionReCheck crc in CRCs)
+        {
+
+            if (crc.GetPlayerObject() == gameObject)
             {
 
-            // 충돌체의 플레이어 오브젝트와 이 오브젝트와 동일하다면
-                if (crc.GetPlayerObject() == gameObject)
-                {
-                // 이미 있다.
-                Debug.Log("충돌체크 대기중.");
-                    return true;
-                }
+                // 있으면 true
+                return true;
             }
+        }
 
-            // 이후에 없으니까, 리체크 했다는 의미로 recheck등록해준다.
-          CollisionReCheck CRC = other.gameObject.AddComponent<CollisionReCheck>();
+        // 충돌 대기시간 추가
+        CollisionReCheck CRC = other.gameObject.AddComponent<CollisionReCheck>();
 
-        // 등록한 리체크의 정보를 등록합니다.
+        // 충돌대상 등록
         CRC.SetPlayerObject(gameObject);
-        // 시간도 설정합니다.
-        CRC.SetPlayerReCheckTime(other.gameObject.GetComponent<CollisionObject>().GetCollisionReCheckTime());
 
-        Debug.Log("충돌체크 등록성공");
-            return false;
+        // 충돌 재사용 대기시작 등록
+        CRC.SetPlayerReCheckTime(collisionObject.GetCollisionReCheckTime());
+
+        return false;
     }
     
     private void LeftNumberOfCollision(Collider other)
     {
-        if(other.gameObject.GetComponent<NumberOfCollisions>() != null)
+
+        // 충돌 횟수 받아옴
+        NumberOfCollisions numberOfCollisions = other.gameObject.GetComponent<NumberOfCollisions>();
+
+        // 충돌횟수 남았으면
+        if (numberOfCollisions != null)
         {
-
-            NumberOfCollisions NOC = other.gameObject.GetComponent<NumberOfCollisions>();
-
-            NOC.DeCreaseNumberOfCollisions();
+            // 감소
+            numberOfCollisions.DeCreaseNumberOfCollisions();
             
-            if(NOC.GetNumberOfCollisions() == 0)
+            // 충돌횟수 끝나면 삭제
+            if(numberOfCollisions.GetNumberOfCollisions() == 0)
             {
+
                 Destroy(other.gameObject);
-                Debug.Log("충돌체크 N회 완료 .삭제함.");
             }
                
 
@@ -103,74 +136,72 @@ public class BaseCollision : Photon.PunBehaviour {
 
     private void LeftApplyDamage(Collider other)
     {
-        if (other.gameObject.GetComponent<CollisionObjectDamage>() != null)
+        // 충돌 데미지 받아옴
+        CollisionObjectDamage collisionObjectDamage = other.gameObject.GetComponent<CollisionObjectDamage>();
+
+        // 받았는지 체크
+        if (collisionObjectDamage != null)
         {
 
-            // 누가 때렸는지 등록함.
-            gameObject.GetComponent<PlayerHealth>().SetEnemyObject(other.gameObject);
-
-            // 데미지 주기는 Master만.
+            // 마스터) 
             if (PhotonNetwork.isMasterClient)
             {
-                Debug.Log("데미지 : " + other.gameObject.GetComponent<CollisionObjectDamage>().GetObjectDamage());
 
-                gameObject.GetComponent<PlayerHealth>().CallApplyDamage(other.gameObject.GetComponent<CollisionObjectDamage>().GetObjectDamage());
+                // 데미지 주기
+                playerHealth.CallApplyDamage(collisionObjectDamage.GetObjectDamage());
+                Debug.Log("데미지 : " + collisionObjectDamage.GetObjectDamage());
             }
 
-            CollisionObjectDamage COD = other.gameObject.GetComponent<CollisionObjectDamage>();
+            // 데미지 충돌횟수 감소
+            collisionObjectDamage.DecreaseObjectDamageNumber();
 
-            COD.DecreaseObjectDamageNumber();
-
-            if(COD.GetObjectDamageNumber() == 0)
+            // 데미지 충돌횟수 확인
+            if(collisionObjectDamage.GetObjectDamageNumber() == 0)
             {
-                Destroy(other.gameObject.GetComponent<CollisionObjectDamage>());
-                Debug.Log("데미지 충돌 끝, 삭제.");
+
+                // 데미지 충돌 끝
+                Destroy(collisionObjectDamage);
             }
         }
     }
 
     private void LeftDebuff(Collider other)
     {
+
+        // 마스터)
         if (PhotonNetwork.isMasterClient)
         {
-            if(other.gameObject.GetComponent<CollisionPushDebuff>() != null)
+
+            // 디버프 받기
+            CollisionPushDebuff collisionPushDebuff = other.gameObject.GetComponent<CollisionPushDebuff>();
+            CollisionNotMoveDebuff collisionNotMoveDebuff = other.gameObject.GetComponent<CollisionNotMoveDebuff>();
+            CollisionStunDebuff collisionStunDebuff = other.gameObject.GetComponent<CollisionStunDebuff>();
+            CollisionDamagedDebuff collisionDamagedDebuff = other.gameObject.GetComponent<CollisionDamagedDebuff>();
+
+            // 충돌체들에 따른 버프 사용
+            if (collisionPushDebuff != null)
             {
-
-                photonView.RPC("RPCPushDebuff",PhotonTargets.All,
-                    other.gameObject.GetComponent<CollisionPushDebuff>().GetMoveDirection(),
-                    other.gameObject.GetComponent<CollisionPushDebuff>().GetMoveSpeed(),
-
-                    other.gameObject.GetComponent<CollisionPushDebuff>().GetMaxTime());
-                Debug.Log("테스트" + other.gameObject.GetComponent<CollisionPushDebuff>().GetMaxTime());
+                photonView.RPC("RPCPushDebuff",PhotonTargets.All, collisionPushDebuff.GetMoveDirection(), 
+                    collisionPushDebuff.GetMoveSpeed(), collisionPushDebuff.GetMaxTime());
             }
 
-            if(other.gameObject.GetComponent<CollisionNotMoveDebuff>() != null)
+            if(collisionNotMoveDebuff != null)
             {
-
-                photonView.RPC("RPCNotMoveDebuff", PhotonTargets.All,
-                    other.gameObject.GetComponent<CollisionNotMoveDebuff>().GetMaxTime()
-                    );
-                
-
+                photonView.RPC("RPCNotMoveDebuff", PhotonTargets.All, collisionNotMoveDebuff.GetMaxTime());
             }
 
-            if(other.gameObject.GetComponent<CollisionStunDebuff>() != null)
+            if(collisionStunDebuff != null)
             {
-                photonView.RPC("RPCStunDebuff", PhotonTargets.All,
-                    other.gameObject.GetComponent<CollisionStunDebuff>().GetMaxTime()
-                    );
+                photonView.RPC("RPCStunDebuff", PhotonTargets.All, collisionStunDebuff.GetMaxTime());
             }
 
-            if(other.gameObject.GetComponent<CollisionDamagedDebuff>() != null)
+            if(collisionDamagedDebuff != null)
             {
-                if (gameObject.GetComponent<PlayerState>().GetPlayerCondition() != PlayerState.ConditionEnum.STUN)
+                if (playerState.GetPlayerCondition() != PlayerState.ConditionEnum.STUN)
                 {
-                    photonView.RPC("RPCDamagedDebuff", PhotonTargets.All,
-                        other.gameObject.GetComponent<CollisionDamagedDebuff>().GetMaxTime());
+                    photonView.RPC("RPCDamagedDebuff", PhotonTargets.All,collisionDamagedDebuff.GetMaxTime());
                 }
             }
-
-            //if(other.gameObject.GetComponent<>)
 
         }
     }
@@ -178,66 +209,87 @@ public class BaseCollision : Photon.PunBehaviour {
 
     /************* RPC입니다. ****************/
     [PunRPC]
-    private void RPCPushDebuff(Vector3 MD , float MPS, float MDT)
+    private void RPCPushDebuff(Vector3 MD, float MPS, float MDT)
     {
-            if (gameObject.GetComponent<PlayerPushDebuff>() == null)
-            {
-                gameObject.AddComponent<PlayerPushDebuff>();
-            }
+        // 밀쳐내기 여부 확인
+        PlayerPushDebuff playerPushDebuff = gameObject.GetComponent<PlayerPushDebuff>();
 
-            gameObject.GetComponent<PlayerPushDebuff>().SetMoveDirection(MD);
+        // 밀쳐내기 없으면 새로 등록
+        if (playerPushDebuff == null)
+        {
 
-            gameObject.GetComponent<PlayerPushDebuff>().SetMovePushSpeed(MPS);
+            playerPushDebuff = gameObject.AddComponent<PlayerPushDebuff>();
+        }
 
-            gameObject.GetComponent<PlayerPushDebuff>().SetMaxDebuffTime(MDT);
+        // 밀쳐내기 정보 갱신
+        playerPushDebuff.SetMoveDirection(MD);
+        playerPushDebuff.SetMovePushSpeed(MPS);
+        playerPushDebuff.SetMaxDebuffTime(MDT);
     }
 
     [PunRPC]
     private void RPCNotMoveDebuff(float MDT)
     {
 
+        // 속박 받아옴
+        PlayerNotMoveDebuff playerNotMoveDebuff = gameObject.GetComponent<PlayerNotMoveDebuff>();
 
-            if(gameObject.GetComponent<PlayerNotMoveDebuff>() == null)
-            {
-                gameObject.AddComponent<PlayerNotMoveDebuff>();
-                
-            }
-            gameObject.GetComponent<PlayerNotMoveDebuff>().SetMaxDebuffTime(MDT);
-            gameObject.GetComponent<PlayerNotMoveDebuff>().SetNowDebuffTime(0);
+        // 속박 없으면 새로 추가
+        if (playerNotMoveDebuff == null)
+        {
+            playerNotMoveDebuff = gameObject.AddComponent<PlayerNotMoveDebuff>();
 
-              gameObject.GetComponent<PlayerState>().SetplayerNotMoveDebuff(gameObject.GetComponent<PlayerNotMoveDebuff>());
+        }
+
+        // 속박 설정 추가
+        playerNotMoveDebuff.SetMaxDebuffTime(MDT);
+        playerNotMoveDebuff.SetNowDebuffTime(0);
+
+        // 플레이어 상태에 속박상태라 알림
+        playerState.SetplayerNotMoveDebuff(playerNotMoveDebuff);
     }
-
-
-
 
     [PunRPC]
     private void RPCStunDebuff(float ST)
     {
+        
+        // 스턴 애니메이션 재생
+        animator.SetBool("StunOnOff", true);
 
+        // 스턴 디버프 받아오기
+        PlayerStunDebuff playerStunDebuff = gameObject.GetComponent<PlayerStunDebuff>();
 
-        gameObject.GetComponent<Animator>().SetBool("StunOnOff", true);
-        if (gameObject.GetComponent<PlayerStunDebuff>() == null)
+        // 스턴 없으면 새로 추가
+        if (playerStunDebuff == null)
         {
-            gameObject.AddComponent<PlayerStunDebuff>();
+            playerStunDebuff = gameObject.AddComponent<PlayerStunDebuff>();
         }
-        gameObject.GetComponent<PlayerStunDebuff>().SetMaxDebuffTime(ST);
-        gameObject.GetComponent<PlayerStunDebuff>().SetNowDebuffTime(0);
+
+        // 스턴 속성 설정
+        playerStunDebuff.SetMaxDebuffTime(ST);
+        playerStunDebuff.SetNowDebuffTime(0);
+
     }
 
     [PunRPC]
     private void RPCDamagedDebuff(float DD)
     {
-       // Random.Range(1, GroggyType + 1);
-        gameObject.GetComponent<Animator>().SetInteger("DamageOnOff", Random.Range(1, GroggyType + 1));
-        if(gameObject.GetComponent<PlayerDamagedDebuff>() == null)
+        // 피격 애니메이션 랜덤 설정
+        animator.SetInteger("DamageOnOff", Random.Range(1, GroggyType + 1));
+
+        // 피격 디버프  받기
+        PlayerDamagedDebuff playerDamagedDebuff = gameObject.GetComponent<PlayerDamagedDebuff>();
+
+        // 피격 디버프 없으면 추가하기
+        if (playerDamagedDebuff == null)
         {
-            gameObject.AddComponent<PlayerDamagedDebuff>();
+            playerDamagedDebuff = gameObject.AddComponent<PlayerDamagedDebuff>();
             Debug.Log("피격 추가");
         }
-        gameObject.GetComponent<PlayerDamagedDebuff>().SetMaxDebuffTime(DD);
-        gameObject.GetComponent<PlayerDamagedDebuff>().SetNowDebuffTime(0);
-        Debug.Log("피격 충돌체크 시간 설정");
+
+        // 피격 속성 설정
+        playerDamagedDebuff.SetMaxDebuffTime(DD);
+        playerDamagedDebuff.SetNowDebuffTime(0);
     }
 
 }

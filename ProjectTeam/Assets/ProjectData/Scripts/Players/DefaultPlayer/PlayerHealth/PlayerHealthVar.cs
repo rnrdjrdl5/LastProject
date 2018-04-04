@@ -4,13 +4,18 @@ using UnityEngine;
 
 public partial class PlayerHealth
 {
+    
+    /**** private ****/
+
     private float MaxHealth = 100.0f;   // 최대체력
     private float NowHealth = 100.0f;   // 현재체력
 
-    private float RecvHealth = 100.0f;      // 다른 클라이언트로부터 받아온 체력
+    private PlayerCamera playerCamera;              // 카메라 오브젝트
+    private PlayerUI playerUI;                       // UI 오브젝트
 
-
-
+    private PhotonManager photonManager;                // 포톤매니저
+   
+    /**** 접근자 ****/
 
     public void SetMaxHealth(float MH) { MaxHealth = MH; }
     public void SetNowHealth(float NH) { NowHealth = NH; }
@@ -18,13 +23,6 @@ public partial class PlayerHealth
     public float GetMaxHealth() { return MaxHealth; }
     public float GetNowHealth() { return NowHealth; }
 
-
-
-    private GameObject EnemyObject;
-
-    public GameObject GetEnemyObject() { return EnemyObject; }
-    public void SetEnemyObject(GameObject s) { EnemyObject = s; }
-    /* 아래부터는 인스펙터에서 편집 가능한 public형 변수입니다.*/
 
 
 

@@ -9,7 +9,8 @@ using UnityEngine;
 public class PlayerCheckCollision : Photon.PunBehaviour , IPunObservable {
 
     private BaseCollision baseCollision;
-    
+
+
 	// Use this for initialization
 	void Start () {
         baseCollision = gameObject.AddComponent<BaseCollision>();
@@ -61,21 +62,5 @@ public class PlayerCheckCollision : Photon.PunBehaviour , IPunObservable {
               baseCollision.UseCollision(other);
              
           }
-
-        if(other.tag == "DeadZone")
-        {
-            if (gameObject.GetComponent<PhotonView>().isMine)
-            {
-                if (other.tag == "DeadZone")
-                {
-                    gameObject.GetComponent<PlayerHealth>().PlayerDead();
-                    Debug.Log("플레이어 데드존 입장");
-
-
-                }
-            }
-        }
-
-          
     }
 }

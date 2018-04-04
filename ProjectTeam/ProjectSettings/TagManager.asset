@@ -11,10 +11,10 @@ TagManager:
   - Floor
   - CheckSkillRange
   - CheckCollision
-  - Teams
   - Boss
   - Interaction
   - Hand
+  - MouseTeam
   layers:
   - Default
   - TransparentFX
