@@ -25,6 +25,8 @@ public class CatTrap : DefaultNewSkill
 
         // 값 설정
         defaultCdtAct.InitCondition(this);
+
+        gameObject.GetComponent<PhotonAnimatorView>().SetParameterSynchronized("isCatTrap", PhotonAnimatorView.ParameterType.Bool, PhotonAnimatorView.SynchronizeType.Discrete);
     }
 
     public override bool CheckState()

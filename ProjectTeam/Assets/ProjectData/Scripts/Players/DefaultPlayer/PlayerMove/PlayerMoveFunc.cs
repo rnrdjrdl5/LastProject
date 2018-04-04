@@ -19,6 +19,11 @@ public partial class PlayerMove
         }
 
         OriginalPlayerSpeed = PlayerSpeed;
+
+        // 애니메이션 뷰 설정
+        PhotonAnimatorView pav = gameObject.GetComponent<PhotonAnimatorView>();
+        pav.SetParameterSynchronized("DirectionX", PhotonAnimatorView.ParameterType.Float, PhotonAnimatorView.SynchronizeType.Continuous);
+        pav.SetParameterSynchronized("DirectionY", PhotonAnimatorView.ParameterType.Float, PhotonAnimatorView.SynchronizeType.Continuous);
     }
 
 

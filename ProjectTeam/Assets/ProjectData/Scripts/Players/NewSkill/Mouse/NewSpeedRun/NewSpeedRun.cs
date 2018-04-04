@@ -55,6 +55,9 @@ public class NewSpeedRun : DefaultNewSkill {
         // 카메라 설정
         playerCamera = GameObject.Find("PlayerCamera").GetComponent<PlayerCamera>();
 
+        // 애니메이션 포톤 뷰 설정
+        gameObject.GetComponent<PhotonAnimatorView>().SetParameterSynchronized("isSpeedRun", PhotonAnimatorView.ParameterType.Bool, PhotonAnimatorView.SynchronizeType.Discrete);
+
     }
 
 

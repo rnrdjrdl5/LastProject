@@ -11,7 +11,7 @@ public class TestPhotonManager : Photon.PunBehaviour
 
     private PhotonView pv;              // 포톤뷰
 
-    string Version = "tes34151522t1";
+    string Version = "20180404t1";
 
     public GameObject CurrentPlayer;        // 플레이어
 
@@ -89,7 +89,7 @@ public class TestPhotonManager : Photon.PunBehaviour
             // 레이캐스트 발사
             if (Input.GetKeyDown(KeyCode.V))
             {
-
+                Debug.Log("발사");
                 // 마우스 위치 받기
                 Vector3 MouseVector3 = PTL.FindMouseCursorPosition(CurrentPlayer, PlayerCamera);
 

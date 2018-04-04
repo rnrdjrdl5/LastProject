@@ -2589,6 +2589,9 @@ MonoBehaviour:
   - Type: 4
     SynchronizeType: 0
     Name: isThrowFryingPan
+  - Type: 4
+    SynchronizeType: 0
+    Name: isCatTrap
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0
@@ -2830,7 +2833,7 @@ MonoBehaviour:
     CollisionNumber: 1
     ReCheckTime: 1000
     DestroyTime: 3
-    ObjectSpeed: 3
+    ObjectSpeed: 10
 --- !u!114 &114496405576377690
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -16,6 +16,9 @@ public class NewThrowFryingPan : DefaultNewSkill
 
         defaultCdtAct = new NormalCdtAct();
         defaultCdtAct.InitCondition(this);
+
+        // 애니메이션 포톤 뷰 설정
+        gameObject.GetComponent<PhotonAnimatorView>().SetParameterSynchronized("isThrowFryingPan", PhotonAnimatorView.ParameterType.Bool, PhotonAnimatorView.SynchronizeType.Discrete);
     }
 
     // 재정의

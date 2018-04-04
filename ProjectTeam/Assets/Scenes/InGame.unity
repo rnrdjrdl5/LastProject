@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -194,8 +194,8 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 16361215}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 457, y: 270, z: 0}
-  m_LocalScale: {x: 0.47604167, y: 0.47604167, z: 0.47604167}
+  m_LocalPosition: {x: 448, y: 220.5, z: 0}
+  m_LocalScale: {x: 0.46666667, y: 0.46666667, z: 0.46666667}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -210,6 +210,12 @@ GameObject:
   m_PrefabParentObject: {fileID: 1783226123013732, guid: 48222199ff3ccd24a84ad64746daeb71,
     type: 2}
   m_PrefabInternal: {fileID: 1293551458}
+--- !u!114 &116090735 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114187862902219886, guid: 48222199ff3ccd24a84ad64746daeb71,
+    type: 2}
+  m_PrefabInternal: {fileID: 1293551458}
+  m_Script: {fileID: 11500000, guid: 4f78b58d1455baf4fb5f8cad6e5aa3d5, type: 3}
 --- !u!20 &245781056 stripped
 Camera:
   m_PrefabParentObject: {fileID: 20452952460693534, guid: 48222199ff3ccd24a84ad64746daeb71,
@@ -388,6 +394,11 @@ Prefab:
       propertyPath: m_TagString
       value: Interaction
       objectReference: {fileID: 0}
+    - target: {fileID: 114507831208348450, guid: 0c9048a1dab71374e92fea3a6fec51b6,
+        type: 2}
+      propertyPath: InteractiveTime
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0c9048a1dab71374e92fea3a6fec51b6, type: 2}
   m_IsPrefabParent: 0
@@ -505,6 +516,11 @@ Prefab:
       propertyPath: m_TagString
       value: Interaction
       objectReference: {fileID: 0}
+    - target: {fileID: 114507831208348450, guid: 0c9048a1dab71374e92fea3a6fec51b6,
+        type: 2}
+      propertyPath: InteractiveTime
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0c9048a1dab71374e92fea3a6fec51b6, type: 2}
   m_IsPrefabParent: 0
@@ -592,6 +608,11 @@ Prefab:
     - target: {fileID: 1253090583157002, guid: 0c9048a1dab71374e92fea3a6fec51b6, type: 2}
       propertyPath: m_TagString
       value: Interaction
+      objectReference: {fileID: 0}
+    - target: {fileID: 114507831208348450, guid: 0c9048a1dab71374e92fea3a6fec51b6,
+        type: 2}
+      propertyPath: InteractiveTime
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0c9048a1dab71374e92fea3a6fec51b6, type: 2}
@@ -684,6 +705,11 @@ Prefab:
     - target: {fileID: 1253090583157002, guid: 0c9048a1dab71374e92fea3a6fec51b6, type: 2}
       propertyPath: m_TagString
       value: Interaction
+      objectReference: {fileID: 0}
+    - target: {fileID: 114507831208348450, guid: 0c9048a1dab71374e92fea3a6fec51b6,
+        type: 2}
+      propertyPath: InteractiveTime
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0c9048a1dab71374e92fea3a6fec51b6, type: 2}
@@ -829,7 +855,7 @@ Prefab:
         type: 2}
     - target: {fileID: 1007189268822388, guid: 795a8e0dbb3285744bdc8a393e2bce84, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114246002250382304, guid: 795a8e0dbb3285744bdc8a393e2bce84,
         type: 2}
@@ -846,6 +872,16 @@ Prefab:
       propertyPath: PlayerTime
       value: 10000
       objectReference: {fileID: 0}
+    - target: {fileID: 114246002250382304, guid: 795a8e0dbb3285744bdc8a393e2bce84,
+        type: 2}
+      propertyPath: playerCamera
+      value: 
+      objectReference: {fileID: 116090733}
+    - target: {fileID: 114246002250382304, guid: 795a8e0dbb3285744bdc8a393e2bce84,
+        type: 2}
+      propertyPath: cameraScript
+      value: 
+      objectReference: {fileID: 116090735}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 795a8e0dbb3285744bdc8a393e2bce84, type: 2}
   m_IsPrefabParent: 0
@@ -1150,7 +1186,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1377275890589388, guid: 9f9b4be7f0554964fab0cb09feafbf47, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114127256453260768, guid: 9f9b4be7f0554964fab0cb09feafbf47,
         type: 2}

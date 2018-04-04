@@ -11,8 +11,14 @@ public class PhotonManager : Photon.PunBehaviour {
 
     public GameObject ResultPanel; // UI 생성, 결과창 용.
     public GameObject ResultObject; // 확인용
-    /// </summary>
 
+    public PointToLocation PTL;             // 레이캐스트용 
+
+    public GameObject playerCamera;             // 레이캐스트용 카메라
+    public PlayerCamera cameraScript;
+
+    public string hitName;               // 맞은사람이름
+    public float hitDistance;           // 맞은거리
 
 
     public string Version = "ffffqqqqqqq";
@@ -38,6 +44,8 @@ public class PhotonManager : Photon.PunBehaviour {
         PhotonNetwork.ConnectUsingSettings(Version);
         TeamsPlayerCount = 0;
         BossPlayerCount = 0;
+
+        PTL = new PointToLocation();
         
     }
 
@@ -152,9 +160,44 @@ public class PhotonManager : Photon.PunBehaviour {
             }
         }
 
-        
-        
-	}
+        // 레이캐스트 발사
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            // 마우스 위치 받기
+
+            Debug.Log(PlayerObject);
+            Vector3 MouseVector3 = PTL.FindMouseCursorPosition(PlayerObject,playerCamera);
+
+            RaycastHit hit;
+
+
+            if (Physics.Raycast(playerCamera.transform.position + MouseVector3.normalized * cameraScript.CameraDistanceTriangle,
+                MouseVector3, out hit, 20, (1 << LayerMask.NameToLayer("Player"))))
+            {
+                float distance = (hit.collider.transform.position - PlayerObject.transform.position).magnitude;
+
+
+
+                Debug.DrawRay(playerCamera.transform.position + MouseVector3.normalized * cameraScript.CameraDistanceTriangle,
+                MouseVector3 * distance, Color.red, 1.0f);
+
+
+                hitName = hit.collider.name;
+                hitDistance = distance;
+            }
+            else
+                hitName = "없음";
+
+        }
+
+
+    }
+
+    private void OnGUI()
+    {
+        GUI.Label(new Rect(0, 400 * Screen.height / 800, 500, 20), "대상이름 : " + hitName);
+        GUI.Label(new Rect(0, 440 * Screen.height / 800, 500, 20), "대상과 거리 : " + hitDistance);
+    }
 
     IEnumerator WaitTime()
     {

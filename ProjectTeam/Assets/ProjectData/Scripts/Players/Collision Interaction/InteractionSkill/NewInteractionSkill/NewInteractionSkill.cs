@@ -52,6 +52,9 @@ public class NewInteractionSkill : Photon.MonoBehaviour, IPunObservable {
 
 
         OriginalCameraPosition = Vector3.zero;
+
+        // 애니메이션 포톤 뷰 설정
+        gameObject.GetComponent<PhotonAnimatorView>().SetParameterSynchronized("InteractionType", PhotonAnimatorView.ParameterType.Int, PhotonAnimatorView.SynchronizeType.Discrete);
     }
 
     // 동기화, 플레이어 물체정보 동기화
