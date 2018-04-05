@@ -4,7 +4,6 @@ using UnityEngine;
 
 public partial class PlayerUI : Photon.PunBehaviour
 {
-    public RectTransform rt;
     // Use this for initialization
     void Start () {
         SetUI();

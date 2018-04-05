@@ -40,7 +40,7 @@ public class TestPhotonManager : Photon.PunBehaviour
 
     public override void OnPhotonRandomJoinFailed(object[] codeAndMsg)
     {
-        PhotonNetwork.CreateRoom("testr34133oom1");
+        PhotonNetwork.CreateRoom("20180405_1");
     }
     public override void OnJoinedRoom()
     {
@@ -49,8 +49,9 @@ public class TestPhotonManager : Photon.PunBehaviour
 
     // Use this for initialization
     void Start () {
-		
-	}
+        PhotonNetwork.isMessageQueueRunning = true;
+
+    }
 
 
     string hitName = "X";
@@ -59,11 +60,14 @@ public class TestPhotonManager : Photon.PunBehaviour
     // Update is called once per frame
     void Update() {
 
+
+        
         if (photonView.isMine)
         {
             // 생성
             if (Input.GetKeyDown(KeyCode.Z))
             {
+                Debug.Log("123");
                 if (CurrentPlayer != null)
                 {
                     Destroy(CurrentPlayer.GetComponent<PlayerUI>().GetUIObject());
@@ -115,6 +119,11 @@ public class TestPhotonManager : Photon.PunBehaviour
                     hitName = "없음";
 
             }
+            
+            else if(Input.GetKeyDown(KeyCode.End))
+            {
+                photonView.RPC("RPCReScene", PhotonTargets.All);
+            }
 
             
         }
@@ -124,6 +133,13 @@ public class TestPhotonManager : Photon.PunBehaviour
     {
         GUI.Label(new Rect(0, 400 * Screen.height / 800, 500, 20), "대상이름 : " + hitName);
         GUI.Label(new Rect(0, 440 * Screen.height / 800, 500, 20), "대상과 거리 : " + hitDistance);
+    }
+
+    [PunRPC]
+    void RPCReScene()
+    {
+        PhotonNetwork.isMessageQueueRunning = false;
+        PhotonNetwork.LoadLevel(0);
     }
 
 }

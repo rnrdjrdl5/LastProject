@@ -14,7 +14,11 @@ public partial class PlayerHealth : Photon.PunBehaviour, IPunObservable
         playerUI = gameObject.GetComponent<PlayerUI>();
 
         // 포톤 매니저 받아옴.
-        photonManager = GameObject.Find("PhotonManager").GetComponent<PhotonManager>();
+
+        GameObject go = GameObject.Find("PhotonNetwork");
+
+        if(go != null) 
+            photonManager = go.GetComponent<PhotonManager>();
 
 
     }

@@ -54,8 +54,9 @@ public class PhotonManager : Photon.PunBehaviour {
 
     // Use this for initialization
     void Start () {
-
+        PhotonNetwork.isMessageQueueRunning = true;
     }
+    
 
 
     [PunRPC]
@@ -134,6 +135,12 @@ public class PhotonManager : Photon.PunBehaviour {
                 photonView.RPC("DestroyAllPlayer", PhotonTargets.All);
                 photonView.RPC("CallSetisGameStart", PhotonTargets.All, false);
                 photonView.RPC("ResetBossTeams", PhotonTargets.All);
+            }
+
+            else if(Input.GetKeyDown(KeyCode.End))
+            {
+                photonView.RPC("RPCReScene", PhotonTargets.All);
+
             }
         }
 
@@ -255,6 +262,7 @@ public class PhotonManager : Photon.PunBehaviour {
 
         // 실패하면 콜백으로  OnPhotonJoinRoomFailed () 호출됨. 구현해줘야ㅐ함.
         // 실패이유는 방이 꽉찼다던지 방이 없다던지 등.
+        Debug.Log("로비들어감");
 
     }
 
@@ -509,7 +517,14 @@ public class PhotonManager : Photon.PunBehaviour {
         }
     }
 
-   
+    [PunRPC]
+    void RPCReScene()
+    {
+        PhotonNetwork.isMessageQueueRunning = false;
+        PhotonNetwork.LoadLevel(0);
+    }
+
+
 }
 
 

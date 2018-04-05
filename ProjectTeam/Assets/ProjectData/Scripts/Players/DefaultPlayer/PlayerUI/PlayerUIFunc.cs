@@ -29,7 +29,7 @@ public partial class PlayerUI
 
             ScoreText = UIObject.transform.Find("ScorePanel/ScoreNumber").gameObject.GetComponent<Text>();
 
-            rt = UIObject.transform.Find("AimPanel").gameObject.GetComponent<RectTransform>();
+           
 
         }
 
