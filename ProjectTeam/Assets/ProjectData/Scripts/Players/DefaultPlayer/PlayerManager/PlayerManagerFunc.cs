@@ -7,16 +7,25 @@ using UnityEngine;
 
 public partial class PlayerManager
 {
-    
+
+    void SetPhotonManager()
+    {
+        
+        photonManager = GameObject.Find("PhotonManager").GetComponent<PhotonManager>();
+    }
+
     void HideCursor()
     {
         // Mouse Lock
+        if (gameObject.GetPhotonView().isMine)
+        {
 
-        Cursor.lockState = CursorLockMode.Locked;
+            Cursor.lockState = CursorLockMode.Locked;
 
-        // Cursor visible
+            // Cursor visible
 
-        Cursor.visible = false;
+            Cursor.visible = false;
+        }
     }
 
     void SetFallowCamera()
@@ -31,11 +40,19 @@ public partial class PlayerManager
 
     }
 
+    void AttachThisPlayer()
+    {
+        if (photonManager != null)
+        {
+            photonManager.AddAllPlayer(gameObject);
+        }
+    }
+
     // Damage 들어갈 떄, 관련 데미지 모두삭제.
 
 
 
 
 
-    
+
 }

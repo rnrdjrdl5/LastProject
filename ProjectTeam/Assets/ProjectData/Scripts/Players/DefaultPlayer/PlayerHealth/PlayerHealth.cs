@@ -1,26 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public partial class PlayerHealth : Photon.PunBehaviour, IPunObservable
 {
 
     private void Awake()
     {
-        // 플레이어 카메라 초기화
-        playerCamera = GameObject.Find("PlayerCamera").GetComponent<PlayerCamera>();
+        SetAwake();
 
-        // 플레이어 UI 초기화
-        playerUI = gameObject.GetComponent<PlayerUI>();
+    }
 
-        // 포톤 매니저 받아옴.
-
-        GameObject go = GameObject.Find("PhotonNetwork");
-
-        if(go != null) 
-            photonManager = go.GetComponent<PhotonManager>();
-
-
+    public void Update()
+    {
+        if (photonView.isMine)
+        {
+            NowHPImage.fillAmount = NowHealth / MaxHealth;
+        }
     }
 
     void IPunObservable.OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

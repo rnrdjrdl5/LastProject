@@ -120,4 +120,8 @@ MonoBehaviour:
   - RPCLoadLevel
   - RPCReScene
   - RPCSend
+  - RPCFinishLoading
+  - RPCRegisterPlayer
+  - RPCFinishConnectPlayer
+  - RPCCreatePlayer
   DisableAutoOpenWizard: 1

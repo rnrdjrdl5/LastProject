@@ -4,17 +4,10 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Punch
-  - Players
-  - DeadZone
-  - Bullet
   - Floor
-  - CheckSkillRange
   - CheckCollision
-  - Boss
   - Interaction
-  - Hand
-  - MouseTeam
+  - Teams
   layers:
   - Default
   - TransparentFX

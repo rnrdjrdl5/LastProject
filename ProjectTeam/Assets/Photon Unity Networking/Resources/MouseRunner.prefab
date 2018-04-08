@@ -1063,7 +1063,6 @@ GameObject:
   - component: {fileID: 114653929583050126}
   - component: {fileID: 114255851139367972}
   - component: {fileID: 114666046391730084}
-  - component: {fileID: 114876105365812256}
   - component: {fileID: 114638738058414934}
   - component: {fileID: 114264987024885528}
   - component: {fileID: 114186861022700930}
@@ -1076,7 +1075,7 @@ GameObject:
   - component: {fileID: 114130693748871330}
   m_Layer: 12
   m_Name: MouseRunner
-  m_TagString: MouseTeam
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1122,7 +1121,7 @@ GameObject:
   - component: {fileID: 4343435972737720}
   m_Layer: 12
   m_Name: Bip001
-  m_TagString: Teams
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2271,13 +2270,7 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
-  m_WarningMessage: "\nBinding warning: Some generic clip(s) use transforms that are
-    already bound by a Humanoid avatar. These transforms can only be changed by Humanoid
-    clips.\n\tTransform 'Bip001 R Clavicle'\n\tTransform 'Bip001 R UpperArm'\n\tTransform
-    'Bip001 Spine1'\n\tTransform 'Bip001 R Finger11'\n\tTransform 'Bip001 L UpperArm'\n\tTransform
-    'Bip001 R Foot'\n\tTransform 'Bip001 L Clavicle'\n\tTransform 'Bip001 L Finger11'\n\tTransform
-    'Bip001 L Finger1'\n\tTransform 'Bip001 L Hand'\n\tand more ...\n\tFrom animation
-    clip 'Take 001'\n\tFrom animation clip 'Take 001'"
+  m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114081009861296032
@@ -2403,6 +2396,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd58e4c97e5b967428c5b083c6a8f4f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MPPanel: {fileID: 1956512030674282, guid: e6ad387ec62d61b42a7fd9c6758242f4, type: 2}
   ManaRetimePoint: 5
 --- !u!114 &114264987024885528
 MonoBehaviour:
@@ -2553,6 +2547,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab2ffa64c176b6b4bada4db6221cf9ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HPPanel: {fileID: 1077334882574502, guid: 3f07794aaddb92a4f890f17a77cf802c, type: 2}
 --- !u!114 &114666977749313988
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2581,19 +2576,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8890246b9397f024c8551e6199d038e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114876105365812256
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1907552380474240}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0cca313b813b2644cb2ec3dc209574f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rt: {fileID: 0}
-  UIPrefab: {fileID: 1390711569190694, guid: f0cae6947a3ca9a4a9d56b84b701a367, type: 2}
 --- !u!135 &135134071691088110
 SphereCollider:
   m_ObjectHideFlags: 1

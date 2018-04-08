@@ -70,7 +70,6 @@ public class TestPhotonManager : Photon.PunBehaviour
                 Debug.Log("123");
                 if (CurrentPlayer != null)
                 {
-                    Destroy(CurrentPlayer.GetComponent<PlayerUI>().GetUIObject());
                     PhotonNetwork.Destroy(CurrentPlayer);
                 }
 
@@ -83,7 +82,7 @@ public class TestPhotonManager : Photon.PunBehaviour
                 Debug.Log("a");
                 if (CurrentPlayer != null)
                 {
-                    Destroy(CurrentPlayer.GetComponent<PlayerUI>().GetUIObject());
+                    
                     PhotonNetwork.Destroy(CurrentPlayer);
                 }
 

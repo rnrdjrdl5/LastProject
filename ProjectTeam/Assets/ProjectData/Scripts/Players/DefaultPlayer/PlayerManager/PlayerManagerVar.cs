@@ -4,5 +4,5 @@ using UnityEngine;
 
 public partial class PlayerManager
 {
-    
+    private PhotonManager photonManager;
 }

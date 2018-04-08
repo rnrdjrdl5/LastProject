@@ -1,9 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public partial class PlayerManaPoint
 {
+    public GameObject MPPanel;              // HP 패널
+
+    private PlayerCamera playerCamera;              // 카메라 오브젝트
+
+    private GameObject UICanvas;            // UI 캔버스
+    private GameObject MPObject;            // MP 오브젝트
+    private Image NowMPImage;               // MP 이미지
+
+    public GameObject GetMPObject() { return MPObject; }
+
 
     private float MaxManaPoint = 100.0f;
 

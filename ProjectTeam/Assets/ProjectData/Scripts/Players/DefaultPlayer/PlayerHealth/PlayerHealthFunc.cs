@@ -1,18 +1,44 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public partial class PlayerHealth
 {
-    public void DestroyPlayer()
-    {
+    
 
+    private void SetAwake()
+    {
         if (photonView.isMine)
         {
+            // 플레이어 카메라 초기화
+            playerCamera = GameObject.Find("PlayerCamera").GetComponent<PlayerCamera>();
 
-            PhotonNetwork.Destroy(gameObject);
+            // UICanvas 받아오기
+            UICanvas = GameObject.Find("UICanvas");
+
+            // HP패널 생성
+            HPObject = Instantiate(HPPanel);
+            HPObject.transform.SetParent(UICanvas.transform);
+
+            // 크기 위치 설정
+            Vector3 v3 = new Vector3
+            {
+                x = Screen.width / 2,
+                y = Screen.height / 2,
+                z = 0.0f
+            };
+
+            HPObject.transform.localScale = Vector3.one;
+            HPObject.transform.position = v3;
+
+
+
+            // 현재 HP 이미지 받아오기
+            NowHPImage = HPObject.transform.Find("NowHpImage").GetComponent<Image>();
         }
     }
+
 
     public void CallApplyDamage(float _damage)
     {
@@ -21,21 +47,26 @@ public partial class PlayerHealth
 
     public void PlayerDead()
     {
+        
+        Debug.Log("플레이어사망");
         // 카메라 비활성화
         playerCamera.isPlayerSpawn = false;
 
-        // UI 파괴
-        Destroy(playerUI.GetUIObject());
+        // 플레이어 타입 죽은 상태로 전환
+        PhotonNetwork.player.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { {"PlayerType","Dead"} });
+
+        // 모든 플레이어 UI 파괴
+        DestroyUI();
 
         // 캐릭터 파괴
-        Debug.Log("asdfdsaf");
         PhotonNetwork.Destroy(gameObject);
 
-        // Photon매니저에서 승리,패배조건 판단합니다.
-        photonManager.GamePlayers.Remove(gameObject);
+    }
 
-
-
+    public void DestroyUI()
+    { 
+        Destroy(HPObject);
+        Destroy(gameObject.GetComponent<PlayerManaPoint>().GetMPObject());
     }
 
 
@@ -55,6 +86,8 @@ public partial class PlayerHealth
             if (NowHealth <= 0) PlayerDead();
         }
     }
+
+    
 
 
     

@@ -737,7 +737,6 @@ GameObject:
   - component: {fileID: 95851605960151838}
   - component: {fileID: 114241517633573072}
   - component: {fileID: 114496405576377690}
-  - component: {fileID: 114801210508702684}
   - component: {fileID: 114314400688664120}
   - component: {fileID: 114081964015991556}
   - component: {fileID: 114400634544518138}
@@ -752,7 +751,7 @@ GameObject:
   - component: {fileID: 114055391085282848}
   m_Layer: 12
   m_Name: NewCatBoss
-  m_TagString: Boss
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2780,6 +2779,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd58e4c97e5b967428c5b083c6a8f4f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MPPanel: {fileID: 1956512030674282, guid: e6ad387ec62d61b42a7fd9c6758242f4, type: 2}
   ManaRetimePoint: 5
 --- !u!114 &114314400688664120
 MonoBehaviour:
@@ -2803,6 +2803,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab2ffa64c176b6b4bada4db6221cf9ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HPPanel: {fileID: 1077334882574502, guid: 3f07794aaddb92a4f890f17a77cf802c, type: 2}
 --- !u!114 &114446830042908978
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2872,19 +2873,6 @@ MonoBehaviour:
     DamageNumber: 10
     RecheckTime: 1
   FryPan: {fileID: 1939484723374934}
---- !u!114 &114801210508702684
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1594536913109006}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0cca313b813b2644cb2ec3dc209574f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rt: {fileID: 0}
-  UIPrefab: {fileID: 1390711569190694, guid: f0cae6947a3ca9a4a9d56b84b701a367, type: 2}
 --- !u!135 &135917992987354584
 SphereCollider:
   m_ObjectHideFlags: 1

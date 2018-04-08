@@ -117,11 +117,11 @@ public class FindObject : MonoBehaviour {
 
 
                 // 스크린 에 비례해서 UI위치 고정
-                Vector3 v3 = new Vector3();
+                    Vector3 v3 = new Vector3();
 
-                v3.x = Screen.width / 2;
-                v3.y = Screen.height / 2;
-                v3.z = 0.0f;
+                    v3.x = Screen.width / 2;
+                    v3.y = Screen.height / 2;
+                    v3.z = 0.0f;
 
                 PressUIObject.transform.position = v3;
 
