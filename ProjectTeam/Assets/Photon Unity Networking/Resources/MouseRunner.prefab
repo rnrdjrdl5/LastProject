@@ -1073,6 +1073,7 @@ GameObject:
   - component: {fileID: 114434883347523360}
   - component: {fileID: 114848141147648566}
   - component: {fileID: 114130693748871330}
+  - component: {fileID: 114437981970179842}
   m_Layer: 12
   m_Name: MouseRunner
   m_TagString: Untagged
@@ -1930,7 +1931,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1907552380474240}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -28.884, y: 0, z: 6.384}
+  m_LocalPosition: {x: -33.440567, y: 0, z: 4.2727275}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4343435972737720}
@@ -2383,7 +2384,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newInteractionSkill: {fileID: 114130693748871330}
-  HideMaterial: {fileID: 2100000, guid: c821bfc8304beb84abe8a2f3b953380e, type: 2}
+  HideMaterial: {fileID: 0}
   FindRad: 5
 --- !u!114 &114255851139367972
 MonoBehaviour:
@@ -2396,7 +2397,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd58e4c97e5b967428c5b083c6a8f4f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MPPanel: {fileID: 1956512030674282, guid: e6ad387ec62d61b42a7fd9c6758242f4, type: 2}
   ManaRetimePoint: 5
 --- !u!114 &114264987024885528
 MonoBehaviour:
@@ -2463,6 +2463,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TimeBarPanelPrefab: {fileID: 1799781259668540, guid: cfadefa0a35baa54bb19352de6d561e0,
     type: 2}
+--- !u!114 &114437981970179842
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1907552380474240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3037f6125b564c4ea20e60c6ed56d95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114521655422584140
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2514,7 +2525,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerCondition: 2
-  PlaceObject: {fileID: 0}
+  PlaceObject: {fileID: 1804668205971154}
 --- !u!114 &114663676283799120
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2547,7 +2558,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab2ffa64c176b6b4bada4db6221cf9ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HPPanel: {fileID: 1077334882574502, guid: 3f07794aaddb92a4f890f17a77cf802c, type: 2}
+  skinnedMeshRenderer:
+  - {fileID: 137727171671918700}
+  - {fileID: 137526351479174558}
+  - {fileID: 137381610397388628}
+  - {fileID: 137221938328902796}
+  - {fileID: 137712237820955514}
+  - {fileID: 137831390456173172}
+  - {fileID: 137845995860340480}
+  - {fileID: 137946666262615928}
+  - {fileID: 137449973879631270}
+  - {fileID: 137536469478718504}
+  - {fileID: 137537897085853294}
+  - {fileID: 137078273611280152}
+  - {fileID: 137861578114061228}
+  - {fileID: 137558716531153274}
+  MaxHiting: 0.3
 --- !u!114 &114666977749313988
 MonoBehaviour:
   m_ObjectHideFlags: 1

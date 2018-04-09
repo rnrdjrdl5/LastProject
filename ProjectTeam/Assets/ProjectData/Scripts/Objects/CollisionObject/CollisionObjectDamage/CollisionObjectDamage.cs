@@ -23,4 +23,10 @@ public class CollisionObjectDamage : MonoBehaviour
         if (CollisionObjectDamageNumber >= 0)
             CollisionObjectDamageNumber -= 1;
     }
+
+    // 플레이어 충돌 이펙트
+    private GameObject DamageEffect;
+
+    public GameObject GetDamageEffect() { return DamageEffect; }
+    public void SetDamageEffect(GameObject go) { DamageEffect = go; }
 }

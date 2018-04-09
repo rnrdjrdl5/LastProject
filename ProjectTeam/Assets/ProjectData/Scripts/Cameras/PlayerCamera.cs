@@ -171,6 +171,7 @@ public class PlayerCamera : MonoBehaviour {
             // 카메라 플레이어 위치로 이동
             float LerpAngle = Mathf.LerpAngle(transform.eulerAngles.y, playerMove.GetPlayerRotateEuler(), 1);
 
+
             // 쿼터니언 변경
             Quaternion QuatTypeLerpAngle = Quaternion.Euler(0, LerpAngle, 0);
 

@@ -11,31 +11,22 @@ public partial class PlayerHealth
     {
         if (photonView.isMine)
         {
-            // 플레이어 카메라 초기화
-            playerCamera = GameObject.Find("PlayerCamera").GetComponent<PlayerCamera>();
 
             // UICanvas 받아오기
             UICanvas = GameObject.Find("UICanvas");
 
-            // HP패널 생성
-            HPObject = Instantiate(HPPanel);
-            HPObject.transform.SetParent(UICanvas.transform);
+            // 패널 받아오기
+            HPPanel = UICanvas.transform.Find("HPPanel").gameObject;
 
-            // 크기 위치 설정
-            Vector3 v3 = new Vector3
-            {
-                x = Screen.width / 2,
-                y = Screen.height / 2,
-                z = 0.0f
-            };
+            // HP이미지 받아오기
+            NowHPImage = HPPanel.transform.Find("NowHpImage").GetComponent<Image>();
+            Debug.Log(NowHPImage);
 
-            HPObject.transform.localScale = Vector3.one;
-            HPObject.transform.position = v3;
+            // 카메라 설정
+            playerCamera = GameObject.Find("PlayerCamera").GetComponent<PlayerCamera>();
 
-
-
-            // 현재 HP 이미지 받아오기
-            NowHPImage = HPObject.transform.Find("NowHpImage").GetComponent<Image>();
+            isHiting = false;
+            NowHiting = 0.0f;
         }
     }
 
@@ -55,19 +46,11 @@ public partial class PlayerHealth
         // 플레이어 타입 죽은 상태로 전환
         PhotonNetwork.player.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { {"PlayerType","Dead"} });
 
-        // 모든 플레이어 UI 파괴
-        DestroyUI();
-
         // 캐릭터 파괴
         PhotonNetwork.Destroy(gameObject);
 
     }
 
-    public void DestroyUI()
-    { 
-        Destroy(HPObject);
-        Destroy(gameObject.GetComponent<PlayerManaPoint>().GetMPObject());
-    }
 
 
     /**** RPC ****/
@@ -82,9 +65,23 @@ public partial class PlayerHealth
             // 데미지 입음
             NowHealth -= _damage;
 
+            Debug.Log(NowHealth);
             // 체력 0이하면 죽음 처리
-            if (NowHealth <= 0) PlayerDead();
+            if (NowHealth <= 0) {
+                NowHPImage.fillAmount = NowHealth / MaxHealth;
+                PlayerDead();
+                    }
         }
+
+        // 그 외에도 이펙트는 준다.
+        for(int i = 0; i < skinnedMeshRenderer.Length; i++)
+        {
+            skinnedMeshRenderer[i].material.color = Color.red;
+        }
+
+        isHiting = true;
+        NowHiting = 0.0f;
+
     }
 
     

@@ -56,7 +56,7 @@ public class LobbyRoomPhoton : Photon.PunBehaviour {
 
     private void Awake()
     {
-
+        
         // 방 상태 로비로 결정
         CanvasStateType = EnumCanvasState.LOBBY;
 
@@ -143,8 +143,21 @@ public class LobbyRoomPhoton : Photon.PunBehaviour {
             { "Offset","NULL" }
         };
 
+        ExitGames.Client.Photon.Hashtable PlayerType = new ExitGames.Client.Photon.Hashtable
+        {
+            { "PlayerType","NULL" }
+        };
+
+        ExitGames.Client.Photon.Hashtable UseBoss = new ExitGames.Client.Photon.Hashtable
+        {
+            { "UseBoss",false }
+        };
+
         PhotonNetwork.player.SetCustomProperties(PlayerSceneState);
         PhotonNetwork.player.SetCustomProperties(PlayerLoadingState);
+        PhotonNetwork.player.SetCustomProperties(PlayerType);
+        PhotonNetwork.player.SetCustomProperties(UseBoss);
+
 
     }
 
@@ -156,7 +169,7 @@ public class LobbyRoomPhoton : Photon.PunBehaviour {
 
     public void ClickJoinButton()
     {
-
+        Debug.Log("123");
         // 방에 입장한다.
         PhotonNetwork.JoinLobby();
 

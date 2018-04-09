@@ -138,7 +138,7 @@ public class BaseCollision : Photon.PunBehaviour{
     {
         // 충돌 데미지 받아옴
         CollisionObjectDamage collisionObjectDamage = other.gameObject.GetComponent<CollisionObjectDamage>();
-
+        
         // 받았는지 체크
         if (collisionObjectDamage != null)
         {

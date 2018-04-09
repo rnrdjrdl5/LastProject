@@ -15,7 +15,8 @@ public class AttackState{
     [Tooltip(" - 같은 대상에게 재충돌체크 제한 시간입니다.")]
     public float RecheckTime;
 
-
+    [Tooltip(" - 충돌체크 이펙트 입니다.")]
+    public GameObject AttackEffect;
 
 
     // 1. 이전에 스크립트를 받은 적이 없을 때
@@ -53,8 +54,11 @@ public class AttackState{
     {
         cod.SetObjectDamage(AttackDamage);
         cod.SetObjectDamageNumber(DamageNumber);
+        cod.SetDamageEffect(AttackEffect);
 
         co.SetUsePlayer("Player" + pv.viewID);
         co.SetCollisionReCheckTime(RecheckTime);
+
+        
     }
 }

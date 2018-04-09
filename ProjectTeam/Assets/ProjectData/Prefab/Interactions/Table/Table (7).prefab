@@ -488,7 +488,7 @@ GameObject:
   - component: {fileID: 23867466634580556}
   m_Layer: 9
   m_Name: Table (7)
-  m_TagString: Untagged
+  m_TagString: Interaction
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4622,7 +4622,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 29818dd384f7bc349b18454990f0fc8a, type: 2}
+  - {fileID: 2100000, guid: 2b9447083623cbf448695b6b503ce578, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5710,7 +5710,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: a8e9f8dac657bd542ad82e9ca79b1610, type: 2}
+  - {fileID: 2100000, guid: 6bacd7ac9ddca444587e06b0325b2c76, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7580,7 +7580,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 29818dd384f7bc349b18454990f0fc8a, type: 2}
+  - {fileID: 2100000, guid: 11f0e9ecd40b0c041a5065e01bc893e1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9376,7 +9376,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66b29a307e8cd1c4aad10a622a45853b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InteractiveTime: 3
+  InteractiveTime: 1
   CanUseObject: 0
   interactiveObjectType: 1
   ActionType: 0

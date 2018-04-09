@@ -8,11 +8,12 @@ using UnityEngine;
 public partial class PlayerManager
 {
 
-    void SetPhotonManager()
-    {
-        
+    public void SetPhotonManager()
+    {    
         photonManager = GameObject.Find("PhotonManager").GetComponent<PhotonManager>();
     }
+    public PhotonManager GetPhotonManager() { return photonManager; }
+
 
     void HideCursor()
     {
@@ -32,10 +33,11 @@ public partial class PlayerManager
     {
         if (gameObject.GetComponent<PhotonView>().isMine)
         {
-            GameObject pc = GameObject.Find("PlayerCamera");
-            pc.GetComponent<PlayerCamera>().PlayerObject = gameObject;
-            pc.GetComponent<PlayerCamera>().isPlayerSpawn = true;
-            pc.GetComponent<PlayerCamera>().SetPlayerMove(gameObject.GetComponent<PlayerMove>());
+            playerCamera = GameObject.Find("PlayerCamera").GetComponent<PlayerCamera>();
+            playerCamera.PlayerObject = gameObject;
+            playerCamera.isPlayerSpawn = true;
+            playerCamera.SetPlayerMove(gameObject.GetComponent<PlayerMove>());
+
         }        
 
     }
