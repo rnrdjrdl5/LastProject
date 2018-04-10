@@ -53,6 +53,7 @@ public class BaseCollision : Photon.PunBehaviour{
     public void UseCollision(Collider other)
     {
 
+        
         // collisionObject 받아오기
         collisionObject = other.gameObject.GetComponent<CollisionObject>();
 
@@ -148,8 +149,10 @@ public class BaseCollision : Photon.PunBehaviour{
             {
 
                 // 데미지 주기
-                playerHealth.CallApplyDamage(collisionObjectDamage.GetObjectDamage());
+                playerHealth.CallApplyDamage(collisionObjectDamage.GetObjectDamage(),collisionObjectDamage.PlayerEffectType) ;
                 Debug.Log("데미지 : " + collisionObjectDamage.GetObjectDamage());
+                
+
             }
 
             // 데미지 충돌횟수 감소

@@ -11,6 +11,7 @@ public partial class PlayerHealth
     /**** private ****/
 
     private PlayerCamera playerCamera;              // 카메라 오브젝트
+    private PlayerEffectManager playerEffectManager;
 
     private GameObject UICanvas;            // UI 캔버스
     private GameObject HPPanel;            // HP 오브젝트

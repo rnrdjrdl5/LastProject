@@ -24,9 +24,7 @@ public class CollisionObjectDamage : MonoBehaviour
             CollisionObjectDamageNumber -= 1;
     }
 
-    // 플레이어 충돌 이펙트
-    private GameObject DamageEffect;
+    public PlayerEffectManager.EnumPlayerEffect PlayerEffectType { get; set; }
 
-    public GameObject GetDamageEffect() { return DamageEffect; }
-    public void SetDamageEffect(GameObject go) { DamageEffect = go; }
+    
 }
