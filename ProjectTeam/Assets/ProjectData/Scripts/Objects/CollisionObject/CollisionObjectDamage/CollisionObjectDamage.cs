@@ -24,7 +24,6 @@ public class CollisionObjectDamage : MonoBehaviour
             CollisionObjectDamageNumber -= 1;
     }
 
-    public PlayerEffectManager.EnumPlayerEffect PlayerEffectType { get; set; }
-
+    public PoolingManager.EffctType EffectType { get; set; }
     
 }

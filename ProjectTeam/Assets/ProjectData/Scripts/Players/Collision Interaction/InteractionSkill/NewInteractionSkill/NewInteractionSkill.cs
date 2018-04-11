@@ -5,6 +5,7 @@ using UnityEngine;
 public class NewInteractionSkill : Photon.MonoBehaviour, IPunObservable {
     /**** public ****/
 
+
     /**** private ****/
 
 
@@ -23,6 +24,8 @@ public class NewInteractionSkill : Photon.MonoBehaviour, IPunObservable {
     private InteractiveState interactiveState;                   // 상호작용 물체 정보
     private PlayerMove boxPlayerMove;                // 플레이어 이동 스크립트
 
+    public ObjectManager objectManager;             // 오브젝트 매니저
+
     /**** 접근자 ****/
 
 
@@ -34,6 +37,9 @@ public class NewInteractionSkill : Photon.MonoBehaviour, IPunObservable {
 
     public InteractiveState GetinteractiveState() { return interactiveState; }
     public void SetinteractiveState(InteractiveState IS) { interactiveState = IS; }
+
+    public ObjectManager GetobjectManager() { return objectManager; }
+    public void SetobjectManager(ObjectManager om) { objectManager = om; }
 
     /**** 유니티 함수 ****/
 
@@ -49,6 +55,8 @@ public class NewInteractionSkill : Photon.MonoBehaviour, IPunObservable {
         playerCamera = GameObject.Find("PlayerCamera").GetComponent<PlayerCamera>();  // 카메라 설정
         playerState = GetComponent<PlayerState>();                                   // 플레이어 상태 설정
         boxPlayerMove = GetComponent<PlayerMove>();                        //플레이어 이동 스크립트
+        objectManager = GameObject.Find("ObjectManager").GetComponent<ObjectManager>();             // 오브젝트 매니저 초기화
+        
 
 
         OriginalCameraPosition = Vector3.zero;
@@ -153,7 +161,6 @@ public class NewInteractionSkill : Photon.MonoBehaviour, IPunObservable {
     {
         // 1. 애니메이션 재생, 상호작용 물체에 따라 다름
         animator.SetInteger("InteractionType", (int)interactiveState.interactiveObjectType);
-
     }
 
     // 서버에게 함수 받음
@@ -227,9 +234,9 @@ public class NewInteractionSkill : Photon.MonoBehaviour, IPunObservable {
 
 
     // 액션 사용, 물리나 애니를 호출함
+    // interactive 정보가 필요함.
     private void CallAction()
     {
-        Debug.Log(interactiveState);
         // 물리 일 경우 날라갈 위치의 노말벡터 전달
         interactiveState.UseAction(/*transform.position - playerCamera.transform.position*/transform.position - OriginalCameraPosition);
     }
@@ -240,8 +247,10 @@ public class NewInteractionSkill : Photon.MonoBehaviour, IPunObservable {
         animator.SetInteger("InteractionType", 0);
     }
 
+    private void InitInterState()
+    {
 
-
+    }
 
 }
 

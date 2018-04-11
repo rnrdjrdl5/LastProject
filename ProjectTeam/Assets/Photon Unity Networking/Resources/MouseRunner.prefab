@@ -2296,6 +2296,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67d834d25c092c246b20d3d482aafb64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectManager: {fileID: 0}
 --- !u!114 &114170829396627250
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2378,7 +2379,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1025010595340440}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5ac2d4935a4f52441b4b02f9482a8bd6, type: 3}
   m_Name: 
@@ -2622,7 +2623,7 @@ SphereCollider:
   m_GameObject: {fileID: 1025010595340440}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 10
   m_Center: {x: 0, y: 0, z: 0}

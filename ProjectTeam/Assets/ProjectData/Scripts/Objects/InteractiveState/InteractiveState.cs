@@ -41,6 +41,7 @@ public class InteractiveState : Photon.MonoBehaviour , IPunObservable {
 
     private          NewInteractionSkill            newInteractionSkill;                    // 플레이어 스킬을 가진 스크립트
 
+
     /**** 접근자 ****/
 
 
@@ -63,11 +64,12 @@ public class InteractiveState : Photon.MonoBehaviour , IPunObservable {
 
     // Use this for initialization
 
-        private void Awake()
+    private void Awake()
     {
-        CanUseObject                    = true;        // 반투명 아닌 상태
-        isCanFirstCheck                 = true;     // 첫 상호작용 사용 가능
+        CanUseObject = true;        // 반투명 아닌 상태
+        isCanFirstCheck = true;     // 첫 상호작용 사용 가능
 
+        GameObject.Find("ObjectManager").GetComponent<ObjectManager>().AddInterObj(gameObject);
 
     }
 
@@ -197,6 +199,11 @@ public class InteractiveState : Photon.MonoBehaviour , IPunObservable {
         if(vID == playerViewID)
         {
             newInteractionSkill.UseSkill();
+        }
+
+        else
+        {
+            // 해당 오브젝트를 찾습니다.
         }
     }
 

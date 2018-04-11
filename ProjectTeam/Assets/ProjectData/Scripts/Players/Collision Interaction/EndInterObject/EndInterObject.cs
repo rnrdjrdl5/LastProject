@@ -51,7 +51,6 @@ public class EndInterObject : MonoBehaviour
             if ((newInteractionSkill.GetinterViewID() == IS.photonView.viewID) &&
                 (!newInteractionSkill.photonView.isMine))
             {
-                Debug.Log("asdF");
                 // 물체 등록
                 newInteractionSkill.SetinteractiveObject(other.gameObject);
                 newInteractionSkill.SetinteractiveState(IS);

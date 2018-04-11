@@ -25,8 +25,6 @@ public partial class PlayerHealth
             // 카메라 설정
             playerCamera = GameObject.Find("PlayerCamera").GetComponent<PlayerCamera>();
 
-            // 이펙트 매니저 설정
-            playerEffectManager = GetComponent<PlayerEffectManager>();
 
             isHiting = false;
             NowHiting = 0.0f;
@@ -34,9 +32,9 @@ public partial class PlayerHealth
     }
 
 
-    public void CallApplyDamage(float _damage ,PlayerEffectManager.EnumPlayerEffect EPE)
+    public void CallApplyDamage(float _damage ,PoolingManager.EffctType effectType)
     {
-        photonView.RPC("ApplyDamage", PhotonTargets.All, _damage , (int)EPE);
+        photonView.RPC("ApplyDamage", PhotonTargets.All, _damage , (int)effectType);
     }
 
     public void PlayerDead()
@@ -59,7 +57,7 @@ public partial class PlayerHealth
     /**** RPC ****/
 
     [PunRPC]
-    private void ApplyDamage(float _damage , PlayerEffectManager.EnumPlayerEffect EPE)
+    private void ApplyDamage(float _damage , int effectType)
     {
 
         // 본인 인 경우에만
@@ -86,7 +84,9 @@ public partial class PlayerHealth
         NowHiting = 0.0f;
 
         // 이펙트 사용
+        GameObject effect = PoolingManager.GetInstance().CreateEffect((PoolingManager.EffctType)effectType);
 
+        effect.transform.position = transform.position + Vector3.up * 0.5f;
         
 
     }

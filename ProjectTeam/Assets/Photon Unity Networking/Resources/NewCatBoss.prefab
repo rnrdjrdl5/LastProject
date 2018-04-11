@@ -2869,9 +2869,10 @@ MonoBehaviour:
   CtnManaCost: 0
   PlayerSkillDebuffs: []
   attackState:
-    AttackDamage: 20
+    AttackDamage: 0
     DamageNumber: 10
     RecheckTime: 1
+    effectType: 0
   FryPan: {fileID: 1939484723374934}
 --- !u!135 &135917992987354584
 SphereCollider:

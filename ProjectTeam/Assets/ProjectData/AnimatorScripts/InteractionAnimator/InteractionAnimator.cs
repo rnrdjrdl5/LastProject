@@ -30,18 +30,50 @@ public class InteractionAnimator : StateMachineBehaviour {
 
     void InitinteractiveState(Animator animator)
     {
-            interactiveState = animator.GetComponent<NewInteractionSkill>().GetinteractiveState();
+         interactiveState = newInteractionSkill.GetinteractiveState();
+
+    }
+
+    void InitNewInteractionSkill(Animator animator)
+    {
+        newInteractionSkill = animator.GetComponent<NewInteractionSkill>();
     }
 
 
 	 // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
 	override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
 
+        // 포톤뷰 스크립트 받기
+        InitPhotonView(animator);
+
+        // 스킬오브젝트 받기
+        InitNewInteractionSkill(animator);
+
+        // 본인이 아니면
+        if (!photonView.isMine)
+        {
+
+            Debug.Log(newInteractionSkill);
+            Debug.Log(newInteractionSkill.GetobjectManager());
+            Debug.Log(newInteractionSkill.GetinterViewID());
+
+            // 스킬오브젝트 . 오브젝트매니저 . 찾기 ( id로 ) 
+            GameObject go = newInteractionSkill.GetobjectManager().FindObject(
+                newInteractionSkill.GetinterViewID());
+
+            Debug.Log(go);
+
+            // skill에 상호작용물체, 상호작용  스크립트 등록.
+            newInteractionSkill.SetinteractiveObject(go);
+            newInteractionSkill.SetinteractiveState(go.GetComponent<InteractiveState>());
+
+            
+        }
+
         // 상호작용 상태 받기
         InitinteractiveState(animator);
 
-        // 포톤뷰 스크립트 받기
-        InitPhotonView(animator);
+
 
         // 본인이면
         if (photonView.isMine)

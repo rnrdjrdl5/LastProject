@@ -16,7 +16,7 @@ public class AutoDestroyParticle : MonoBehaviour {
         {
             if(!ps.IsAlive())
             {
-                Destroy(gameObject);
+                PoolingManager.GetInstance().PushObject(gameObject);
             }
         }
 	}

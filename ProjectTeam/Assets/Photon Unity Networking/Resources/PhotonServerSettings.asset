@@ -125,4 +125,5 @@ MonoBehaviour:
   - RPCFinishConnectPlayer
   - RPCCreatePlayer
   - RPCDeleteResult
+  - RPCFindObject
   DisableAutoOpenWizard: 1

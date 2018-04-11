@@ -16,7 +16,7 @@ public class AttackState{
     public float RecheckTime;
 
     [Tooltip(" - 충돌체크 이펙트 입니다.")]
-    public PlayerEffectManager.EnumPlayerEffect playerEffectType;
+    public PoolingManager.EffctType effectType;
 
 
     // 1. 이전에 스크립트를 받은 적이 없을 때
@@ -54,7 +54,7 @@ public class AttackState{
     {
         cod.SetObjectDamage(AttackDamage);
         cod.SetObjectDamageNumber(DamageNumber);
-        cod.PlayerEffectType = playerEffectType;
+        cod.EffectType = effectType;
 
         co.SetUsePlayer("Player" + pv.viewID);
         co.SetCollisionReCheckTime(RecheckTime);

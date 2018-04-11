@@ -62,8 +62,6 @@ public class TestPhotonManager : Photon.PunBehaviour
 
 
         
-        if (photonView.isMine)
-        {
             // 생성
             if (Input.GetKeyDown(KeyCode.Z))
             {
@@ -125,7 +123,7 @@ public class TestPhotonManager : Photon.PunBehaviour
             }
 
             
-        }
+        
 	}
 
     private void OnGUI()

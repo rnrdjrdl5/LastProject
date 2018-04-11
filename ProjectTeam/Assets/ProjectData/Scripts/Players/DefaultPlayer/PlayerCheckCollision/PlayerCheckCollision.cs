@@ -31,6 +31,7 @@ public class PlayerCheckCollision : Photon.PunBehaviour , IPunObservable {
     private void OnTriggerStay(Collider other)
     {
         CheckCollision(gameObject, other);
+       
     }
 
     void IPunObservable.OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
@@ -54,12 +55,12 @@ public class PlayerCheckCollision : Photon.PunBehaviour , IPunObservable {
     {
         //Debug.Log("충돌체크`" + go.name);
           if (other.tag == "CheckCollision")
-          {
-             // other : 충돌체크용 오브젝트, 
-             // other에 있는 변수를 보고, 상태이상에 대해 판단한다.
-             // ex) if other.getcomponent<Bullet>().getType() == "슬로우"
-             //      bullet : 
-              baseCollision.UseCollision(other);
+        {
+            // other : 충돌체크용 오브젝트, 
+            // other에 있는 변수를 보고, 상태이상에 대해 판단한다.
+            // ex) if other.getcomponent<Bullet>().getType() == "슬로우"
+            //      bullet : 
+            baseCollision.UseCollision(other);
              
           }
     }

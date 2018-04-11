@@ -149,7 +149,7 @@ public class BaseCollision : Photon.PunBehaviour{
             {
 
                 // 데미지 주기
-                playerHealth.CallApplyDamage(collisionObjectDamage.GetObjectDamage(),collisionObjectDamage.PlayerEffectType) ;
+                playerHealth.CallApplyDamage(collisionObjectDamage.GetObjectDamage(),collisionObjectDamage.EffectType) ;
                 Debug.Log("데미지 : " + collisionObjectDamage.GetObjectDamage());
                 
 

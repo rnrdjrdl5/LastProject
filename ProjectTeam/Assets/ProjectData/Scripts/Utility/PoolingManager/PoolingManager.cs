@@ -4,6 +4,22 @@ using UnityEngine;
 
 public class PoolingManager : MonoBehaviour {
 
+    public enum EffctType
+    { ATTACK }
+
+    public GameObject CreateEffect(EffctType effectType)
+    {
+        GameObject effect = null;
+        switch(effectType)
+        {
+            case EffctType.ATTACK:
+                effect = PopObject("Cat_Effect_FryPan_Attack_01");
+                 break;
+        }
+
+        return effect;
+    }
+
     static private PoolingManager poolingManager;
 
     static public PoolingManager GetInstance()
@@ -94,6 +110,7 @@ public class PoolingManager : MonoBehaviour {
         return go;
     }
 
+    
 
     
 }
