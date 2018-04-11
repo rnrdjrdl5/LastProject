@@ -8,11 +8,6 @@ public class ObjectManager : MonoBehaviour {
 
     public void AddInterObj(GameObject go) { InterObj.Add(go); }
 
-    private void Awake()
-    {
-        InterObj = new List<GameObject>();
-    }
-
     public GameObject FindObject(int vID)
     {
         for (int i = 0; i < InterObj.Count; i++)

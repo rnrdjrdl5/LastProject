@@ -21,20 +21,27 @@ public class TablePhysics : MonoBehaviour {
     public              float               XZPower;            // 직선으로 솟는 힘
     public              float               TorquePower;        // 회전하는 힘
 
-    public float tableMass;
+    public float tableMass;             // 테이블 질량
 
-    public float subObjectMass;
+    public float subObjectMass;             // 보조 오브젝트 질량
 
     public GameObject[] subObjects;                // 물리의 영향을 받는 보조 오브젝트 (식기, 접시 등)
 
+    public float CreateOffPhysicsObjectTime;           // 오브젝트 물리제거 시작시간
+    public float PhysicsOffTime;        // 물리 꺼지는 시간
+
+    public GameObject OtherTableObject;             // 다른 테이블, 테이블의 다른 부위
 
     /**** private ****/
     private Rigidbody rigidBody;
+
+    IEnumerator CoroSetOffPhysics;
 
     public void Awake()
     {
         rigidBody = GetComponent<Rigidbody>();
         rigidBody.mass = tableMass;
+        CoroSetOffPhysics = SetOffPhysics();
     }
 
 
@@ -65,6 +72,9 @@ public class TablePhysics : MonoBehaviour {
 
         // 회전시키기
         rigidBody.AddTorque((QuatY * NotY_NormalVector3) * TorquePower, ForceMode.Impulse);
+
+        // 코루틴 작동
+        StartCoroutine(CoroSetOffPhysics);
         
     }
 
@@ -78,13 +88,36 @@ public class TablePhysics : MonoBehaviour {
             // 보조 오브젝트의 부모 없음으로 처리
             subObjects[i].transform.parent = null;
 
-            // 강체 받아오기
-            Rigidbody subRigidbody = subObjects[i].GetComponent<Rigidbody>();
+            // 강체 생성
+            Rigidbody subRigidbody = subObjects[i].AddComponent<Rigidbody>();
 
             // 보조 오브젝트 물리 설정
             subRigidbody.constraints = RigidbodyConstraints.None;
             subRigidbody.maxAngularVelocity = TorquePower;
             subRigidbody.mass = subObjectMass;
+
+            subRigidbody.gameObject.AddComponent<BoxCollider>();
         }
+    }
+
+    // N초뒤에 물리 제거용 스크립트 생성
+    IEnumerator SetOffPhysics()
+    {
+        
+        // N초 뒤
+        yield return new WaitForSeconds(CreateOffPhysicsObjectTime);
+
+        // 보조 오브젝트 NoCollision으로 변경
+        for (int i = 0; i < subObjects.Length; i++)
+        {
+            subObjects[i].layer = LayerMask.NameToLayer("NoCollisionPlayer");
+        }
+
+        // 이 오브젝트에도 물리 제거 스크립트 등록
+        OffObjectPhysics offObjectPhysics = gameObject.AddComponent<OffObjectPhysics>();
+        offObjectPhysics.OffTime = PhysicsOffTime ;
+        
+        // 같이 사라질 오브젝트 등록, 여기서는 테이블의 기둥
+        offObjectPhysics.OtherObject = OtherTableObject;
     }
 }

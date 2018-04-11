@@ -139,7 +139,9 @@ public class NewInteractionSkill : Photon.MonoBehaviour, IPunObservable {
 
                         // 8. ViewID 동기화
                         // 애니메이션 동기화하고 viewID 동기화시간이 다름, 최대 0.1초
+                        
                         interViewID = interactiveObject.GetPhotonView().viewID;
+                        Debug.Log("실제 번호 : " + interViewID);
 
                         // 9. 플레이어 카메라 위치 저장, 동기화
                         OriginalCameraPosition = playerCamera.transform.position;

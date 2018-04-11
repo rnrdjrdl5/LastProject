@@ -52,14 +52,12 @@ public class InteractionAnimator : StateMachineBehaviour {
         // 본인이 아니면
         if (!photonView.isMine)
         {
-
-            Debug.Log(newInteractionSkill);
-            Debug.Log(newInteractionSkill.GetobjectManager());
-            Debug.Log(newInteractionSkill.GetinterViewID());
+            Debug.Log("번호 : " + newInteractionSkill.GetinterViewID());
 
             // 스킬오브젝트 . 오브젝트매니저 . 찾기 ( id로 ) 
             GameObject go = newInteractionSkill.GetobjectManager().FindObject(
                 newInteractionSkill.GetinterViewID());
+
 
             Debug.Log(go);
 

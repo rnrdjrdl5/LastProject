@@ -5,8 +5,6 @@ using UnityEngine;
 public class EndInterObject : MonoBehaviour
 {
 
-    public NewInteractionSkill newInteractionSkill;
-
     private PhotonView pv;
 
     struct StructInteraction
@@ -29,6 +27,15 @@ public class EndInterObject : MonoBehaviour
         Inters = new List<StructInteraction>();
         gameObject.GetComponent<SphereCollider>().radius = FindRad;
         pv = GetComponentInParent<PhotonView>();
+        if (!pv.isMine)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void Start()
+    {
+
     }
 
     int a = 0;
@@ -41,22 +48,6 @@ public class EndInterObject : MonoBehaviour
         {
             // 해당 스크립트를 받아옵니다.
             InteractiveState IS = other.gameObject.GetComponent<InteractiveState>();
-
-
-            // 충돌물체가 viewid와 같다면 &&
-            // 본인이 소유한게 아니라면 &&
-
-            // 문제점 : 
-            // 
-            if ((newInteractionSkill.GetinterViewID() == IS.photonView.viewID) &&
-                (!newInteractionSkill.photonView.isMine))
-            {
-                // 물체 등록
-                newInteractionSkill.SetinteractiveObject(other.gameObject);
-                newInteractionSkill.SetinteractiveState(IS);
-
-                
-            }
 
 
             // 사용 불가능하면
