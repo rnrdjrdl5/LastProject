@@ -149,7 +149,7 @@ public class BaseCollision : Photon.PunBehaviour{
             {
 
                 // 데미지 주기
-                playerHealth.CallApplyDamage(collisionObjectDamage.GetObjectDamage(),collisionObjectDamage.EffectType) ;
+                playerHealth.CallApplyDamage(collisionObjectDamage.GetObjectDamage()) ;
                 Debug.Log("데미지 : " + collisionObjectDamage.GetObjectDamage());
                 
 
@@ -165,6 +165,13 @@ public class BaseCollision : Photon.PunBehaviour{
                 // 데미지 충돌 끝
                 Destroy(collisionObjectDamage);
             }
+
+            // 모든 클라에서 각자 체크
+            // 이펙트 사용
+            GameObject effect = PoolingManager.GetInstance().CreateEffect(collisionObjectDamage.EffectType);
+            effect.transform.position = transform.position + Vector3.up * 0.5f;
+
+            playerHealth.FlushEffect();
         }
     }
 

@@ -9,8 +9,6 @@ public class OffObjectPhysics : MonoBehaviour {
     IEnumerator CoroOffPhysics;
     bool isCheck;
 
-    public GameObject OtherObject;                // 달라붙어있는 오브젝트 있으면 선택
-
     private void Awake()
     {
         CoroOffPhysics = OffPhysics();
@@ -31,14 +29,16 @@ public class OffObjectPhysics : MonoBehaviour {
     {
         yield return new WaitForSeconds(OffTime);
 
-        Destroy(GetComponent<Rigidbody>());
-        Destroy(GetComponent<BoxCollider>());
+        BoxCollider[] boxColliders = gameObject.GetComponents<BoxCollider>();
 
-        if (OtherObject != null)
+
+        for (int i = 0; i < boxColliders.Length; i++)
         {
-            Destroy(OtherObject.GetComponent<Rigidbody>());
-            Destroy(OtherObject.GetComponent<BoxCollider>());
+            Destroy(boxColliders[i]);
         }
+
+        Destroy(GetComponent<Rigidbody>());
+
 
         yield return null;
     }

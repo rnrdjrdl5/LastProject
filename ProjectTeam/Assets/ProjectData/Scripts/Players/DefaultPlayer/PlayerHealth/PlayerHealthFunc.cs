@@ -32,9 +32,9 @@ public partial class PlayerHealth
     }
 
 
-    public void CallApplyDamage(float _damage ,PoolingManager.EffctType effectType)
+    public void CallApplyDamage(float _damage)
     {
-        photonView.RPC("ApplyDamage", PhotonTargets.All, _damage , (int)effectType);
+        photonView.RPC("ApplyDamage", PhotonTargets.All, _damage);
     }
 
     public void PlayerDead()
@@ -57,7 +57,7 @@ public partial class PlayerHealth
     /**** RPC ****/
 
     [PunRPC]
-    private void ApplyDamage(float _damage , int effectType)
+    private void ApplyDamage(float _damage)
     {
 
         // 본인 인 경우에만
@@ -74,21 +74,18 @@ public partial class PlayerHealth
                     }
         }
 
+    }
+
+    public void FlushEffect()
+    {
         // 그 외에도 이펙트는 준다.
-        for(int i = 0; i < skinnedMeshRenderer.Length; i++)
+        for (int i = 0; i < skinnedMeshRenderer.Length; i++)
         {
             skinnedMeshRenderer[i].material.color = Color.red;
         }
 
         isHiting = true;
         NowHiting = 0.0f;
-
-        // 이펙트 사용
-        GameObject effect = PoolingManager.GetInstance().CreateEffect((PoolingManager.EffctType)effectType);
-
-        effect.transform.position = transform.position + Vector3.up * 0.5f;
-        
-
     }
 
 

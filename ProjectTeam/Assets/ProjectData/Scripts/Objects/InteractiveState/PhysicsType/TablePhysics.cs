@@ -30,8 +30,6 @@ public class TablePhysics : MonoBehaviour {
     public float CreateOffPhysicsObjectTime;           // 오브젝트 물리제거 시작시간
     public float PhysicsOffTime;        // 물리 꺼지는 시간
 
-    public GameObject OtherTableObject;             // 다른 테이블, 테이블의 다른 부위
-
     /**** private ****/
     private Rigidbody rigidBody;
 
@@ -116,8 +114,5 @@ public class TablePhysics : MonoBehaviour {
         // 이 오브젝트에도 물리 제거 스크립트 등록
         OffObjectPhysics offObjectPhysics = gameObject.AddComponent<OffObjectPhysics>();
         offObjectPhysics.OffTime = PhysicsOffTime ;
-        
-        // 같이 사라질 오브젝트 등록, 여기서는 테이블의 기둥
-        offObjectPhysics.OtherObject = OtherTableObject;
     }
 }

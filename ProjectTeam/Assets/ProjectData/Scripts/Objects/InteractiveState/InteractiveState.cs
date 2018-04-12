@@ -41,6 +41,8 @@ public class InteractiveState : Photon.MonoBehaviour , IPunObservable {
 
     private          NewInteractionSkill            newInteractionSkill;                    // 플레이어 스킬을 가진 스크립트
 
+    private         bool            isPlayerAction = false;                              // 해당 플레이어 액션 했는지 여부
+
 
     /**** 접근자 ****/
 
@@ -91,33 +93,52 @@ public class InteractiveState : Photon.MonoBehaviour , IPunObservable {
 
     // 액션을 사용함
     // 물리 인 경우 카메라의 위치 이용, 매개변수 받음
+
+    // 개인적으로 모두 사용
     public void UseAction(Vector3 NormalVector3)
     {
 
-        // 모든 액션은 마스터에서 실행함
+        // 반투명 처리를 위해 마스터의 변수 false 사용
         if (PhotonNetwork.isMasterClient)
+            CanUseObject = false;
+
+
+        // 상호작용 하지 않은 상태
+        if (!isPlayerAction)
         {
-            // 액션 적용방식 판단
+            // 상호작용 온
+            isPlayerAction = true;
 
-            CanUseObject = false;                       // 상호작용 완료
+            // 액션 개인 판단
+            if (ActionType == EnumAction.PHYSICS)
+            {
 
-            // 애니메이션 방식의 상호작용
+
+                // 추가로 rpc 보냄
+                // 애니메이션ㄷ
+                if (photonView.isMine)
+                {
+                    photonView.RPC("RPCTableAction", PhotonTargets.Others, NormalVector3);
+                }
+
+                // 충돌체크 변경
+                gameObject.layer = LayerMask.NameToLayer("NoCollisionPlayer");
+
+                // 물리 컴포넌트 받기
+                TablePhysics tablePhysics = GetComponent<TablePhysics>();
+
+                // 물리 방식 액션 사용
+                tablePhysics.Action(NormalVector3);
+
+
+            }
+            /*
             if (ActionType == EnumAction.ANIMATION ||
-                ActionType == EnumAction.MIX)
+              ActionType == EnumAction.MIX)
             {
 
-                // 애니메이션 호출
-                
-                // 동기화 시켜주기.
-                // PhotonAnimationView 이용
-            }
+            }*/
 
-
-            // 물리 방식의 상호작용 + 충돌체크 제거
-            else if (ActionType == EnumAction.PHYSICS)
-            {
-                photonView.RPC("RPCTableAction", PhotonTargets.All, NormalVector3);
-            }
         }
     }
 
@@ -221,20 +242,26 @@ public class InteractiveState : Photon.MonoBehaviour , IPunObservable {
 
     }
 
-    // 모든 대상
-    // 테이블 물리 RPC
+    // 물리 용 RPC
+    // 무사히 상호작용 되었는지판단
+    // 안되있으면 상호작용 적용
     [PunRPC]
     private void RPCTableAction(Vector3 normalVector3)
     {
+        // playeraction 한 적이 없다면.
+        if (isPlayerAction == false)
+        {
+            isPlayerAction = true;
 
-        // 충돌체크 변경
-        gameObject.layer = LayerMask.NameToLayer("NoCollisionPlayer");
+            // 충돌체크 변경
+            gameObject.layer = LayerMask.NameToLayer("NoCollisionPlayer");
 
-        // 물리 컴포넌트 받기
-        TablePhysics tablePhysics = GetComponent<TablePhysics>();
+            // 물리 컴포넌트 받기
+            TablePhysics tablePhysics = GetComponent<TablePhysics>();
 
-        // 물리 방식 액션 사용
-        tablePhysics.Action(normalVector3);
+            // 물리 방식 액션 사용
+            tablePhysics.Action(normalVector3);
+        }
     }
 
     // 모든 대상
