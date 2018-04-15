@@ -15,9 +15,6 @@ public partial class PlayerManager : MonoBehaviour {
     }
     private void Start()
     {
-        SetPhotonManager();
         HideCursor();
-
-        AttachThisPlayer();
     }
 }

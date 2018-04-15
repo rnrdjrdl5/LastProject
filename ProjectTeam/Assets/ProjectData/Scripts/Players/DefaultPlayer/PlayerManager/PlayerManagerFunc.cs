@@ -8,11 +8,6 @@ using UnityEngine;
 public partial class PlayerManager
 {
 
-    public void SetPhotonManager()
-    {    
-        photonManager = GameObject.Find("PhotonManager").GetComponent<PhotonManager>();
-    }
-    public PhotonManager GetPhotonManager() { return photonManager; }
 
 
     void HideCursor()
@@ -42,13 +37,6 @@ public partial class PlayerManager
 
     }
 
-    void AttachThisPlayer()
-    {
-        if (photonManager != null)
-        {
-            photonManager.AddAllPlayer(gameObject);
-        }
-    }
 
     // Damage 들어갈 떄, 관련 데미지 모두삭제.
 

@@ -8,7 +8,7 @@ public class NewThrowFryingPan : DefaultNewSkill
 {
     // 스킬의 옵션이 결정됩니다.
     // 스킬에서 사용하지 않는 옵션은 조정해봤자 의미 없습니다.
-    public ProjectileState projectileState;
+    public TorqueProjectileState torqueProjectileState ;
 
     protected override void Awake()
     {
@@ -75,9 +75,17 @@ public class NewThrowFryingPan : DefaultNewSkill
 
         BulletDefaultPlace.y += CharacterHeight;
 
-        GameObject CharmBullet = Instantiate(projectileState.ProjectileObject, transform.position + (BulletDefaultPlace), Quaternion.identity);
 
-        projectileState.SetData(CharmBullet, gameObject);
+        Quaternion BulletRotation = transform.rotation;
+
+        Vector3 v3 = transform.rotation.eulerAngles;
+        v3.y += -90;
+        v3.x += 135;
+        
+
+        GameObject CharmBullet = Instantiate(torqueProjectileState.ProjectileObject, transform.position + (BulletDefaultPlace), Quaternion.Euler(v3));
+
+        torqueProjectileState.SetData(CharmBullet, gameObject);
 
         // 발사체에 디버프를 넣습니다.
         AddDebuffComponent(CharmBullet);

@@ -40,8 +40,11 @@ public class InteractiveState : Photon.MonoBehaviour , IPunObservable {
 
 
     private          NewInteractionSkill            newInteractionSkill;                    // 플레이어 스킬을 가진 스크립트
+    private ObjectManager objectManager;                // 플레이어 오브젝트 관리  매니저
 
     private         bool            isPlayerAction = false;                              // 해당 플레이어 액션 했는지 여부
+
+    
 
 
     /**** 접근자 ****/
@@ -71,7 +74,8 @@ public class InteractiveState : Photon.MonoBehaviour , IPunObservable {
         CanUseObject = true;        // 반투명 아닌 상태
         isCanFirstCheck = true;     // 첫 상호작용 사용 가능
 
-        GameObject.Find("ObjectManager").GetComponent<ObjectManager>().AddInterObj(gameObject);
+        objectManager = GameObject.Find("ObjectManager").GetComponent<ObjectManager>();
+        objectManager.AddInterObj(gameObject);
 
     }
 
@@ -102,44 +106,45 @@ public class InteractiveState : Photon.MonoBehaviour , IPunObservable {
         if (PhotonNetwork.isMasterClient)
             CanUseObject = false;
 
+        // 오브젝트 리스트에 있는 리스트 목록 삭제
 
         // 상호작용 하지 않은 상태
-        if (!isPlayerAction)
+        /*  if (!isPlayerAction)
+          {*/
+        // 상호작용 온
+        //   isPlayerAction = true;
+
+        // 액션 개인 판단
+        if (ActionType == EnumAction.PHYSICS)
         {
-            // 상호작용 온
-            isPlayerAction = true;
 
-            // 액션 개인 판단
-            if (ActionType == EnumAction.PHYSICS)
+            //  스킬 을 사용한 플레이어인 경우                           ( 스킬 사용한 사람만 newinteractionSkill이 할당됨 ) 
+            if (newInteractionSkill != null)
             {
-
-
-                // 추가로 rpc 보냄
-                // 애니메이션ㄷ
-                if (photonView.isMine)
+                if (newInteractionSkill.photonView.isMine)
                 {
-                    photonView.RPC("RPCTableAction", PhotonTargets.Others, NormalVector3);
+                    photonView.RPC("RPCTableAction", PhotonTargets.All, NormalVector3);
                 }
-
-                // 충돌체크 변경
-                gameObject.layer = LayerMask.NameToLayer("NoCollisionPlayer");
-
-                // 물리 컴포넌트 받기
-                TablePhysics tablePhysics = GetComponent<TablePhysics>();
-
-                // 물리 방식 액션 사용
-                tablePhysics.Action(NormalVector3);
-
-
             }
-            /*
-            if (ActionType == EnumAction.ANIMATION ||
-              ActionType == EnumAction.MIX)
-            {
+            /*// 충돌체크 변경
+            gameObject.layer = LayerMask.NameToLayer("NoCollisionPlayer");
 
-            }*/
+            // 물리 컴포넌트 받기
+            TablePhysics tablePhysics = GetComponent<TablePhysics>();
+
+            // 물리 방식 액션 사용
+            tablePhysics.Action(NormalVector3);*/
+
 
         }
+        /*
+        if (ActionType == EnumAction.ANIMATION ||
+          ActionType == EnumAction.MIX)
+        {
+
+        }*/
+
+        //  }
     }
 
 
@@ -249,9 +254,12 @@ public class InteractiveState : Photon.MonoBehaviour , IPunObservable {
     private void RPCTableAction(Vector3 normalVector3)
     {
         // playeraction 한 적이 없다면.
-        if (isPlayerAction == false)
-        {
-            isPlayerAction = true;
+        /*   if (isPlayerAction == false)
+           {
+               isPlayerAction = true;*/
+
+        // 리스트에서 해당 오브젝트 삭제
+        objectManager.RemoveObject(photonView.viewID);
 
             // 충돌체크 변경
             gameObject.layer = LayerMask.NameToLayer("NoCollisionPlayer");
@@ -261,7 +269,7 @@ public class InteractiveState : Photon.MonoBehaviour , IPunObservable {
 
             // 물리 방식 액션 사용
             tablePhysics.Action(normalVector3);
-        }
+        //}
     }
 
     // 모든 대상

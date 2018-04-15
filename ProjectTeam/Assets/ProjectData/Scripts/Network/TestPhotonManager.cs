@@ -20,6 +20,7 @@ public class TestPhotonManager : Photon.PunBehaviour
 
     public PointToLocation PTL;             // 레이용 스크립트
 
+    public UIManager uIManager;
 
     private void Awake()
     {
@@ -30,26 +31,47 @@ public class TestPhotonManager : Photon.PunBehaviour
         PTL.SetPlayerCamera(PlayerCamera);
         playerCamera = PlayerCamera.GetComponent<PlayerCamera>();
         PTL.SetcameraScript(playerCamera);
-        
+
+
     }
 
     public override void OnJoinedLobby()
     {
+        Debug.Log("로비입장");
         PhotonNetwork.JoinRandomRoom();
+
     }
 
     public override void OnPhotonRandomJoinFailed(object[] codeAndMsg)
     {
-        PhotonNetwork.CreateRoom("20180405_1");
+        PhotonNetwork.CreateRoom("20180413");
     }
     public override void OnJoinedRoom()
+    {
+        ExitGames.Client.Photon.Hashtable MouseScore = new ExitGames.Client.Photon.Hashtable
+        {
+            { "MouseScore",0}
+        };
+
+        ExitGames.Client.Photon.Hashtable CatScore = new ExitGames.Client.Photon.Hashtable
+        {
+            { "CatScore",0 }
+        };
+
+
+        PhotonNetwork.player.SetCustomProperties(MouseScore);
+        PhotonNetwork.player.SetCustomProperties(CatScore);
+    }
+
+    public override void OnPhotonPlayerConnected(PhotonPlayer newPlayer)
     {
 
     }
 
+
     // Use this for initialization
     void Start () {
-        PhotonNetwork.isMessageQueueRunning = true;
+        PhotonNetwork.isMessageQueueRunning = true;        
 
     }
 
@@ -71,8 +93,16 @@ public class TestPhotonManager : Photon.PunBehaviour
                     PhotonNetwork.Destroy(CurrentPlayer);
                 }
 
-                CurrentPlayer = PhotonNetwork.Instantiate("NewCatBoss", PlayerSpawnLocation.transform.position, Quaternion.identity, 0);
-            }
+                CurrentPlayer = PhotonNetwork.Instantiate("Cat/CatBoss", PlayerSpawnLocation.transform.position, Quaternion.identity, 0);
+
+            uIManager = CurrentPlayer.GetComponent<UIManager>();
+            uIManager.SetManaPoint(true);
+            uIManager.SetHealthPoint(true);
+            uIManager.SetAim(true);
+
+            uIManager.Players.Add(PhotonNetwork.player);
+
+        }
 
             //생성
             else if (Input.GetKeyDown(KeyCode.X))
@@ -84,8 +114,15 @@ public class TestPhotonManager : Photon.PunBehaviour
                     PhotonNetwork.Destroy(CurrentPlayer);
                 }
 
-                CurrentPlayer = PhotonNetwork.Instantiate("MouseRunner", PlayerSpawnLocation.transform.position, Quaternion.identity, 0);
-            }
+                CurrentPlayer = PhotonNetwork.Instantiate("Mouse/MouseRunner", PlayerSpawnLocation.transform.position, Quaternion.identity, 0);
+
+                uIManager = CurrentPlayer.GetComponent<UIManager>();
+                uIManager.SetManaPoint(true);
+               uIManager.SetHealthPoint(true);
+               uIManager.SetAim(true);
+
+            uIManager.Players.Add(PhotonNetwork.player);
+        }
 
             // 레이캐스트 발사
             if (Input.GetKeyDown(KeyCode.V))

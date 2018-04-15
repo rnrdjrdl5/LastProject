@@ -7,7 +7,8 @@ public partial class CollisionTorqueMove
     protected override void Start()
     {
         base.Start();
-        gameObject.GetComponent<Rigidbody>().AddTorque(TorqueRad);
+        gameObject.GetComponent<Rigidbody>().maxAngularVelocity = TorqueRad;
+        gameObject.GetComponent<Rigidbody>().AddTorque((transform.forward) * TorqueRad, ForceMode.Impulse);
     }
 
 

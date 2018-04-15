@@ -4,9 +4,9 @@ using UnityEngine;
 
 public partial class CollisionTorqueMove
 {
-    private Vector3 TorqueRad;
+    private float TorqueRad;
 
-    public Vector3 GetTorqueRad() { return TorqueRad; }
-    public void SetTorqueRad(Vector3 str) { TorqueRad = str; }
+    public float GetTorqueRad() { return TorqueRad; }
+    public void SetTorqueRad(float str) { TorqueRad = str; }
 
 }

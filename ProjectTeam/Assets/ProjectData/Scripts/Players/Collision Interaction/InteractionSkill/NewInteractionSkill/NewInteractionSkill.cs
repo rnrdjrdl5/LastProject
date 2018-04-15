@@ -26,6 +26,8 @@ public class NewInteractionSkill : Photon.MonoBehaviour, IPunObservable {
 
     public ObjectManager objectManager;             // 오브젝트 매니저
 
+    public int AddScore = 3;              // 뒤집을떄 얻는 스코어
+
     /**** 접근자 ****/
 
 
@@ -46,6 +48,7 @@ public class NewInteractionSkill : Photon.MonoBehaviour, IPunObservable {
 
     private void Awake()
     {
+
         inGameCanvas = GameObject.Find("InGameObject");                               // 캔버스 설정
 
         animator = GetComponent<Animator>();                                      // 애니메이터 설정
@@ -84,6 +87,8 @@ public class NewInteractionSkill : Photon.MonoBehaviour, IPunObservable {
     // 캐릭터 스킬 사용 여부 체크
     private void Update()
     {
+    //    Debug.Log(PhotonNetwork.player.CustomProperties["MouseScore"]);
+
         // 본인이라면
         if (photonView.isMine)
         {
@@ -241,6 +246,14 @@ public class NewInteractionSkill : Photon.MonoBehaviour, IPunObservable {
     {
         // 물리 일 경우 날라갈 위치의 노말벡터 전달
         interactiveState.UseAction(/*transform.position - playerCamera.transform.position*/transform.position - OriginalCameraPosition);
+
+        // 사용했을 때 스코어 추가
+        if (photonView.isMine)
+        {
+            PhotonNetwork.player.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { {"MouseScore"
+                    ,(int)PhotonNetwork.player.CustomProperties["MouseScore"] + AddScore} });
+
+        }
     }
 
     private void OffInteraction()

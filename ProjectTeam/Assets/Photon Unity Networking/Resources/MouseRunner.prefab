@@ -2384,7 +2384,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ac2d4935a4f52441b4b02f9482a8bd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newInteractionSkill: {fileID: 114130693748871330}
   HideMaterial: {fileID: 0}
   FindRad: 5
 --- !u!114 &114255851139367972

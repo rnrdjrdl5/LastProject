@@ -65,7 +65,7 @@ public class InteractionAnimator : StateMachineBehaviour {
             newInteractionSkill.SetinteractiveObject(go);
             newInteractionSkill.SetinteractiveState(go.GetComponent<InteractiveState>());
 
-            
+
         }
 
         // 상호작용 상태 받기

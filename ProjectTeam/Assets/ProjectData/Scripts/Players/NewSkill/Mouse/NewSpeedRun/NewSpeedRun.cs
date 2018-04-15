@@ -14,7 +14,7 @@ public class NewSpeedRun : DefaultNewSkill {
     private float PlayerOriginalSpeed;              // 플레이어 원래 속도
     private float PlayerOriginalBackSpeed;          // 플레이어 원래 속도
     private float OriginalAniSpeed;                 // 플레이어 원래 애니메이션 전환속도
-    private float CheckTime;                     // 시간 흐름 저장용
+    private float CheckTime;                     // 시간 흐름 저장용 , 보정값
 
 
     private PlayerMove playerMove;               // 플레이어 이동 스크립트

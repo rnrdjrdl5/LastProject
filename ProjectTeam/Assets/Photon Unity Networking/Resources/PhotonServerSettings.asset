@@ -126,4 +126,9 @@ MonoBehaviour:
   - RPCCreatePlayer
   - RPCDeleteResult
   - RPCFindObject
+  - RPCActionCheckCreatePlayer
+  - RPCActionCheckFinishNext
+  - RPCActionCheckGameFinish
+  - RPCActionCheckGameStart
+  - RPCNextRound
   DisableAutoOpenWizard: 1

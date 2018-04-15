@@ -2826,15 +2826,16 @@ MonoBehaviour:
   PlayerSkillDebuffs:
   - SkillDebuffType: 1
     MaxTime: 0.1
-  projectileState:
-    ProjectileObject: {fileID: 1023685096185302, guid: b64f962fb79dc874e910ba8ec12d09cd,
+  torqueProjectileState:
+    ProjectileObject: {fileID: 1592117993979618, guid: ea306f825c9af894f8269cfc96f152fd,
       type: 2}
     ObjectDamage: 10
     ObjectDamageNumber: 10
     CollisionNumber: 1
     ReCheckTime: 1000
     DestroyTime: 3
-    ObjectSpeed: 10
+    ObjectSpeed: 3
+    ObjectTorque: 3
 --- !u!114 &114496405576377690
 MonoBehaviour:
   m_ObjectHideFlags: 1

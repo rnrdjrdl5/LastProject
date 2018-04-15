@@ -153,10 +153,22 @@ public class LobbyRoomPhoton : Photon.PunBehaviour {
             { "UseBoss",false }
         };
 
+        ExitGames.Client.Photon.Hashtable MouseScore = new ExitGames.Client.Photon.Hashtable
+        {
+            { "MouseScore",0}
+        };
+
+        ExitGames.Client.Photon.Hashtable CatScore = new ExitGames.Client.Photon.Hashtable
+        {
+            { "CatScore",0 }
+        };
+
         PhotonNetwork.player.SetCustomProperties(PlayerSceneState);
         PhotonNetwork.player.SetCustomProperties(PlayerLoadingState);
         PhotonNetwork.player.SetCustomProperties(PlayerType);
         PhotonNetwork.player.SetCustomProperties(UseBoss);
+        PhotonNetwork.player.SetCustomProperties(MouseScore);
+        PhotonNetwork.player.SetCustomProperties(CatScore);
 
 
     }

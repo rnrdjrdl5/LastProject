@@ -44,6 +44,8 @@ public class RunCdtAct : DefaultConditionAction
                     // 스킬 사용
                     defaultNewSkill.UseSkill();
 
+                    defaultNewSkill.GetmanaPoint().SetisReTimeMana(false);
+
                     // 지속성 스킬 사용
                     skillCtnCdtOption.GetskillConditionContinueOption().SetisUseCtnSkill(true);
                 }
@@ -71,6 +73,9 @@ public class RunCdtAct : DefaultConditionAction
 
                 // 스킬 사용중 해제
                 skillCtnCdtOption.GetskillConditionContinueOption().SetisUseCtnSkill(false);
+
+                if (defaultNewSkill.GetmanaPoint().GetisReTimeMana() ==false)
+                    defaultNewSkill.GetmanaPoint().SetisReTimeMana(true);
             }
         }
 
@@ -92,6 +97,9 @@ public class RunCdtAct : DefaultConditionAction
                     defaultNewSkill.coolDown.CalcCoolDown();
 
                     defaultNewSkill.coolDown.SetisUseCoolDown(true);
+
+                    if (defaultNewSkill.GetmanaPoint().GetisReTimeMana() == false)
+                        defaultNewSkill.GetmanaPoint().SetisReTimeMana(true);
                 }
             }
         }
@@ -110,6 +118,9 @@ public class RunCdtAct : DefaultConditionAction
 
                     defaultNewSkill.ExitCtnSkill();
                     skillCtnCdtOption.GetskillConditionContinueOption().SetisUseCtnSkill(false);
+
+                    if (defaultNewSkill.GetmanaPoint().GetisReTimeMana() == false)
+                        defaultNewSkill.GetmanaPoint().SetisReTimeMana(true);
                 }
             }
         }
