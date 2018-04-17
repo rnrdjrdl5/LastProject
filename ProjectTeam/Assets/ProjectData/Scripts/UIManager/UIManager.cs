@@ -18,7 +18,6 @@ public class UIManager : Photon.PunBehaviour {
     // 레스토랑 이미지 최소 설정값
     private int OneRestState;
     private int TwoRestState;
-    private int ThreeRestState;
 
     /**** 접근자 private ****/
     private PhotonManager photonManager;                // 포톤매니저
@@ -117,6 +116,9 @@ public class UIManager : Photon.PunBehaviour {
     }
 
     /**** HelperUI , HelpUI  , Helper : Icon ****/
+
+
+    public bool isCanUseHelperUI = true;
 
     public GameObject HelperUIPanel { set; get; }
     public void InitHelperUIPanel() { HelperUIPanel = UICanvas.transform.Find("HelperUIPanel").gameObject; }
@@ -218,6 +220,8 @@ public class UIManager : Photon.PunBehaviour {
             else
                 StarImage[i].SetActive(false);
         }
+
+        SetStarPanel(true);
     }
 
     // 모든 별들에게 공통적으로 실시
@@ -246,6 +250,7 @@ public class UIManager : Photon.PunBehaviour {
     public GameObject[] MouseImage;
     public void InitMouseImage()
     {
+        MouseImage = new GameObject[5];
         for (int i = 0; i < 5; i++)
         {
             MouseImage[i] = MouseImagePanel.transform.Find("MouseImage" + (i + 1).ToString()).gameObject;
@@ -255,6 +260,7 @@ public class UIManager : Photon.PunBehaviour {
     public GameObject[] MouseOffImage;
     public void InitMouseOffImage()
     {
+        MouseOffImage = new GameObject[5];
         for (int i = 0; i < 5; i++)
         {
             MouseOffImage[i] = MouseImagePanel.transform.Find("MouseOffImage" + (i + 1).ToString()).gameObject;
@@ -496,16 +502,18 @@ public class UIManager : Photon.PunBehaviour {
         photonManager = GameObject.Find("PhotonManager").GetComponent<PhotonManager>();
 
 
+        if (photonManager != null)
+        {
 
-        OneStarCondition = photonManager.OneStarCondition;
-        TwoStarCondition = photonManager.TwoStarCondition;
-        ThreeStarCondition = photonManager.ThreeStarCondition;
-        ForeStarCondition = photonManager.ForeStarCondition;
-        FiveStarCondition = photonManager.FiveStarCondition;
+            OneStarCondition = photonManager.OneStarCondition;    
+            TwoStarCondition = photonManager.TwoStarCondition; 
+            ThreeStarCondition = photonManager.ThreeStarCondition; 
+            ForeStarCondition = photonManager.ForeStarCondition;  
+            FiveStarCondition = photonManager.FiveStarCondition;  
 
-        OneRestState = photonManager.OneRestState;
-        TwoRestState = photonManager.TwoRestState;
-        ThreeRestState = photonManager.ThreeRestState;
+            OneRestState = photonManager.OneRestState;
+            TwoRestState = photonManager.TwoRestState;
+        }
 
 
 
@@ -612,9 +620,27 @@ public class UIManager : Photon.PunBehaviour {
 
             }
 
+            if (isCanUseHelperUI)
+            {
+                if (Input.GetKeyDown(KeyCode.F1))
+                {
+                    if (HelperUIPanel.GetActive() == true)
+                    {
+                        SetHelperUI(false);
+                        SetHelpUI(true);
+                    }
+                    else
+                    {
+                        SetHelperUI(true);
+                        SetHelpUI(false);
+                    }
+                }
+            }
 
-            float ObjectPersent = objectManager.InterObj.Count / objectManager.MaxInterObj * 100;
-            Debug.Log(ObjectPersent);
+
+
+
+            float ObjectPersent = ((float)objectManager.InterObj.Count / (float)objectManager.MaxInterObj) * 100;
 
             CheckRestUI(ObjectPersent);
 
@@ -638,7 +664,7 @@ public class UIManager : Photon.PunBehaviour {
     {
         // 별 설정
         int star = 0;
-        if (Type >= photonManager.FiveStarCondition)
+        if (Type >= FiveStarCondition)
         {
             star = 5;
         }
@@ -659,26 +685,27 @@ public class UIManager : Photon.PunBehaviour {
             star = 1;
         }
         else
+        {
+            Debug.Log("조건충족안됨");
             star = 0;
+        }
 
+
+        Debug.Log(" Star : " + star);
             OnStarGrade(star);
 
         // 레스토랑 이미지 설정
 
-        if (Type >= ThreeRestState)
-        {
-            star = 3;
-        }
-        else if (Type >= TwoRestState && Type < ThreeRestState)
-        {
-            star = 2;
-        }
-        else if (Type >= OneRestState && Type < TwoRestState)
+        if (Type >= TwoRestState)      
         {
             star = 1;
         }
+        else if (Type >= OneRestState && Type < TwoRestState) 
+        {
+            star = 2;
+        }
         else
-            star = 0;
+            star = 3;
 
 
         SetRestState(true, star);

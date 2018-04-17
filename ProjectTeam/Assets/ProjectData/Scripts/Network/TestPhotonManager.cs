@@ -22,6 +22,7 @@ public class TestPhotonManager : Photon.PunBehaviour
 
     public UIManager uIManager;
 
+
     private void Awake()
     {
         PhotonNetwork.ConnectUsingSettings(Version);

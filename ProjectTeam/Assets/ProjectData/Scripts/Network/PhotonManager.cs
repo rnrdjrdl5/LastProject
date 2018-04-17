@@ -40,7 +40,6 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
     // 레스토랑 이미지 최소 설정값
     public int OneRestState;
     public int TwoRestState;
-    public int ThreeRestState;
 
 
     /**** Private ****/
@@ -102,22 +101,7 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
     private void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.F1))
-        {
-            if (uIManager.HelperUIPanel.GetActive() == true)
-            {
-                Debug.Log("asd");
-                uIManager.SetHelperUI(false);
-                uIManager.SetHelpUI(true);
-            }
-            else
-            {
-                Debug.Log("qwe");
-                uIManager.SetHelperUI(true);
-                uIManager.SetHelpUI(false);
-            }
-            Debug.Log("zxz");
-        }
+
     }
 
     /**** 함수 ****/
@@ -185,9 +169,16 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
         uIManager.SetLimitTime(false);
         uIManager.SetAim(false);
 
+        // 혹시라도 도움말 UI가 켜져있으면 도움말 UI 제거
+        uIManager.isCanUseHelperUI = false;
+        uIManager.SetHelperUI(true);
+        uIManager.SetHelpUI(false);
+
         // 플레이어 Result UI 설정
         uIManager.SetTimeWatch(true);
         uIManager.SetEndState(true, (UIManager.ResultType)i);
+
+        
 
         // 플레이어 게임 종료 보여주기 
         Debug.Log("끝");
@@ -386,9 +377,6 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
             while (true) {
 
                 uIManager.LimitTimeTextText.text = playTimerNumber.ToString();
-
-                Debug.Log("갱신중");
-                Debug.Log(playTimerNumber);
                 if (playTimerNumber <= 0)
                 {
                     yield break;
