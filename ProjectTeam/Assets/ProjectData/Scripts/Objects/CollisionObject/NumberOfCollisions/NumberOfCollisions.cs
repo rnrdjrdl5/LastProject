@@ -27,4 +27,10 @@ public class NumberOfCollisions : MonoBehaviour
             numberOfCollisions -= 1;
     }
 
+    public void ResetObject()
+    {
+        numberOfCollisions = 0;
+
+    }
+
 }

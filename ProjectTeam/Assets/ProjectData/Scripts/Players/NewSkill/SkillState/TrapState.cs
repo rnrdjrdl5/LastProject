@@ -27,7 +27,7 @@ public class TrapState{
     public float DestroyTime = 3.0f;
 
     // 데이터를 설정합니다.
-    public void SetData(GameObject CollisionGameObject, GameObject PlayerObject)
+    public void SetData(GameObject CollisionGameObject, GameObject PlayerObject , int ID)
     {
         CollisionObject CollisionObjectScript = CollisionGameObject.GetComponent<CollisionObject>();
 
@@ -41,6 +41,7 @@ public class TrapState{
         {
             CollisionObjectScript.SetCollisionReCheckTime(ReCheckTime);
             CollisionObjectScript.SetUsePlayer("Player" + PlayerObject.GetPhotonView().viewID);
+            CollisionObjectScript.PlayerIOwnerID = ID;
         }
 
         if (CollisionObjectDamageScript != null)

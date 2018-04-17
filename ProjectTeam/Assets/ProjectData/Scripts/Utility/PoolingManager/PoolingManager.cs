@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PoolingManager : MonoBehaviour {
 
+
     public enum EffctType
     { ATTACK }
 
@@ -32,6 +33,8 @@ public class PoolingManager : MonoBehaviour {
 
     public GameObject[] Prefabs;
 
+
+
     private void Awake()
     {
         Poolings = new Dictionary<string, PoolingObject>();
@@ -46,11 +49,14 @@ public class PoolingManager : MonoBehaviour {
         {
             // 오브젝트 풀링 인스턴스화
             PoolingObject pm = new PoolingObject();
-            pm.Objects = new List<GameObject>();
 
-            // ID지정, 프리팹위치 파악용
+            pm.Objects = new List<GameObject>();        // 오브젝트 
+            pm.ActiveObjects = new List<GameObject>();
+           // ID지정, 프리팹위치 파악용
             pm.ID = i;
 
+            // 상위 접근용
+            pm.poolingManager = this;
 
 
 
@@ -84,12 +90,15 @@ public class PoolingManager : MonoBehaviour {
         if (Poolings[prefabName].Objects.Count == 0)
         {
             go = CreateObject(prefabName);
+            Poolings[prefabName].ActiveObjects.Add(go);
         }
 
         else
             go = Poolings[prefabName].PopObject();
 
-
+        // pop 할 때 ID값 지급
+        go.GetComponent<ObjectIDScript>().SetID();
+        
 
         return go;
 
@@ -99,6 +108,8 @@ public class PoolingManager : MonoBehaviour {
     public void PushObject(GameObject go)
     {
         Poolings[go.name].PushObject(go,transform);
+
+        go.GetComponent<ObjectIDScript>().DeleteID();
 
     }
 
@@ -110,7 +121,53 @@ public class PoolingManager : MonoBehaviour {
         return go;
     }
 
-    
 
-    
+    public GameObject FindObjectUseObjectID(int ObjectID)
+    {
+
+        /* // 오브젝트 풀링 매니저의 프리팹 수만큼 루프
+         for (int i = 0; i < GetInstance().Prefabs.Length; i++)
+         {
+
+             // 하나의 리스트부터 불러온다.
+             List<GameObject> gos = GetInstance().Poolings[GetInstance().Prefabs[i].name].Objects;
+
+             // 리스트 마다 for 돌림
+             for (int j = 0; j < gos.Count; j++)
+             {
+                 Debug.Log("gos[j].GetComponent<ObjectIDScript>().ID  : " + gos[j].GetComponent<ObjectIDScript>().ID);
+                 Debug.Log(ObjectID);
+                 // 해당 게임오브젝트의 번호값과 일치하면.
+                 if (gos[j].GetComponent<ObjectIDScript>().ID == ObjectID)
+                 {
+                     return gos[j].gameObject;
+                 }
+
+             }
+         }
+         Debug.Log("못찾음");
+         return null;*/
+
+        for (int i = 0; i < GetInstance().Prefabs.Length; i++)
+        {
+
+            List<GameObject> gos = GetInstance().Poolings[GetInstance().Prefabs[i].name].ActiveObjects;
+
+            for (int j = 0; j < gos.Count; j++)
+            {
+                if (gos[j].GetComponent<ObjectIDScript>().ID == ObjectID)
+                {
+                    return gos[j].gameObject;
+                }
+            }
+
+            
+        }
+        Debug.Log(" 또못찾음");
+        return null;
+
+    }
+
+
+
 }

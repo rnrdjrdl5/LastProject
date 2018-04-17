@@ -4,11 +4,14 @@ using UnityEngine;
 
 public partial class CollisionTorqueMove
 {
-    protected override void Start()
+    public void UseTorque()
     {
-        base.Start();
-        gameObject.GetComponent<Rigidbody>().maxAngularVelocity = TorqueRad;
-        gameObject.GetComponent<Rigidbody>().AddTorque((transform.forward) * TorqueRad, ForceMode.Impulse);
+        gameObject.GetComponent<Rigidbody>().AddTorque(-originalTorque,ForceMode.Impulse);
+
+            originalTorque = (transform.forward) * TorqueRad;
+            gameObject.GetComponent<Rigidbody>().maxAngularVelocity = TorqueRad;
+            gameObject.GetComponent<Rigidbody>().AddTorque(originalTorque, ForceMode.Impulse);
+
     }
 
 

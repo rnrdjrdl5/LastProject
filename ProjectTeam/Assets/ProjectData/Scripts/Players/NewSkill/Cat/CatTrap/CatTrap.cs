@@ -51,11 +51,11 @@ public class CatTrap : DefaultNewSkill
     {
 
         // 마스터인 경우
-        if (PhotonNetwork.isMasterClient)
+        if(photonView.isMine)
         {
 
             // 모든 클라이언트에 전송
-            photonView.RPC("RPCCreateTrap", PhotonTargets.All);
+            photonView.RPC("RPCCreateTrap", PhotonTargets.All , PhotonNetwork.player.ID);
         }
     }
 
@@ -68,7 +68,7 @@ public class CatTrap : DefaultNewSkill
 
     /**** RPC ****/
     [PunRPC]
-    void RPCCreateTrap()
+    void RPCCreateTrap(int ID)
     {
         float BulletDistance = 0f;
         float CharacterHeight = 0.5f;
@@ -79,7 +79,7 @@ public class CatTrap : DefaultNewSkill
 
         GameObject CharmBullet = Instantiate(trapState.ProjectileObject, transform.position + (BulletDefaultPlace), Quaternion.identity);
 
-        trapState.SetData(CharmBullet, gameObject);
+        trapState.SetData(CharmBullet, gameObject, ID);
 
         // 발사체에 디버프를 넣습니다.
         AddDebuffComponent(CharmBullet);

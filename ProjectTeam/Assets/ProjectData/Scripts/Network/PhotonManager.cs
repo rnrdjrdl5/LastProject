@@ -28,6 +28,21 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
     public float PreScoreUITimer = 2.0f;
     public float NextRoundTimer = 2.0f;
 
+
+    /***** 외부 설정 *****/
+    // 퍼센트
+    public int OneStarCondition;
+    public int TwoStarCondition;
+    public int ThreeStarCondition;
+    public int ForeStarCondition;
+    public int FiveStarCondition;
+
+    // 레스토랑 이미지 최소 설정값
+    public int OneRestState;
+    public int TwoRestState;
+    public int ThreeRestState;
+
+
     /**** Private ****/
     private UIManager uIManager;                // UI 매니저
 
@@ -365,7 +380,7 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
         }
 
 
-        // 다른 클라이언트들은 갱신만 해주다가 마스터 값에 따라 종료
+        // 다른 클라이언트들은 갱신만 해주다가 마스터 값에 따라 종collisionObject료
         else
         {
             while (true) {

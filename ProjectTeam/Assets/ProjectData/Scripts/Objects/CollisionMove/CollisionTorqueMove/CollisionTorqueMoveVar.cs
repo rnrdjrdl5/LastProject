@@ -9,4 +9,6 @@ public partial class CollisionTorqueMove
     public float GetTorqueRad() { return TorqueRad; }
     public void SetTorqueRad(float str) { TorqueRad = str; }
 
+    private Vector3 originalTorque = Vector3.zero;
+
 }

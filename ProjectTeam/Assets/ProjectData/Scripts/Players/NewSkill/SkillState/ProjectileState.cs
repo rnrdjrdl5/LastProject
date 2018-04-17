@@ -49,6 +49,7 @@ public class ProjectileState
         {
             CollisionObjectScript.SetCollisionReCheckTime(ReCheckTime);
             CollisionObjectScript.SetUsePlayer("Player" + PlayerObject.GetPhotonView().viewID);
+            CollisionObjectScript.PlayerIOwnerID = PhotonNetwork.player.ID;
         }
 
         if (CollisionObjectDamageScript != null)

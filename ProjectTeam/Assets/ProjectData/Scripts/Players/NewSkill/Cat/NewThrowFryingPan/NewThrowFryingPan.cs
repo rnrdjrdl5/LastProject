@@ -46,12 +46,12 @@ public class NewThrowFryingPan : DefaultNewSkill
     void CreateFryingPan()
     {
 
-        // 마스터인 경우
-        if(PhotonNetwork.isMasterClient)
+        // 클라이언트 주인인 경우
+        if(photonView.isMine)
         {
 
             // 모든 클라이언트에게 공격을 전송
-            photonView.RPC("RPCCreateFryingPan", PhotonTargets.All);
+            photonView.RPC("RPCCreateFryingPan", PhotonTargets.All , PhotonNetwork.player.ID);
         }
     }
 
@@ -66,7 +66,7 @@ public class NewThrowFryingPan : DefaultNewSkill
     /**** RPC ****/
 
     [PunRPC]
-    void RPCCreateFryingPan()
+    void RPCCreateFryingPan(int ID)
     {
         float BulletDistance = 1.0f;
         float CharacterHeight = 1.2f;
@@ -81,14 +81,21 @@ public class NewThrowFryingPan : DefaultNewSkill
         Vector3 v3 = transform.rotation.eulerAngles;
         v3.y += -90;
         v3.x += 135;
-        
 
-        GameObject CharmBullet = Instantiate(torqueProjectileState.ProjectileObject, transform.position + (BulletDefaultPlace), Quaternion.Euler(v3));
 
-        torqueProjectileState.SetData(CharmBullet, gameObject);
+        Debug.Log("사용15124312");
+        GameObject FryPan = PoolingManager.GetInstance().PopObject("FryPan");
+
+        FryPan.transform.position = transform.position + (BulletDefaultPlace);
+        FryPan.transform.rotation = Quaternion.Euler(v3);
+
+        torqueProjectileState.SetData(FryPan, gameObject, ID);
+        //GameObject CharmBullet = Instantiate(torqueProjectileState.ProjectileObject, transform.position + (BulletDefaultPlace), Quaternion.Euler(v3));
+
+        //  torqueProjectileState.SetData(CharmBullet, gameObject,ID);
 
         // 발사체에 디버프를 넣습니다.
-        AddDebuffComponent(CharmBullet);
+        // AddDebuffComponent(CharmBullet);
     }
 
 }

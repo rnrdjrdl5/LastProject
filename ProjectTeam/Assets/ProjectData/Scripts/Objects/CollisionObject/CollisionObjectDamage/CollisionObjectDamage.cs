@@ -24,6 +24,13 @@ public class CollisionObjectDamage : MonoBehaviour
             CollisionObjectDamageNumber -= 1;
     }
 
+    public void ResetObject()
+    {
+        collisionObjectDamage = 0;
+
+        CollisionObjectDamageNumber = 0;
+    }
+
     public PoolingManager.EffctType EffectType { get; set; }
     
 }

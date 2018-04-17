@@ -9,7 +9,16 @@ public class UIManager : Photon.PunBehaviour {
 
     public enum ResultType { BREAK,KILL,TIMEOVER }
 
+    private int OneStarCondition;
+    private int TwoStarCondition;
+    private int ThreeStarCondition;
+    private int ForeStarCondition;
+    private int FiveStarCondition;
 
+    // 레스토랑 이미지 최소 설정값
+    private int OneRestState;
+    private int TwoRestState;
+    private int ThreeRestState;
 
     /**** 접근자 private ****/
     private PhotonManager photonManager;                // 포톤매니저
@@ -18,7 +27,13 @@ public class UIManager : Photon.PunBehaviour {
 
     private bool IsScoreReCheck;              // 플레이어 정보 갱신시킬지 말지 결정함
     public bool IsUseScoreUI { get; set; }
+
+    public ObjectManager objectManager;
+
     
+
+
+
 
 
 
@@ -140,6 +155,112 @@ public class UIManager : Photon.PunBehaviour {
         AimPanel.SetActive(isActive);
         AimImage.SetActive(isActive);
     }
+
+    /***** RestStatePanel *****/
+
+    public GameObject RestStatePanel;
+    public void InitRestStatePanel() { RestStatePanel = UICanvas.transform.Find("RestStatePanel").gameObject; }
+
+    public GameObject[] RestStates;
+    public void InitRestStates()
+    {
+        RestStates = new GameObject[3];
+        Debug.Log(RestStatePanel);
+        for (int i = 0; i < 3; i++)
+        {
+            RestStates[i] = RestStatePanel.transform.Find("RestState" + (i + 1).ToString()).gameObject;
+        }
+    }
+
+    public void SetRestState(bool isActive, int type)
+    {
+        for (int i = 0; i < RestStates.Length; i++)
+        {
+
+            RestStates[i].SetActive(false);
+        }
+
+        RestStates[type - 1].SetActive(isActive);
+        RestStatePanel.SetActive(isActive);
+    }
+
+    /***** StartPanel *****/
+
+    public GameObject StarPanel;
+    public void InitStarPanel() { StarPanel = UICanvas.transform.Find("StarPanel").gameObject; }
+
+    public GameObject[] StarImage;
+    public void InitStarImage()
+    {
+        StarImage = new GameObject[5];
+        for (int i = 0; i < 5; i++)
+        {
+
+            StarImage[i] = StarPanel.transform.Find("StarImage" + (i + 1).ToString()).gameObject;
+        }
+    }
+
+
+    // 특정 번호의 별을 설정
+    public void SetStarNumber(bool isActive, int type)
+    {
+        StarImage[type - 1].SetActive(isActive);
+    }
+
+    //별을 순차별로 정함.
+    public void OnStarGrade(int Grade)
+    {
+        for (int i = 0; i < StarImage.Length; i++)
+        {
+            if (i < Grade)
+                StarImage[i].SetActive(true);
+        
+            else
+                StarImage[i].SetActive(false);
+        }
+    }
+
+    // 모든 별들에게 공통적으로 실시
+    public void SetStar(bool isActive)
+    {
+        for (int i = 0; i < StarImage.Length; i++)
+        {
+            StarImage[i].SetActive(isActive);
+        }
+
+        StarPanel.SetActive(isActive);
+    }
+
+    // 패널 설정
+    public void SetStarPanel(bool isActive)
+    {
+        StarPanel.SetActive(isActive);
+    }
+
+
+
+    /**** MouseImagePanel ****/
+    public GameObject MouseImagePanel;
+    public void InitMouseImagePanel() { MouseImagePanel = UICanvas.transform.Find("MouseImagePanel").gameObject; }
+
+    public GameObject[] MouseImage;
+    public void InitMouseImage()
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            MouseImage[i] = MouseImagePanel.transform.Find("MouseImage" + (i + 1).ToString()).gameObject;
+        }
+    }
+
+    public GameObject[] MouseOffImage;
+    public void InitMouseOffImage()
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            MouseOffImage[i] = MouseImagePanel.transform.Find("MouseOffImage" + (i + 1).ToString()).gameObject;
+        }
+    }
+
 
 
 
@@ -369,8 +490,27 @@ public class UIManager : Photon.PunBehaviour {
         // 플레이어 리스트 초기화
         Players = new List<PhotonPlayer>();
 
-        // UI 초기화들
-        InitUICanvas();
+        // 오브젝트 매니저 초기화
+        objectManager = GameObject.Find("ObjectManager").GetComponent<ObjectManager>();
+
+        photonManager = GameObject.Find("PhotonManager").GetComponent<PhotonManager>();
+
+
+
+        OneStarCondition = photonManager.OneStarCondition;
+        TwoStarCondition = photonManager.TwoStarCondition;
+        ThreeStarCondition = photonManager.ThreeStarCondition;
+        ForeStarCondition = photonManager.ForeStarCondition;
+        FiveStarCondition = photonManager.FiveStarCondition;
+
+        OneRestState = photonManager.OneRestState;
+        TwoRestState = photonManager.TwoRestState;
+        ThreeRestState = photonManager.ThreeRestState;
+
+
+
+    // UI 초기화들
+    InitUICanvas();
 
         InitLimitTimePanel();
         InitLimitTimeText();
@@ -394,6 +534,16 @@ public class UIManager : Photon.PunBehaviour {
 
         InitAimPanel();
         InitAimImage();
+
+        InitRestStatePanel();
+        InitRestStates();
+
+        InitStarPanel();
+        InitStarImage();
+
+        InitMouseImagePanel();
+        InitMouseImage();
+        InitMouseOffImage();
 
 
 
@@ -454,7 +604,20 @@ public class UIManager : Photon.PunBehaviour {
                 {
                     SetScoreMenu();
                 }
+
+
+
+
+                
+
             }
+
+
+            float ObjectPersent = objectManager.InterObj.Count / objectManager.MaxInterObj * 100;
+            Debug.Log(ObjectPersent);
+
+            CheckRestUI(ObjectPersent);
+
         }
 
     }
@@ -471,5 +634,55 @@ public class UIManager : Photon.PunBehaviour {
         IsScoreReCheck = false;
     }
 
+    public void CheckRestUI(float Type)
+    {
+        // 별 설정
+        int star = 0;
+        if (Type >= photonManager.FiveStarCondition)
+        {
+            star = 5;
+        }
+        else if (Type >= ForeStarCondition && Type < FiveStarCondition)
+        {
+            star = 4;
+        }
+        else if (Type >= ThreeStarCondition && Type < ForeStarCondition)
+        {
+            star = 3;
+        }
+        else if (Type >= TwoStarCondition && Type < ThreeStarCondition)
+        {
+            star = 2;
+        }
+        else if (Type >= OneStarCondition && Type < TwoStarCondition)
+        {
+            star = 1;
+        }
+        else
+            star = 0;
+
+            OnStarGrade(star);
+
+        // 레스토랑 이미지 설정
+
+        if (Type >= ThreeRestState)
+        {
+            star = 3;
+        }
+        else if (Type >= TwoRestState && Type < ThreeRestState)
+        {
+            star = 2;
+        }
+        else if (Type >= OneRestState && Type < TwoRestState)
+        {
+            star = 1;
+        }
+        else
+            star = 0;
+
+
+        SetRestState(true, star);
+
+    }
 
 }

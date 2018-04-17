@@ -2513,8 +2513,8 @@ MonoBehaviour:
   CtnManaCost: 0
   PlayerSkillDebuffs: []
   attackState:
-    AttackDamage: 10
-    DamageNumber: 1
+    AttackDamage: 1
+    DamageNumber: 10000
     RecheckTime: 1
     effectType: 0
   FryPan: {fileID: 1123400184420220}
@@ -2664,6 +2664,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3037f6125b564c4ea20e60c6ed56d95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectManager: {fileID: 0}
+  RestStatePanel: {fileID: 0}
+  RestStates: []
+  StarPanel: {fileID: 0}
+  StarImage: []
+  MouseImagePanel: {fileID: 0}
+  MouseImage: []
+  MouseOffImage: []
 --- !u!114 &114426729994096366
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2723,7 +2731,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerCamera: {fileID: 0}
-  PlayerSpeed: 9
+  PlayerSpeed: 4
   PlayerBackSpeed: 5
   RotationSpeed: 100
   SpeedMulti: 1.5
@@ -2757,6 +2765,9 @@ MonoBehaviour:
   - Type: 4
     SynchronizeType: 0
     Name: isCatTrap
+  - Type: 4
+    SynchronizeType: 0
+    Name: isSpeedRun
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0
@@ -2786,7 +2797,7 @@ MonoBehaviour:
     ObjectDamage: 10
     ObjectDamageNumber: 10
     CollisionNumber: 1
-    ReCheckTime: 1000
+    ReCheckTime: 0.5
     DestroyTime: 0.5
     ObjectSpeed: 20
     ObjectTorque: 1000
@@ -2838,7 +2849,7 @@ MonoBehaviour:
   ManaCost: 0
   CtnManaCost: 0
   PlayerSkillDebuffs: []
-  PlayerRunSpeed: 10
+  PlayerRunSpeed: 15
 --- !u!135 &135596427008310140
 SphereCollider:
   m_ObjectHideFlags: 1

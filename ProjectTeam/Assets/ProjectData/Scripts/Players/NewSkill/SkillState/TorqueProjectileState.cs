@@ -36,7 +36,7 @@ public class TorqueProjectileState
 
 
     // 데이터를 설정합니다.
-    public void SetData(GameObject CollisionGameObject, GameObject PlayerObject)
+    public void SetData(GameObject CollisionGameObject, GameObject PlayerObject , int ID)
     {
         CollisionObject CollisionObjectScript = CollisionGameObject.GetComponent<CollisionObject>();
 
@@ -52,6 +52,7 @@ public class TorqueProjectileState
         {
             CollisionObjectScript.SetCollisionReCheckTime(ReCheckTime);
             CollisionObjectScript.SetUsePlayer("Player" + PlayerObject.GetPhotonView().viewID);
+            CollisionObjectScript.PlayerIOwnerID = ID;
         }
 
         if (CollisionObjectDamageScript != null)
@@ -70,11 +71,12 @@ public class TorqueProjectileState
             NumberOfCollisionsScript.SetNumberOfCollisions(CollisionNumber);
         }
 
-        if (collisionTorqueMove)
+        if (collisionTorqueMove != null)
         {
             collisionTorqueMove.SetTorqueRad(ObjectTorque);
             collisionTorqueMove.SetCollisionMoveSpeed(ObjectSpeed);
             collisionTorqueMove.SetCollisionMoveDirect(PlayerObject.transform.forward.normalized);
+            collisionTorqueMove.UseTorque();
         }
 
         // 각도 알기위해서 추가 사용

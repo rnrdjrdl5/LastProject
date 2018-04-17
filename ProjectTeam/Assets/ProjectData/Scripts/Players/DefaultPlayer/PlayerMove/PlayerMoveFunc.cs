@@ -45,27 +45,28 @@ public partial class PlayerMove
                 if (gameObject.GetComponent<CharacterController>().isGrounded)
                 {
 
-                    // 1. 플레이어 이동방향 설정
-                    MoveDir = new Vector3(HSpeed, 0, VSpeed);
+                     // 1. 플레이어 이동방향 설정
+                     MoveDir = new Vector3(HSpeed, 0, VSpeed);
 
-                    // 2. 노말처리
-                    float NormalsqrMag = MoveDir.normalized.sqrMagnitude;
+                     // 2. 노말처리
+                     float NormalsqrMag = MoveDir.normalized.sqrMagnitude;
 
-                    // 대쉬가 아닌 경우 방향전환
-                    if (!ps.EqualPlayerCondition(PlayerState.ConditionEnum.SPEEDRUN))
-                        MoveDir = new Vector3(HSpeed, 0, VSpeed);
+                     // 대쉬가 아닌 경우 방향전환
+                     if (!ps.EqualPlayerCondition(PlayerState.ConditionEnum.SPEEDRUN))
+                         MoveDir = new Vector3(HSpeed, 0, VSpeed);
 
-                    // 대쉬인 경우 직진(회전에서 방향처리)
-                    else {
-                        MoveDir = Vector3.forward * MoveDir.magnitude;
-                    }
+                     // 대쉬인 경우 직진(회전에서 방향처리)
+                     else {
+                         MoveDir = Vector3.forward * MoveDir.magnitude;
+                     }
 
-                    // 노말벡터 길이 vs 일반벡터 길이
-                    if (MoveDir.sqrMagnitude > NormalsqrMag &&
-                        NormalsqrMag > 0)
-                    {
-                        MoveDir = MoveDir.normalized; 
-                    }
+                     // 노말벡터 길이 vs 일반벡터 길이
+                     if (MoveDir.sqrMagnitude > NormalsqrMag &&
+                         NormalsqrMag > 0)
+                     {
+                         MoveDir = MoveDir.normalized; 
+                     }
+
 
 
                     if (ps.EqualPlayerCondition(PlayerState.ConditionEnum.INTERACTION) &&
@@ -104,6 +105,9 @@ public partial class PlayerMove
 
             // 캐릭터 조건부 x방향 회전
             SetPlayerRotateX();
+
+            // 플레이어 보간 직접 설정
+          //  GetComponent<PhotonTransformView>().SetSynchronizedValues(gameObject.GetComponent<CharacterController>().velocity , turnSpeed : 0);
 
         }
     }

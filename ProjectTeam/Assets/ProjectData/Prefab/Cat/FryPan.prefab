@@ -21,13 +21,14 @@ GameObject:
   - component: {fileID: 4084534675206132}
   - component: {fileID: 33470773836730406}
   - component: {fileID: 23513773789313854}
-  - component: {fileID: 65124121721736570}
   - component: {fileID: 114625541918752086}
   - component: {fileID: 114267951614380052}
   - component: {fileID: 114635371701169826}
   - component: {fileID: 114168793092140104}
   - component: {fileID: 54893578212416868}
   - component: {fileID: 114384998978380864}
+  - component: {fileID: 135630887343250760}
+  - component: {fileID: 114288801719067242}
   m_Layer: 0
   m_Name: FryPan
   m_TagString: CheckCollision
@@ -42,7 +43,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1592117993979618}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.798046, y: 0.961, z: -1.2769496}
+  m_LocalPosition: {x: -20.423952, y: 1.07, z: 0.1107893}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -104,18 +105,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &65124121721736570
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1592117993979618}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.8, y: 0.8, z: 0.8}
-  m_Center: {x: 0, y: -0.2, z: -0.000000013038516}
 --- !u!114 &114168793092140104
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -141,6 +130,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collisionObjectTime: 0
+--- !u!114 &114288801719067242
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1592117993979618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4676b9fb688cebf4e9dae13f10c7bbec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114384998978380864
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -179,3 +179,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numberOfCollisions: 0
+--- !u!135 &135630887343250760
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1592117993979618}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.7
+  m_Center: {x: 0, y: 0, z: 0}

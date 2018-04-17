@@ -40,4 +40,15 @@ public partial class CollisionObject
     public void SetUsePlayer(string UP) { UsePlayer = UP; }
     public string GetUsePlayer() { return UsePlayer; }
 
+    public int PlayerIOwnerID { get; set; }
+
+    public void ResetObject()
+    {
+        CollisionReCheckTime = 0.0f;
+
+        UsePlayer = null;
+
+        PlayerIOwnerID = 0;
+
+    }
 }

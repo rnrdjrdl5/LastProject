@@ -51,6 +51,8 @@ public class ObjectManager : MonoBehaviour {
                     int NowCatScore = (int)PhotonNetwork.player.CustomProperties["CatScore"];
 
                     PhotonNetwork.player.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "CatScore", NowCatScore - DecreaseCatScore } });
+
+
                 }
 
 

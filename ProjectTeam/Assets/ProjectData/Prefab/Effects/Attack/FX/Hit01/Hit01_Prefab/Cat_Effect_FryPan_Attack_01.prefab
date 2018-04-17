@@ -39,6 +39,7 @@ GameObject:
   - component: {fileID: 198378283207021670}
   - component: {fileID: 199058924364147806}
   - component: {fileID: 114224192705100364}
+  - component: {fileID: 114074289701078202}
   m_Layer: 0
   m_Name: Cat_Effect_FryPan_Attack_01
   m_TagString: Untagged
@@ -290,6 +291,17 @@ Transform:
   m_Father: {fileID: 4261070873419552}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114074289701078202
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1249010773769348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4676b9fb688cebf4e9dae13f10c7bbec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114224192705100364
 MonoBehaviour:
   m_ObjectHideFlags: 1

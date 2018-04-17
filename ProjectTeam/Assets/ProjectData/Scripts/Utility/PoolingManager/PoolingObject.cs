@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class PoolingObject
 {
-
+    public PoolingManager poolingManager { get; set; }
 
     public List<GameObject> Objects { get; set; }           // 관리대상 오브젝트들
 
+    public List<GameObject> ActiveObjects { get; set; }
+
     public int ID { get; set; }                  // 프리팹 번호
+
 
     public void InitProp(GameObject go , Transform tf)
     {
@@ -27,6 +30,8 @@ public class PoolingObject
 
         Objects.RemoveAt(0);
 
+        ActiveObjects.Add(go);
+
         return go;
     }
 
@@ -35,7 +40,21 @@ public class PoolingObject
         go.SetActive(false);
         go.transform.SetParent(tf);
         Objects.Add(go);
+        ActiveObjects.Remove(FindActiveObject(go));
+        
     }
+
+    public GameObject FindActiveObject(GameObject go)
+    {
+        for (int i = 0; i < ActiveObjects.Count; i++)
+        {
+            if (ActiveObjects[i].gameObject == go)
+                return go;
+
+        }
+        return null;
+    }
+
 
 
 

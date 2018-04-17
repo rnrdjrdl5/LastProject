@@ -2297,6 +2297,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectManager: {fileID: 0}
+  AddScore: 3
 --- !u!114 &114170829396627250
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2323,7 +2324,7 @@ MonoBehaviour:
     SynchronizeEnabled: 1
     TeleportEnabled: 1
     TeleportIfDistanceGreaterThan: 3
-    InterpolateOption: 2
+    InterpolateOption: 3
     InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 1
     InterpolateMoveTowardsAcceleration: 2
@@ -2525,7 +2526,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerCondition: 2
-  PlaceObject: {fileID: 1804668205971154}
 --- !u!114 &114663676283799120
 MonoBehaviour:
   m_ObjectHideFlags: 1

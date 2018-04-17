@@ -34,7 +34,12 @@ public class BaseCollision : Photon.PunBehaviour{
     private Animator animator;              // 애니메이터 
 
     private CollisionObject collisionObject;            // 충돌 오브젝트 스크립트
+    private CollisionObjectDamage collisionObjectDamage;
+    private NumberOfCollisions numberOfCollisions;
 
+    CollisionNotMoveDebuff collisionNotMoveDebuff;
+    CollisionStunDebuff collisionStunDebuff;
+    CollisionDamagedDebuff collisionDamagedDebuff;
     private void Awake()
     {
         
@@ -60,15 +65,13 @@ public class BaseCollision : Photon.PunBehaviour{
         // 성공적으로 받음
         if (collisionObject != null)
         {
-
             // 충돌체 주인 확인
             if (collisionObject.GetUsePlayer() != "Player" + photonView.viewID)
             {
-                
+
                 // 충돌 된적 없는 경우
                 if (!ReCheck(other))
                 {
-                   
                     // 데미지 체크
                     LeftApplyDamage(other);
 
@@ -111,26 +114,42 @@ public class BaseCollision : Photon.PunBehaviour{
 
         return false;
     }
-    
+
     private void LeftNumberOfCollision(Collider other)
     {
 
         // 충돌 횟수 받아옴
-        NumberOfCollisions numberOfCollisions = other.gameObject.GetComponent<NumberOfCollisions>();
+        numberOfCollisions = other.gameObject.GetComponent<NumberOfCollisions>();
 
         // 충돌횟수 남았으면
         if (numberOfCollisions != null)
         {
             // 감소
             numberOfCollisions.DeCreaseNumberOfCollisions();
-            
-            // 충돌횟수 끝나면 삭제
-            if(numberOfCollisions.GetNumberOfCollisions() == 0)
-            {
 
-                Destroy(other.gameObject);
+
+            // 오브젝트 주인만 사용
+            if (collisionObject.PlayerIOwnerID == PhotonNetwork.player.ID)
+            {
+                // 충돌횟수 끝나면 삭제
+                if (numberOfCollisions.GetNumberOfCollisions() == 0)
+                {
+
+                    // 어느 게임오브젝트를 삭제할 것인지 판단해야 함.
+
+                    // 1. 해당 공격 오브젝트이름으로 오브젝트 풀링 오브젝트 탐지 
+
+                    // 2. 탐지 성공 시 해당 오브젝트 집어넣기
+
+                    Debug.Log("ID : " + other.gameObject.GetComponent<ObjectIDScript>().ID);
+
+                    photonView.RPC("RPCPushObjectPool", PhotonTargets.All, other.gameObject.GetComponent<ObjectIDScript>().ID);
+                                        
+                    /*ResetSkillOption(other);
+                    PoolingManager.GetInstance().PushObject(other.gameObject);*/
+                }
             }
-               
+
 
         }
     }
@@ -138,22 +157,33 @@ public class BaseCollision : Photon.PunBehaviour{
     private void LeftApplyDamage(Collider other)
     {
         // 충돌 데미지 받아옴
-        CollisionObjectDamage collisionObjectDamage = other.gameObject.GetComponent<CollisionObjectDamage>();
+        collisionObjectDamage = other.gameObject.GetComponent<CollisionObjectDamage>();
         
         // 받았는지 체크
         if (collisionObjectDamage != null)
         {
 
-            // 마스터) 
-            if (PhotonNetwork.isMasterClient)
+            // 공격한 사람 클라이언트에서 처리함
+           if(collisionObject.PlayerIOwnerID == PhotonNetwork.player.ID)  
             {
 
                 // 데미지 주기
                 playerHealth.CallApplyDamage(collisionObjectDamage.GetObjectDamage()) ;
                 Debug.Log("데미지 : " + collisionObjectDamage.GetObjectDamage());
-                
+
+                // 이펙트 전송
+                photonView.RPC("RPCCreateEffect", PhotonTargets.All , (int)collisionObjectDamage.EffectType);
+
+               /* Debug.Log(PhotonNetwork.player.ID);
+                Debug.Log(collisionObject.PlayerIOwnerID);*/
+
+
 
             }
+
+
+           // 아래는 개인이 처리합니다.
+
 
             // 데미지 충돌횟수 감소
             collisionObjectDamage.DecreaseObjectDamageNumber();
@@ -162,16 +192,8 @@ public class BaseCollision : Photon.PunBehaviour{
             if(collisionObjectDamage.GetObjectDamageNumber() == 0)
             {
 
-                // 데미지 충돌 끝
-                Destroy(collisionObjectDamage);
             }
 
-            // 모든 클라에서 각자 체크
-            // 이펙트 사용
-            GameObject effect = PoolingManager.GetInstance().CreateEffect(collisionObjectDamage.EffectType);
-            effect.transform.position = transform.position + Vector3.up * 0.5f;
-
-            playerHealth.FlushEffect();
         }
     }
 
@@ -179,21 +201,13 @@ public class BaseCollision : Photon.PunBehaviour{
     {
 
         // 마스터)
-        if (PhotonNetwork.isMasterClient)
+        //if (PhotonNetwork.isMasterClient)
+        if(PhotonNetwork.player.ID == collisionObject.PlayerIOwnerID)
         {
-
-            // 디버프 받기
-            CollisionPushDebuff collisionPushDebuff = other.gameObject.GetComponent<CollisionPushDebuff>();
             CollisionNotMoveDebuff collisionNotMoveDebuff = other.gameObject.GetComponent<CollisionNotMoveDebuff>();
             CollisionStunDebuff collisionStunDebuff = other.gameObject.GetComponent<CollisionStunDebuff>();
             CollisionDamagedDebuff collisionDamagedDebuff = other.gameObject.GetComponent<CollisionDamagedDebuff>();
 
-            // 충돌체들에 따른 버프 사용
-            if (collisionPushDebuff != null)
-            {
-                photonView.RPC("RPCPushDebuff",PhotonTargets.All, collisionPushDebuff.GetMoveDirection(), 
-                    collisionPushDebuff.GetMoveSpeed(), collisionPushDebuff.GetMaxTime());
-            }
 
             if(collisionNotMoveDebuff != null)
             {
@@ -216,26 +230,49 @@ public class BaseCollision : Photon.PunBehaviour{
         }
     }
 
-
-    /************* RPC입니다. ****************/
-    [PunRPC]
-    private void RPCPushDebuff(Vector3 MD, float MPS, float MDT)
+    private void ResetSkillOption(GameObject go)
     {
-        // 밀쳐내기 여부 확인
-        PlayerPushDebuff playerPushDebuff = gameObject.GetComponent<PlayerPushDebuff>();
+        // 정보 초기화 필요
+        if (collisionObject != null)
+            collisionObject.ResetObject();
 
-        // 밀쳐내기 없으면 새로 등록
-        if (playerPushDebuff == null)
+        if (collisionObjectDamage != null)
+            collisionObjectDamage.ResetObject();
+
+        if (numberOfCollisions != null)
+            numberOfCollisions.ResetObject();
+
+        if (collisionStunDebuff != null)
+            Destroy(collisionStunDebuff);
+
+        if (collisionNotMoveDebuff != null)
+            Destroy(collisionNotMoveDebuff);
+
+        if (collisionDamagedDebuff != null)
+            Destroy(collisionDamagedDebuff);
+
+        // ReCheck 스크립트 받아옴
+        CollisionReCheck[] CRCs = go.GetComponents<CollisionReCheck>();
+
+        for (int i = CRCs.Length-1; i >=0; i--)
         {
-
-            playerPushDebuff = gameObject.AddComponent<PlayerPushDebuff>();
+            Destroy(CRCs[i]);
         }
 
-        // 밀쳐내기 정보 갱신
-        playerPushDebuff.SetMoveDirection(MD);
-        playerPushDebuff.SetMovePushSpeed(MPS);
-        playerPushDebuff.SetMaxDebuffTime(MDT);
+
+        CollisionObjectTime collisionObjectTime = go.GetComponent<CollisionObjectTime>();
+
+        if (collisionObjectTime != null)
+            collisionObjectTime.ResetObject();
+
     }
+
+
+
+
+
+    /************* RPC입니다. ****************/
+
 
     [PunRPC]
     private void RPCNotMoveDebuff(float MDT)
@@ -302,4 +339,40 @@ public class BaseCollision : Photon.PunBehaviour{
         playerDamagedDebuff.SetNowDebuffTime(0);
     }
 
+
+
+
+    // 이펙트용 RPC
+    [PunRPC]
+    void RPCCreateEffect(int EffectType)
+    {
+        GameObject effect = PoolingManager.GetInstance().CreateEffect((PoolingManager.EffctType)EffectType);
+        effect.transform.position = transform.position + Vector3.up * 0.5f;
+
+        playerHealth.FlushEffect();
+    }
+
+
+
+    // 오브젝트 풀에서 탐지하는 용도
+    [PunRPC]
+    void RPCPushObjectPool(int ObjectID)
+    {
+        GameObject go = PoolingManager.GetInstance().FindObjectUseObjectID(ObjectID);
+
+        // 오브젝트를 다시 push에 넣어준다.
+        ResetSkillOption(go);
+
+        if (go != null)
+            PoolingManager.GetInstance().PushObject(go);
+    }
+
+
+    // 오브젝트 삭제용 RPC
+    // 삭제할 오브젝트를 모른다. ID 값으로 찾는방법 알아봐야할듯.
+    /* [PunRPC]
+     void RPCDestroyObject()
+     {
+         for(int i = 0; i < PoolingManager.GetInstance().
+     }*/
 }

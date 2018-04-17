@@ -78,12 +78,15 @@ public class NewCatAttack : DefaultNewSkill{
 
     void CreateFryPanOption()
     {
+
+        // 모두다 실행한다. 하지만  특정 사람만 준다. 
+
         // 프라이팬에 데미지와 정보 스크립트를 추가합니다.
         collisionObjectDamage = FryPan.AddComponent<CollisionObjectDamage>();
         collisionObject = FryPan.AddComponent<CollisionObject>();
 
         // 정보 스크립트에 수치를 대입합니다.
-        attackState.SetData(collisionObjectDamage, collisionObject, photonView);
+        attackState.SetData(collisionObjectDamage, collisionObject, photonView , PhotonNetwork.player.ID);
 
         // 디버프를 추가합니다. 공격에서는 경직 디버프가 들어있습니다.
         AddDebuffComponent(FryPan);
