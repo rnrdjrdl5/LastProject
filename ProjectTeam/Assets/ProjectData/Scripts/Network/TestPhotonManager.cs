@@ -79,11 +79,10 @@ public class TestPhotonManager : Photon.PunBehaviour
 
     string hitName = "X";
     float hitDistance = 0.0f;
-    
+
+    public GameObject doq;
     // Update is called once per frame
     void Update() {
-
-
         
             // 생성
             if (Input.GetKeyDown(KeyCode.Z))

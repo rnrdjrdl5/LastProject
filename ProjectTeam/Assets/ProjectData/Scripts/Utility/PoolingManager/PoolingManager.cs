@@ -97,7 +97,12 @@ public class PoolingManager : MonoBehaviour {
         else
             go = Poolings[prefabName].PopObject();
 
-        go.GetComponent<ObjectIDScript>().SetID();
+
+        ObjectIDScript objectIDScript = go.GetComponent<ObjectIDScript>();
+
+        // objectID가 존재하면 지급, 
+        if(objectIDScript != null)
+            objectIDScript.SetID();
 
         
         
@@ -111,7 +116,10 @@ public class PoolingManager : MonoBehaviour {
     {
         Poolings[go.name].PushObject(go,transform);
 
-        go.GetComponent<ObjectIDScript>().DeleteID();
+        ObjectIDScript objectIDScript = go.GetComponent<ObjectIDScript>();
+
+        if(objectIDScript != null)
+            objectIDScript.DeleteID();
 
     }
 
@@ -124,31 +132,9 @@ public class PoolingManager : MonoBehaviour {
     }
 
 
+    // 맞았을 때 RPC 이용해서 다른 곳의 ID 검색
     public GameObject FindObjectUseObjectID(int ObjectID)
     {
-
-        /* // 오브젝트 풀링 매니저의 프리팹 수만큼 루프
-         for (int i = 0; i < GetInstance().Prefabs.Length; i++)
-         {
-
-             // 하나의 리스트부터 불러온다.
-             List<GameObject> gos = GetInstance().Poolings[GetInstance().Prefabs[i].name].Objects;
-
-             // 리스트 마다 for 돌림
-             for (int j = 0; j < gos.Count; j++)
-             {
-                 Debug.Log("gos[j].GetComponent<ObjectIDScript>().ID  : " + gos[j].GetComponent<ObjectIDScript>().ID);
-                 Debug.Log(ObjectID);
-                 // 해당 게임오브젝트의 번호값과 일치하면.
-                 if (gos[j].GetComponent<ObjectIDScript>().ID == ObjectID)
-                 {
-                     return gos[j].gameObject;
-                 }
-
-             }
-         }
-         Debug.Log("못찾음");
-         return null;*/
 
         for (int i = 0; i < GetInstance().Prefabs.Length; i++)
         {

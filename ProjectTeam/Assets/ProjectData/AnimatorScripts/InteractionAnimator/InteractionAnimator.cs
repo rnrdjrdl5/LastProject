@@ -59,6 +59,7 @@ public class InteractionAnimator : StateMachineBehaviour {
                 newInteractionSkill.GetinterViewID());
 
 
+
             Debug.Log(go);
 
             // skill에 상호작용물체, 상호작용  스크립트 등록.
@@ -96,9 +97,16 @@ public class InteractionAnimator : StateMachineBehaviour {
 
         if (photonView.isMine)
         {
-            
 
-            
+            // 애니메이션 타입이고
+            // 액션이 사용되지 않은 상태라면
+            if (interactiveState.ActionType == InteractiveState.EnumAction.ANIMATION &&
+                interactiveState.IsUseAction == false)
+            {
+                interactiveState.CallRPCCancelActionAnimation();
+            }
+
+
             // FIndObject의 활성화 탐지 시작
             findObject.SetisUseFindObject(true);
 

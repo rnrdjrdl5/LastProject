@@ -5,6 +5,15 @@ using UnityEngine;
 using UnityEngine.UI;
 public class UIManager : Photon.PunBehaviour {
 
+    public float GetScoreWaitTime = 0.5f;
+    public float GetScoreMoveTime = 0.2f;
+
+    
+    IEnumerator EnumCoro;
+
+
+
+
 
     static private UIManager uIManager;
 
@@ -434,6 +443,9 @@ public class UIManager : Photon.PunBehaviour {
     public GameObject InGameCanvas { get; set; }
     public void InitInGameCanvas() { InGameCanvas = GameObject.Find("InGameCanvas"); }
 
+    public GameObject GetScorePanel { get; set; }
+    public void InitGetScorePanel() { GetScorePanel = InGameCanvas.transform.Find("GetScorePanel").gameObject; }
+
 
 
 
@@ -654,6 +666,8 @@ public class UIManager : Photon.PunBehaviour {
 
 
         InitInGameCanvas();
+
+        InitGetScorePanel();
     }
 
 
@@ -769,7 +783,6 @@ public class UIManager : Photon.PunBehaviour {
         }
 
 
-        Debug.Log(" Star : " + star);
             OnStarGrade(star);
 
         // 레스토랑 이미지 설정
@@ -790,6 +803,95 @@ public class UIManager : Photon.PunBehaviour {
 
         // 쥐 이미지 갱신
 
+
+    }
+
+    public void CreateScoreImage()
+    {
+        // 오브젝트 풀.
+
+        //1 . 풀링에서 빼옵니다.
+        GameObject getScoreImageObject = PoolingManager.GetInstance().PopObject("GetScoreImage");
+
+        //2. 부모 설정
+        getScoreImageObject.transform.SetParent(GetScorePanel.transform);
+
+        //3. 초기 위치 설정.
+        Vector3 v3 = new Vector3 { x = Screen.width * 0.7f, y = Screen.height * 0.55f, z = 90.0f };
+
+        getScoreImageObject.transform.localScale = Vector3.one;
+        getScoreImageObject.transform.position = v3;
+
+
+        // 4. 이미지를 움직인다. 
+        EnumCoro = MoveScoreImage(getScoreImageObject);
+
+        StartCoroutine(EnumCoro);
+    }
+
+    enum EnumMoveScore { WAIT, MOVE };
+    IEnumerator MoveScoreImage(GameObject go)
+    {
+        // 1. 이미지 원래 위치 받아온다.
+        Vector3 OriginalPosition = go.transform.position;
+
+        // 2. 이미지 마지막위치 선정
+        Vector3 FinalPosition = new Vector3 { x = Screen.width * 0.9f, y = Screen.height * 0.9f, z = 0.0f };
+
+        // 3. Lerp에 쓰일 초기 값을 정한다.
+        float NowTime = 0.0f;
+
+
+        EnumMoveScore MoveScoreType = EnumMoveScore.WAIT;
+        // 2가지 단계로 나눈다.
+        // 1. 머무르는 시간
+        // 2. 날라가는 시간
+
+    
+
+        while (true)
+        {
+
+            if (MoveScoreType == EnumMoveScore.WAIT)
+            {
+                if (NowTime >= GetScoreWaitTime)
+                {
+                    MoveScoreType = EnumMoveScore.MOVE;
+                    NowTime = 0.0f;
+
+                }
+                else
+                {
+                    NowTime += Time.deltaTime;
+                    yield return null;
+                }
+            }
+            
+
+            if (MoveScoreType == EnumMoveScore.MOVE)
+            {
+
+                // 1. 이미지의 다음값을 선정
+                NowTime += 1 / GetScoreMoveTime * Time.deltaTime;
+
+                // 2. 다음 위치로 이동
+                go.transform.position = Vector3.Lerp(OriginalPosition, FinalPosition, NowTime);
+
+                // 3. 위치가 1 이상이면 오브젝트 풀에 다시 넣고 끝낸다.
+                if (NowTime >= 1.0f)
+                {
+                    PoolingManager.GetInstance().PushObject(go);
+                    yield break;
+                }
+
+                else
+                    yield return null;
+            }
+
+
+
+
+        }
 
     }
 

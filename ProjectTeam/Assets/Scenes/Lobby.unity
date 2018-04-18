@@ -315,7 +315,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1aa85423ca713c4ab909540e7480b70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Version: 20180414
+  Version: 20180414_30
   LobbyCanvas: {fileID: 1112922411}
   WaitingRoomCanvas: {fileID: 129760404}
   RoomCanvas: {fileID: 929229745}
@@ -2268,12 +2268,12 @@ Prefab:
     - target: {fileID: 224982804386553094, guid: b5b119a6c9687b84f903e29755c8209c,
         type: 2}
       propertyPath: m_LocalPosition.x
-      value: 460.5
+      value: 413
       objectReference: {fileID: 0}
     - target: {fileID: 224982804386553094, guid: b5b119a6c9687b84f903e29755c8209c,
         type: 2}
       propertyPath: m_LocalPosition.y
-      value: 259
+      value: 232.5
       objectReference: {fileID: 0}
     - target: {fileID: 224982804386553094, guid: b5b119a6c9687b84f903e29755c8209c,
         type: 2}

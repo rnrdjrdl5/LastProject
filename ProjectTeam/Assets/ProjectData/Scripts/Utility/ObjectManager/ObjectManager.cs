@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+//다른 클라이언트에서 오브젝트를 찾기 위해서 사용 , 
+// 점수를 확인하기 위해서도 사용
 public class ObjectManager : MonoBehaviour {
 
     public int MaxInterObj { get; set; }

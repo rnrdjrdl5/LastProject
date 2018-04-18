@@ -9,6 +9,7 @@ public class NewInteractionSkill : Photon.MonoBehaviour, IPunObservable {
     /**** private ****/
 
 
+    
     private GameObject inGameCanvas;                       // UI 캔버스
     private GameObject interactiveObject;                  // 상호작용 오브젝트
 
@@ -26,7 +27,8 @@ public class NewInteractionSkill : Photon.MonoBehaviour, IPunObservable {
 
     public ObjectManager objectManager;             // 오브젝트 매니저
 
-    public int AddScore = 3;              // 뒤집을떄 얻는 스코어
+    /**** public ****/
+    //public int AddScore = 3;              // 뒤집을떄 얻는 스코어
 
     /**** 접근자 ****/
 
@@ -160,13 +162,30 @@ public class NewInteractionSkill : Photon.MonoBehaviour, IPunObservable {
 
 
 
-    // 함수
-
 
     // 서버에게 함수 받음
     public void UseSkill()
     {
-        // 1. 애니메이션 재생, 상호작용 물체에 따라 다름
+        // 1. 애니메이션이면 추가로
+        if (interactiveState.ActionType != InteractiveState.EnumAction.PHYSICS)
+        {
+            // 플레이어 위치 고정
+            Vector3 PlayerDistance = interactiveState.ObjectDistancePlayer * interactiveState.gameObject.transform.forward;
+            Debug.Log(" interactiveState.gameObject.transform.forward: " + interactiveState.gameObject.transform.forward);
+
+                gameObject.transform.position =
+                    transform.position + PlayerDistance;
+                Debug.Log("위치갱신.");
+
+
+
+            // 물체 애니메이션 적용
+            interactiveState.CallActionAnimation();
+
+            
+            
+        }
+        
         animator.SetInteger("InteractionType", (int)interactiveState.interactiveObjectType);
     }
 
@@ -245,13 +264,13 @@ public class NewInteractionSkill : Photon.MonoBehaviour, IPunObservable {
     private void CallAction()
     {
         // 물리 일 경우 날라갈 위치의 노말벡터 전달
-        interactiveState.UseAction(/*transform.position - playerCamera.transform.position*/transform.position - OriginalCameraPosition);
+        interactiveState.UseAction(transform.position - OriginalCameraPosition);
 
         // 사용했을 때 스코어 추가
         if (photonView.isMine)
         {
             PhotonNetwork.player.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { {"MouseScore"
-                    ,(int)PhotonNetwork.player.CustomProperties["MouseScore"] + AddScore} });
+                    ,(int)PhotonNetwork.player.CustomProperties["MouseScore"] + interactiveState.InterObjectScore } });
 
         }
     }
@@ -266,6 +285,8 @@ public class NewInteractionSkill : Photon.MonoBehaviour, IPunObservable {
     {
 
     }
+
+    /***** RPC *****/
 
 }
 
