@@ -7,6 +7,7 @@ public partial class PlayerHealth
 {
     /**** public ****/
     public SkinnedMeshRenderer[] skinnedMeshRenderer;
+    public float MaxHiting = 0.3f;
 
     /**** private ****/
 
@@ -21,8 +22,9 @@ public partial class PlayerHealth
 
     private bool isHiting;
     private float NowHiting;
-    public float MaxHiting = 0.3f;
 
+    private PhotonManager photonManager;
+    
 
     /**** 접근자 ****/
 

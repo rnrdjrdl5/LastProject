@@ -163,6 +163,10 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
         if (CurrentPlayer != null)
             PhotonNetwork.Destroy(CurrentPlayer);
 
+
+
+
+
         // 플레이어 UICanvas 끄기
         uIManager.SetHealthPoint(false);
         uIManager.SetManaPoint(false);
@@ -171,14 +175,22 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
 
         // 혹시라도 도움말 UI가 켜져있으면 도움말 UI 제거
         uIManager.isCanUseHelperUI = false;
-        uIManager.SetHelperUI(true);
+        uIManager.SetHelperUI(false);
         uIManager.SetHelpUI(false);
+
+        uIManager.SetStarPanel(false);
+        uIManager.RestStatePanel.SetActive(false);
+        
+
+        uIManager.MouseImagePanel.SetActive(false);
+
 
         // 플레이어 Result UI 설정
         uIManager.SetTimeWatch(true);
         uIManager.SetEndState(true, (UIManager.ResultType)i);
 
-        
+        // 갱신 안하기
+        uIManager.IsReDrawUI = false;
 
         // 플레이어 게임 종료 보여주기 
         Debug.Log("끝");
@@ -462,7 +474,7 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
     void RPCActionCheckCreatePlayer()
     {
         // 플레이어의 UI 매니저 받아옴
-        uIManager = CurrentPlayer.GetComponent<UIManager>();
+        uIManager = GameObject.Find("UIManager").GetComponent<UIManager>();
 
         // 플레이어 정보를 추가합니다. 스코어 창에 쓰일꺼임.
         for (int i = 0; i < PhotonNetwork.playerList.Length; i++)
@@ -485,8 +497,12 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
         uIManager.SetManaPoint(true);
         uIManager.SetLimitTime(true);
         uIManager.SetAim(true);
-
-
+        uIManager.MouseImagePanel.SetActive(true);
+        uIManager.RestStatePanel.SetActive(true);
+        uIManager.StarPanel.SetActive(true);
+        // 2. UI에서 실시간으로 갱신해주도록 설정
+        uIManager.IsReDrawUI = true;
+        
 
 
         // 게임 종료 조건 시작
@@ -531,9 +547,6 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
 
         // 스코어 창 보여주기
         ToShowScoreUI();
-
-        // 스코어 창 갱신 불가 상태 변경
-        uIManager.IsUseScoreUI = false;
 
         TimerValue = NextRoundTimer;
 

@@ -121,6 +121,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c126e3db544f7024bb5f9985aa122ed1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GetScoreImage: {fileID: 1335281521138530, guid: 1bf5918d43bc48a4bb90f50f8815d2cf,
+    type: 2}
   Prefabs:
   - {fileID: 1249010773769348, guid: a3c1eebe6295f4e4eb1529bcd6d7763a, type: 2}
   - {fileID: 1592117993979618, guid: ea306f825c9af894f8269cfc96f152fd, type: 2}

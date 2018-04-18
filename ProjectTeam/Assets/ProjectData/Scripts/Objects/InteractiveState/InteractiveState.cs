@@ -31,7 +31,6 @@ public class InteractiveState : Photon.MonoBehaviour , IPunObservable {
     public           EnumAction                     ActionType;                             // 상호작용 액션 타입
 
 
-
     /**** private ****/
 
 
@@ -102,27 +101,34 @@ public class InteractiveState : Photon.MonoBehaviour , IPunObservable {
     public void UseAction(Vector3 NormalVector3)
     {
 
-        // 반투명 처리를 위해 마스터의 변수 false 사용
         if (PhotonNetwork.isMasterClient)
             CanUseObject = false;
 
-        // 오브젝트 리스트에 있는 리스트 목록 삭제
-
-        // 상호작용 하지 않은 상태
-        /*  if (!isPlayerAction)
-          {*/
-        // 상호작용 온
-        //   isPlayerAction = true;
-
-        // 액션 개인 판단
         if (ActionType == EnumAction.PHYSICS)
         {
 
             //  스킬 을 사용한 플레이어인 경우                           ( 스킬 사용한 사람만 newinteractionSkill이 할당됨 ) 
+
             if (newInteractionSkill != null)
             {
                 if (newInteractionSkill.photonView.isMine)
                 {
+                    // 개인 점수 생성 
+                    GameObject GetScoreImageObject = Instantiate(PoolingManager.GetInstance().GetScoreImage);
+
+                    Debug.Log(GetScoreImageObject);
+                    Debug.Log(UIManager.GetInstance().InGameCanvas.transform.Find("GetScorePanel"));
+                    GetScoreImageObject.transform.SetParent(UIManager.GetInstance().InGameCanvas.transform.Find("GetScorePanel"));
+
+                    GetScoreImageObject.transform.localScale = Vector3.one;
+
+
+                    Vector3 v3 = new Vector3{x = Screen.width * 0.7f,y = Screen.height* 0.55f,z = 0.0f};
+
+                    GetScoreImageObject.transform.position = v3;
+
+                    Destroy(GetScoreImageObject, 3.0f);
+
                     photonView.RPC("RPCTableAction", PhotonTargets.All, NormalVector3);
                 }
             }

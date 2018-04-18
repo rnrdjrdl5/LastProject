@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PoolingManager : MonoBehaviour {
 
+    public GameObject GetScoreImage;
 
     public enum EffctType
     { ATTACK }
@@ -96,8 +97,9 @@ public class PoolingManager : MonoBehaviour {
         else
             go = Poolings[prefabName].PopObject();
 
-        // pop 할 때 ID값 지급
         go.GetComponent<ObjectIDScript>().SetID();
+
+        
         
 
         return go;

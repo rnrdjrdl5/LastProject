@@ -5,6 +5,15 @@ using UnityEngine;
 using UnityEngine.UI;
 public class UIManager : Photon.PunBehaviour {
 
+
+    static private UIManager uIManager;
+
+    static public UIManager GetInstance()
+    {
+        return uIManager;
+    }
+
+
     /**** Type ****/
 
     public enum ResultType { BREAK,KILL,TIMEOVER }
@@ -19,6 +28,10 @@ public class UIManager : Photon.PunBehaviour {
     private int OneRestState;
     private int TwoRestState;
 
+
+    // 1. 마우스 이미지 그릴지 말지 결정한다.
+    private bool isDrawMouseImage = false;
+
     /**** 접근자 private ****/
     private PhotonManager photonManager;                // 포톤매니저
 
@@ -29,6 +42,10 @@ public class UIManager : Photon.PunBehaviour {
 
     public ObjectManager objectManager;
 
+
+
+    // 갱신 할지 말지 결정
+    public bool IsReDrawUI { set; get; }
     
 
 
@@ -183,7 +200,6 @@ public class UIManager : Photon.PunBehaviour {
         }
 
         RestStates[type - 1].SetActive(isActive);
-        RestStatePanel.SetActive(isActive);
     }
 
     /***** StartPanel *****/
@@ -221,7 +237,7 @@ public class UIManager : Photon.PunBehaviour {
                 StarImage[i].SetActive(false);
         }
 
-        SetStarPanel(true);
+      //  SetStarPanel(true);
     }
 
     // 모든 별들에게 공통적으로 실시
@@ -265,6 +281,56 @@ public class UIManager : Photon.PunBehaviour {
         {
             MouseOffImage[i] = MouseImagePanel.transform.Find("MouseOffImage" + (i + 1).ToString()).gameObject;
         }
+    }
+
+    public void SetNowMouseImage()
+    {
+        // 0. 현재 접속유저 판단.
+
+        int MouseAmount = PhotonNetwork.playerList.Length - 1;
+
+        for (int i = 0; i < 5; i++)
+        {
+            
+
+            if (i < MouseAmount)
+            {
+                MouseOffImage[i].SetActive(false);
+                MouseImage[i].SetActive(false);
+            }
+        }
+
+        // 갯수는 모두 돌자.
+        int NowLiveMouse = 0;
+        for (int i = 0; i < PhotonNetwork.playerList.Length; i++)
+        {
+            if ((string)PhotonNetwork.playerList[i].CustomProperties["PlayerType"] == "Mouse")
+            {
+
+                // 1. 쥐면 추가한다.
+                NowLiveMouse++;
+            }
+
+        }
+
+        // 1 최대 갯수 설정
+
+        for (int i = 0; i < MouseAmount; i++)
+        {
+            if (i < NowLiveMouse)
+            {
+                MouseImage[i].SetActive(true);
+            }
+
+            else
+            {
+                MouseImage[i].SetActive(false);
+                MouseOffImage[i].SetActive(true);
+            }
+
+        }
+
+
     }
 
 
@@ -361,6 +427,12 @@ public class UIManager : Photon.PunBehaviour {
     }
 
 
+
+
+
+    /***** InGameCanvas ******/
+    public GameObject InGameCanvas { get; set; }
+    public void InitInGameCanvas() { InGameCanvas = GameObject.Find("InGameCanvas"); }
 
 
 
@@ -487,6 +559,8 @@ public class UIManager : Photon.PunBehaviour {
     /**** 유니티 함수 ****/
     private void Awake()
     {
+        uIManager = this;
+
         // 플레이어 갱신 X 설정
         IsScoreReCheck = false;
 
@@ -575,78 +649,82 @@ public class UIManager : Photon.PunBehaviour {
 
         InitTotalScoreBGImage();
         InitTotalPlayerStats();
+
+
+
+
+        InitInGameCanvas();
     }
 
 
     private void Update()
     {
 
-        // 본인 인 경우에만
-        if (photonView.isMine)
+        if (IsUseScoreUI)
         {
-
-            if (IsUseScoreUI)
+            // Tap 누를 때마다 재설정
+            if (Input.GetKeyDown(KeyCode.Tab))
             {
-                // Tap 누를 때마다 재설정
-                if (Input.GetKeyDown(KeyCode.Tab))
+
+                // 비활성화 일 경우
+                if (ScorePanel.GetActive() == false)
                 {
-
-                    // 비활성화 일 경우
-                    if (ScorePanel.GetActive() == false)
-                    {
-                        OnScorePanel();
-                    }
-
-                    // 활성화 일 경우
-                    else if (ScorePanel.GetActive() == true)
-                    {
-                        OffScorePanel();
-                    }
-                    else
-                        Debug.Log("에러");
+                    OnScorePanel();
                 }
 
-
-                // 갱신중일때
-                if (IsScoreReCheck)
+                // 활성화 일 경우
+                else if (ScorePanel.GetActive() == true)
                 {
-                    SetScoreMenu();
+                    OffScorePanel();
                 }
-
-
-
-
-                
-
+                else
+                    Debug.Log("에러");
             }
 
-            if (isCanUseHelperUI)
+
+            // 갱신중일때
+            if (IsScoreReCheck)
             {
-                if (Input.GetKeyDown(KeyCode.F1))
-                {
-                    if (HelperUIPanel.GetActive() == true)
-                    {
-                        SetHelperUI(false);
-                        SetHelpUI(true);
-                    }
-                    else
-                    {
-                        SetHelperUI(true);
-                        SetHelpUI(false);
-                    }
-                }
+                SetScoreMenu();
             }
 
 
 
 
-            float ObjectPersent = ((float)objectManager.InterObj.Count / (float)objectManager.MaxInterObj) * 100;
 
-            CheckRestUI(ObjectPersent);
 
         }
 
+        if (isCanUseHelperUI)
+        {
+            if (Input.GetKeyDown(KeyCode.F1))
+            {
+                if (HelperUIPanel.GetActive() == true)
+                {
+                    SetHelperUI(false);
+                    SetHelpUI(true);
+                }
+                else
+                {
+                    SetHelperUI(true);
+                    SetHelpUI(false);
+                }
+            }
+        }
+
+
+
+        if (IsReDrawUI)
+        {
+            float ObjectPersent = ((float)objectManager.InterObj.Count / (float)objectManager.MaxInterObj) * 100;
+
+            CheckRestUI(ObjectPersent);
+            SetNowMouseImage();
+        }
+
     }
+
+    
 
     public void OnScorePanel()
     {
@@ -709,6 +787,9 @@ public class UIManager : Photon.PunBehaviour {
 
 
         SetRestState(true, star);
+
+        // 쥐 이미지 갱신
+
 
     }
 

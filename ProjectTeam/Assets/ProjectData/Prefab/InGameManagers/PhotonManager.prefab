@@ -27,7 +27,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4995535111199802
 Transform:
   m_ObjectHideFlags: 1
@@ -78,7 +78,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e456c2ac9ba34e443a7989ccb0aea49e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playTimerNumber: 5
+  playTimerNumber: 100
   MaxCatScore: 100
   PreScoreUITimer: 2
   NextRoundTimer: 2
+  OneStarCondition: 16
+  TwoStarCondition: 32
+  ThreeStarCondition: 48
+  ForeStarCondition: 64
+  FiveStarCondition: 80
+  OneRestState: 25
+  TwoRestState: 50
