@@ -53,9 +53,6 @@ public class UIManager : Photon.PunBehaviour {
 
 
 
-    // 갱신 할지 말지 결정
-    public bool IsReDrawUI { set; get; }
-    
 
 
 
@@ -728,13 +725,13 @@ public class UIManager : Photon.PunBehaviour {
 
 
 
-        if (IsReDrawUI)
-        {
             float ObjectPersent = ((float)objectManager.InterObj.Count / (float)objectManager.MaxInterObj) * 100;
 
             CheckRestUI(ObjectPersent);
             SetNowMouseImage();
-        }
+
+
+        
 
     }
 

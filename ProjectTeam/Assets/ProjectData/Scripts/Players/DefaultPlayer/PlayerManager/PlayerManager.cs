@@ -16,5 +16,10 @@ public partial class PlayerManager : MonoBehaviour {
     private void Start()
     {
         HideCursor();
+
+        // player들 나오면 PhotonManager에 추가한다. 
+        PhotonManager photonManager = GameObject.Find("PhotonManager").GetComponent<PhotonManager>();
+        photonManager.AllPlayers.Add(gameObject);
+
     }
 }

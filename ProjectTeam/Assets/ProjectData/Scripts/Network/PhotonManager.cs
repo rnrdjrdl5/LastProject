@@ -13,6 +13,8 @@ using UnityEngine.SceneManagement;
 public class PhotonManager : Photon.PunBehaviour , IPunObservable
 {
 
+
+
     delegate bool Condition();
     delegate void ConditionLoop();
     delegate int RPCActionCondition();
@@ -41,6 +43,7 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
     public int OneRestState;
     public int TwoRestState;
 
+    public List<GameObject> AllPlayers;            // 플레이어들을 가리키는 변수
 
     /**** Private ****/
     private UIManager uIManager;                // UI 매니저
@@ -53,6 +56,8 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
     private GameObject CurrentPlayer;               // 사용자 플레이어 포톤매니저에서 등록
     private PlayerCamera playerCamera;              // 플레이어 카메라
     private ObjectManager objectManager;            // 오브젝트 매니저
+    
+    
 
     /**** 접근자 ****/
 
@@ -77,6 +82,8 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
 
         // 오브젝트 매니저 찾기
         objectManager = GameObject.Find("ObjectManager").GetComponent<ObjectManager>();
+
+        AllPlayers = new List<GameObject>();
     }
 
     private void Start()
@@ -100,7 +107,6 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
 
     private void Update()
     {
-
 
     }
 
@@ -155,9 +161,6 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
     {
 
         Debug.Log("i : " + i);
-        // 카메라 스폰 취소
-        playerCamera.isPlayerSpawn = false;
-
 
         // 플레이어 삭제 처리
         if (CurrentPlayer != null)
@@ -189,8 +192,6 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
         uIManager.SetTimeWatch(true);
         uIManager.SetEndState(true, (UIManager.ResultType)i);
 
-        // 갱신 안하기
-        uIManager.IsReDrawUI = false;
 
         // 플레이어 게임 종료 보여주기 
         Debug.Log("끝");
@@ -501,8 +502,6 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
         uIManager.RestStatePanel.SetActive(true);
         uIManager.StarPanel.SetActive(true);
         // 2. UI에서 실시간으로 갱신해주도록 설정
-        uIManager.IsReDrawUI = true;
-        
 
 
         // 게임 종료 조건 시작
@@ -657,6 +656,29 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
     public override void OnLeftLobby()
     {
         Debug.Log("3");
+    }
+
+    public override void OnPhotonPlayerDisconnected(PhotonPlayer otherPlayer)
+    {
+
+        // 리스트 내 플레이어 삭제
+        for (int i = 0; i < AllPlayers.Count; i++)
+        {
+            if (AllPlayers[i].GetPhotonView().ownerId == otherPlayer.ID)
+            {
+                Destroy(AllPlayers[i]);
+                break;
+            }
+        }
+
+        //사람이 넘어버리면 옵저버 재지정
+        if (playerCamera.OverSeePlayer())
+        {
+            playerCamera.FindSeePlayer();
+        }
+        
+
+
     }
 
 

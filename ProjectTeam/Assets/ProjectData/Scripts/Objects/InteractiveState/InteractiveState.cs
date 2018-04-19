@@ -39,14 +39,13 @@ public class InteractiveState : Photon.MonoBehaviour , IPunObservable {
     [Tooltip(" - 어떤 액션인지 판단한다.")]
     public           EnumAction                     ActionType;                             // 상호작용 액션 타입
 
-    [Header(" - 플레이어와의 거리")]
-    [Tooltip(" - 상호작용 물체와 어느정도 떨어져있는지 나타냄.")]
-    public float ObjectDistancePlayer;
-
     [Header(" - 점수")]
     [Tooltip(" - 점수 획득량")]
-    public float InterObjectScore;
+    public int InterObjectScore;
 
+    [Header(" - 상호작용 플레이어 위치")]
+    [Tooltip(" - 플레이어 위치 오브젝트")]
+    public GameObject PlayerInterPosition;
 
     public bool IsUseAction { get; set; }
     /**** private ****/
@@ -133,11 +132,12 @@ public class InteractiveState : Photon.MonoBehaviour , IPunObservable {
         if (newInteractionSkill != null)
         {
 
+            // 개인 점수 생성 
+            UIManager.GetInstance().CreateScoreImage();
+
+
             if (ActionType == EnumAction.PHYSICS)
             {
-
-                // 개인 점수 생성 
-                UIManager.GetInstance().CreateScoreImage();
 
                 //  스킬 을 사용한 플레이어인 경우                           ( 스킬 사용한 사람만 newinteractionSkill이 할당됨 ) 
 
@@ -307,8 +307,7 @@ public class InteractiveState : Photon.MonoBehaviour , IPunObservable {
         // 1. 리스트에서 해당 오브젝트 삭제
         objectManager.RemoveObject(photonView.viewID);
 
-        // 2. 충돌체크 변경
-        gameObject.layer = LayerMask.NameToLayer("NoCollisionPlayer");
+        // 충돌체크 삭제
         Destroy(gameObject.GetComponent<BoxCollider>());
 
         // 3. 사용했다고 처리
@@ -326,17 +325,24 @@ public class InteractiveState : Photon.MonoBehaviour , IPunObservable {
 
     // 모든 대상
     // 상호작용 애니메이션 을 킨다.
+    // 층돌 레이어를 변경한다.
     [PunRPC]
     public void RPCActionAnimation()
     {
+        // 충돌레이어 변경
+        gameObject.layer = LayerMask.NameToLayer("NoCollisionPlayer");
+
         animator.SetBool("isAction", true);
     }
 
     // 모든 대상
     // 상호작용이 끊겼으므로 애니메이션을 끈다.
+    // 레이어도 돌려준다.
     [PunRPC]
     public void RPCCancelActionAnimation()
     {
+        // 충돌레이어 변경
+        gameObject.layer = LayerMask.NameToLayer("MainObject");
         animator.SetBool("isAction", false);
     }
     

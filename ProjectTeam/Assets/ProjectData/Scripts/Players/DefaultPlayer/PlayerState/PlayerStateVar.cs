@@ -7,9 +7,8 @@ public partial class PlayerState
     /********* 플레이어의 현재 상태를 가지는 열거형입니다. ******/
     public enum ConditionEnum
     { NONE , NOTUSINGSKILL , 
-        IDLE, RUN, SPEEDRUN , 
-        WINDBLAST, BLINK,
-        DAMAGE, ATTACK , SEALCHARM ,STUN
+        IDLE, RUN, SPEEDRUN , JUMP,
+        DAMAGE, ATTACK  ,STUN
      , THROW_FRYING_PAN
     , INTERACTION , };
 

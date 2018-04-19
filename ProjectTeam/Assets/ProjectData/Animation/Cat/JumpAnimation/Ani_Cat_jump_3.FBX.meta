@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 8b6873d4c066c6f429fece45b0f2f518
-timeCreated: 1523870443
+guid: c953fd4ac47c7c84f9d4a44c7113ceb4
+timeCreated: 1524119374
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
@@ -72,22 +72,22 @@ ModelImporter:
     100128: Bip001 Tail2
     100130: Bip001 TailNub
     100132: Bone001
-    100134: Neko_girl_apran
-    100136: Neko_girl_arms
-    100138: Neko_girl_eyeball
-    100140: Neko_girl_eyeblow
-    100142: Neko_girl_eyecover
-    100144: Neko_girl_head
-    100146: Neko_girl_neckless
-    100148: Neko_girl_pants
-    100150: Neko_girl_ribbon
-    100152: Neko_girl_shirts
-    100154: Neko_girl_shoes
-    100156: Neko_girl_vest
-    100158: Object001
-    100160: Object002
-    100162: Object003
-    100164: Object_Fryfan
+    100134: Cylinder001
+    100136: Neko_girl_apran
+    100138: Neko_girl_arms
+    100140: Neko_girl_eyeball
+    100142: Neko_girl_eyeblow
+    100144: Neko_girl_eyecover
+    100146: Neko_girl_head
+    100148: Neko_girl_neckless
+    100150: Neko_girl_pants
+    100152: Neko_girl_ribbon
+    100154: Neko_girl_shirts
+    100156: Neko_girl_shoes
+    100158: Neko_girl_vest
+    100160: Object001
+    100162: Object002
+    100164: Object003
     400000: //RootNode
     400002: Bip001
     400004: Bip001 Footsteps
@@ -155,22 +155,24 @@ ModelImporter:
     400128: Bip001 Tail2
     400130: Bip001 TailNub
     400132: Bone001
-    400134: Neko_girl_apran
-    400136: Neko_girl_arms
-    400138: Neko_girl_eyeball
-    400140: Neko_girl_eyeblow
-    400142: Neko_girl_eyecover
-    400144: Neko_girl_head
-    400146: Neko_girl_neckless
-    400148: Neko_girl_pants
-    400150: Neko_girl_ribbon
-    400152: Neko_girl_shirts
-    400154: Neko_girl_shoes
-    400156: Neko_girl_vest
-    400158: Object001
-    400160: Object002
-    400162: Object003
-    400164: Object_Fryfan
+    400134: Cylinder001
+    400136: Neko_girl_apran
+    400138: Neko_girl_arms
+    400140: Neko_girl_eyeball
+    400142: Neko_girl_eyeblow
+    400144: Neko_girl_eyecover
+    400146: Neko_girl_head
+    400148: Neko_girl_neckless
+    400150: Neko_girl_pants
+    400152: Neko_girl_ribbon
+    400154: Neko_girl_shirts
+    400156: Neko_girl_shoes
+    400158: Neko_girl_vest
+    400160: Object001
+    400162: Object002
+    400164: Object003
+    2300000: Cylinder001
+    3300000: Cylinder001
     4300000: Neko_girl_head
     4300002: Neko_girl_vest
     4300004: Neko_girl_arms
@@ -183,10 +185,10 @@ ModelImporter:
     4300018: Neko_girl_neckless
     4300020: Neko_girl_shirts
     4300022: Neko_girl_eyeblow
-    4300024: Object001
-    4300026: Object002
-    4300028: Object003
-    4300030: Object_Fryfan
+    4300024: Cylinder001
+    4300026: Object001
+    4300028: Object002
+    4300030: Object003
     7400000: Take 001
     9500000: //RootNode
     13700000: Neko_girl_apran
@@ -204,18 +206,17 @@ ModelImporter:
     13700024: Object001
     13700026: Object002
     13700028: Object003
-    13700030: Object_Fryfan
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: _Neko_girl_F319___Default
-    second: {fileID: 2100000, guid: 8824807c319671c41847eeafb90c9e54, type: 2}
+    second: {fileID: 2100000, guid: 7298e80fc1d28fa4ebd3d7400eef4eb0, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: _Object_Frypan_Neko_girl_F19___Default
-    second: {fileID: 2100000, guid: 8fdbce6fbedeb0549a803ffa5bb92e33, type: 2}
+      name: wire_184228153
+    second: {fileID: 2100000, guid: 1ba72be70c4265849bc06d42e0f54870, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -228,7 +229,10 @@ ModelImporter:
     optimizeGameObjects: 0
     motionNodeName: 
     rigImportErrors: 
-    rigImportWarnings: 
+    rigImportWarnings: "Copied Avatar Rig Configuration mis-match. Bone length in
+      copied configuration does not match position in animation file:\n\t'Bip001 L
+      Thigh' : position error = 27.809620 mm\n\t'Bip001 R Thigh' : position error
+      = 32.990482 mm\n"
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
@@ -245,8 +249,8 @@ ModelImporter:
     - serializedVersion: 16
       name: Take 001
       takeName: Take 001
-      firstFrame: 0
-      lastFrame: 1
+      firstFrame: 37
+      lastFrame: 40
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -255,12 +259,12 @@ ModelImporter:
       hasAdditiveReferencePose: 0
       loopTime: 0
       loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 1
       keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
+      keepOriginalPositionXZ: 1
       heightFromFeet: 0
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
@@ -297,7 +301,7 @@ ModelImporter:
     tangentImportMode: 3
     normalCalculationMode: 4
   importAnimation: 1
-  copyAvatar: 0
+  copyAvatar: 1
   humanDescription:
     serializedVersion: 2
     human:
@@ -1089,7 +1093,8 @@ ModelImporter:
     hasTranslationDoF: 1
     hasExtraRoot: 1
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: ff39c666115fa414680b770d41b7a80d,
+    type: 3}
   animationType: 3
   humanoidOversampling: 1
   additionalBone: 0

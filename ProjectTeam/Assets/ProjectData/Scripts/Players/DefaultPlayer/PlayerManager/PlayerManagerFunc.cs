@@ -30,7 +30,6 @@ public partial class PlayerManager
         {
             playerCamera = GameObject.Find("PlayerCamera").GetComponent<PlayerCamera>();
             playerCamera.PlayerObject = gameObject;
-            playerCamera.isPlayerSpawn = true;
             playerCamera.SetPlayerMove(gameObject.GetComponent<PlayerMove>());
 
         }        

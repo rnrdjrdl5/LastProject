@@ -162,26 +162,38 @@ public class NewInteractionSkill : Photon.MonoBehaviour, IPunObservable {
 
 
 
-
     // 서버에게 함수 받음
     public void UseSkill()
     {
         // 1. 애니메이션이면 추가로
         if (interactiveState.ActionType != InteractiveState.EnumAction.PHYSICS)
         {
+
             // 플레이어 위치 고정
-            Vector3 PlayerDistance = interactiveState.ObjectDistancePlayer * interactiveState.gameObject.transform.forward;
-            Debug.Log(" interactiveState.gameObject.transform.forward: " + interactiveState.gameObject.transform.forward);
+            gameObject.transform.position =
+                interactiveState.PlayerInterPosition.transform.position;
 
-                gameObject.transform.position =
-                    transform.position + PlayerDistance;
-                Debug.Log("위치갱신.");
+            Vector3 v3 = new Vector3 {
+                x = gameObject.transform.rotation.eulerAngles.x,
+                y = interactiveState.PlayerInterPosition.transform.rotation.eulerAngles.y,
+                z = gameObject.transform.rotation.eulerAngles.z
+            };
+
+            gameObject.transform.rotation = Quaternion.Euler(v3);
+
+
+            // playermove에서 가지고 있는 회전값을 설정합니다.
+            boxPlayerMove.SetPlayerRotateEuler(v3.y);
+
+            // playercamera 가 가지고 있는 회전값을 설정합니다.
+            // 카메라는 기본적으로 백뷰이기 때문에 추가 오프셋이 들어감. 정확한 수치는
+           // playerCamera.SetCameraRadX(v3.y + 90.0f);
 
 
 
-            // 물체 애니메이션 적용
+            // 물체 애니메이션 적용 , 레이어 설정
             interactiveState.CallActionAnimation();
-
+            
             
             
         }

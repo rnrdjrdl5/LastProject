@@ -22,7 +22,15 @@ public partial class PlayerMove
     public float RotationSpeed = 100.0f;             // 캐릭터 회전속도
     public float SpeedMulti;                    // 애니메이션 배수
     public float AniSpeedUp;                    // 애니메이션 속도
-    
+
+    [Header("점프 값 ")]
+    [Tooltip(" 점프 속도에 따른 수치.")]
+    public float JumpSpeed;
+
+    [Header("중력값")]
+    [Tooltip(" 중력수치")]
+    public float gravity = 20;
+
 
     /**** private ****/
 
@@ -34,9 +42,9 @@ public partial class PlayerMove
     private float OriginalPlayerSpeed = 0.0f;               // SpeedRun) 일반 이동속도 저장함
     private float HSpeed = 0;               // 플레이어 가로 속도
     private float VSpeed = 0;               // 플레이어 세로 속도
-    private float gravity = 20.0f;              // 중력
     private float PlayerRotateEuler = 0;                // 플레이어 오일러 회전값
-    
+    private CharacterController characterController;                // 캐릭터 컨트롤러
+
 
     EnumSpeedLocation SpeedLocationTypeX = EnumSpeedLocation.NONE;              // 애니메이션 블렌딩
     EnumSpeedLocation SpeedLocationTypeY = EnumSpeedLocation.NONE;              // 애니메이션 블렌딩

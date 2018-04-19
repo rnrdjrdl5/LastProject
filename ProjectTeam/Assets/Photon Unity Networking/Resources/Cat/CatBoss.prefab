@@ -2716,6 +2716,8 @@ MonoBehaviour:
   RotationSpeed: 100
   SpeedMulti: 1.5
   AniSpeedUp: 3
+  JumpSpeed: 20
+  gravity: 20
 --- !u!114 &114593309359467792
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2748,6 +2750,9 @@ MonoBehaviour:
   - Type: 4
     SynchronizeType: 0
     Name: isSpeedRun
+  - Type: 3
+    SynchronizeType: 0
+    Name: JumpType
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0
@@ -2774,7 +2779,7 @@ MonoBehaviour:
   torqueProjectileState:
     ProjectileObject: {fileID: 1592117993979618, guid: ea306f825c9af894f8269cfc96f152fd,
       type: 2}
-    ObjectDamage: 10
+    ObjectDamage: 100
     ObjectDamageNumber: 10
     CollisionNumber: 1
     ReCheckTime: 0.5

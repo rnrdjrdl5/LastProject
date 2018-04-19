@@ -25,6 +25,7 @@ public partial class PlayerHealth
             // 카메라 설정
             playerCamera = GameObject.Find("PlayerCamera").GetComponent<PlayerCamera>();
 
+            photonManager = GameObject.Find("PhotonManager").GetComponent<PhotonManager>();
 
             isHiting = false;
             NowHiting = 0.0f;
@@ -42,13 +43,21 @@ public partial class PlayerHealth
         
         Debug.Log("플레이어사망");
         // 카메라 비활성화
-        playerCamera.isPlayerSpawn = false;
 
         // 플레이어 타입 죽은 상태로 전환
         PhotonNetwork.player.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { {"PlayerType","Dead"} });
 
+        // 해당 플레이어 리스트에서 삭제
+        photonManager.AllPlayers.Remove(gameObject);
+
+        // 옵저버 모드 온
+        playerCamera.isObserver = true;
+        playerCamera.SetCameraModeType(PlayerCamera.EnumCameraMode.FREE);
+
         // 캐릭터 파괴
         PhotonNetwork.Destroy(gameObject);
+
+        
 
     }
 

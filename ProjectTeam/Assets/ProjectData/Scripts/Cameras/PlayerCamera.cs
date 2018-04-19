@@ -25,6 +25,7 @@ public class PlayerCamera : MonoBehaviour {
     public PlayerCamera.EnumCameraMode GetCameraModeType() { return CameraModeType; }
     public void SetCameraModeType(PlayerCamera.EnumCameraMode ECM) { CameraModeType = ECM; }
 
+    
 
 
     //카메라 뷰를 2종류로 나눕니다.
@@ -37,8 +38,9 @@ public class PlayerCamera : MonoBehaviour {
 
 
 
-    // 플레이어 생성 여부
-    public bool isPlayerSpawn = true;
+
+    // 플레이어 관전 가능 여부
+    public bool isObserver = false;
 
     // 플레이어 오브젝트
     public GameObject PlayerObject;
@@ -84,6 +86,13 @@ public class PlayerCamera : MonoBehaviour {
 
     // 자연스럽게 흘러가는 시간.
     public float NaturePlayeCameraRotation;
+
+
+    // 관전용 변수들
+    private PhotonManager photonManager;
+    private int SeePlayerNumber;
+    private GameObject SeePlayer;
+
     // Use this for initialization
 
     private void Awake()
@@ -93,6 +102,9 @@ public class PlayerCamera : MonoBehaviour {
         PTL = new PointToLocation();
         PTL.SetPlayerCamera(gameObject);
         PTL.SetcameraScript(this);
+
+        photonManager = GameObject.Find("PhotonManager").GetComponent<PhotonManager>();
+        SeePlayerNumber = 0;
     }
 
     void Start () {
@@ -127,13 +139,27 @@ public class PlayerCamera : MonoBehaviour {
         // 키 입력에 따라 각도를 바꾼다.
         SetCameraRad();
 
+        // 옵저버 사용
+        if (isObserver)
+        {
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                FindSeePlayer();
+            }
+
+            // 해당 플레이어의 체력 mp 동기화 시킨다.
+            
+        }
+
+
     }
 
     private void LateUpdate()
     {
         // 1. 초기 카메라 위치를 잡습니다.
         // 플레이어 생성 시
-        if (isPlayerSpawn)
+        if (PlayerObject)
         {
 
 
@@ -149,20 +175,44 @@ public class PlayerCamera : MonoBehaviour {
             {
                 FreeCamera();
             }
+
+            
+
         }
 
-        
+       
 
 
 
+    }
+
+    public void FindSeePlayer()
+    {
+        // 추가
+        SeePlayerNumber += 1;
+
+        // 오버됬는지 판단
+        if (OverSeePlayer())
+        {
+            SeePlayerNumber = 0;
+        }
+
+        PlayerObject = photonManager.AllPlayers[SeePlayerNumber];
+    }
+
+    public bool OverSeePlayer()
+    {
+        if (SeePlayerNumber >= photonManager.AllPlayers.Count)
+            return true;
+        else
+            return false;
     }
 
 
     // 플레이어의 뒤를 무조건 따라갑니다.
     void FollowCamera()
     {
-        if (isPlayerSpawn)
-        {
+        
             // 각도로 위치 얻어내기
             float CameraPlayerDistanceX = Mathf.Cos(Mathf.Deg2Rad * CameraRad) * CameraDistanceTriangle;
             float CameraPlayerDistanceY = Mathf.Sin(Mathf.Deg2Rad * CameraRad) * CameraDistanceTriangle;
@@ -189,7 +239,7 @@ public class PlayerCamera : MonoBehaviour {
             
 
 
-        }
+       
     }
 
     // 플레이어를 따라가나, 시점은 마음대로 변경이 가능합니다.

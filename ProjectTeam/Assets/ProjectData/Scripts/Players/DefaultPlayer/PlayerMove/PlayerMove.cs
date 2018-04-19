@@ -22,20 +22,6 @@ public partial class PlayerMove : Photon.PunBehaviour
     void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            if (UpMove)
-                UpMove = false;
-            else
-                UpMove = true;
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            if (RightMove)
-                RightMove = false;
-            else
-                RightMove = true; 
-        }
 
         
 

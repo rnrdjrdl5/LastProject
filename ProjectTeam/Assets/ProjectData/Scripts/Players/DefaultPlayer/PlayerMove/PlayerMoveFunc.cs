@@ -8,7 +8,7 @@ public partial class PlayerMove
     // 초기 설정
     void SetAwake()
     {
-
+        characterController = gameObject.GetComponent<CharacterController>();
         animator = gameObject.GetComponent<Animator>();
         ps = gameObject.GetComponent<PlayerState>();
         PlayerCamera = GameObject.Find("PlayerCamera").GetComponent<PlayerCamera>();
@@ -41,31 +41,31 @@ public partial class PlayerMove
                 ps.EqualPlayerCondition(PlayerState.ConditionEnum.ATTACK) ||
                 ps.EqualPlayerCondition(PlayerState.ConditionEnum.INTERACTION)))
             {
-                
-                if (gameObject.GetComponent<CharacterController>().isGrounded)
+
+                if (characterController.isGrounded)
                 {
+                    // 1. 플레이어 이동방향 설정
+                    MoveDir = new Vector3(HSpeed, 0, VSpeed);
 
-                     // 1. 플레이어 이동방향 설정
-                     MoveDir = new Vector3(HSpeed, 0, VSpeed);
+                    // 2. 노말처리
+                    float NormalsqrMag = MoveDir.normalized.sqrMagnitude;
 
-                     // 2. 노말처리
-                     float NormalsqrMag = MoveDir.normalized.sqrMagnitude;
+                    // 대쉬가 아닌 경우 방향전환
+                    if (!ps.EqualPlayerCondition(PlayerState.ConditionEnum.SPEEDRUN))
+                        MoveDir = new Vector3(HSpeed, 0, VSpeed);
 
-                     // 대쉬가 아닌 경우 방향전환
-                     if (!ps.EqualPlayerCondition(PlayerState.ConditionEnum.SPEEDRUN))
-                         MoveDir = new Vector3(HSpeed, 0, VSpeed);
+                    // 대쉬인 경우 직진(회전에서 방향처리)
+                    else
+                    {
+                        MoveDir = Vector3.forward * MoveDir.magnitude;
+                    }
 
-                     // 대쉬인 경우 직진(회전에서 방향처리)
-                     else {
-                         MoveDir = Vector3.forward * MoveDir.magnitude;
-                     }
-
-                     // 노말벡터 길이 vs 일반벡터 길이
-                     if (MoveDir.sqrMagnitude > NormalsqrMag &&
-                         NormalsqrMag > 0)
-                     {
-                         MoveDir = MoveDir.normalized; 
-                     }
+                    // 노말벡터 길이 vs 일반벡터 길이
+                    if (MoveDir.sqrMagnitude > NormalsqrMag &&
+                        NormalsqrMag > 0)
+                    {
+                        MoveDir = MoveDir.normalized;
+                    }
 
 
 
@@ -96,18 +96,32 @@ public partial class PlayerMove
 
                 }
 
-                // 캐릭터에 중력 적용.
-                MoveDir.y -= gravity * Time.deltaTime;
-
-                // 캐릭터 움직임.
-                gameObject.GetComponent<CharacterController>().Move(MoveDir * Time.deltaTime);
+                // 캐릭터 조건부 x방향 회전
+                SetPlayerRotateX();
             }
 
-            // 캐릭터 조건부 x방향 회전
-            SetPlayerRotateX();
 
-            // 플레이어 보간 직접 설정
-          //  GetComponent<PhotonTransformView>().SetSynchronizedValues(gameObject.GetComponent<CharacterController>().velocity , turnSpeed : 0);
+
+            if ( (ps.EqualPlayerCondition(PlayerState.ConditionEnum.RUN) ||
+                 ps.EqualPlayerCondition(PlayerState.ConditionEnum.IDLE) ||
+                 ps.EqualPlayerCondition(PlayerState.ConditionEnum.SPEEDRUN)) &&
+                 Input.GetKeyDown(KeyCode.Space))
+            {
+
+                MoveDir.y = JumpSpeed;
+            }
+
+            else
+            {
+                MoveDir.y -= gravity * Time.deltaTime;
+            }
+
+
+            // 캐릭터 움직임.
+            Debug.Log("MoveDir :" + MoveDir);
+            characterController.Move(MoveDir * Time.deltaTime);
+
+
 
         }
     }
