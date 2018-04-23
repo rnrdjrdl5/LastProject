@@ -23,7 +23,8 @@ public partial class PlayerHealth
             Debug.Log(NowHPImage);
 
             // 카메라 설정
-            playerCamera = GameObject.Find("PlayerCamera").GetComponent<PlayerCamera>();
+            //playerCamera = GameObject.Find("PlayerCamera").GetComponent<PlayerCamera>();
+            playerCamera = PlayerCamera.GetInstance();
 
             photonManager = GameObject.Find("PhotonManager").GetComponent<PhotonManager>();
 

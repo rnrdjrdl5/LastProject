@@ -78,7 +78,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e456c2ac9ba34e443a7989ccb0aea49e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playTimerNumber: 100
+  playTimerNumber: 1000
   MaxCatScore: 100
   PreScoreUITimer: 2
   NextRoundTimer: 2
@@ -89,3 +89,4 @@ MonoBehaviour:
   FiveStarCondition: 80
   OneRestState: 25
   TwoRestState: 50
+  AllPlayers: []

@@ -36,7 +36,7 @@ public class TorqueProjectileState
 
 
     // 데이터를 설정합니다.
-    public void SetData(GameObject CollisionGameObject, GameObject PlayerObject , int ID)
+    public void SetData(GameObject CollisionGameObject, GameObject PlayerObject , int ID , Vector3 Dir)
     {
         CollisionObject CollisionObjectScript = CollisionGameObject.GetComponent<CollisionObject>();
 
@@ -75,7 +75,8 @@ public class TorqueProjectileState
         {
             collisionTorqueMove.SetTorqueRad(ObjectTorque);
             collisionTorqueMove.SetCollisionMoveSpeed(ObjectSpeed);
-            collisionTorqueMove.SetCollisionMoveDirect(PlayerObject.transform.forward.normalized);
+            //collisionTorqueMove.SetCollisionMoveDirect(PlayerObject.transform.forward.normalized);
+            collisionTorqueMove.SetCollisionMoveDirect(Dir);
             collisionTorqueMove.UseTorque();
         }
 

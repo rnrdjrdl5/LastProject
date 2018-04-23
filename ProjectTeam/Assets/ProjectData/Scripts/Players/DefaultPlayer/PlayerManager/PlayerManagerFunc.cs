@@ -14,7 +14,8 @@ public partial class PlayerManager
     {
         if (gameObject.GetComponent<PhotonView>().isMine)
         {
-            playerCamera = GameObject.Find("PlayerCamera").GetComponent<PlayerCamera>();
+            // playerCamera = GameObject.Find("PlayerCamera").GetComponent<PlayerCamera>();
+            playerCamera = PlayerCamera.GetInstance();
             playerCamera.PlayerObject = gameObject;
             playerCamera.SetPlayerMove(gameObject.GetComponent<PlayerMove>());
 

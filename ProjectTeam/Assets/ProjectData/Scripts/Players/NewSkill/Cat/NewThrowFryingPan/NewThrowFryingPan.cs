@@ -10,6 +10,8 @@ public class NewThrowFryingPan : DefaultNewSkill
     // 스킬에서 사용하지 않는 옵션은 조정해봤자 의미 없습니다.
     public TorqueProjectileState torqueProjectileState ;
 
+    private PointToLocation PTL;
+
     protected override void Awake()
     {
         base.Awake();
@@ -19,6 +21,8 @@ public class NewThrowFryingPan : DefaultNewSkill
 
         // 애니메이션 포톤 뷰 설정
         gameObject.GetComponent<PhotonAnimatorView>().SetParameterSynchronized("isThrowFryingPan", PhotonAnimatorView.ParameterType.Bool, PhotonAnimatorView.SynchronizeType.Discrete);
+
+        PTL = new PointToLocation();
     }
 
     // 재정의
@@ -51,7 +55,7 @@ public class NewThrowFryingPan : DefaultNewSkill
         {
 
             // 모든 클라이언트에게 공격을 전송
-            photonView.RPC("RPCCreateFryingPan", PhotonTargets.All , PhotonNetwork.player.ID);
+            photonView.RPC("RPCCreateFryingPan", PhotonTargets.All, PhotonNetwork.player.ID, PTL.FindMouseCursorPosition(gameObject, PlayerCamera.GetInstance().gameObject));
         }
     }
 
@@ -66,7 +70,7 @@ public class NewThrowFryingPan : DefaultNewSkill
     /**** RPC ****/
 
     [PunRPC]
-    void RPCCreateFryingPan(int ID)
+    void RPCCreateFryingPan(int ID , Vector3 PanDir)
     {
         float BulletDistance = 1.0f;
         float CharacterHeight = 1.2f;
@@ -89,7 +93,10 @@ public class NewThrowFryingPan : DefaultNewSkill
         FryPan.transform.position = transform.position + (BulletDefaultPlace);
         FryPan.transform.rotation = Quaternion.Euler(v3);
 
-        torqueProjectileState.SetData(FryPan, gameObject, ID);
+
+
+
+        torqueProjectileState.SetData(FryPan, gameObject, ID, PanDir);
         //GameObject CharmBullet = Instantiate(torqueProjectileState.ProjectileObject, transform.position + (BulletDefaultPlace), Quaternion.Euler(v3));
 
         //  torqueProjectileState.SetData(CharmBullet, gameObject,ID);

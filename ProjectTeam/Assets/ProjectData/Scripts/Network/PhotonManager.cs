@@ -17,11 +17,15 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
 
     delegate bool Condition();
     delegate void ConditionLoop();
-    delegate int RPCActionCondition();
+    delegate int RPCActionType();
+
+    delegate void ActionMine(params object[] obj);
 
     Condition condition;
     ConditionLoop conditionLoop;
-    RPCActionCondition rPCActionCondition;
+    RPCActionType rPCActionType;
+
+    ActionMine actionMine;
 
     /**** public ****/
     public int playTimerNumber = 5;              // 플레이 타이머
@@ -78,7 +82,8 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
     {
 
         // 카메라 찾기
-        playerCamera = GameObject.Find("PlayerCamera").GetComponent<PlayerCamera>();
+        //playerCamera = GameObject.Find("PlayerCamera").GetComponent<PlayerCamera>();
+        playerCamera = PlayerCamera.GetInstance();
 
         // 오브젝트 매니저 찾기
         objectManager = GameObject.Find("ObjectManager").GetComponent<ObjectManager>();
@@ -97,9 +102,9 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
 
         condition = new Condition(CheckGameStart);
         conditionLoop = new ConditionLoop(NoAction);
-        rPCActionCondition = new RPCActionCondition(NoRPCActonCondition);
+        rPCActionType = new RPCActionType(NoRPCActonCondition);
 
-        IEnumCoro = CoroTrigger(condition, conditionLoop, rPCActionCondition, "RPCActionCheckGameStart");
+        IEnumCoro = CoroTrigger(condition, conditionLoop, rPCActionType, "RPCActionCheckGameStart");
         StartCoroutine(IEnumCoro);
 
 
@@ -120,13 +125,13 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
         Cursor.visible = true;
     }
 
-    private bool isUseCursor = false;
+    private bool isCanUseCursor = false;
 
     private void Update()
     {
         if (gameObject.GetPhotonView().isMine)
         {
-            if (!isUseCursor)
+            if (!isCanUseCursor)
             {
                 HideCursor();
             }
@@ -191,8 +196,13 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
         Debug.Log("i : " + i);
 
         // 플레이어 삭제 처리
+        Debug.Log("*************************12*" + CurrentPlayer + "********21**************");
         if (CurrentPlayer != null && photonView.isMine)
-            PhotonNetwork.Destroy(CurrentPlayer);
+        {   
+            
+           Debug.Log("*************" + CurrentPlayer + "*****************");
+          //  PhotonNetwork.Destroy(CurrentPlayer);
+        }
 
 
 
@@ -203,6 +213,7 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
         uIManager.SetManaPoint(false);
         uIManager.SetLimitTime(false);
         uIManager.SetAim(false);
+        uIManager.BackgroundPanel.SetActive(false);
 
         // 혹시라도 도움말 UI가 켜져있으면 도움말 UI 제거
         uIManager.isCanUseHelperUI = false;
@@ -211,7 +222,6 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
 
         // 별, 레스토랑 정보 끄기
         uIManager.SetStarPanel(false);
-        uIManager.RestStatePanel.SetActive(false);
         
         // 쥐 남은 수 끄기
         uIManager.MouseImagePanel.SetActive(false);
@@ -233,6 +243,21 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
         Debug.Log("끝");
     }
 
+    // 모든 플레이어가 한번씩 고양이를 했는지 여부 = 게임이 끝났는지.
+    bool AllPlayCat()
+    {
+        bool isCheck = true;
+        for (int i = 0; i < PhotonNetwork.playerList.Length; i++)
+        {
+            if ((bool)PhotonNetwork.playerList[i].CustomProperties["UseBoss"] == false)
+            {
+                isCheck = false;
+            }
+        }
+
+        return isCheck;
+
+    }
 
 
 
@@ -285,9 +310,19 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
 
 
 
+    // 개인 사용자용 액션들
+    
+    void ExitGameRoom(params object[] obj)
+    {
+        PhotonNetwork.LeaveRoom();
+    }
+
+
+
+
     // Condition 들
 
-        // 로딩 끝났는지 파악
+    // 로딩 끝났는지 파악
     bool CheckGameStart()
     {
         bool isInGame = true;
@@ -358,27 +393,20 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
             return false;
     }
 
-    // 다음 라운드로 넘어 갈 수 있는지 파악한다. 
-    bool CheckNextRound()
+    bool CheckGameEnd()
     {
-
-        // Custom 값을 보고 판단.
-        for (int i = 0; i < PhotonNetwork.playerList.Length; i++)
-        {
-            if ((bool)PhotonNetwork.playerList[i].CustomProperties["NextReady"] == false)
-            {
-                return false;
-            }
-        }
-
-        return true;
+        if (uIManager.IsGameEnd)
+            return true;
+        else
+            return false;
     }
 
 
     /**** 코루틴 ****/
 
+        // 방장이 모든걸 처리함.
     // 조건/ 반복조건 / 액션조건판단 후 액션 으로 나눔
-    IEnumerator CoroTrigger(Condition condition, ConditionLoop conditionLoop, RPCActionCondition rpcActionCondition, string RPCAction)
+    IEnumerator CoroTrigger(Condition condition, ConditionLoop conditionLoop, RPCActionType rPCActionType, string RPCAction)
     {
         while (true)
         {
@@ -391,7 +419,7 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
                 {
 
                     // 액션 사용, 조건 판단해서 사용.
-                    int type = rpcActionCondition();
+                    int type = rPCActionType();
 
                     if (type >= 0)
                         photonView.RPC(RPCAction, PhotonTargets.All, type);
@@ -406,6 +434,29 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
             yield return null;
         }
 
+    }
+
+    IEnumerator CoroTriggerMine(Condition condition, ConditionLoop conditionLoop, ActionMine actionMine, params object[] obj)
+    {
+        while (true)
+        {
+
+            bool AcceptCondition = condition();
+
+            if (AcceptCondition)
+            {
+
+                // 액션 사용, 조건 판단해서 사용.
+                actionMine(obj);
+
+
+                yield break;
+            }
+            else
+                conditionLoop();
+
+            yield return null;
+        }
     }
 
 
@@ -515,9 +566,9 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
         // 플레이어 생성 완료
         condition = new Condition(CheckCreatePlayer);
         conditionLoop = new ConditionLoop(NoAction);
-        rPCActionCondition = new RPCActionCondition(NoRPCActonCondition);
+        rPCActionType = new RPCActionType(NoRPCActonCondition);
 
-        IEnumCoro = CoroTrigger(condition, conditionLoop, rPCActionCondition, "RPCActionCheckCreatePlayer");
+        IEnumCoro = CoroTrigger(condition, conditionLoop, rPCActionType, "RPCActionCheckCreatePlayer");
         StartCoroutine(IEnumCoro);
     }
 
@@ -550,8 +601,8 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
         uIManager.SetLimitTime(true);
         uIManager.SetAim(true);
         uIManager.MouseImagePanel.SetActive(true);
-        uIManager.RestStatePanel.SetActive(true);
         uIManager.StarPanel.SetActive(true);
+        uIManager.BackgroundPanel.SetActive(true);
 
 
         // 2. UI에서 실시간으로 갱신해주도록 설정
@@ -560,8 +611,8 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
         // 게임 종료 조건 시작
         condition = new Condition(CheckGameFinish);
         conditionLoop = new ConditionLoop(NoAction);
-        rPCActionCondition = new RPCActionCondition(MasterResultCheck);
-        IEnumCoro = CoroTrigger(condition, conditionLoop, rPCActionCondition, "RPCActionCheckGameFinish");
+        rPCActionType = new RPCActionType(MasterResultCheck);
+        IEnumCoro = CoroTrigger(condition, conditionLoop, rPCActionType, "RPCActionCheckGameFinish");
         StartCoroutine(IEnumCoro);
 
 
@@ -587,8 +638,8 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
 
         condition = new Condition(CheckTimeWait);
         conditionLoop = new ConditionLoop(DecreateTimeAction);
-        rPCActionCondition = new RPCActionCondition(NoRPCActonCondition);
-        IEnumCoro = CoroTrigger(condition, conditionLoop, rPCActionCondition, "RPCActionCheckFinishNext");
+        rPCActionType = new RPCActionType(NoRPCActonCondition);
+        IEnumCoro = CoroTrigger(condition, conditionLoop, rPCActionType, "RPCActionCheckFinishNext");
         StartCoroutine(IEnumCoro);
     }
 
@@ -604,19 +655,38 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
         // 스코어 창 보여주기
         ToShowScoreUI();
 
-        // 추가로 next 버튼과 Ready 이미지 보여주기.
-        uIManager.NextGamePanel.SetActive(true);
-        uIManager.ReadyBGPanel.SetActive(true);
+        
 
-        condition = new Condition(CheckNextRound);
-        conditionLoop = new ConditionLoop(NoAction);
-        rPCActionCondition = new RPCActionCondition(NoRPCActonCondition);
+        // 게임 끝나면.
+        if (AllPlayCat())
+        {
+            uIManager.GameEndPanel.SetActive(true);
+
+            condition = new Condition(CheckGameEnd);
+            conditionLoop = new ConditionLoop(NoAction);
+
+            actionMine = new ActionMine(ExitGameRoom);
+
+            isCanUseCursor = true;
+
+            IEnumCoro = CoroTriggerMine(condition, conditionLoop, actionMine);
+            StartCoroutine(IEnumCoro);
+        }
+
+        // 안끝났으면.
+        else
+        {
+            TimerValue = 1.0f;
+            condition = new Condition(CheckTimeWait);
+            conditionLoop = new ConditionLoop(DecreateTimeAction);
+            rPCActionType = new RPCActionType(NoRPCActonCondition);
 
 
-        isUseCursor = true;
+            isCanUseCursor = false;
 
-        IEnumCoro = CoroTrigger(condition, conditionLoop, rPCActionCondition, "RPCNextRound");
-        StartCoroutine(IEnumCoro);
+            IEnumCoro = CoroTrigger(condition, conditionLoop, rPCActionType, "RPCNextRound");
+            StartCoroutine(IEnumCoro);
+        }
     }
 
 
@@ -624,24 +694,7 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
     [PunRPC]
     void RPCNextRound()
     {
-        Debug.Log("asdf");
-        bool isCheck = true;
-        for (int i = 0; i < PhotonNetwork.playerList.Length; i++)
-        {
-            if ((bool)PhotonNetwork.playerList[i].CustomProperties["UseBoss"] == false)
-            {
-                isCheck = false;
-            }
-        }
-
-        if (isCheck)
-        {
-            PhotonNetwork.LeaveRoom();
-        }
-        else
-        {
-            PhotonNetwork.LoadLevel(2);
-        }
+        PhotonNetwork.LoadLevel(2);
     }
 
     // 캐릭터 생성

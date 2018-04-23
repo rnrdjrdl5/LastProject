@@ -19,7 +19,8 @@ public class InteractionAnimator : StateMachineBehaviour {
 
     void InitScripts(Animator animator)
     {
-            playerCamera = GameObject.Find("PlayerCamera").GetComponent<PlayerCamera>();
+        //playerCamera = GameObject.Find("PlayerCamera").GetComponent<PlayerCamera>();
+        playerCamera = PlayerCamera.GetInstance();
 
             findObject = animator.gameObject.GetComponent<FindObject>();
 

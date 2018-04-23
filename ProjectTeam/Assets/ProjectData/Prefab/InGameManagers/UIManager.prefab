@@ -51,10 +51,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3037f6125b564c4ea20e60c6ed56d95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GetScoreWaitTime: 0.5
+  GetScoreMoveTime: 0.2
+  MaxPlayer: 6
   objectManager: {fileID: 0}
   isCanUseHelperUI: 1
-  RestStatePanel: {fileID: 0}
-  RestStates: []
   StarPanel: {fileID: 0}
   StarImage: []
   MouseImagePanel: {fileID: 0}

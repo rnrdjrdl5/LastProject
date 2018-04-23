@@ -66,7 +66,8 @@ public class FindObject : MonoBehaviour {
 
     void Start() {
         PTL = new PointToLocation();
-        PTL.SetPlayerCamera(GameObject.Find("PlayerCamera"));
+        //PTL.SetPlayerCamera(GameObject.Find("PlayerCamera"));
+        PTL.SetPlayerCamera(PlayerCamera.GetInstance().gameObject);
         InGameCanvas = GameObject.Find("InGameCanvas");
 
         PTL.SetcameraScript(PTL.GetPlayerCamera().GetComponent<PlayerCamera>());

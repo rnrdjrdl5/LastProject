@@ -11,12 +11,13 @@ public partial class PlayerMove
         characterController = gameObject.GetComponent<CharacterController>();
         animator = gameObject.GetComponent<Animator>();
         ps = gameObject.GetComponent<PlayerState>();
-        PlayerCamera = GameObject.Find("PlayerCamera").GetComponent<PlayerCamera>();
+        //PlayerCamera = GameObject.Find("PlayerCamera").GetComponent<PlayerCamera>();
+        playerCamera = PlayerCamera.GetInstance();
         newInteractionSkill = GetComponent<NewInteractionSkill>();
         findObject = GetComponent<FindObject>();
         timeBar = GetComponent<TimeBar>();
 
-        if (PlayerCamera == null)
+        if (playerCamera == null)
         {
             Debug.Log(" 카메라 못찾음.에러.");
         }
@@ -254,7 +255,7 @@ public partial class PlayerMove
     {
        
         // 시점 자유 여부
-        if (PlayerCamera.GetCameraModeType() != PlayerCamera.EnumCameraMode.FREE)
+        if (playerCamera.GetCameraModeType() != PlayerCamera.EnumCameraMode.FREE)
         {
 
             
@@ -546,10 +547,10 @@ public partial class PlayerMove
 
 
             // 1. 카메라를 따라가는 상태로 변경.
-            PlayerCamera.SetCameraModeType(PlayerCamera.EnumCameraMode.FOLLOW);
+            playerCamera.SetCameraModeType(PlayerCamera.EnumCameraMode.FOLLOW);
 
             // 2. 플레이어의 회전값을 free값으로 변경
-            animator.GetComponent<PlayerMove>().SetPlayerRotateEuler(-PlayerCamera.GetCameraRadX());
+            animator.GetComponent<PlayerMove>().SetPlayerRotateEuler(-playerCamera.GetCameraRadX());
 
 
 

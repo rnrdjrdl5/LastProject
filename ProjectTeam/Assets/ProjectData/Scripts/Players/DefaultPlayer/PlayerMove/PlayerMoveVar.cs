@@ -15,7 +15,7 @@ public partial class PlayerMove
     /**** public ****/
 
 
-    public PlayerCamera PlayerCamera;               // 카메라 스크립트
+    public PlayerCamera playerCamera;               // 카메라 스크립트
 
     [Header(" 이동속도")]
     public float PlayerSpeed = 10.0f;               // 캐릭터 이동속도

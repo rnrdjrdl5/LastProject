@@ -56,7 +56,8 @@ public class NewInteractionSkill : Photon.MonoBehaviour, IPunObservable {
 
         findObject = GetComponent<FindObject>();                                    // 탐지 오브젝트 설정
         timeBar = GetComponent<TimeBar>();                                       // 타임바 설정
-        playerCamera = GameObject.Find("PlayerCamera").GetComponent<PlayerCamera>();  // 카메라 설정
+        //playerCamera = GameObject.Find("PlayerCamera").GetComponent<PlayerCamera>();  // 카메라 설정
+        playerCamera = PlayerCamera.GetInstance();
         playerState = GetComponent<PlayerState>();                                   // 플레이어 상태 설정
         boxPlayerMove = GetComponent<PlayerMove>();                        //플레이어 이동 스크립트
         objectManager = GameObject.Find("ObjectManager").GetComponent<ObjectManager>();             // 오브젝트 매니저 초기화
@@ -191,19 +192,89 @@ public class NewInteractionSkill : Photon.MonoBehaviour, IPunObservable {
         if (interactiveState.ActionType != InteractiveState.EnumAction.PHYSICS)
         {
 
-            // 1. 플레이어 위치 고정
-            gameObject.transform.position =
+            // 애니메이션의 타입에 따라 고정위치가 달라진다.
+
+
+            // 플레이어타입이 Position으로 고정형이라면.
+            Vector3 v3 = Vector3.zero;
+            if (interactiveState.InterPosType == InteractiveState.EnumInterPos.POSITION)
+            {
+
+                // 1. 플레이어 위치 고정
+                gameObject.transform.position =
                 interactiveState.PlayerInterPosition.transform.position;
 
-            
-            // 2. 플레이어 각도 고정
-            Vector3 v3 = new Vector3 {
-                x = gameObject.transform.rotation.eulerAngles.x,
-                y = interactiveState.PlayerInterPosition.transform.rotation.eulerAngles.y,
-                z = gameObject.transform.rotation.eulerAngles.z
-            };
 
-            gameObject.transform.rotation = Quaternion.Euler(v3);
+
+
+                // 2. 플레이어 각도 고정
+                v3 = new Vector3
+                {
+                    x = gameObject.transform.rotation.eulerAngles.x,
+                    y = interactiveState.PlayerInterPosition.transform.rotation.eulerAngles.y,
+                    z = gameObject.transform.rotation.eulerAngles.z
+                };
+
+                gameObject.transform.rotation = Quaternion.Euler(v3);
+            }
+
+            else
+            {
+
+                /* // 1. 플레이어와 물체의 순수 거리 구하기
+                 Vector3 PlayerInterVector3 = transform.position - interactiveState.transform.position;
+                 float PlayerInterDis = PlayerInterVector3.magnitude;
+
+                 // 2. 플레이어 <>물체,    플레이어<>상호작용고정위치 거리 를 이용해서 배율 구하기
+                 float DistanceMul = PlayerInterDis / interactiveState.InterPositionDis;
+
+                 // 3. 플레이어와 물체 사이의 노말벡터 구하기
+                 Vector3 PlayerInterNormalVector3 = PlayerInterVector3.normalized;
+
+                 // 4. 노말값에 배율값 곱해주기
+                 Vector3 PlayerAddVector3 = PlayerInterNormalVector3 * DistanceMul;
+
+                 //5. 위 계싼값 + 상호자굥ㅇ 위치  = 플레이어 새 위치
+
+                 transform.position = interactiveState.transform.position + PlayerAddVector3;
+
+
+                 // 2. ㅍㄹ레잉와*/
+
+                // 1. 고정위치 ㅡ 상호작용 벡터 구하기 
+
+                /* float NormalMag = (interactiveState.PlayerInterPosition.transform.position - interactiveState.transform.position).normalized.magnitude;
+                 float Mag = (interactiveState.PlayerInterPosition.transform.position - interactiveState.transform.position).magnitude;
+
+                 float Mul = Mag / NormalMag;
+
+                 transform.position = interactiveState.transform.position +
+                     (transform.position - interactiveState.transform.position).normalized * Mul;
+
+                 transform.LookAt(interactiveState.transform);*/
+
+                // 1. 플레이어 위치 고정
+                gameObject.transform.position =
+                interactiveState.PlayerInterPosition.transform.position;
+
+
+
+
+                // 2. 플레이어 각도 고정
+                v3 = new Vector3
+                {
+                    x = gameObject.transform.rotation.eulerAngles.x,
+                    y = interactiveState.PlayerInterPosition.transform.rotation.eulerAngles.y,
+                    z = gameObject.transform.rotation.eulerAngles.z
+                };
+
+                gameObject.transform.rotation = Quaternion.Euler(v3);
+
+
+
+
+
+            }
 
 
             // 3, 플레이어 각도 변경때문에 free위치 재조절

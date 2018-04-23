@@ -15,7 +15,7 @@ public class PoolingManager : MonoBehaviour {
         switch(effectType)
         {
             case EffctType.ATTACK:
-                effect = PopObject("Cat_Effect_FryPan_Attack_01");
+                effect = PopObject("w");
                  break;
         }
 

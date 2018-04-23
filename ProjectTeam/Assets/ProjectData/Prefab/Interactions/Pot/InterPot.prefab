@@ -3485,4 +3485,5 @@ MonoBehaviour:
   ActionType: 1
   InterObjectScore: 10
   PlayerInterPosition: {fileID: 1728827553062602}
+  InterPosType: 1
   isCanFirstCheck: 0

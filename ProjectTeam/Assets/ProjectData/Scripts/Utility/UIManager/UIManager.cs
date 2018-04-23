@@ -38,9 +38,6 @@ public class UIManager : Photon.PunBehaviour {
 
     private bool isUseNextButton = false;
 
-    // 레스토랑 이미지 최소 설정값
-    private int OneRestState;
-    private int TwoRestState;
 
 
     // 1. 마우스 이미지 그릴지 말지 결정한다.
@@ -75,6 +72,14 @@ public class UIManager : Photon.PunBehaviour {
     public GameObject UICanvas { set; get; }
     public void InitUICanvas() { UICanvas = GameObject.Find("UICanvas");
     }
+
+    /**** BackgroundPanel ****/
+    public GameObject BackgroundPanel { get; set; }
+    public void InitBackgroundPanel()
+    {
+        BackgroundPanel = UICanvas.transform.Find("BackgroundPanel").gameObject;
+    }
+
 
     /**** LimitTime ****/
 
@@ -126,23 +131,6 @@ public class UIManager : Photon.PunBehaviour {
     }
 
 
-    /**** StartRun ****/
-
-    public GameObject StartRunPanel { set; get; }
-    public void InitStartRunPanel() { StartRunPanel = UICanvas.transform.Find("StartRunPanel").gameObject; }
-
-    public GameObject StartRunText { set; get; }
-    public void InitStartRunText() { StartRunText = StartRunPanel.transform.Find("StartRunText").gameObject; }
-
-    public Text StartRunTextText { set; get; }
-    public void InitStartRunTextText() { StartRunTextText = StartRunText.GetComponent<Text>(); }
-
-    public void SetStartRun(bool isActive)
-    {
-        StartRunPanel.SetActive(isActive);
-        StartRunText.SetActive(isActive);
-    }
-
     /**** HelperUI , HelpUI  , Helper : Icon ****/
 
 
@@ -186,32 +174,6 @@ public class UIManager : Photon.PunBehaviour {
         AimImage.SetActive(isActive);
     }
 
-    /***** RestStatePanel *****/
-
-    public GameObject RestStatePanel;
-    public void InitRestStatePanel() { RestStatePanel = UICanvas.transform.Find("RestStatePanel").gameObject; }
-
-    public GameObject[] RestStates;
-    public void InitRestStates()
-    {
-        RestStates = new GameObject[3];
-        Debug.Log(RestStatePanel);
-        for (int i = 0; i < 3; i++)
-        {
-            RestStates[i] = RestStatePanel.transform.Find("RestState" + (i + 1).ToString()).gameObject;
-        }
-    }
-
-    public void SetRestState(bool isActive, int type)
-    {
-        for (int i = 0; i < RestStates.Length; i++)
-        {
-
-            RestStates[i].SetActive(false);
-        }
-
-        RestStates[type - 1].SetActive(isActive);
-    }
 
     /***** StartPanel *****/
 
@@ -504,29 +466,11 @@ public class UIManager : Photon.PunBehaviour {
         }
     }
 
+    /**** GameEndPanel ****/
+    public GameObject GameEndPanel { get; set; }
+    public void InitGameEndPanel() { GameEndPanel = ScorePanel.transform.Find("GameEndPanel").gameObject; }
+    public bool IsGameEnd { get; set; }
 
-    /**** NextPagePanel ****/
-    public GameObject NextGamePanel { get; set; }
-    public void InitNextGamePanel() { NextGamePanel = ScorePanel.transform.Find("NextGamePanel").gameObject; }
-
-    
-
-
-
-    /**** ReadyBGPanel ****/
-    public GameObject ReadyBGPanel { get; set; }
-    public void InitReadyBGPanel() {ReadyBGPanel = ScorePanel.transform.Find("ReadyBGPanel").gameObject;}
-
-    public GameObject[] PlayerReadyImage { get; set; }
-    public void InitPlayerReadyImage()
-    {
-        PlayerReadyImage = new GameObject[MaxPlayer];
-
-        for (int i = 0; i < PlayerReadyImage.Length; i++)
-        {
-            PlayerReadyImage[i] = ReadyBGPanel.transform.Find("PlayerReadyImage" + (i + 1).ToString()).gameObject;
-        }
-    }
 
 
 
@@ -665,19 +609,6 @@ public class UIManager : Photon.PunBehaviour {
 
         // 레스토랑 이미지 설정
 
-        if (Type >= TwoRestState)
-        {
-            star = 1;
-        }
-        else if (Type >= OneRestState && Type < TwoRestState)
-        {
-            star = 2;
-        }
-        else
-            star = 3;
-
-
-        SetRestState(true, star);
 
         // 쥐 이미지 갱신
 
@@ -739,14 +670,14 @@ public class UIManager : Photon.PunBehaviour {
             ForeStarCondition = photonManager.ForeStarCondition;  
             FiveStarCondition = photonManager.FiveStarCondition;  
 
-            OneRestState = photonManager.OneRestState;
-            TwoRestState = photonManager.TwoRestState;
         }
 
 
 
     // UI 초기화들
     InitUICanvas();
+
+        InitBackgroundPanel();
 
         InitLimitTimePanel();
         InitLimitTimeText();
@@ -764,15 +695,9 @@ public class UIManager : Photon.PunBehaviour {
         InitHelpUIPanel();
         InitHelpUIImage();
 
-        InitStartRunPanel();
-        InitStartRunText();
-        InitStartRunTextText();
-
         InitAimPanel();
         InitAimImage();
 
-        InitRestStatePanel();
-        InitRestStates();
 
         InitStarPanel();
         InitStarImage();
@@ -807,17 +732,14 @@ public class UIManager : Photon.PunBehaviour {
         InitSelectPlayerPanel();
         InitSelectPlayerImage();
 
-        InitNextGamePanel();
-
-        InitReadyBGPanel();
-        InitPlayerReadyImage();
-
-
 
 
         InitInGameCanvas();
 
         InitGetScorePanel();
+
+        InitGameEndPanel();
+        IsGameEnd = false;
     }
 
 
@@ -878,58 +800,23 @@ public class UIManager : Photon.PunBehaviour {
         CheckRestUI(ObjectPersent);
         SetNowMouseImage();
 
-        // 레디 창 활성화 상태일 때 , Ready 이미지 활성화 여부 정하기.
-        if (ReadyBGPanel.GetActive())
-        {
-            // 루프 
-            for (int i = 0; i < PlayerReadyImage.Length; i++)
-            {
-
-                if (i < Players.Count)
-                {
-                    bool isReady = (bool)Players[i].CustomProperties["NextReady"];
-                        //(bool)PhotonNetwork.playerList[i].CustomProperties["NextReady"];
-                    if (isReady)
-                    {
-                        PlayerReadyImage[i].SetActive(true);
-                    }
-                    else
-                        PlayerReadyImage[i].SetActive(false);
-                }
-                else
-                    PlayerReadyImage[i].SetActive(false);
-
-            }
-        }
-
 
         
 
     }
-
+        
     /**** UI 이벤트  ****/
-
-    public void ClickNextButton()
+    public void GameEndButtonClick()
     {
-        Debug.Log("ㅁㄴㅇㄹㄹ");
-
-        ExitGames.Client.Photon.Hashtable Ready;
-
-        if (isUseNextButton == false)
-        {
-            Ready = new ExitGames.Client.Photon.Hashtable { { "NextReady", true } };
-            isUseNextButton = true;
-        }
-
+        if (IsGameEnd)
+            IsGameEnd = false;
         else
-        {
-            Ready = new ExitGames.Client.Photon.Hashtable { { "NextReady", false } };
-            isUseNextButton = false;
-        }
-        PhotonNetwork.player.SetCustomProperties(Ready);
+            IsGameEnd = true;
+
+        Debug.Log("end : " + IsGameEnd);
+
 
     }
-    
 
 
 

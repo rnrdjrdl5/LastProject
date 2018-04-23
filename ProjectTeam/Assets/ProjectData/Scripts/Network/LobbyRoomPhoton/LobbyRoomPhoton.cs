@@ -163,18 +163,12 @@ public class LobbyRoomPhoton : Photon.PunBehaviour {
             { "CatScore",0 }
         };
 
-        ExitGames.Client.Photon.Hashtable NextReady = new ExitGames.Client.Photon.Hashtable
-        {
-            { "NextReady",false }
-        };
-
         PhotonNetwork.player.SetCustomProperties(PlayerSceneState);
         PhotonNetwork.player.SetCustomProperties(PlayerLoadingState);
         PhotonNetwork.player.SetCustomProperties(PlayerType);
         PhotonNetwork.player.SetCustomProperties(UseBoss);
         PhotonNetwork.player.SetCustomProperties(MouseScore);
         PhotonNetwork.player.SetCustomProperties(CatScore);
-        PhotonNetwork.player.SetCustomProperties(NextReady);
 
 
     }
@@ -280,7 +274,7 @@ public class LobbyRoomPhoton : Photon.PunBehaviour {
             {
 
 
-                roomPlayerObject[i].RoomPlayerListPanelImage.color = Color.red;
+                roomPlayerObject[i].RoomPlayerListPanelImage.color = Color.white;
 
                 roomPlayerObject[i].PlayerName.text = roomPlayerData[i].PlayerName;
 
@@ -293,9 +287,10 @@ public class LobbyRoomPhoton : Photon.PunBehaviour {
 
 
             // 유저가 접속 안한 패널
-            else
+            else 
             {
-                roomPlayerObject[i].RoomPlayerListPanelImage.color = Color.blue;
+
+                roomPlayerObject[i].RoomPlayerListPanelImage.color = Color.white;
 
                 roomPlayerObject[i].PlayerName.text = "";
 

@@ -8,11 +8,16 @@ public class InteractiveState : Photon.MonoBehaviour , IPunObservable {
 
     // 물체의 타입
     public            enum           EnumInteractiveObject
-    { TABLE  = 1 , MIKE , DRAWE , POT};
+    { TABLE  = 1 , MIKE , DRAWE , POT , PIANO};
 
     // 물체의 액션 적용 방식
     public            enum           EnumAction
     { PHYSICS, ANIMATION , MIX};
+
+    // 물체가 애니메이션 일때, 상호작용 거리 타입 
+    // 1. 특정위치    2. 특정 거리 
+    public enum EnumInterPos
+    { POSITION, DISTANCE };
 
 
 
@@ -47,6 +52,13 @@ public class InteractiveState : Photon.MonoBehaviour , IPunObservable {
     [Tooltip(" - 플레이어 위치 오브젝트")]
     public GameObject PlayerInterPosition;
 
+    
+    [Header(" - 상호작용 위치 타입")]
+    [Tooltip(" - 상호작용 위치가 고정형인지 거리형인지 판단.")]
+    public EnumInterPos InterPosType;
+
+    
+    
     public bool IsUseAction { get; set; }
     /**** private ****/
 
@@ -63,7 +75,8 @@ public class InteractiveState : Photon.MonoBehaviour , IPunObservable {
     private Animator animator;
 
     public Animator Getanimator() { return animator; }
-    
+
+    public float InterPositionDis { get; set; }          // 플레이어 상호작용 거리
 
 
     /**** 접근자 ****/
@@ -99,6 +112,8 @@ public class InteractiveState : Photon.MonoBehaviour , IPunObservable {
         animator = GetComponent<Animator>();
 
         IsUseAction = false;
+
+        InterPositionDis = (PlayerInterPosition.transform.position - transform.position).magnitude;
 
     }
 

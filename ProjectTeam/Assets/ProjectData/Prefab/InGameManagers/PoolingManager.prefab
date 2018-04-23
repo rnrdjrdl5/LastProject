@@ -54,6 +54,6 @@ MonoBehaviour:
   GetScoreImage: {fileID: 1335281521138530, guid: 1bf5918d43bc48a4bb90f50f8815d2cf,
     type: 2}
   Prefabs:
-  - {fileID: 1249010773769348, guid: a3c1eebe6295f4e4eb1529bcd6d7763a, type: 2}
+  - {fileID: 1450816617650098, guid: 646d1604159edd746a6fdc69536cc0d9, type: 2}
   - {fileID: 1592117993979618, guid: ea306f825c9af894f8269cfc96f152fd, type: 2}
   - {fileID: 1335281521138530, guid: 1bf5918d43bc48a4bb90f50f8815d2cf, type: 2}

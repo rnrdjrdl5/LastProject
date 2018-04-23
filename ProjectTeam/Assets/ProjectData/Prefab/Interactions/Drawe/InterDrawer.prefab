@@ -54,9 +54,10 @@ GameObject:
   - component: {fileID: 95260503713241764}
   - component: {fileID: 114807422922370198}
   - component: {fileID: 114506198986054408}
-  m_Layer: 0
+  - component: {fileID: 65240481288788384}
+  m_Layer: 9
   m_Name: Ani_Drawer
-  m_TagString: Untagged
+  m_TagString: Interaction
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -94,7 +95,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1921593538656770}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 2.025}
+  m_LocalPosition: {x: 0, y: 0, z: -2.99}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4197408076412502}
@@ -143,6 +144,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1977376349322522}
   m_Mesh: {fileID: 4300000, guid: 62e5f563a7f62464a9b843f9a2cced1e, type: 3}
+--- !u!65 &65240481288788384
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1977376349322522}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.6631521, y: 1.1076605, z: 2.7507603}
+  m_Center: {x: 0.00000014901168, y: -0.00000027166374, z: 1.3894405}
 --- !u!95 &95260503713241764
 Animator:
   serializedVersion: 3
@@ -177,6 +190,7 @@ MonoBehaviour:
   ActionType: 1
   InterObjectScore: 40
   PlayerInterPosition: {fileID: 1090012858239084}
+  InterPosType: 0
   isCanFirstCheck: 0
 --- !u!114 &114807422922370198
 MonoBehaviour:

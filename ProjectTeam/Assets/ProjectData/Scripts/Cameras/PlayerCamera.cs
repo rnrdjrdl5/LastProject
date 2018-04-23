@@ -5,6 +5,10 @@ using UnityEngine;
 public class PlayerCamera : MonoBehaviour {
 
 
+    private static PlayerCamera playerCamera;
+    public static PlayerCamera GetInstance() { return playerCamera; }
+
+
     // 플레이어 지면과 닿을 때 지면까지의 최소 거리
 
     // 1. 카메라 레이캐스트를 쓰기 위해서
@@ -119,6 +123,8 @@ public class PlayerCamera : MonoBehaviour {
 
     private void Awake()
     {
+        playerCamera = this;
+
         // 기본 설정.
         CameraModeType = EnumCameraMode.FOLLOW;
         PTL = new PointToLocation();
