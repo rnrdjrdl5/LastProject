@@ -255,37 +255,7 @@ ModelImporter:
     optimizeGameObjects: 0
     motionNodeName: 
     rigImportErrors: 
-    rigImportWarnings: "Copied Avatar Rig Configuration mis-match. Bone length in
-      copied configuration does not match position in animation file:\n\t'Bip001 L
-      Thigh' : position error = 136.066849 mm\n\t'Bip001 L Calf' : position error
-      = 62.246403 mm\n\t'Bip001 L Foot' : position error = 11.181404 mm\n\t'Bip001
-      L Toe0' : position error = 46.940315 mm\n\t'Bip001 R Thigh' : position error
-      = 152.409134 mm\n\t'Bip001 R Calf' : position error = 62.246288 mm\n\t'Bip001
-      R Foot' : position error = 11.181288 mm\n\t'Bip001 R Toe0' : position error
-      = 46.940323 mm\n\t'Bip001 Spine1' : position error = 38.200611 mm\n\t'Bip001
-      Neck' : position error = 62.724979 mm\n\t'Bip001 Head' : position error = 39.025646
-      mm\n\t'Bip001 L Clavicle' : position error = 40.037941 mm\n\t'Bip001 L UpperArm'
-      : position error = 2.775937 mm\n\t'Bip001 L Forearm' : position error = 7.098272
-      mm\n\t'Bip001 L Hand' : position error = 43.154133 mm\n\t'Bip001 L Finger0'
-      : position error = 32.840855 mm\n\t'Bip001 L Finger01' : position error = 5.038321
-      mm\n\t'Bip001 L Finger02' : position error = 2.422480 mm\n\t'Bip001 L Finger1'
-      : position error = 42.720879 mm\n\t'Bip001 L Finger11' : position error = 18.342457
-      mm\n\t'Bip001 L Finger12' : position error = 6.499134 mm\n\t'Bip001 L Finger2'
-      : position error = 46.364849 mm\n\t'Bip001 L Finger21' : position error = 24.360783
-      mm\n\t'Bip001 L Finger22' : position error = 4.940399 mm\n\t'Bip001 L Finger3'
-      : position error = 42.466934 mm\n\t'Bip001 L Finger31' : position error = 21.300434
-      mm\n\t'Bip001 L Finger32' : position error = 1.422064 mm\n\t'Bip001 R Clavicle'
-      : position error = 35.845093 mm\n\t'Bip001 R UpperArm' : position error = 2.776005
-      mm\n\t'Bip001 R Forearm' : position error = 7.098407 mm\n\t'Bip001 R Hand' :
-      position error = 43.154442 mm\n\t'Bip001 R Finger0' : position error = 32.840836
-      mm\n\t'Bip001 R Finger01' : position error = 5.038442 mm\n\t'Bip001 R Finger02'
-      : position error = 2.422504 mm\n\t'Bip001 R Finger1' : position error = 42.720642
-      mm\n\t'Bip001 R Finger11' : position error = 18.342539 mm\n\t'Bip001 R Finger12'
-      : position error = 6.499418 mm\n\t'Bip001 R Finger2' : position error = 46.364704
-      mm\n\t'Bip001 R Finger21' : position error = 24.360901 mm\n\t'Bip001 R Finger22'
-      : position error = 4.940535 mm\n\t'Bip001 R Finger3' : position error = 42.466675
-      mm\n\t'Bip001 R Finger31' : position error = 21.300451 mm\n\t'Bip001 R Finger32'
-      : position error = 1.422086 mm\n"
+    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 

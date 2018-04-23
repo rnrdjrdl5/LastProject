@@ -105,9 +105,37 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
 
     }
 
+
+    public void HideCursor()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+
+        Cursor.visible = false;
+    }
+
+    public void ShowCursor()
+    {
+        Cursor.lockState = CursorLockMode.None;
+
+        Cursor.visible = true;
+    }
+
+    private bool isUseCursor = false;
+
     private void Update()
     {
-
+        if (gameObject.GetPhotonView().isMine)
+        {
+            if (!isUseCursor)
+            {
+                HideCursor();
+            }
+            else
+            {
+                ShowCursor();
+            }
+            
+        }
     }
 
     /**** 함수 ****/
@@ -163,7 +191,7 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
         Debug.Log("i : " + i);
 
         // 플레이어 삭제 처리
-        if (CurrentPlayer != null)
+        if (CurrentPlayer != null && photonView.isMine)
             PhotonNetwork.Destroy(CurrentPlayer);
 
 
@@ -181,12 +209,20 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
         uIManager.SetHelperUI(false);
         uIManager.SetHelpUI(false);
 
+        // 별, 레스토랑 정보 끄기
         uIManager.SetStarPanel(false);
         uIManager.RestStatePanel.SetActive(false);
         
-
+        // 쥐 남은 수 끄기
         uIManager.MouseImagePanel.SetActive(false);
 
+        // 스코어창 끄기
+        uIManager.ScorePanel.SetActive(false);
+
+        // 스코어창 끄고 갱신 불가
+        uIManager.OffScorePanel();
+        // 스코어 창 누르지 못하도록 변경.
+        uIManager.IsUseScoreUI = false;
 
         // 플레이어 Result UI 설정
         uIManager.SetTimeWatch(true);
@@ -322,6 +358,21 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
             return false;
     }
 
+    // 다음 라운드로 넘어 갈 수 있는지 파악한다. 
+    bool CheckNextRound()
+    {
+
+        // Custom 값을 보고 판단.
+        for (int i = 0; i < PhotonNetwork.playerList.Length; i++)
+        {
+            if ((bool)PhotonNetwork.playerList[i].CustomProperties["NextReady"] == false)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
 
 
     /**** 코루틴 ****/
@@ -501,6 +552,8 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
         uIManager.MouseImagePanel.SetActive(true);
         uIManager.RestStatePanel.SetActive(true);
         uIManager.StarPanel.SetActive(true);
+
+
         // 2. UI에서 실시간으로 갱신해주도록 설정
 
 
@@ -515,6 +568,10 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
         // 타이머 시작
         IEnumCoro = Timer();
         StartCoroutine(IEnumCoro);
+
+        // 노래 재생 시작
+        SoundManager.GetInstance().PlayBackGround();
+
     }
 
     // UI삭제하고 일정 시간 대기하는 트리거 사용
@@ -535,7 +592,7 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
         StartCoroutine(IEnumCoro);
     }
 
-    // 시간 지나면 Result 꺼버리고 일정시간 대기하는 트리거 사용
+    // 시간 지나면 Result 꺼버리고, 스코어창 보여주고. next활성화 시켜서 레디 확인하기.
     [PunRPC]
     void RPCActionCheckFinishNext()
     {
@@ -547,11 +604,16 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
         // 스코어 창 보여주기
         ToShowScoreUI();
 
-        TimerValue = NextRoundTimer;
+        // 추가로 next 버튼과 Ready 이미지 보여주기.
+        uIManager.NextGamePanel.SetActive(true);
+        uIManager.ReadyBGPanel.SetActive(true);
 
-        condition = new Condition(CheckTimeWait);
-        conditionLoop = new ConditionLoop(DecreateTimeAction);
+        condition = new Condition(CheckNextRound);
+        conditionLoop = new ConditionLoop(NoAction);
         rPCActionCondition = new RPCActionCondition(NoRPCActonCondition);
+
+
+        isUseCursor = true;
 
         IEnumCoro = CoroTrigger(condition, conditionLoop, rPCActionCondition, "RPCNextRound");
         StartCoroutine(IEnumCoro);

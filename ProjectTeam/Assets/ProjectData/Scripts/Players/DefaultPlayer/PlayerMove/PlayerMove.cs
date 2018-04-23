@@ -4,6 +4,7 @@ using UnityEngine;
 
 public partial class PlayerMove : Photon.PunBehaviour
 {
+
     private void Awake()
     {
         SetAwake();
@@ -23,11 +24,12 @@ public partial class PlayerMove : Photon.PunBehaviour
     {
 
 
-        
+        CheckResetCanKey();
 
         PlayerMoveAnimation();
 
         PlayerTransform();
+
 
 
         if (UpMove)

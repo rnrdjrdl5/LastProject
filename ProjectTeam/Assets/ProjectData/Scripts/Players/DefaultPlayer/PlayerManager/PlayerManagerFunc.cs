@@ -10,20 +10,6 @@ public partial class PlayerManager
 
 
 
-    void HideCursor()
-    {
-        // Mouse Lock
-        if (gameObject.GetPhotonView().isMine)
-        {
-
-            Cursor.lockState = CursorLockMode.Locked;
-
-            // Cursor visible
-
-            Cursor.visible = false;
-        }
-    }
-
     void SetFallowCamera()
     {
         if (gameObject.GetComponent<PhotonView>().isMine)

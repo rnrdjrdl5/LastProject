@@ -8,7 +8,7 @@ public class AttackAnimator : StateMachineBehaviour {
 	override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
         animator.SetBool("isAttack", false);
 
-        animator.gameObject.GetComponent<PlayerState>().SetPlayerCondition(PlayerState.ConditionEnum.ATTACK);
+        //animator.gameObject.GetComponent<PlayerState>().SetPlayerCondition(PlayerState.ConditionEnum.ATTACK);
         
 	}
 
@@ -25,7 +25,8 @@ public class AttackAnimator : StateMachineBehaviour {
         PlayerState ps = animator.gameObject.GetComponent<PlayerState>();
 
         // 해당 스테이트에서 나갈 때 공격 조건이 꺼져있으면 킵니다.
-        if (NCA.GetisCanAttack() == false && ps.GetPlayerCondition() != PlayerState.ConditionEnum.ATTACK)
+        if (NCA.GetisCanAttack() == false)
+            //ps.GetPlayerCondition() != PlayerState.ConditionEnum.ATTACK)
         {
             Debug.Log("sdf");
             NCA.SetisCanAttack(true);

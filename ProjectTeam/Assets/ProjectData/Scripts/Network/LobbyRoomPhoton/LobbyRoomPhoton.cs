@@ -163,12 +163,18 @@ public class LobbyRoomPhoton : Photon.PunBehaviour {
             { "CatScore",0 }
         };
 
+        ExitGames.Client.Photon.Hashtable NextReady = new ExitGames.Client.Photon.Hashtable
+        {
+            { "NextReady",false }
+        };
+
         PhotonNetwork.player.SetCustomProperties(PlayerSceneState);
         PhotonNetwork.player.SetCustomProperties(PlayerLoadingState);
         PhotonNetwork.player.SetCustomProperties(PlayerType);
         PhotonNetwork.player.SetCustomProperties(UseBoss);
         PhotonNetwork.player.SetCustomProperties(MouseScore);
         PhotonNetwork.player.SetCustomProperties(CatScore);
+        PhotonNetwork.player.SetCustomProperties(NextReady);
 
 
     }

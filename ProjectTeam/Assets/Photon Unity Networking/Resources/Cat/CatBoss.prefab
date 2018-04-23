@@ -2716,7 +2716,7 @@ MonoBehaviour:
   RotationSpeed: 100
   SpeedMulti: 1.5
   AniSpeedUp: 3
-  JumpSpeed: 20
+  JumpSpeed: 10
   gravity: 20
 --- !u!114 &114593309359467792
 MonoBehaviour:
@@ -3775,4 +3775,4 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.7, z: 0}
+  m_Center: {x: 0, y: 0.68, z: 0}

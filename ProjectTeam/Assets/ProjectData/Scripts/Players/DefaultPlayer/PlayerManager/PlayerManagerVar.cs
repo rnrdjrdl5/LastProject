@@ -8,4 +8,8 @@ public partial class PlayerManager
 
 
     private PlayerCamera playerCamera;
+
+
+    public bool IsUseHideCursor { get; set; }
+
 }

@@ -69,8 +69,9 @@ public class InteractionAnimator : StateMachineBehaviour {
 
         }
 
+        // 애니메이션 exit 사용 시 사용하기.
         // 상호작용 상태 받기
-        InitinteractiveState(animator);
+        //InitinteractiveState(animator);
 
 
 
@@ -95,7 +96,7 @@ public class InteractionAnimator : StateMachineBehaviour {
 	// OnStateExit is called when a transition ends and the state machine finishes evaluating this state
 	override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
 
-        if (photonView.isMine)
+       /* if (photonView.isMine)
         {
 
             // 애니메이션 타입이고
@@ -112,7 +113,13 @@ public class InteractionAnimator : StateMachineBehaviour {
 
             timeBar.DestroyObjects();
 
+            
+            // 1. 카메라를 따라가는 상태로 변경.
             playerCamera.SetCameraModeType(PlayerCamera.EnumCameraMode.FOLLOW);
+
+            // 2. 플레이어의 회전값을 free값으로 변경
+            animator.GetComponent<PlayerMove>().SetPlayerRotateEuler(-playerCamera.GetCameraRadX());
+            
 
 
 
@@ -122,7 +129,7 @@ public class InteractionAnimator : StateMachineBehaviour {
             //interactiveState.SetisCanFirstCheck(true);
             // ** 마스터에서 처리하기에는 애니메이션 동기화 문제가 있어서 안됨
             interactiveState.CallOnCanFirstCheck();
-        }
+        }*/
 
     }
 

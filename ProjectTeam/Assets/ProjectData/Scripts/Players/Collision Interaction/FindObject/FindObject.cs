@@ -287,7 +287,7 @@ public class FindObject : MonoBehaviour {
 
 
                     //시간에 비례해서 색상을 정합니다.
-                    ChooseMaterialColor(Interaction);
+                  //  ChooseMaterialColor(Interaction);
 
 
                     // 물체를 발견했을 때, 이미 지정했던 오브젝트가 있는 경우 ,
@@ -297,7 +297,7 @@ public class FindObject : MonoBehaviour {
                     {
 
                         // 기존 오브젝트 색을 돌린다.
-                        ResetMaterialColor(ObjectTarget);
+                      //  ResetMaterialColor(ObjectTarget);
 
                     }
 
@@ -321,7 +321,7 @@ public class FindObject : MonoBehaviour {
                 if (Interaction == null)
                 {
                     // 오브젝트 색상을 원래대로 돌려준다.
-                    ResetMaterialColor(ObjectTarget);
+              //      ResetMaterialColor(ObjectTarget);
 
 
                     // 오브젝트를 삭제하자. 
@@ -363,7 +363,7 @@ public class FindObject : MonoBehaviour {
     public void BackDefault()
     {
         // 색상을 원래대로 돌립니다.
-        ResetMaterialColor(ObjectTarget);
+     //   ResetMaterialColor(ObjectTarget);
 
         // 근접 전용 ui를 파괴합니다.
         DestroyMeleeObject();

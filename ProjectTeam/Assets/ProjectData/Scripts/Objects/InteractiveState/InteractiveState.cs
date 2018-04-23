@@ -8,7 +8,7 @@ public class InteractiveState : Photon.MonoBehaviour , IPunObservable {
 
     // 물체의 타입
     public            enum           EnumInteractiveObject
-    { TABLE  = 1 , MIKE , };
+    { TABLE  = 1 , MIKE , DRAWE , POT};
 
     // 물체의 액션 적용 방식
     public            enum           EnumAction

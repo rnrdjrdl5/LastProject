@@ -12,6 +12,9 @@ public partial class PlayerMove
         animator = gameObject.GetComponent<Animator>();
         ps = gameObject.GetComponent<PlayerState>();
         PlayerCamera = GameObject.Find("PlayerCamera").GetComponent<PlayerCamera>();
+        newInteractionSkill = GetComponent<NewInteractionSkill>();
+        findObject = GetComponent<FindObject>();
+        timeBar = GetComponent<TimeBar>();
 
         if (PlayerCamera == null)
         {
@@ -38,7 +41,6 @@ public partial class PlayerMove
                (ps.EqualPlayerCondition(PlayerState.ConditionEnum.RUN) ||
                 ps.EqualPlayerCondition(PlayerState.ConditionEnum.IDLE) ||
                 ps.EqualPlayerCondition(PlayerState.ConditionEnum.SPEEDRUN) ||
-                ps.EqualPlayerCondition(PlayerState.ConditionEnum.ATTACK) ||
                 ps.EqualPlayerCondition(PlayerState.ConditionEnum.INTERACTION)))
             {
 
@@ -76,6 +78,8 @@ public partial class PlayerMove
                         // 플레이어 다시 이동으로 변경
                         animator.SetInteger("InteractionType", 0);
 
+                        ResetSkill();
+
 
                     }
 
@@ -101,14 +105,28 @@ public partial class PlayerMove
             }
 
 
-
+            // 점프했으면
             if ( (ps.EqualPlayerCondition(PlayerState.ConditionEnum.RUN) ||
                  ps.EqualPlayerCondition(PlayerState.ConditionEnum.IDLE) ||
                  ps.EqualPlayerCondition(PlayerState.ConditionEnum.SPEEDRUN)) &&
-                 Input.GetKeyDown(KeyCode.Space))
+                 Input.GetKeyDown(KeyCode.Space) && 
+                 characterController.isGrounded)
             {
+                // 1. 점프 준비자세 시작
 
-                MoveDir.y = JumpSpeed;
+                animator.SetInteger("JumpType", 1);
+
+                // 이동정보 저장, 애니메이션 이벤트에서 다시 대입해주기 
+                JumpMoveDir = MoveDir;
+
+                MoveDir.y += JumpSpeed;
+                // 이동정보 초기화
+                /*HSpeed = 0;
+                VSpeed = 0;
+                MoveDir.z = 0;
+                MoveDir.x = 0;*/
+
+
             }
 
             else
@@ -116,10 +134,55 @@ public partial class PlayerMove
                 MoveDir.y -= gravity * Time.deltaTime;
             }
 
-
             // 캐릭터 움직임.
-            Debug.Log("MoveDir :" + MoveDir);
             characterController.Move(MoveDir * Time.deltaTime);
+
+
+
+
+            if (!characterController.isGrounded &&
+                  MoveDir.y < 0 &&
+                !(ps.EqualPlayerCondition(PlayerState.ConditionEnum.JUMP)))
+            {
+                Debug.Log("공중임.");
+                animator.SetInteger("JumpType", 2);
+            }
+
+
+
+
+              // 공중에 떠있으면 , 착륙중일때.
+              // 1. 높은 건물에서 떨어질 때
+              // 2. 사용자가 점프해서 떨어질 때
+              if (!characterController.isGrounded &&
+                  MoveDir.y < 0 )
+                 // (animator.GetInteger("JumpType") == 0 || isJumping == true))
+                  
+              {
+                  animator.SetInteger("JumpType", 2);
+                    isJumping = false;
+              }
+
+
+              // 지상일때, 착지 애니메이션 사용중일때 
+              else if (characterController.isGrounded &&
+                  animator.GetInteger("JumpType") == 2 )
+              {
+                  animator.SetInteger("JumpType", 0);
+                Debug.Log("착지.");
+
+                // 이동정보 초기화
+                /*  MoveDir.z = 0;
+                  MoveDir.x = 0;
+                  HSpeed = 0;
+                  VSpeed = 0;*/
+              }
+
+
+
+
+
+
 
 
 
@@ -132,6 +195,9 @@ public partial class PlayerMove
         if (gameObject.GetComponent<PhotonView>().isMine)
         {
 
+            // 키를 누를 수 있는 상태라면.
+            if (isCanKey)
+            {
 
                 //0. 입력에 따라서 Speed를 결정합니다.
 
@@ -175,7 +241,8 @@ public partial class PlayerMove
 
                 animator.SetFloat("DirectionX", HSpeed);
                 animator.SetFloat("DirectionY", VSpeed);
-           
+
+            }
         }
     }
 
@@ -195,6 +262,8 @@ public partial class PlayerMove
 
             // 캐릭터 회전값 받기
             PlayerRotateEuler += Input.GetAxis("Mouse X") * RotationSpeed * Time.deltaTime;
+            if (PlayerRotateEuler >= 360)
+                PlayerRotateEuler -= 360;
 
             // 전력질주 상태
             if (ps.GetPlayerCondition() == PlayerState.ConditionEnum.SPEEDRUN)
@@ -431,5 +500,66 @@ public partial class PlayerMove
         }
 
         return Speed;
+    }
+
+    public void JumpEvent()
+    {
+        MoveDir.x = JumpMoveDir.x;
+        MoveDir.z = JumpMoveDir.z;
+        MoveDir.y += JumpSpeed;
+        isJumping = true;
+    }
+
+    private void CheckResetCanKey()
+    {
+
+        // 입력 받을 수 없는상태
+        // + 키입력이 없는 상태
+        if ((Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0) &&
+            isCanKey ==false)
+        {
+            isCanKey = true;
+        }
+
+    }
+    
+    // 애니메이션 스테이트 exit역할을 하던 것. 
+    // exit 는 늦기 때문에 직접적으로 호출
+    public void ResetSkill()
+    {
+        if (photonView.isMine)
+        {
+
+            // 애니메이션 타입이고
+            // 액션이 사용되지 않은 상태라면
+            if (newInteractionSkill.GetinteractiveState().ActionType == InteractiveState.EnumAction.ANIMATION &&
+                newInteractionSkill.GetinteractiveState().IsUseAction == false)
+            {
+                newInteractionSkill.GetinteractiveState().CallRPCCancelActionAnimation();
+            }
+
+
+            // FIndObject의 활성화 탐지 시작
+            findObject.SetisUseFindObject(true);
+
+            timeBar.DestroyObjects();
+
+
+            // 1. 카메라를 따라가는 상태로 변경.
+            PlayerCamera.SetCameraModeType(PlayerCamera.EnumCameraMode.FOLLOW);
+
+            // 2. 플레이어의 회전값을 free값으로 변경
+            animator.GetComponent<PlayerMove>().SetPlayerRotateEuler(-PlayerCamera.GetCameraRadX());
+
+
+
+
+            Debug.Log("해제해제해제 , + " + newInteractionSkill.GetinteractiveState().photonView.viewID);
+
+            // 모든 클라이언트에게 RPC전송 하는 함수 콜
+            //interactiveState.SetisCanFirstCheck(true);
+            // ** 마스터에서 처리하기에는 애니메이션 동기화 문제가 있어서 안됨
+            newInteractionSkill.GetinteractiveState().CallOnCanFirstCheck();
+        }
     }
 }

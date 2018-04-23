@@ -350,6 +350,8 @@ public class BaseCollision : Photon.PunBehaviour{
         effect.transform.position = transform.position + Vector3.up * 0.5f;
 
         playerHealth.FlushEffect();
+
+        SoundManager.GetInstance().PlayHitSound();
     }
 
 

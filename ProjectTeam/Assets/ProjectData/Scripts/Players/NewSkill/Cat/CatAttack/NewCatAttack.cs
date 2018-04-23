@@ -38,8 +38,9 @@ public class NewCatAttack : DefaultNewSkill{
     {
 
         if ((playerState.EqualPlayerCondition(PlayerState.ConditionEnum.IDLE) ||
-            playerState.EqualPlayerCondition(PlayerState.ConditionEnum.ATTACK) ||
-            playerState.EqualPlayerCondition(PlayerState.ConditionEnum.RUN))
+            //playerState.EqualPlayerCondition(PlayerState.ConditionEnum.ATTACK) ||
+            playerState.EqualPlayerCondition(PlayerState.ConditionEnum.RUN) || 
+            playerState.EqualPlayerCondition(PlayerState.ConditionEnum.SPEEDRUN))
             && (isCanAttack))
 
         {
@@ -74,6 +75,7 @@ public class NewCatAttack : DefaultNewSkill{
     void ResetCanAttack()
     {
         isCanAttack = true;
+
     }
 
     void CreateFryPanOption()
