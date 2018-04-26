@@ -6,6 +6,7 @@ public partial class PlayerState : MonoBehaviour {
 
     private void Awake()
     {
+        animator = GetComponent<Animator>();
     }
 
     private void Update()

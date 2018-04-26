@@ -30,7 +30,7 @@ public class SpeedRunAnimator : StateMachineBehaviour {
         animator.SetBool("isSpeedRun", false);
 
         // 3. 애니메이션 속도 복구시킴
-        newSpeedRun.GetplayerMove().AniSpeedUp = newSpeedRun.GetOriginalAniSpeed();
+        newSpeedRun.GetplayerMove().SetAniSpeedUp(newSpeedRun.GetOriginalAniSpeed());
 
         // 4. 지속시간 초기화
         newSpeedRun.SetCheckTime(0.0f);

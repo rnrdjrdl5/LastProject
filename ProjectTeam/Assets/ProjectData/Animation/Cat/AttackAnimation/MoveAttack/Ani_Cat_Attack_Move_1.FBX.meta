@@ -281,13 +281,13 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.47610122
-        functionName: ResetCanAttack
+      - time: 0.6695254
+        functionName: OnNextAttackAni
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: dc6b334417896624e86a5d9f04764117,
           type: 3}
         floatParameter: 0
-        intParameter: 0
+        intParameter: 2
         messageOptions: 0
       transformMask: []
       maskType: 3

@@ -7,7 +7,10 @@ public class PoolingManager : MonoBehaviour {
     public GameObject GetScoreImage;
 
     public enum EffctType
-    { ATTACK }
+    {
+        ATTACK ,
+        ATTACKLINE1 , ATTACKLINE2, ATTACKLINE3
+    }
 
     public GameObject CreateEffect(EffctType effectType)
     {
@@ -15,8 +18,18 @@ public class PoolingManager : MonoBehaviour {
         switch(effectType)
         {
             case EffctType.ATTACK:
-                effect = PopObject("w");
+                effect = PopObject("Cat_Effect_FryPan_Attack_01");
                  break;
+            case EffctType.ATTACKLINE1:
+                effect = PopObject("Hit_Line_Effect_01");
+                break;
+            case EffctType.ATTACKLINE2:
+                effect = PopObject("Hit_Line_Effect_02");
+                break;
+            case EffctType.ATTACKLINE3:
+                effect = PopObject("Hit_Line_Effect_03");
+                break;
+
         }
 
         return effect;
@@ -101,8 +114,11 @@ public class PoolingManager : MonoBehaviour {
         ObjectIDScript objectIDScript = go.GetComponent<ObjectIDScript>();
 
         // objectID가 존재하면 지급, 
-        if(objectIDScript != null)
+        if (objectIDScript != null)
+        {
+            // 고유 값 적용
             objectIDScript.SetID();
+        }
 
         
         
@@ -143,9 +159,14 @@ public class PoolingManager : MonoBehaviour {
 
             for (int j = 0; j < gos.Count; j++)
             {
-                if (gos[j].GetComponent<ObjectIDScript>().ID == ObjectID)
+                ObjectIDScript objectIDScript = gos[j].GetComponent<ObjectIDScript>();
+                if (objectIDScript != null)
                 {
-                    return gos[j].gameObject;
+
+                    if (objectIDScript.ID == ObjectID)
+                    {
+                        return gos[j].gameObject;
+                    }
                 }
             }
 

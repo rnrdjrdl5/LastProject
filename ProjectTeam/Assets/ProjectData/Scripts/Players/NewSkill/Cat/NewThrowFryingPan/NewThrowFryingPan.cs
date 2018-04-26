@@ -31,7 +31,8 @@ public class NewThrowFryingPan : DefaultNewSkill
         //이동중이거나 가만히 있을 때 가능합니다.
         if ((
             playerState.EqualPlayerCondition(PlayerState.ConditionEnum.IDLE) ||
-            playerState.EqualPlayerCondition(PlayerState.ConditionEnum.RUN)))
+             playerState.EqualPlayerCondition(PlayerState.ConditionEnum.RUN)) &&
+             playerState.GetisUseAttack() == false)
 
         {
             return true;
@@ -102,7 +103,7 @@ public class NewThrowFryingPan : DefaultNewSkill
         //  torqueProjectileState.SetData(CharmBullet, gameObject,ID);
 
         // 발사체에 디버프를 넣습니다.
-        // AddDebuffComponent(CharmBullet);
+         AddDebuffComponent(FryPan);
     }
 
 }

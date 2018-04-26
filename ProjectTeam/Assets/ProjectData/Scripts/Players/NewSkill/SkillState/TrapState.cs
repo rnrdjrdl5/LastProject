@@ -26,6 +26,9 @@ public class TrapState{
     [Tooltip(" - 쥐덪 자연  소멸 시간입니다.")]
     public float DestroyTime = 3.0f;
 
+    [Tooltip(" - 쥐덫 최대 설치 개수 ")]
+    public int MaxTrap = 3;
+
     // 데이터를 설정합니다.
     public void SetData(GameObject CollisionGameObject, GameObject PlayerObject , int ID)
     {

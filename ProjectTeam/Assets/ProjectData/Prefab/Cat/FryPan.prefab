@@ -29,6 +29,7 @@ GameObject:
   - component: {fileID: 114384998978380864}
   - component: {fileID: 135630887343250760}
   - component: {fileID: 114288801719067242}
+  - component: {fileID: 114324158850119974}
   m_Layer: 0
   m_Name: FryPan
   m_TagString: CheckCollision
@@ -130,6 +131,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collisionObjectTime: 0
+  NowTimer: 0
 --- !u!114 &114288801719067242
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -141,6 +143,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4676b9fb688cebf4e9dae13f10c7bbec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ID: 0
+--- !u!114 &114324158850119974
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1592117993979618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerId: 0
+  group: 0
+  OwnerShipWasTransfered: 0
+  prefixBackup: -1
+  synchronization: 0
+  onSerializeTransformOption: 3
+  onSerializeRigidBodyOption: 2
+  ownershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  ObservedComponentsFoldoutOpen: 1
+  viewIdField: 0
+  instantiationId: -1
+  currentMasterID: -1
+  isRuntimeInstantiated: 0
 --- !u!114 &114384998978380864
 MonoBehaviour:
   m_ObjectHideFlags: 1

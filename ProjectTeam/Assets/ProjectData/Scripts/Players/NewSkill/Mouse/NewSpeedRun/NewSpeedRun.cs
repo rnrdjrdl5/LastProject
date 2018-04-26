@@ -64,7 +64,8 @@ public class NewSpeedRun : DefaultNewSkill {
     public override bool CheckState()
     {
         //이동중이거나 가만히 있을 때 가능합니다.
-        if (playerState.EqualPlayerCondition(PlayerState.ConditionEnum.RUN))
+        if (playerState.EqualPlayerCondition(PlayerState.ConditionEnum.RUN) &&
+            playerState.GetisUseAttack() == false)
 
         {
             return true;
@@ -85,10 +86,10 @@ public class NewSpeedRun : DefaultNewSkill {
         playerMove.PlayerBackSpeed = PlayerRunSpeed;
 
         // 3. 플레이어 애니메이션 전환속도 저장
-        OriginalAniSpeed = playerMove.AniSpeedUp;
+        OriginalAniSpeed = playerMove.GetAniSpeedUp();
 
         // 4. 플레이어 이동속도 갱신 (즉발)
-        playerMove.AniSpeedUp = 20.0f;
+        playerMove.SetAniSpeedUp(20.0f);
 
 
         Debug.Log("스킬사용");
@@ -106,7 +107,7 @@ public class NewSpeedRun : DefaultNewSkill {
         // 
         if ((playerState.EqualPlayerCondition(PlayerState.ConditionEnum.RUN) ||
             playerState.EqualPlayerCondition(PlayerState.ConditionEnum.SPEEDRUN)) &&
-            (CheckTime < 0.05f))
+            (CheckTime < 0.05f) && playerState.GetisUseAttack() == false)
         {
             return true;
         }
@@ -143,7 +144,7 @@ public class NewSpeedRun : DefaultNewSkill {
         animator.SetBool("isSpeedRun", false);
 
         // 3. 애니메이션 속도 복구시킴
-        playerMove.AniSpeedUp = OriginalAniSpeed;
+        playerMove.SetAniSpeedUp(OriginalAniSpeed);
 
         // 4. 지속시간 초기화
         CheckTime = 0.0f;

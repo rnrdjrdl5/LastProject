@@ -22,7 +22,7 @@ public class PlayerDefaultDebuff : MonoBehaviour {
 
 
     // Use this for initialization
-    void Start () {
+    virtual protected void Start () {
         NowDebuffTime = 0.0f;
         
     }

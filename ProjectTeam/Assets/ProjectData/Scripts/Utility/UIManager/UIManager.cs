@@ -600,7 +600,6 @@ public class UIManager : Photon.PunBehaviour {
         }
         else
         {
-            Debug.Log("조건충족안됨");
             star = 0;
         }
 

@@ -273,7 +273,7 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.6648334
+      - time: 0.5946736
         functionName: DeleteFryPanOption
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: dc6b334417896624e86a5d9f04764117,
@@ -281,13 +281,13 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.59643644
-        functionName: ResetCanAttack
+      - time: 0.65173596
+        functionName: OnNextAttackAni
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: dc6b334417896624e86a5d9f04764117,
           type: 3}
         floatParameter: 0
-        intParameter: 0
+        intParameter: 1
         messageOptions: 0
       transformMask: []
       maskType: 3

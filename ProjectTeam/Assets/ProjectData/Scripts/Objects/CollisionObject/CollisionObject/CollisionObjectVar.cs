@@ -40,7 +40,7 @@ public partial class CollisionObject
     public void SetUsePlayer(string UP) { UsePlayer = UP; }
     public string GetUsePlayer() { return UsePlayer; }
 
-    public int PlayerIOwnerID { get; set; }
+    public int PlayerIOwnerID { get; set; }     // 공격한 사람의 클라이언트에서 충돌판정을 하기 위해서 사용   + push , pop 사용 시 ID값을 사용함.
 
     public void ResetObject()
     {
@@ -51,4 +51,5 @@ public partial class CollisionObject
         PlayerIOwnerID = 0;
 
     }
+
 }

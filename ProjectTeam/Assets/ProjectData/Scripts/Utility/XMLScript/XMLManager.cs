@@ -19,7 +19,7 @@ public class XMLManager {
         xmlDocument.AppendChild(playerDataElement);
 
 
-        
+        //인스펙터 list를 기준으로.
         foreach (string name in playerNames)
         {
 

@@ -64,7 +64,7 @@ public class DefaultNewSkill : MonoBehaviour {
 
 
 
-    protected void Update()
+    virtual protected void Update()
     {
         defaultCdtAct.ConditionAction();
 
@@ -142,6 +142,12 @@ public class DefaultNewSkill : MonoBehaviour {
             {
                 CollisionNotMoveDebuff CNMD = CollisionObject.AddComponent<CollisionNotMoveDebuff>();
                 CNMD.SetMaxTime(PlayerSkillDebuffs[i].GetMaxTime());
+            }
+
+            else if (PlayerSkillDebuffs[i].EqualSkillDebuffType(DefaultPlayerSkillDebuff.EnumSkillDebuff.GROGGY))
+            {
+                CollisionGroggyDebuff CGD = CollisionObject.AddComponent<CollisionGroggyDebuff>();
+                CGD.SetMaxTime(PlayerSkillDebuffs[i].GetMaxTime());
             }
 
                 

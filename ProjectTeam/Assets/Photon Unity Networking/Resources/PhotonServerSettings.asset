@@ -136,4 +136,7 @@ MonoBehaviour:
   - RPCActionAnimation
   - RPCAnimation
   - RPCCancelActionAnimation
+  - RPCGroggyDebuff
+  - FallDamage
+  - RPCEraseTrap
   DisableAutoOpenWizard: 1

@@ -8,6 +8,8 @@ public partial class PlayerMove
     // 초기 설정
     void SetAwake()
     {
+
+
         characterController = gameObject.GetComponent<CharacterController>();
         animator = gameObject.GetComponent<Animator>();
         ps = gameObject.GetComponent<PlayerState>();
@@ -16,6 +18,7 @@ public partial class PlayerMove
         newInteractionSkill = GetComponent<NewInteractionSkill>();
         findObject = GetComponent<FindObject>();
         timeBar = GetComponent<TimeBar>();
+        playerHealth = GetComponent<PlayerHealth>();
 
         if (playerCamera == null)
         {
@@ -28,6 +31,8 @@ public partial class PlayerMove
         PhotonAnimatorView pav = gameObject.GetComponent<PhotonAnimatorView>();
         pav.SetParameterSynchronized("DirectionX", PhotonAnimatorView.ParameterType.Float, PhotonAnimatorView.SynchronizeType.Continuous);
         pav.SetParameterSynchronized("DirectionY", PhotonAnimatorView.ParameterType.Float, PhotonAnimatorView.SynchronizeType.Continuous);
+        pav.SetParameterSynchronized("JumpType", PhotonAnimatorView.ParameterType.Int, PhotonAnimatorView.SynchronizeType.Discrete);
+        pav.SetParameterSynchronized("StunOnOff", PhotonAnimatorView.ParameterType.Bool, PhotonAnimatorView.SynchronizeType.Discrete);
     }
 
 
@@ -85,7 +90,7 @@ public partial class PlayerMove
                     }
 
                     // 벡터를 로컬 좌표계 기준에서 월드 좌표계 기준으로 변환한다.
-                    MoveDir = transform.TransformDirection(MoveDir);
+                    MoveDir = transform.TransformDirection(MoveDir);     
 
                     // 앞으로 이동 시
                     if (Input.GetAxisRaw("Vertical") >= 0 && VSpeed >= 0)
@@ -101,9 +106,15 @@ public partial class PlayerMove
 
                 }
 
-                // 캐릭터 조건부 x방향 회전
-                SetPlayerRotateX();
+                
             }
+
+
+            // 캐릭터 조건부 x방향 회전
+            if(!ps.EqualPlayerCondition(PlayerState.ConditionEnum.STUN) &&
+                !ps.EqualPlayerCondition(PlayerState.ConditionEnum.GROGGY))
+                SetPlayerRotateX();
+
 
 
             // 점프했으면
@@ -115,21 +126,28 @@ public partial class PlayerMove
             {
                 // 1. 점프 준비자세 시작
 
+                // - 원래 이동속도로 돌립니다.
+                if (ps.EqualPlayerCondition(PlayerState.ConditionEnum.SPEEDRUN))
+                {
+                    MoveDir /= PlayerSpeed;
+
+                    PlayerSpeed = OriginalPlayerSpeed;
+
+                    MoveDir *= PlayerSpeed;
+
+                    Debug.Log(OriginalPlayerSpeed);
+                }
+
+                // - 점프 시작
                 animator.SetInteger("JumpType", 1);
 
-                // 이동정보 저장, 애니메이션 이벤트에서 다시 대입해주기 
-                JumpMoveDir = MoveDir;
-
+                // - 점프 추가
                 MoveDir.y += JumpSpeed;
-                // 이동정보 초기화
-                /*HSpeed = 0;
-                VSpeed = 0;
-                MoveDir.z = 0;
-                MoveDir.x = 0;*/
 
-
+                
             }
 
+            // 점프 아니면 중력.
             else
             {
                 MoveDir.y -= gravity * Time.deltaTime;
@@ -140,28 +158,20 @@ public partial class PlayerMove
 
 
 
-
+            // 공중에 떠있으면 , 착륙중일때.
+            // 1. 높은 건물에서 떨어질 때
+            // 2. 사용자가 점프해서 떨어질 때
             if (!characterController.isGrounded &&
-                  MoveDir.y < 0 &&
-                !(ps.EqualPlayerCondition(PlayerState.ConditionEnum.JUMP)))
-            {
-                Debug.Log("공중임.");
-                animator.SetInteger("JumpType", 2);
-            }
-
-
-
-
-              // 공중에 떠있으면 , 착륙중일때.
-              // 1. 높은 건물에서 떨어질 때
-              // 2. 사용자가 점프해서 떨어질 때
-              if (!characterController.isGrounded &&
-                  MoveDir.y < 0 )
-                 // (animator.GetInteger("JumpType") == 0 || isJumping == true))
-                  
+                MoveDir.y < 0 &&
+                animator.GetInteger("JumpType") != 2)
               {
                   animator.SetInteger("JumpType", 2);
-                    isJumping = false;
+
+                // 플레이어 최대 위치등록
+                PreFallPosition = transform.position.y;
+
+                Debug.Log("높이 갱신 : " + PreFallPosition);
+                  
               }
 
 
@@ -169,14 +179,27 @@ public partial class PlayerMove
               else if (characterController.isGrounded &&
                   animator.GetInteger("JumpType") == 2 )
               {
+                
                   animator.SetInteger("JumpType", 0);
-                Debug.Log("착지.");
 
-                // 이동정보 초기화
-                /*  MoveDir.z = 0;
-                  MoveDir.x = 0;
-                  HSpeed = 0;
-                  VSpeed = 0;*/
+                //착지 시 높이 판단.
+                // 1. 쥐인경우
+                if ((string)PhotonNetwork.player.CustomProperties["PlayerType"] == "Mouse")
+                {
+                    Debug.Log("착륙높이 :" + transform.position.y);
+                    if (PreFallPosition - transform.position.y >= AtLeastFallPosition)
+                    {
+                        // 데미지주기
+                        playerHealth.CallFallDamage(FallDamage);
+
+                        // 스턴 주기
+                        ps.AddDebuffState(DefaultPlayerSkillDebuff.EnumSkillDebuff.STUN,FallStunTime);
+
+                        // 속도값 없애기
+                        MoveDir = Vector3.zero;
+                    }
+                }
+              
               }
 
 
@@ -253,7 +276,6 @@ public partial class PlayerMove
     // 플레이어가 마우스 x축으로 이동하는지에 대한 여부.
     void SetPlayerRotateX()
     {
-       
         // 시점 자유 여부
         if (playerCamera.GetCameraModeType() != PlayerCamera.EnumCameraMode.FREE)
         {
@@ -503,13 +525,6 @@ public partial class PlayerMove
         return Speed;
     }
 
-    public void JumpEvent()
-    {
-        MoveDir.x = JumpMoveDir.x;
-        MoveDir.z = JumpMoveDir.z;
-        MoveDir.y += JumpSpeed;
-        isJumping = true;
-    }
 
     private void CheckResetCanKey()
     {
@@ -526,6 +541,7 @@ public partial class PlayerMove
     
     // 애니메이션 스테이트 exit역할을 하던 것. 
     // exit 는 늦기 때문에 직접적으로 호출
+    // interaction에서.
     public void ResetSkill()
     {
         if (photonView.isMine)
@@ -563,4 +579,11 @@ public partial class PlayerMove
             newInteractionSkill.GetinteractiveState().CallOnCanFirstCheck();
         }
     }
+
+    public void ResetMoveSpeed()
+    {
+        MoveDir = new Vector3 { x = 0, y = MoveDir.y, z = 0 };
+
+    }
+
 }

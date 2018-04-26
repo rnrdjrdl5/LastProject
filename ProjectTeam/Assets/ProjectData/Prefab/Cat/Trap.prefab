@@ -27,6 +27,7 @@ GameObject:
   - component: {fileID: 114880273577508850}
   - component: {fileID: 114500572509967492}
   - component: {fileID: 114958093004837950}
+  - component: {fileID: 114260867036066280}
   m_Layer: 0
   m_Name: Trap
   m_TagString: CheckCollision
@@ -158,6 +159,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CollisionReCheckTime: 0
   UsePlayer: 
+--- !u!114 &114260867036066280
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1020411345617866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4676b9fb688cebf4e9dae13f10c7bbec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ID: 0
 --- !u!114 &114500572509967492
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -170,6 +183,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collisionObjectTime: 0
+  NowTimer: 0
 --- !u!114 &114880273577508850
 MonoBehaviour:
   m_ObjectHideFlags: 1

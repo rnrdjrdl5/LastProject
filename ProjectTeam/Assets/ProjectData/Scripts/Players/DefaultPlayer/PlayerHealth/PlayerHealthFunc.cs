@@ -34,10 +34,18 @@ public partial class PlayerHealth
     }
 
 
+    // 일반 데미지
     public void CallApplyDamage(float _damage)
     {
         photonView.RPC("ApplyDamage", PhotonTargets.All, _damage);
     }
+
+    // 낙하될 떄 데미지
+    public void CallFallDamage(float _damage)
+    {
+        photonView.RPC("FallDamage", PhotonTargets.All, _damage);
+    }
+
 
     public void PlayerDead()
     {
@@ -85,6 +93,20 @@ public partial class PlayerHealth
         }
 
     }
+
+    [PunRPC]
+    private void FallDamage(float _damage)
+    {
+        // 본인 인 경우에만
+        if (gameObject.GetComponent<PhotonView>().isMine)
+        {
+            if (NowHealth - _damage <= 0)
+                NowHealth = 1;
+            else
+                NowHealth -= _damage;
+        }
+    }
+
 
     public void FlushEffect()
     {

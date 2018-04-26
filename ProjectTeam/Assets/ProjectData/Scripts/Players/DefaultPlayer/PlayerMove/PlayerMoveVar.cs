@@ -26,13 +26,6 @@ public partial class PlayerMove
     [Header("카메라 회전속도")]
     public float RotationSpeed = 100.0f;             // 캐릭터 회전속도
 
-    [Header("애니메이션 배수")]
-    [Tooltip("다른 방향으로 이동 시 추가 배수값으로 이동 " )]
-    public float SpeedMulti;                    // 애니메이션 배수
-
-    [Header("애니메이션 재생 속도")]
-    public float AniSpeedUp;                    // 애니메이션 속도
-
     [Header("점프 값 ")]
     [Tooltip(" 점프 속도에 따른 수치.")]
     public float JumpSpeed;
@@ -40,6 +33,17 @@ public partial class PlayerMove
     [Header("중력값")]
     [Tooltip(" 중력수치")]
     public float gravity = 20;
+
+    [Header("데미지 받는 최소 높이")]
+    public float AtLeastFallPosition;
+
+    [Header("추락 데미지")]
+    public float FallDamage;
+
+    [Header("추락 스턴 지속시간")]
+    public float FallStunTime;
+
+
 
 
     /**** private ****/
@@ -51,21 +55,22 @@ public partial class PlayerMove
     private NewInteractionSkill newInteractionSkill;            // 상호작용
     private FindObject findObject;                      // 탐지
     private TimeBar timeBar;                // 타임바 , **** 나중에 반드시 바뀔것임.
+    private PlayerHealth playerHealth;
 
     private Vector3 MoveDir = Vector3.zero;             // 플레이어 이동속도
-    private Vector3 JumpMoveDir = Vector3.zero;             // 플레이어 이동속도,  점프 이전에 저장값. 점프후에 다시 돌려줌
 
-    private bool isJumping = false;             // 점프 사용 여부 , 떨어질 때 구분용도
     private bool isCanKey = true;               // 키 누를 수 있는지 여부
 
     private float OriginalPlayerSpeed = 0.0f;               // SpeedRun) 일반 이동속도 저장함
     private float HSpeed = 0;               // 플레이어 가로 속도
     private float VSpeed = 0;               // 플레이어 세로 속도
     private float PlayerRotateEuler = 0;                // 플레이어 오일러 회전값 , 플레이어 회전 담당
+    private float SpeedMulti = 1.5f;                  // 애니메이션 배수
+    private float AniSpeedUp = 3.0f;                     // 애니메이션 속도
 
-    
+    private float PreFallPosition;              // 플레이어 점프 이전 위치.
 
-    
+
 
 
     EnumSpeedLocation SpeedLocationTypeX = EnumSpeedLocation.NONE;              // 애니메이션 블렌딩
@@ -92,11 +97,12 @@ public partial class PlayerMove
     public Vector3 GetMoveDir() { return MoveDir; }
     public void SetMoveDir(Vector3 md) { md = MoveDir; }
 
-    public Vector3 GetJumpMoveDir() { return JumpMoveDir; }
-    public void SetJumpMoveDir(Vector3 md) { md = JumpMoveDir; }
 
     public bool GetisCanKey() { return isCanKey; }
     public void SetisCanKey(bool ck) { isCanKey = ck; }
+
+    public void SetAniSpeedUp(float ASU) { AniSpeedUp = ASU; }
+    public float GetAniSpeedUp() { return AniSpeedUp; }
 
 
 
