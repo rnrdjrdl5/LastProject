@@ -59,6 +59,7 @@ public class AttackState{
         co.SetUsePlayer("Player" + pv.viewID);
         co.SetCollisionReCheckTime(RecheckTime);
 
+
         if(pv.isMine)
             co.PlayerIOwnerID = ID;
 

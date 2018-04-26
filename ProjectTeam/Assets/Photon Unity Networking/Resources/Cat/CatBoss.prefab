@@ -2708,7 +2708,9 @@ MonoBehaviour:
     SkillKeyType: 0
   ManaCost: 0
   CtnManaCost: 0
-  PlayerSkillDebuffs: []
+  PlayerSkillDebuffs:
+  - SkillDebuffType: 1
+    MaxTime: 1
   attackState:
     AttackDamage: 10
     DamageNumber: 10000

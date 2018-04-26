@@ -22,7 +22,7 @@ using UnityEngine;
 
 public class BaseCollision : Photon.PunBehaviour{
 
-
+    private MathUtility mathUtility;
 
     
 
@@ -42,7 +42,8 @@ public class BaseCollision : Photon.PunBehaviour{
     CollisionGroggyDebuff collisionGroggyDebuff;
     private void Awake()
     {
-        
+        mathUtility = new MathUtility();
+
         // 플레이어 체력 스크립트 받기
         playerHealth = gameObject.GetComponent<PlayerHealth>();
 
@@ -225,10 +226,7 @@ public class BaseCollision : Photon.PunBehaviour{
 
             if(collisionDamagedDebuff != null)
             {
-                if (playerState.GetPlayerCondition() != PlayerState.ConditionEnum.STUN)
-                {
-                    photonView.RPC("RPCDamagedDebuff", PhotonTargets.All,collisionDamagedDebuff.GetMaxTime());
-                }
+                photonView.RPC("RPCDamagedDebuff", PhotonTargets.All, other.gameObject.transform.position);
             }
 
             if (collisionGroggyDebuff != null)
@@ -285,6 +283,11 @@ public class BaseCollision : Photon.PunBehaviour{
 
 
 
+
+
+
+    
+
     /************* RPC입니다. ****************/
 
 
@@ -334,25 +337,32 @@ public class BaseCollision : Photon.PunBehaviour{
 
     }
 
+
+    // 해당 디버프는 따로 시간을 지정할 수 없음. 애니메이션 시간을 지정해야함.
     [PunRPC]
-    private void RPCDamagedDebuff(float DD)
+    private void RPCDamagedDebuff(Vector3 otherPosition)
     {
+        MathUtility.EnumDirVector DirVectorType =  mathUtility.VectorDirType(gameObject, otherPosition);
 
-       /* // 피격 애니메이션 랜덤 설정
-
-        // 피격 디버프  받기
-        PlayerDamagedDebuff playerDamagedDebuff = gameObject.GetComponent<PlayerDamagedDebuff>();
-
-        // 피격 디버프 없으면 추가하기
-        if (playerDamagedDebuff == null)
+        if (DirVectorType == MathUtility.EnumDirVector.UP)
         {
-            playerDamagedDebuff = gameObject.AddComponent<PlayerDamagedDebuff>();
-            Debug.Log("피격 추가");
+            animator.SetInteger("DamagedType", 3);
         }
 
-        // 피격 속성 설정
-        playerDamagedDebuff.SetMaxDebuffTime(DD);
-        playerDamagedDebuff.SetNowDebuffTime(0);*/
+        else if (DirVectorType == MathUtility.EnumDirVector.DOWN)
+        {
+            animator.SetInteger("DamagedType", 4);
+        }
+
+        else if (DirVectorType == MathUtility.EnumDirVector.LEFT)
+        {
+            animator.SetInteger("DamagedType", 2);
+        }
+
+        else if (DirVectorType == MathUtility.EnumDirVector.RIGHT)
+        {
+            animator.SetInteger("DamagedType", 1);
+        }
     }
 
     [PunRPC]
