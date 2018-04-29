@@ -118,12 +118,15 @@ public class CatTrap : DefaultNewSkill
             else
             {
                 Debug.Log("리스트 크기 : " + Traps.Count);
-                //각각 오브젝트 풀에 다시 넣어줌.
+                Traps[0].GetComponent<Animator>().SetBool("isAction", false);
                 photonView.RPC("RPCEraseTrap", PhotonTargets.All, Traps[0].GetComponent<ObjectIDScript>().ID);
-                Traps.Remove(Traps[0]);
             }
         }
     }
+
+
+
+
 
     /**** RPC ****/
     [PunRPC]
@@ -160,9 +163,10 @@ public class CatTrap : DefaultNewSkill
     [PunRPC]
     void RPCEraseTrap(int ID)
     {
-        GameObject go = PoolingManager.GetInstance().FindObjectUseObjectID(ID);
 
-        go.GetComponent<CollisionObject>().ResetSkillOption();
+        GameObject go = PoolingManager.GetInstance().FindObjectUseObjectID(ID);
+        Debug.Log("go : " + go);
+
 
         PoolingManager.GetInstance().PushObject(go);
 

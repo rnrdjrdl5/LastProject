@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class NewSpeedRun : DefaultNewSkill {
 
+    
+
     /**** public ****/
 
     public float PlayerRunSpeed;                    // 플레이어 가속 속도
@@ -41,7 +43,6 @@ public class NewSpeedRun : DefaultNewSkill {
 
     protected override void Awake()
     {
-
         // 부모에서 설정
         base.Awake();
 
@@ -95,8 +96,22 @@ public class NewSpeedRun : DefaultNewSkill {
         Debug.Log("스킬사용");
         Debug.Log(" 이동속도 저장값 : " + PlayerOriginalSpeed);
 
-        // 3. 애니메이션 변경
+        // 5. 애니메이션 변경
         animator.SetBool("isSpeedRun", true);
+
+        // 6. 대쉬 이펙트 출력
+        GameObject Effect = null;
+        if (playerState.GetPlayerType() == "Mouse")
+        {
+            Effect = PoolingManager.GetInstance().CreateEffect(PoolingManager.EffctType.MOUSE_START_DASH);
+        }
+        else if(playerState.GetPlayerType() == "Cat")
+        {
+            Effect = PoolingManager.GetInstance().CreateEffect(PoolingManager.EffctType.MOUSE_START_DASH);
+        }
+        Effect.transform.position = transform.position;
+        Effect.transform.Rotate(Vector3.up, 90.0f);
+
     }
 
     public override bool CheckCtnState()

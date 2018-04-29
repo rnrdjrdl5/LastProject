@@ -142,4 +142,5 @@ MonoBehaviour:
   - RPCCreateStunEffect
   - RPCDeleteStunEffect
   - RPCAddDebuffState
+  - RPCSetAnimationMode
   DisableAutoOpenWizard: 1

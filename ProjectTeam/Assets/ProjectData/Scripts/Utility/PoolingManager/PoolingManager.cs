@@ -7,8 +7,12 @@ public class PoolingManager : MonoBehaviour {
     public enum EffctType
     {
         ATTACK ,
+
         ATTACKLINE1 , ATTACKLINE2, ATTACKLINE3,
-        BIGDUST_BIG, BIGDUST_SMALL, MIDDLEDUST_BIG , MIDDLEDUST_SMALL , SMALL_DUST_SMALL
+
+        BIGDUST_BIG, BIGDUST_SMALL, MIDDLEDUST_BIG , MIDDLEDUST_SMALL , SMALL_DUST_SMALL,
+
+        MOUSE_START_DASH
     }
 
     public GameObject CreateEffect(EffctType effectType)
@@ -45,6 +49,11 @@ public class PoolingManager : MonoBehaviour {
             case EffctType.SMALL_DUST_SMALL:
                 effect = PopObject("FX_YSK_Prefab_Dust_Small_Small");
                 break;
+            case EffctType.MOUSE_START_DASH:
+                effect = PopObject("FX_KDH_Prefab_MouseStartDash");
+                break;
+
+
 
 
         }

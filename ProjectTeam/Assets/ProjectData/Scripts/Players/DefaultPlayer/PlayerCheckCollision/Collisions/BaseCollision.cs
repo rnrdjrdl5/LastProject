@@ -35,11 +35,13 @@ public class BaseCollision : Photon.PunBehaviour{
     private CollisionObject collisionObject;            // 충돌 오브젝트 스크립트
     private CollisionObjectDamage collisionObjectDamage;
     private NumberOfCollisions numberOfCollisions;
+    private CollisionAnimator collisionAnimator;        // 애니메이션 여부를 결정지음.
 
     CollisionNotMoveDebuff collisionNotMoveDebuff;
     CollisionStunDebuff collisionStunDebuff;
     CollisionDamagedDebuff collisionDamagedDebuff;
     CollisionGroggyDebuff collisionGroggyDebuff;
+
     private void Awake()
     {
         mathUtility = new MathUtility();
@@ -82,6 +84,9 @@ public class BaseCollision : Photon.PunBehaviour{
 
                     // 최대 충돌횟수 체크
                     LeftNumberOfCollision(other);
+
+                    // 애니메이션 여부 판단해서 재생함.
+                    LeftAnimation(other);
                 }
             }
         }
@@ -122,6 +127,7 @@ public class BaseCollision : Photon.PunBehaviour{
 
         // 충돌 횟수 받아옴
         numberOfCollisions = other.gameObject.GetComponent<NumberOfCollisions>();
+        collisionAnimator = other.gameObject.GetComponent<CollisionAnimator>();
 
         // 충돌횟수 남았으면
         if (numberOfCollisions != null)
@@ -134,20 +140,17 @@ public class BaseCollision : Photon.PunBehaviour{
             if (collisionObject.PlayerIOwnerID == PhotonNetwork.player.ID)
             {
                 // 충돌횟수 끝나면 삭제
-                if (numberOfCollisions.GetNumberOfCollisions() == 0)
+                // 애니메이션 용 충돌이 아니라면.
+                if (numberOfCollisions.GetNumberOfCollisions() == 0 &&
+                    collisionAnimator == null)
                 {
 
-                    // 어느 게임오브젝트를 삭제할 것인지 판단해야 함.
+                        Debug.Log("ID : " + other.gameObject.GetComponent<ObjectIDScript>().ID);
 
-                    // 1. 해당 공격 오브젝트이름으로 오브젝트 풀링 오브젝트 탐지 
-
-                    // 2. 탐지 성공 시 해당 오브젝트 집어넣기
-
-                    Debug.Log("ID : " + other.gameObject.GetComponent<ObjectIDScript>().ID);
-
-                    photonView.RPC("RPCPushObjectPool", PhotonTargets.All, other.gameObject.GetComponent<ObjectIDScript>().ID);
-                                        
+                        photonView.RPC("RPCPushObjectPool", PhotonTargets.All, other.gameObject.GetComponent<ObjectIDScript>().ID);
                 }
+
+                // 단 오브젝트 풀링은 애니메이션일 경우 알아서 처리함.
             }
 
 
@@ -252,6 +255,17 @@ public class BaseCollision : Photon.PunBehaviour{
         }
     }
 
+    private void LeftAnimation(Collider other)
+    {
+        if (collisionAnimator!=null)
+        {
+            if (PhotonNetwork.player.ID == collisionObject.PlayerIOwnerID)
+            {
+                photonView.RPC("RPCSetAnimationMode", PhotonTargets.All);
+            }
+        }
+    }
+
     //private void ResetSkillOption(GameObject go)
     //{
     //    정보 초기화 필요
@@ -301,7 +315,7 @@ public class BaseCollision : Photon.PunBehaviour{
 
 
 
-    
+
 
     /************* RPC입니다. ****************/
 
@@ -310,14 +324,13 @@ public class BaseCollision : Photon.PunBehaviour{
     private void RPCNotMoveDebuff(float MDT)
     {
 
-        Debug.Log("sadf");
+        animator.SetBool("isNotMove", true);
         // 속박 받아옴
         PlayerNotMoveDebuff playerNotMoveDebuff = gameObject.GetComponent<PlayerNotMoveDebuff>();
 
         // 속박 없으면 새로 추가
         if (playerNotMoveDebuff == null)
         {
-            Debug.Log("sadf2");
             playerNotMoveDebuff = gameObject.AddComponent<PlayerNotMoveDebuff>();
 
         }
@@ -327,7 +340,7 @@ public class BaseCollision : Photon.PunBehaviour{
         playerNotMoveDebuff.SetNowDebuffTime(0);
 
         // 플레이어 상태에 속박상태라 알림
-        playerState.SetplayerNotMoveDebuff(playerNotMoveDebuff);
+       // playerState.SetplayerNotMoveDebuff(playerNotMoveDebuff);
     }
 
     [PunRPC]
@@ -440,12 +453,9 @@ public class BaseCollision : Photon.PunBehaviour{
             PoolingManager.GetInstance().PushObject(go);
     }
 
-
-    // 오브젝트 삭제용 RPC
-    // 삭제할 오브젝트를 모른다. ID 값으로 찾는방법 알아봐야할듯.
-    /* [PunRPC]
-     void RPCDestroyObject()
-     {
-         for(int i = 0; i < PoolingManager.GetInstance().
-     }*/
+    [PunRPC]
+    void RPCSetAnimationMode()
+    {
+        collisionAnimator.SetAnimatorMode();
+    }
 }

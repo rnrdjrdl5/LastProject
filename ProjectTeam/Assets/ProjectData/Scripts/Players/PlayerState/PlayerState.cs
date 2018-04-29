@@ -10,6 +10,8 @@ public partial class PlayerState : MonoBehaviour {
 
         SetHeadObject();
 
+        PlayerType = (string)PhotonNetwork.player.CustomProperties["PlayerType"];
+
     }
 
     private void Update()

@@ -1985,6 +1985,9 @@ MonoBehaviour:
   - Type: 4
     SynchronizeType: 0
     Name: StunOnOff
+  - Type: 4
+    SynchronizeType: 0
+    Name: isNotMove
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0
@@ -2025,7 +2028,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coolDown:
-    MaxCoolDown: 0
+    MaxCoolDown: 5
   InputKey:
     SkillKeyType: 9
   ExitInputKey:
@@ -2074,7 +2077,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ac2d4935a4f52441b4b02f9482a8bd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HideMaterial: {fileID: 0}
   FindRad: 8
 --- !u!114 &114599325072324434
 MonoBehaviour:

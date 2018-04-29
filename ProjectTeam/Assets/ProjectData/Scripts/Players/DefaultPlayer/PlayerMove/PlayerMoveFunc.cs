@@ -43,11 +43,10 @@ public partial class PlayerMove
         if (photonView.isMine)
         {
 
-            if ((gameObject.GetComponent<PlayerState>().GetplayerNotMoveDebuff() == null) &&
-               (ps.EqualPlayerCondition(PlayerState.ConditionEnum.RUN) ||
+              if(ps.EqualPlayerCondition(PlayerState.ConditionEnum.RUN) ||
                 ps.EqualPlayerCondition(PlayerState.ConditionEnum.IDLE) ||
                 ps.EqualPlayerCondition(PlayerState.ConditionEnum.SPEEDRUN) ||
-                ps.EqualPlayerCondition(PlayerState.ConditionEnum.INTERACTION)))
+                ps.EqualPlayerCondition(PlayerState.ConditionEnum.INTERACTION))
             {
 
                 if (characterController.isGrounded)

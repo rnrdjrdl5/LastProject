@@ -12,6 +12,12 @@ using UnityEngine.SceneManagement;
  * ******/
 public class PhotonManager : Photon.PunBehaviour , IPunObservable
 {
+    // 싱글톤
+    private static PhotonManager photonManager;
+    public static PhotonManager GetInstance() { return photonManager; }
+
+
+
     // 드라마틱 카메라 모드 
     public GameObject DramaticCameraPrefab;
     private GameObject DramaticCameraObject;
@@ -84,7 +90,7 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
 
     private void Awake()
     {
-
+        photonManager = this;
         // 카메라 찾기
         //playerCamera = GameObject.Find("PlayerCamera").GetComponent<PlayerCamera>();
         playerCamera = PlayerCamera.GetInstance();

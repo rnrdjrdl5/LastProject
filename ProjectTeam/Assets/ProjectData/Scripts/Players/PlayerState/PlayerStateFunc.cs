@@ -33,6 +33,25 @@ public partial class PlayerState
             playerStunDebuff.SetMaxDebuffTime(MaxTime);
             playerStunDebuff.SetNowDebuffTime(0);
         }
+
+        else if ((DefaultPlayerSkillDebuff.EnumSkillDebuff)ESD == DefaultPlayerSkillDebuff.EnumSkillDebuff.GROGGY)
+        {
+            Debug.Log("그로기");
+            animator.SetBool("isGroggy", true);
+
+            // 경직 디버프 받아오기
+            PlayerGroggyDebuff playerGroggyDebuff = gameObject.GetComponent<PlayerGroggyDebuff>();
+
+            // 경직 없으면 새로 추가
+            if (playerGroggyDebuff == null)
+            {
+                playerGroggyDebuff = gameObject.AddComponent<PlayerGroggyDebuff>();
+            }
+
+            // 경직 속성 설정
+            playerGroggyDebuff.SetMaxDebuffTime(MaxTime);
+            playerGroggyDebuff.SetNowDebuffTime(0);
+        }
     }
 
 

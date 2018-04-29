@@ -10,6 +10,15 @@ public partial class PlayerState
     private GameObject HeadObject;
 
 
+    private string PlayerType;
+
+    public string GetPlayerType() { return PlayerType; }
+    public void SetPlayerType(string pt)
+    {
+        PlayerType = pt;
+    }
+
+
     public void SetHeadObject()
     {
         Transform[] tr = GetComponentsInChildren<Transform>();
@@ -33,9 +42,9 @@ public partial class PlayerState
     public enum ConditionEnum
     { NONE , NOTUSINGSKILL , 
         IDLE, RUN, SPEEDRUN , JUMP,
-        DAMAGE, /*ATTACK  ,*/STUN , GROGGY
+        DAMAGE, STUN , GROGGY , NOTMOVE
      , THROW_FRYING_PAN , TRAP
-    , INTERACTION , };
+      , INTERACTION , };
 
     public ConditionEnum   PlayerCondition         = ConditionEnum.IDLE;
 
@@ -68,12 +77,12 @@ public partial class PlayerState
 
     
 
-
+    /*
     // 상태이상들 입니다.
     private PlayerNotMoveDebuff playerNotMoveDebuff;
     public void SetplayerNotMoveDebuff(PlayerNotMoveDebuff CNMD ) { playerNotMoveDebuff = CNMD; }
     public PlayerNotMoveDebuff GetplayerNotMoveDebuff() { return playerNotMoveDebuff; }
-
+    */
 
 
 

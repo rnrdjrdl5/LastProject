@@ -1,6 +1,6 @@
 // Unity built-in shader source. Copyright (c) 2016 Unity Technologies. MIT license (see license.txt)
 
-Shader "Particles/Additive" {
+Shader "Particles/Additive_HDR" {
 Properties {
     [HDR]_TintColor ("Tint Color", Color) = (0.5,0.5,0.5,0.5)
     _MainTex ("Particle Texture", 2D) = "white" {}
@@ -27,6 +27,7 @@ Category {
 
             sampler2D _MainTex;
             fixed4 _TintColor;
+			fixed4 _NoiseColor;
 
             struct appdata_t {
                 float4 vertex : POSITION;

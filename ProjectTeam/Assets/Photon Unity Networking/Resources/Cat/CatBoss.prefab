@@ -2867,7 +2867,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coolDown:
-    MaxCoolDown: 0
+    MaxCoolDown: 5
   InputKey:
     SkillKeyType: 9
   ExitInputKey:

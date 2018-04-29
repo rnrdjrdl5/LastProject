@@ -36,6 +36,16 @@ public class TurnOffLight : DefaultNewSkill
 
     public override void UseSkill()
     {
+
+        // 쥐를 제외한 모든 플레이어에게 사용
+        for (int i = 0; i < PhotonManager.GetInstance().AllPlayers.Count; i++)
+        {
+            if(!PhotonManager.GetInstance().AllPlayers[i].name.Contains("Cat"))
+                PhotonManager.GetInstance().AllPlayers[i].GetComponent<PlayerState>().AddDebuffState(DefaultPlayerSkillDebuff.EnumSkillDebuff.GROGGY, 0.1f);
+        }
+
+
+         
         photonView.RPC("RPCTurnOffLight", PhotonTargets.Others);
         Debug.Log("스킬시작");
     }
