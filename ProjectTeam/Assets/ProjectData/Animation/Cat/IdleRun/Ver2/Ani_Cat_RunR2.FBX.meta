@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 2b3e41eaf3ca71147b74be46bdd2003a
-timeCreated: 1524627963
+guid: d7167fd68d4267d489ec038337ef5693
+timeCreated: 1524834652
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
@@ -214,12 +214,12 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: _Neko_girl_F319___Default
-    second: {fileID: 2100000, guid: 6c7af1188edcea74ba5e82527bd273be, type: 2}
+    second: {fileID: 2100000, guid: 115ad242cf42bf24583bd37a6d60180f, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: _Object_Frypan_Neko_girl_F19___Default
-    second: {fileID: 2100000, guid: de9af204919f9f643ba4c8a1cead92e8, type: 2}
+    second: {fileID: 2100000, guid: 47e653e4b8ed67440ad5ebbadb3942d0, type: 2}
   materials:
     importMaterials: 1
     materialName: 0

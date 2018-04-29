@@ -221,38 +221,6 @@ public class NewInteractionSkill : Photon.MonoBehaviour, IPunObservable {
             else
             {
 
-                /* // 1. 플레이어와 물체의 순수 거리 구하기
-                 Vector3 PlayerInterVector3 = transform.position - interactiveState.transform.position;
-                 float PlayerInterDis = PlayerInterVector3.magnitude;
-
-                 // 2. 플레이어 <>물체,    플레이어<>상호작용고정위치 거리 를 이용해서 배율 구하기
-                 float DistanceMul = PlayerInterDis / interactiveState.InterPositionDis;
-
-                 // 3. 플레이어와 물체 사이의 노말벡터 구하기
-                 Vector3 PlayerInterNormalVector3 = PlayerInterVector3.normalized;
-
-                 // 4. 노말값에 배율값 곱해주기
-                 Vector3 PlayerAddVector3 = PlayerInterNormalVector3 * DistanceMul;
-
-                 //5. 위 계싼값 + 상호자굥ㅇ 위치  = 플레이어 새 위치
-
-                 transform.position = interactiveState.transform.position + PlayerAddVector3;
-
-
-                 // 2. ㅍㄹ레잉와*/
-
-                // 1. 고정위치 ㅡ 상호작용 벡터 구하기 
-
-                /* float NormalMag = (interactiveState.PlayerInterPosition.transform.position - interactiveState.transform.position).normalized.magnitude;
-                 float Mag = (interactiveState.PlayerInterPosition.transform.position - interactiveState.transform.position).magnitude;
-
-                 float Mul = Mag / NormalMag;
-
-                 transform.position = interactiveState.transform.position +
-                     (transform.position - interactiveState.transform.position).normalized * Mul;
-
-                 transform.LookAt(interactiveState.transform);*/
-
                 // 1. 플레이어 위치 고정
                 gameObject.transform.position =
                 interactiveState.PlayerInterPosition.transform.position;

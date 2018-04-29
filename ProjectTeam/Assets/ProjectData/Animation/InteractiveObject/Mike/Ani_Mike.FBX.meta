@@ -72,7 +72,15 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.9332256
+        functionName: MiddleFallDown
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 66b29a307e8cd1c4aad10a622a45853b,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}

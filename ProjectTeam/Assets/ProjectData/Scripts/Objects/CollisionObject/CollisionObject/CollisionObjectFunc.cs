@@ -2,8 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class CollisionObject{
+public partial class CollisionObject
+{
+    public void ResetObject()
+    {
+        CollisionReCheckTime = 0.0f;
 
+        UsePlayer = null;
+
+        PlayerIOwnerID = 0;
+
+    }
 
     public void ResetSkillOption()
     {
@@ -54,4 +63,7 @@ public partial class CollisionObject{
             collisionObjectTime.ResetObject();
     }
 
-    }
+
+
+
+}

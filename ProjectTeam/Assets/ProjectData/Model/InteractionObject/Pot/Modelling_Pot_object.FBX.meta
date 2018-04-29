@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: e767d7e893a90b94184cb1c68e08058b
-timeCreated: 1524233022
+guid: 4c12bab1ca3342e47bf4432714123318
+timeCreated: 1524813913
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
@@ -241,6 +241,7 @@ ModelImporter:
     4300086: Plane055
     4300088: Plane056
     4300090: Plane057
+    9500000: //RootNode
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -270,7 +271,7 @@ ModelImporter:
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
-    animationCompression: 1
+    animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -322,8 +323,9 @@ ModelImporter:
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 0
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 1f9fedc57a39f164e883d246072e555d,
+    type: 3}
+  animationType: 2
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

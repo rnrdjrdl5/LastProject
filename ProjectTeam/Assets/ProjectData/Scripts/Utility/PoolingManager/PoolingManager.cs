@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class PoolingManager : MonoBehaviour {
 
-    public GameObject GetScoreImage;
-
     public enum EffctType
     {
         ATTACK ,
-        ATTACKLINE1 , ATTACKLINE2, ATTACKLINE3
+        ATTACKLINE1 , ATTACKLINE2, ATTACKLINE3,
+        BIGDUST_BIG, BIGDUST_SMALL, MIDDLEDUST_BIG , MIDDLEDUST_SMALL , SMALL_DUST_SMALL
     }
 
     public GameObject CreateEffect(EffctType effectType)
@@ -20,6 +19,7 @@ public class PoolingManager : MonoBehaviour {
             case EffctType.ATTACK:
                 effect = PopObject("Cat_Effect_FryPan_Attack_01");
                  break;
+
             case EffctType.ATTACKLINE1:
                 effect = PopObject("Hit_Line_Effect_01");
                 break;
@@ -29,6 +29,23 @@ public class PoolingManager : MonoBehaviour {
             case EffctType.ATTACKLINE3:
                 effect = PopObject("Hit_Line_Effect_03");
                 break;
+
+            case EffctType.BIGDUST_BIG:
+                effect = PopObject("FX_YSK_Prefab_Dust_Big_Big");
+                break;
+            case EffctType.BIGDUST_SMALL:
+                effect = PopObject("FX_YSK_Prefab_Dust_Big_Small");
+                break;
+            case EffctType.MIDDLEDUST_BIG:
+                effect = PopObject("FX_YSK_Prefab_Dust_Middle_Big");
+                break;
+            case EffctType.MIDDLEDUST_SMALL:
+                effect = PopObject("FX_YSK_Prefab_Dust_Middle_Small");
+                break;
+            case EffctType.SMALL_DUST_SMALL:
+                effect = PopObject("FX_YSK_Prefab_Dust_Small_Small");
+                break;
+
 
         }
 

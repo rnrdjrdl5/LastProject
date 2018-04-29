@@ -226,9 +226,24 @@ public class BaseCollision : Photon.PunBehaviour{
 
             if(collisionDamagedDebuff != null)
             {
-                photonView.RPC("RPCDamagedDebuff", PhotonTargets.All, other.gameObject.transform.position);
-            }
+                MathUtility.EnumDirVector DirVectorType;
 
+                if (collisionObject.UsePlayerObject != null)
+                    DirVectorType = mathUtility.VectorDirType(gameObject, collisionObject.UsePlayerObject.transform.position);
+
+                else
+                {
+                    DirVectorType = mathUtility.VectorDirType(gameObject, other.gameObject.transform.position);
+                    Debug.Log("공격 대상을 찾을 수 없음. 물체의 위치에 따라피격을 정해줌.");
+                }
+
+
+
+
+
+                photonView.RPC("RPCDamagedDebuff", PhotonTargets.All, (int)DirVectorType);
+            }
+            
             if (collisionGroggyDebuff != null)
             {
                 photonView.RPC("RPCGroggyDebuff", PhotonTargets.All, collisionGroggyDebuff.GetMaxTime());
@@ -340,26 +355,25 @@ public class BaseCollision : Photon.PunBehaviour{
 
     // 해당 디버프는 따로 시간을 지정할 수 없음. 애니메이션 시간을 지정해야함.
     [PunRPC]
-    private void RPCDamagedDebuff(Vector3 otherPosition)
+    private void RPCDamagedDebuff(int DirVectorType)
     {
-        MathUtility.EnumDirVector DirVectorType =  mathUtility.VectorDirType(gameObject, otherPosition);
 
-        if (DirVectorType == MathUtility.EnumDirVector.UP)
+        if ((MathUtility.EnumDirVector)DirVectorType == MathUtility.EnumDirVector.UP)
         {
             animator.SetInteger("DamagedType", 3);
         }
 
-        else if (DirVectorType == MathUtility.EnumDirVector.DOWN)
+        else if ((MathUtility.EnumDirVector)DirVectorType == MathUtility.EnumDirVector.DOWN)
         {
             animator.SetInteger("DamagedType", 4);
         }
 
-        else if (DirVectorType == MathUtility.EnumDirVector.LEFT)
+        else if ((MathUtility.EnumDirVector)DirVectorType == MathUtility.EnumDirVector.LEFT)
         {
             animator.SetInteger("DamagedType", 2);
         }
 
-        else if (DirVectorType == MathUtility.EnumDirVector.RIGHT)
+        else if ((MathUtility.EnumDirVector)DirVectorType == MathUtility.EnumDirVector.RIGHT)
         {
             animator.SetInteger("DamagedType", 1);
         }
@@ -375,17 +389,17 @@ public class BaseCollision : Photon.PunBehaviour{
         animator.SetBool("isGroggy", true);
 
         // 경직 디버프 받아오기
-        PlayerGroggyDebuff playerStunDebuff = gameObject.GetComponent<PlayerGroggyDebuff>();
+        PlayerGroggyDebuff playerGroggyDebuff = gameObject.GetComponent<PlayerGroggyDebuff>();
 
         // 경직 없으면 새로 추가
-        if (playerStunDebuff == null)
+        if (playerGroggyDebuff == null)
         {
-            playerStunDebuff = gameObject.AddComponent<PlayerGroggyDebuff>();
+            playerGroggyDebuff = gameObject.AddComponent<PlayerGroggyDebuff>();
         }
 
         // 경직 속성 설정
-        playerStunDebuff.SetMaxDebuffTime(GD);
-        playerStunDebuff.SetNowDebuffTime(0);
+        playerGroggyDebuff.SetMaxDebuffTime(GD);
+        playerGroggyDebuff.SetNowDebuffTime(0);
     }
 
 
@@ -406,6 +420,12 @@ public class BaseCollision : Photon.PunBehaviour{
 
 
     // 오브젝트 풀에서 탐지하는 용도
+
+        // 주의점
+        // 동기화가 깨질 경우
+        // 다른 클라이언트에서는 이 오브젝트를 찾지 못한다.
+
+        // 즉 , 연결방법이 없어진다.
     [PunRPC]
     void RPCPushObjectPool(int ObjectID)
     {

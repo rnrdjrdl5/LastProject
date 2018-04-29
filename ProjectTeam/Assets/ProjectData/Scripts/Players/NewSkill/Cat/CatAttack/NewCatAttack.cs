@@ -167,7 +167,7 @@ public class NewCatAttack : DefaultNewSkill{
         collisionObject = FryPan.AddComponent<CollisionObject>();
 
         // 정보 스크립트에 수치를 대입합니다.
-        attackState.SetData(collisionObjectDamage, collisionObject, photonView , PhotonNetwork.player.ID);
+        attackState.SetData(collisionObjectDamage, collisionObject, photonView , PhotonNetwork.player.ID,gameObject);
 
         // 디버프를 추가합니다. 공격에서는 경직 디버프가 들어있습니다.
         AddDebuffComponent(FryPan);

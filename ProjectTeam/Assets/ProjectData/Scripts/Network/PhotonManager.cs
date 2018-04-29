@@ -12,7 +12,11 @@ using UnityEngine.SceneManagement;
  * ******/
 public class PhotonManager : Photon.PunBehaviour , IPunObservable
 {
+    // 드라마틱 카메라 모드 
+    public GameObject DramaticCameraPrefab;
+    private GameObject DramaticCameraObject;
 
+    bool isObserverMode = true;
 
 
     delegate bool Condition();
@@ -129,17 +133,32 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
 
     private void Update()
     {
-        if (gameObject.GetPhotonView().isMine)
+        if (!isCanUseCursor)
         {
-            if (!isCanUseCursor)
+            HideCursor();
+        }
+        else
+        {
+            ShowCursor();
+        }
+
+        if (Input.GetKeyDown(KeyCode.F10))
+        {
+            Debug.Log("옵저버모드 활성화");
+            if (CurrentPlayer != null)
             {
-                HideCursor();
-            }
-            else
-            {
-                ShowCursor();
-            }
-            
+                Vector3 position = CurrentPlayer.transform.position;
+
+                PhotonNetwork.player.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "PlayerType", "Dead" } });
+
+                AllPlayers.Remove(CurrentPlayer);
+
+                PhotonNetwork.Destroy(CurrentPlayer);
+                DramaticCameraObject = Instantiate(DramaticCameraPrefab, position, Quaternion.identity);
+
+                Debug.Log("asdf");
+            }   
+
         }
     }
 
@@ -182,16 +201,11 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
         //ResultUI.SetActive(true);
     }
 
-    // 플레이어 스코어 보여주기
-    void ToShowScoreUI()
-    {
-        uIManager.OnScorePanel();
-    }
-
 
     // 플레이어 삭제
     void DeleteResult(int i)
     {
+
 
         Debug.Log("i : " + i);
 
@@ -226,13 +240,15 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
         // 쥐 남은 수 끄기
         uIManager.MouseImagePanel.SetActive(false);
 
-        // 스코어창 끄기
-        uIManager.ScorePanel.SetActive(false);
 
-        // 스코어창 끄고 갱신 불가
-        uIManager.OffScorePanel();
+
+        // 스코어 패널 끄기
+        uIManager.scorePanelScript.ShowScorePanel(false);
+
         // 스코어 창 누르지 못하도록 변경.
-        uIManager.IsUseScoreUI = false;
+        uIManager.scorePanelScript.IsUseScoreUI = false;
+
+
 
         // 플레이어 Result UI 설정
         uIManager.SetTimeWatch(true);
@@ -395,10 +411,8 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
 
     bool CheckGameEnd()
     {
-        if (uIManager.IsGameEnd)
-            return true;
-        else
-            return false;
+        Debug.Log("막음");
+        return false;
     }
 
 
@@ -652,15 +666,15 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
         uIManager.SetTimeWatch(false);
         uIManager.SetEndState(false, (UIManager.ResultType)0);
 
-        // 스코어 창 보여주기
-        ToShowScoreUI();
+
+        // 스코어창 보여주기
+        uIManager.scorePanelScript.ShowScorePanel(true);
 
         
 
         // 게임 끝나면.
         if (AllPlayCat())
         {
-            uIManager.GameEndPanel.SetActive(true);
 
             condition = new Condition(CheckGameEnd);
             conditionLoop = new ConditionLoop(NoAction);

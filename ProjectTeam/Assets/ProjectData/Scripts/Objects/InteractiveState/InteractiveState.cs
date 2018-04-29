@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class InteractiveState : Photon.MonoBehaviour , IPunObservable {
 
+
     /**** 열거형 ****/
 
     // 물체의 타입
     public            enum           EnumInteractiveObject
-    { TABLE  = 1 , MIKE , DRAWE , POT , PIANO};
+    { TABLE  = 1 , MIKE , DRAWE , POT , PIANO , POSMEKA , };
 
     // 물체의 액션 적용 방식
     public            enum           EnumAction
@@ -17,7 +18,7 @@ public class InteractiveState : Photon.MonoBehaviour , IPunObservable {
     // 물체가 애니메이션 일때, 상호작용 거리 타입 
     // 1. 특정위치    2. 특정 거리 
     public enum EnumInterPos
-    { POSITION, DISTANCE };
+    { POSITION, DISTANCE , NONE};
 
 
 
@@ -52,13 +53,18 @@ public class InteractiveState : Photon.MonoBehaviour , IPunObservable {
     [Tooltip(" - 플레이어 위치 오브젝트")]
     public GameObject PlayerInterPosition;
 
-    
+
     [Header(" - 상호작용 위치 타입")]
     [Tooltip(" - 상호작용 위치가 고정형인지 거리형인지 판단.")]
-    public EnumInterPos InterPosType;
+    public EnumInterPos InterPosType = EnumInterPos.NONE;
 
-    
-    
+    [Header(" - 상호작용 먼지 이펙트 위치")]
+    [Tooltip(" - 상호작용 이펙트 위치입니다.")]
+    public GameObject InterEffect;
+
+
+
+
     public bool IsUseAction { get; set; }
     /**** private ****/
 
@@ -113,7 +119,8 @@ public class InteractiveState : Photon.MonoBehaviour , IPunObservable {
 
         IsUseAction = false;
 
-        InterPositionDis = (PlayerInterPosition.transform.position - transform.position).magnitude;
+        if (InterPosType != EnumInterPos.NONE)
+            InterPositionDis = (PlayerInterPosition.transform.position - transform.position).magnitude;
 
     }
 
@@ -147,10 +154,12 @@ public class InteractiveState : Photon.MonoBehaviour , IPunObservable {
         if (newInteractionSkill != null)
         {
 
+
             // 개인 점수 생성 
-            UIManager.GetInstance().CreateScoreImage();
+            UIManager.GetInstance().CreateScoreImage(InterObjectScore);
 
-
+            Debug.Log("asd");
+       
             if (ActionType == EnumAction.PHYSICS)
             {
 
@@ -348,6 +357,7 @@ public class InteractiveState : Photon.MonoBehaviour , IPunObservable {
         gameObject.layer = LayerMask.NameToLayer("NoCollisionPlayer");
 
         animator.SetBool("isAction", true);
+
     }
 
     // 모든 대상
@@ -360,6 +370,34 @@ public class InteractiveState : Photon.MonoBehaviour , IPunObservable {
         gameObject.layer = LayerMask.NameToLayer("MainObject");
         animator.SetBool("isAction", false);
     }
-    
+
+
+
+    /**** 애니메이션 이벤트 *****/
+    public void BigFallDown()
+    {
+        GameObject go = PoolingManager.GetInstance().CreateEffect(PoolingManager.EffctType.BIGDUST_BIG);
+        go.transform.position = InterEffect.transform.position;
+
+        go = PoolingManager.GetInstance().CreateEffect(PoolingManager.EffctType.BIGDUST_SMALL);
+        go.transform.position = InterEffect.transform.position;
+    }
+
+
+    public void MiddleFallDown()
+    {
+        GameObject go = PoolingManager.GetInstance().CreateEffect(PoolingManager.EffctType.MIDDLEDUST_BIG);
+        go.transform.position = InterEffect.transform.position;
+
+        go = PoolingManager.GetInstance().CreateEffect(PoolingManager.EffctType.MIDDLEDUST_SMALL);
+        go.transform.position = InterEffect.transform.position;
+    }
+
+    public void SmallFallDown()
+    {
+        GameObject go = PoolingManager.GetInstance().CreateEffect(PoolingManager.EffctType.SMALL_DUST_SMALL);
+        go.transform.position = InterEffect.transform.position;
+    }
+
 }
 

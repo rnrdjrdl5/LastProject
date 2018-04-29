@@ -114,5 +114,6 @@ public class TablePhysics : MonoBehaviour {
         // 이 오브젝트에도 물리 제거 스크립트 등록
         OffObjectPhysics offObjectPhysics = gameObject.AddComponent<OffObjectPhysics>();
         offObjectPhysics.OffTime = PhysicsOffTime ;
+        offObjectPhysics.SetPhysicsObjectType(OffObjectPhysics.EnumPhysicsObject.MAINOBJECT);
     }
 }

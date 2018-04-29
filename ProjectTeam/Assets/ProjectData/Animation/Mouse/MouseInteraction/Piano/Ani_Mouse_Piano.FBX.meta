@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 090d2e038f3f7524d94dedec009d743b
-timeCreated: 1524640907
+guid: 3e5f6202ec922574fa2975f69ef770a3
+timeCreated: 1524824656
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
@@ -161,6 +161,8 @@ ModelImporter:
     100306: White050
     100308: White051
     100310: White052
+    100312: "\xA1\xA1\xD7\xFD\xD7\xFB"
+    100314: "\xD7\xFE\xD7\xFC"
     400000: //RootNode
     400002: Bip001
     400004: Bip001 Footsteps
@@ -317,6 +319,8 @@ ModelImporter:
     400306: White050
     400308: White051
     400310: White052
+    400312: "\xA1\xA1\xD7\xFD\xD7\xFB"
+    400314: "\xD7\xFE\xD7\xFC"
     2300000: Black001
     2300002: Black002
     2300004: Black003
@@ -638,7 +642,51 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Take 001
+      takeName: Take 001
+      firstFrame: 0
+      lastFrame: 523
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events:
+      - time: 0.9217663
+        functionName: CallAction
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 67d834d25c092c246b20d3d482aafb64,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.9656938
+        functionName: OffInteraction
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 67d834d25c092c246b20d3d482aafb64,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 1
   meshes:
     lODScreenPercentages: []

@@ -19,37 +19,12 @@ public class AttackState{
     public PoolingManager.EffctType effectType;
 
 
-    // 1. 이전에 스크립트를 받은 적이 없을 때
-    public void SetData(GameObject CollisionGameObject, PhotonView pv, int ID)
-    {
-        // 1. 무기로부터 각종 정보를 받습니다.
-        CollisionObjectDamage collisionObjectDamage = 
-            CollisionGameObject.GetComponent<CollisionObjectDamage>();
-
-        CollisionObject collisionObject =
-            CollisionGameObject.GetComponent<CollisionObject>();
-
-        InitData(collisionObjectDamage, collisionObject, pv, ID);
-
-    }
 
 
-
-    // 2. 이전에 스크립트를 받은 적이 있을 때
     public void SetData(CollisionObjectDamage cod,
         CollisionObject co,
-        PhotonView pv, int ID)
-
-    {
-        InitData(cod, co, pv,ID);
-    }
-
-
-
-    // 받은 데이터를 기반으로 스크립트에 데미지를 넣습니다.
-    private void InitData(CollisionObjectDamage cod,
-        CollisionObject co,
-        PhotonView pv , int ID)
+        PhotonView pv, int ID,
+        GameObject gameObject)
 
     {
         cod.SetObjectDamage(AttackDamage);
@@ -58,11 +33,12 @@ public class AttackState{
 
         co.SetUsePlayer("Player" + pv.viewID);
         co.SetCollisionReCheckTime(RecheckTime);
+        co.UsePlayerObject = gameObject;
 
-
-        if(pv.isMine)
+        if (pv.isMine)
             co.PlayerIOwnerID = ID;
 
-        
     }
+
+
 }

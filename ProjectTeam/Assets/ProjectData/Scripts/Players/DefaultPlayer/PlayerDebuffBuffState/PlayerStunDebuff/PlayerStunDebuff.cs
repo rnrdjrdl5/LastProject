@@ -4,6 +4,22 @@ using UnityEngine;
 
 public class PlayerStunDebuff : PlayerDefaultDebuff
 {
+
+    PlayerState playerState;
+
+    protected override void Awake()
+    {
+        playerState = GetComponent<PlayerState>();
+
+    }
+
+
+    protected override void Start()
+    {
+    }
+
+   
+
     protected override void Update()
     {
         base.Update();
@@ -15,5 +31,23 @@ public class PlayerStunDebuff : PlayerDefaultDebuff
     {
         gameObject.GetComponent<Animator>().SetBool("StunOnOff", false);
         Debug.Log("***스턴끝 *****");
+
+        if (DebuffEffect != null)
+        {
+            PoolingManager.GetInstance().PushObject(DebuffEffect);
+        }
     }
+
+    public void CreateEffect()
+    {
+        DebuffEffect = PoolingManager.GetInstance().PopObject("strun_main_01");
+
+        DebuffEffect.transform.position =
+            playerState.GetHeadObject().transform.position - transform.up * 0.5f;
+
+        DebuffEffect.transform.SetParent(playerState.GetHeadObject().transform);
+
+    }
+
+
 }

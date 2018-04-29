@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 368c7d7cebfcfda4f8ee10a0e5195661
-timeCreated: 1524231732
+guid: 3e7507979c42d364aa420d37a3cbd448
+timeCreated: 1524932749
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
@@ -244,12 +244,12 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: 01 - Default
-    second: {fileID: 2100000, guid: 91645caa27749f24c93a2fc276360809, type: 2}
+    second: {fileID: 2100000, guid: 9c0ce7112b9f25247a702c134da11732, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: 'Material #26'
-    second: {fileID: 2100000, guid: c53b02ce763e7aa4a950bb8ed9cfe2f4, type: 2}
+    second: {fileID: 2100000, guid: e72aaf42a663f284580b5c505207521d, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -268,14 +268,50 @@ ModelImporter:
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
-    animationCompression: 1
+    animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Take 001
+      takeName: Take 001
+      firstFrame: 0
+      lastFrame: 90
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events:
+      - time: 0.9539295
+        functionName: BigFallDown
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 66b29a307e8cd1c4aad10a622a45853b,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 1
   meshes:
     lODScreenPercentages: []

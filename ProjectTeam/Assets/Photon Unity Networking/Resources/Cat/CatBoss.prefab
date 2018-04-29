@@ -2772,7 +2772,7 @@ MonoBehaviour:
   turnOffLightState:
     TrunOffPanel: {fileID: 1478077443266326, guid: 2609ca348ce3ba840b05c845eb21ef1d,
       type: 2}
-    TurnOffTime: 0
+    TurnOffTime: 3
 --- !u!114 &114685199335468200
 MonoBehaviour:
   m_ObjectHideFlags: 1

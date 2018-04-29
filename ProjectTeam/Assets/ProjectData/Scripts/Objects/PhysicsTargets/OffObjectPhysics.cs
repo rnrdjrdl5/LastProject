@@ -9,8 +9,15 @@ public class OffObjectPhysics : MonoBehaviour {
     IEnumerator CoroOffPhysics;
     bool isCheck;
 
+    public enum EnumPhysicsObject { SUBOBJECT, MAINOBJECT }
+    public EnumPhysicsObject PhysicsObjectType;
+
+    public EnumPhysicsObject GetPhysicsObjectType() { return PhysicsObjectType; }
+    public void SetPhysicsObjectType(EnumPhysicsObject PO) { PhysicsObjectType = PO; }
+
     private void Awake()
     {
+        PhysicsObjectType = EnumPhysicsObject.SUBOBJECT;
         CoroOffPhysics = OffPhysics();
         isCheck = false;
     }
@@ -22,6 +29,30 @@ public class OffObjectPhysics : MonoBehaviour {
         {
             isCheck = true;
             StartCoroutine(CoroOffPhysics);
+
+
+
+            GameObject go;
+
+            if (PhysicsObjectType == EnumPhysicsObject.MAINOBJECT)
+            {
+                go = PoolingManager.GetInstance().CreateEffect(PoolingManager.EffctType.MIDDLEDUST_BIG);
+                go.transform.position = collision.contacts[0].point;
+
+                go = PoolingManager.GetInstance().CreateEffect(PoolingManager.EffctType.MIDDLEDUST_SMALL);
+                go.transform.position = collision.contacts[0].point;
+            }
+
+            else if (PhysicsObjectType == EnumPhysicsObject.SUBOBJECT)
+            {
+                go = PoolingManager.GetInstance().CreateEffect(PoolingManager.EffctType.SMALL_DUST_SMALL);
+                go.transform.position = collision.contacts[0].point;
+            }
+
+
+
+
+
         }
     }
 

@@ -139,4 +139,7 @@ MonoBehaviour:
   - RPCGroggyDebuff
   - FallDamage
   - RPCEraseTrap
+  - RPCCreateStunEffect
+  - RPCDeleteStunEffect
+  - RPCAddDebuffState
   DisableAutoOpenWizard: 1

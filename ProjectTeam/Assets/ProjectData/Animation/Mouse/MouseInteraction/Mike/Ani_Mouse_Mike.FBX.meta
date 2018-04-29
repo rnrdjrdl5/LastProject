@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 62f8922a68e297446a354f9adf1a5ebe
-timeCreated: 1524640833
+guid: 9c1238d85d25c814fbbc83b36c5c8a29
+timeCreated: 1524824078
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
@@ -187,7 +187,51 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Take 001
+      takeName: Take 001
+      firstFrame: 0
+      lastFrame: 150
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events:
+      - time: 0.7338017
+        functionName: CallAction
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 67d834d25c092c246b20d3d482aafb64,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.91293454
+        functionName: OffInteraction
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 67d834d25c092c246b20d3d482aafb64,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 1
   meshes:
     lODScreenPercentages: []

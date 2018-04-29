@@ -109,7 +109,7 @@ public class LobbyRoomPhoton : Photon.PunBehaviour {
 
         RoomOptions ro = new RoomOptions
         {
-            MaxPlayers = 6
+            MaxPlayers = 7
         };
 
         PhotonNetwork.CreateRoom("Catching" + Random.Range(0,1000).ToString(),ro,TypedLobby.Default);

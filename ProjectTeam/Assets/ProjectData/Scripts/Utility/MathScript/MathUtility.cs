@@ -32,21 +32,25 @@ public class MathUtility {
 
         if (IsIncludeRad(go.transform.right, DesVector - go.transform.position, 90))
         {
+            Debug.Log("오른쪽");
             return EnumDirVector.RIGHT;
         }
 
         else if (IsIncludeRad(-go.transform.right, DesVector - go.transform.position, 90))
         {
+            Debug.Log("왼쪽");
             return EnumDirVector.LEFT;
         }
 
         else if (IsIncludeRad(-go.transform.forward, DesVector - go.transform.position, 90))
         {
+            Debug.Log("아래");
             return EnumDirVector.DOWN;
         }
 
         else if (IsIncludeRad(go.transform.forward, DesVector - go.transform.position, 90))
         {
+            Debug.Log("위");
             return EnumDirVector.UP;
 
         }

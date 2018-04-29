@@ -59,6 +59,9 @@ public class TurnOffLight : DefaultNewSkill
 
         // 데이터 설정
         top.SetTurnOffTime(turnOffLightState.TurnOffTime);
-        
+
+        top.StartCutScene();
+
+
     }
 }

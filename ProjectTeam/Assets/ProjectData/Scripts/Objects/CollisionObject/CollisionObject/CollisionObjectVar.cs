@@ -42,14 +42,7 @@ public partial class CollisionObject
 
     public int PlayerIOwnerID { get; set; }     // 공격한 사람의 클라이언트에서 충돌판정을 하기 위해서 사용   + push , pop 사용 시 ID값을 사용함.
 
-    public void ResetObject()
-    {
-        CollisionReCheckTime = 0.0f;
+    public GameObject UsePlayerObject;              // 공격한 플레이어의 GameObject
 
-        UsePlayer = null;
-
-        PlayerIOwnerID = 0;
-
-    }
 
 }

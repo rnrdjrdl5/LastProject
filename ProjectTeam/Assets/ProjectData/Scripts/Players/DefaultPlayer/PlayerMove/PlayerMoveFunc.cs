@@ -196,7 +196,7 @@ public partial class PlayerMove
                         ps.AddDebuffState(DefaultPlayerSkillDebuff.EnumSkillDebuff.STUN,FallStunTime);
 
                         // 속도값 없애기
-                        MoveDir = Vector3.zero;
+                        MoveDir = Vector3.up * MoveDir.y;
                     }
                 }
               

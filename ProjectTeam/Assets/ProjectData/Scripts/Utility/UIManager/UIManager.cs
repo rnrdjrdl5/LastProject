@@ -5,13 +5,22 @@ using UnityEngine;
 using UnityEngine.UI;
 public class UIManager : Photon.PunBehaviour {
 
+    public ScorePanelScript scorePanelScript { get; set; }
+
+
+
+
+
     [Header(" 스코어 이펙트 ")]
     public float GetScoreWaitTime = 0.5f;
     public float GetScoreMoveTime = 0.2f;
 
-    [Header("최대인원")]
-    public int MaxPlayer = 6;
+
+    // UI 플레이어 기준 수
+    [Header("플레이어 UI 기준 몇명으로 할 것인가? ")]
+    public int MaxUISlot = 6;
     
+
     IEnumerator EnumCoro;
 
 
@@ -47,9 +56,6 @@ public class UIManager : Photon.PunBehaviour {
     private PhotonManager photonManager;                // 포톤매니저
 
     public List<PhotonPlayer> Players{ get; set; }              // 플레이어를 담는 리스트 , PhotonManager에서 Add시킴
-
-    public bool IsScoreReCheck { get; set; }             // 플레이어 정보 갱신시킬지 말지 결정함
-    public bool IsUseScoreUI { get; set; }
 
     public ObjectManager objectManager;
 
@@ -145,18 +151,51 @@ public class UIManager : Photon.PunBehaviour {
 
     public GameObject HelperUIImage { set; get; }
     public void InitHelperUIImage() { HelperUIImage = HelperUIPanel.transform.Find("HelperUIImage").gameObject; }
-    public GameObject HelpUIImage { set; get; }
-    public void InitHelpUIImage() { HelpUIImage = HelpUIPanel.transform.Find("HelpUIImage").gameObject; }
 
-    public void SetHelpUI(bool isActive)
-    {
-        HelpUIImage.SetActive(isActive);
-        HelpUIPanel.SetActive(isActive);
-    }
+    public GameObject CatHelpUIImage { get; set; }
+    public void InitCatHelpUIImage() { CatHelpUIImage = HelpUIPanel.transform.Find("CatHelpUIImage").gameObject; }
+    public GameObject MouseHelpUIImage { get; set; }
+    public void InitMouseHelpUIImage() { MouseHelpUIImage = HelpUIPanel.transform.Find("MouseHelpUIImage").gameObject; }
+
+
     public void SetHelperUI(bool isActive)
     {
         HelperUIImage.SetActive(isActive);
         HelperUIPanel.SetActive(isActive);
+    }
+
+    public void SetHelpUI(bool isActive)
+    {
+        HelpUIPanel.SetActive(isActive);
+
+        CatHelpUIImage.SetActive(false);
+        MouseHelpUIImage.SetActive(false);
+
+        // MouseHelpUIImage.SetActive(false);
+        if (isActive)
+        {
+            string PlayerType = (string)PhotonNetwork.player.CustomProperties["PlayerType"];
+
+            if (PlayerType == "Cat")
+            {
+                CatHelpUIImage.SetActive(true);
+
+            }
+            else if (PlayerType == "Mouse")
+            {
+
+                MouseHelpUIImage.SetActive(true);
+
+            }
+
+        }
+
+        else
+        {
+
+            
+        }
+
     }
 
 
@@ -364,114 +403,10 @@ public class UIManager : Photon.PunBehaviour {
         EndStatePanel.SetActive(isActive);
     }
 
-        
 
 
 
-    /**** ScroePanel ****/
-
-    public GameObject ScorePanel { set; get; }
-    public void InitScorePanel() { ScorePanel = ResultUI.transform.Find("ScorePanel").gameObject; }
-
-    public void SetScorePanel(bool isActive)
-    {
-        ScorePanel.SetActive(isActive);
-    }
-
-
-    /**** Mouse Score ****/
-    public GameObject MouseScoreBGImage { set; get; }
-    public void InitMouseScoreBGImage() { MouseScoreBGImage = ScorePanel.transform.Find("MouseScoreBGImage").gameObject; }
-
-    public Text[] MousePlayerName { set; get; }
-
-    public Text[] MousePlayerScore { set; get; }
-
-    // MousePlayer 이름 정보 재설정
-    public void InitMousePlayerStats()
-    {
-        MousePlayerName = new Text[MaxPlayer];
-        MousePlayerScore = new Text[MaxPlayer];
-
-        for (int i = 0; i < MaxPlayer; i++)
-        {
-            MousePlayerName[i] = MouseScoreBGImage.transform.Find("MousePlayer" + (i + 1).ToString() + "BGImage/PlayerName").GetComponent<Text>();
-
-            MousePlayerScore[i] = MouseScoreBGImage.transform.Find("MousePlayer" + (i + 1).ToString() + "BGImage/PlayerScore").GetComponent<Text>();
-        }
-    }
-
-    /**** Cat Score ****/
-    public GameObject CatScoreBGImage { set; get; }
-    public void InitCatScoreBGImage() { CatScoreBGImage = ScorePanel.transform.Find("CatScoreBGImage").gameObject; }
-
-
-    public Text[] CatPlayerName { set; get; }
-
-    public Text[] CatPlayerScore { set; get; }
-
-    // CatPlayer 이름 정보 재설정
-    public void InitCatPlayerStats()
-    {
-        CatPlayerName = new Text[MaxPlayer];
-        CatPlayerScore = new Text[MaxPlayer];
-
-        for (int i = 0; i < MaxPlayer; i++)
-        {
-
-            CatPlayerName[i] = CatScoreBGImage.transform.Find("CatPlayer" + (i + 1).ToString() + "BGImage/PlayerName").GetComponent<Text>();
-
-            CatPlayerScore[i] = CatScoreBGImage.transform.Find("CatPlayer" + (i + 1).ToString() + "BGImage/PlayerScore").GetComponent<Text>();
-        }
-    }
-
-
-
-    /**** Total Score ****/
-    public GameObject TotalScoreBGImage { set; get; }
-    public void InitTotalScoreBGImage() { TotalScoreBGImage = ScorePanel.transform.Find("TotalScoreBGImage").gameObject; }
-
-    public Text[] TotalPlayerName { set; get; }
-
-    public Text[] TotalPlayerScore { set; get; }
-
-    // TotalPlayer 이름 재설정
-    public void InitTotalPlayerStats()
-    {
-        TotalPlayerName = new Text[MaxPlayer];
-        TotalPlayerScore = new Text[MaxPlayer];
-
-        for (int i = 0; i < MaxPlayer; i++)
-        {
-            TotalPlayerName[i] = TotalScoreBGImage.transform.Find("TotalPlayer" + (i+1).ToString() + "BGImage/PlayerName").GetComponent<Text>();
-            
-            TotalPlayerScore[i] = TotalScoreBGImage.transform.Find("TotalPlayer" + (i + 1).ToString() + "BGImage/PlayerScore").GetComponent<Text>();
-        }
-    }
-
-
-    /**** SelectPlayerPanel ****/
-    public GameObject SelectPlayerPanel { get; set; }
-    public void InitSelectPlayerPanel() { SelectPlayerPanel = ScorePanel.transform.Find("SelectPlayerPanel").gameObject; }
-
-    public GameObject[] SelectPlayerImage { get; set; }
-
-    public void InitSelectPlayerImage()
-    {
-        SelectPlayerImage = new GameObject[MaxPlayer];
-
-        for (int i = 0; i < SelectPlayerImage.Length; i++)
-        {
-            SelectPlayerImage[i] = SelectPlayerPanel.transform.Find("SelectPlayerImage" + (i + 1).ToString()).gameObject;
-        }
-    }
-
-    /**** GameEndPanel ****/
-    public GameObject GameEndPanel { get; set; }
-    public void InitGameEndPanel() { GameEndPanel = ScorePanel.transform.Find("GameEndPanel").gameObject; }
-    public bool IsGameEnd { get; set; }
-
-
+    
 
 
 
@@ -485,66 +420,6 @@ public class UIManager : Photon.PunBehaviour {
     public void InitGetScorePanel() { GetScorePanel = InGameCanvas.transform.Find("GetScorePanel").gameObject; }
 
 
-
-    /***** 일반 함수 *****/
-    void SetScoreMenu()
-    {
-        
-        // Sort 정렬
-        PlayerSorting();
-
-        // 패널 수만큼 루프
-        for (int i = 0; i < MaxPlayer; i++)
-        {
-
-            // 인원 수만큼 정보 설정
-            if (i < Players.Count)
-            {
-                int CatScore = -1;
-                if (Players[i].CustomProperties["CatScore"] != null)
-                     CatScore= (int)Players[i].CustomProperties["CatScore"];
-
-
-                int MouseScore = -1;
-                if (Players[i].CustomProperties["MouseScore"] != null)
-                    MouseScore = (int)Players[i].CustomProperties["MouseScore"];
-
-                
-                // 점수 설정
-                MousePlayerScore[i].text = MouseScore.ToString();
-                CatPlayerScore[i].text = CatScore.ToString();
-                TotalPlayerScore[i].text = (MouseScore + CatScore).ToString();
-
-                // 이름 설정
-                CatPlayerName[i].text = Players[i].NickName;
-                MousePlayerName[i].text = Players[i].NickName;
-                TotalPlayerName[i].text = Players[i].NickName;
-
-                // 본인 클라이언트면 불빛 들어오도록 설정
-                if (Players[i].NickName == PhotonNetwork.player.NickName)
-                {
-                    SelectPlayerImage[i].SetActive(true);
-                }
-                else
-                    SelectPlayerImage[i].SetActive(false);
-            }
-            
-            // 인원 아닌 곳 공백 처리
-            else
-            {
-                MousePlayerScore[i].text = "";
-                CatPlayerScore[i].text = "";
-                TotalPlayerScore[i].text = "";
-
-                CatPlayerName[i].text = "";
-                MousePlayerName[i].text = "";
-                TotalPlayerName[i].text = "";
-
-                SelectPlayerImage[i].SetActive(false);
-            }
-        }
-
-    }
 
     // 플레이어 리스트 Sort
     public void PlayerSorting()
@@ -562,17 +437,6 @@ public class UIManager : Photon.PunBehaviour {
             );
     }
 
-    public void OnScorePanel()
-    {
-        SetScorePanel(true);
-        IsScoreReCheck = true;
-    }
-
-    public void OffScorePanel()
-    {
-        SetScorePanel(false);
-        IsScoreReCheck = false;
-    }
 
     public void CheckRestUI(float Type)
     {
@@ -614,25 +478,28 @@ public class UIManager : Photon.PunBehaviour {
 
     }
 
-    public void CreateScoreImage()
+    public void CreateScoreImage(int Score)
     {
         // 오브젝트 풀.
 
         //1 . 풀링에서 빼옵니다.
-        GameObject getScoreImageObject = PoolingManager.GetInstance().PopObject("GetScoreImage");
+        GameObject getScoreText = PoolingManager.GetInstance().PopObject("GetScoreText");
+
+        // 풀링의 텍스트 이름 수정
+        getScoreText.GetComponent<Text>().text = "+" + Score.ToString();
 
         //2. 부모 설정
-        getScoreImageObject.transform.SetParent(GetScorePanel.transform);
+        getScoreText.transform.SetParent(GetScorePanel.transform);
 
         //3. 초기 위치 설정.
         Vector3 v3 = new Vector3 { x = Screen.width * 0.7f, y = Screen.height * 0.55f, z = 90.0f };
 
-        getScoreImageObject.transform.localScale = Vector3.one;
-        getScoreImageObject.transform.position = v3;
+        getScoreText.transform.localScale = Vector3.one;
+        getScoreText.transform.position = v3;
 
 
         // 4. 이미지를 움직인다. 
-        EnumCoro = MoveScoreImage(getScoreImageObject);
+        EnumCoro = MoveScoreImage(getScoreText);
 
         StartCoroutine(EnumCoro);
     }
@@ -644,12 +511,6 @@ public class UIManager : Photon.PunBehaviour {
     private void Awake()
     {
         uIManager = this;
-
-        // 플레이어 갱신 X 설정
-        IsScoreReCheck = false;
-
-        // 스코어 UI 사용 가능
-        IsUseScoreUI = true;
 
         // 플레이어 리스트 초기화
         Players = new List<PhotonPlayer>();
@@ -692,7 +553,9 @@ public class UIManager : Photon.PunBehaviour {
         InitHelperUIImage();
 
         InitHelpUIPanel();
-        InitHelpUIImage();
+        InitCatHelpUIImage();
+        InitMouseHelpUIImage();
+
 
         InitAimPanel();
         InitAimImage();
@@ -717,80 +580,28 @@ public class UIManager : Photon.PunBehaviour {
         InitAllKillImage();
         InitTimeOverImage();
 
-        InitScorePanel();
-
-        InitMouseScoreBGImage();
-        InitMousePlayerStats();
-
-        InitCatScoreBGImage();
-        InitCatPlayerStats();
-
-        InitTotalScoreBGImage();
-        InitTotalPlayerStats();
-
-        InitSelectPlayerPanel();
-        InitSelectPlayerImage();
-
-
-
         InitInGameCanvas();
 
         InitGetScorePanel();
 
-        InitGameEndPanel();
-        IsGameEnd = false;
+        // 스코어 패널 관련 내용 스크립트로 따로 처리
+        scorePanelScript = new ScorePanelScript();
+        scorePanelScript.InitData(MaxUISlot);
+
+
     }
 
 
     private void Update()
     {
-        // 스코어 사용 가능할 때
-        if (IsUseScoreUI)
-        {
-            // Tap 누를 때마다 재설정
-            if (Input.GetKeyDown(KeyCode.Tab))
-            {
+        // 스코어 패널 보여줌
+        ShowScore();
 
-                // 비활성화 일 경우
-                if (ScorePanel.GetActive() == false)
-                {
-                    OnScorePanel();
-                }
-
-                // 활성화 일 경우
-                else if (ScorePanel.GetActive() == true)
-                {
-                    OffScorePanel();
-                }
-                else
-                    Debug.Log("에러");
-            }
-
-        }
-
-        // 스코어 갱신중일때
-        if (IsScoreReCheck)
-        {
-            SetScoreMenu();
-        }
+        // 스코어 갱신 
+        UpdateScore();
 
         // 도움말 사용 가능할 때
-        if (isCanUseHelperUI)
-        {
-            if (Input.GetKeyDown(KeyCode.F1))
-            {
-                if (HelperUIPanel.GetActive() == true)
-                {
-                    SetHelperUI(false);
-                    SetHelpUI(true);
-                }
-                else
-                {
-                    SetHelperUI(true);
-                    SetHelpUI(false);
-                }
-            }
-        }
+        OnOffHelpUI();
 
 
         // 쥐, 레스토랑 모양 갱신
@@ -799,28 +610,86 @@ public class UIManager : Photon.PunBehaviour {
         CheckRestUI(ObjectPersent);
         SetNowMouseImage();
 
+    }
 
-        
+
+    void ShowScore()
+    {
+        // 스코어 사용 가능할 때
+        if (scorePanelScript.IsUseScoreUI == true)
+        {
+
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+
+                if (scorePanelScript.ScorePanel.GetActive() == false)
+                {
+                    scorePanelScript.ShowScorePanel(true);
+                }
+
+                else
+                {
+                    scorePanelScript.ShowScorePanel(false);
+                }
+            }
+
+        }
 
     }
-        
+
+    void UpdateScore()
+    {
+        if (scorePanelScript.ScorePanel.GetActive() == true)
+        {
+            scorePanelScript.UpdateScores();
+        }
+    }
+
+    void OnOffHelpUI()
+    {
+        // 도움말 사용 가능할 때
+        if (isCanUseHelperUI)
+        {
+            if (Input.GetKeyDown(KeyCode.F1) ||
+                Input.GetKeyDown(KeyCode.Escape))
+            {
+
+
+
+                if (HelperUIPanel.GetActive() == true)
+                {
+                    SetHelperUI(false);
+                    SetHelpUI(true);
+
+
+                }
+                else
+                {
+                    SetHelperUI(true);
+                    SetHelpUI(false);
+                }
+            }
+        }
+    }
+
+
+
+
+
+
+
     /**** UI 이벤트  ****/
     public void GameEndButtonClick()
     {
-        if (IsGameEnd)
+        /*if (IsGameEnd)
             IsGameEnd = false;
         else
             IsGameEnd = true;
 
-        Debug.Log("end : " + IsGameEnd);
+        Debug.Log("end : " + IsGameEnd);*/
 
 
     }
-
-
-
-
-
 
     enum EnumMoveScore { WAIT, MOVE };
     IEnumerator MoveScoreImage(GameObject go)

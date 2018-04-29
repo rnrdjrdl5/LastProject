@@ -7,8 +7,27 @@ public partial class PlayerState
 
     private Animator animator;
 
+    private GameObject HeadObject;
 
 
+    public void SetHeadObject()
+    {
+        Transform[] tr = GetComponentsInChildren<Transform>();
+
+        for (int i = 0; i < tr.Length; i++)
+        {
+
+            if (tr[i].name == "Bip001 Head")
+            {
+                HeadObject = tr[i].gameObject;
+                break;
+            }
+            else
+                Debug.Log("못찾음");
+
+        }
+    }
+    public GameObject GetHeadObject() { return HeadObject; }
 
     /********* 플레이어의 현재 상태를 가지는 열거형입니다. ******/
     public enum ConditionEnum
@@ -54,29 +73,6 @@ public partial class PlayerState
     private PlayerNotMoveDebuff playerNotMoveDebuff;
     public void SetplayerNotMoveDebuff(PlayerNotMoveDebuff CNMD ) { playerNotMoveDebuff = CNMD; }
     public PlayerNotMoveDebuff GetplayerNotMoveDebuff() { return playerNotMoveDebuff; }
-
-
-    // 디버프를 겁니다.
-    public void AddDebuffState(DefaultPlayerSkillDebuff.EnumSkillDebuff ESD , float MaxTime)
-    {
-        if (ESD == DefaultPlayerSkillDebuff.EnumSkillDebuff.STUN)
-        {
-            // 스턴 애니메이션 재생
-            animator.SetBool("StunOnOff", true);
-
-            PlayerStunDebuff playerStunDebuff = gameObject.GetComponent<PlayerStunDebuff>();
-
-            if (playerStunDebuff == null)
-            {
-                playerStunDebuff = gameObject.AddComponent<PlayerStunDebuff>();
-            }
-
-
-            playerStunDebuff.SetMaxDebuffTime(MaxTime);
-            playerStunDebuff.SetNowDebuffTime(0);
-
-        }
-    }
 
 
 

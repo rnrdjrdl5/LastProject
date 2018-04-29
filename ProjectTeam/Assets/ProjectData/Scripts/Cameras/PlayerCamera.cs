@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerCamera : MonoBehaviour {
 
+    
+
 
     private static PlayerCamera playerCamera;
     public static PlayerCamera GetInstance() { return playerCamera; }
@@ -20,7 +22,7 @@ public class PlayerCamera : MonoBehaviour {
 
 
     // 카메라 뷰의 설정.
-    public enum EnumCameraMode { FOLLOW, FREE, SPEEDRUN };
+    public enum EnumCameraMode { FOLLOW, FREE , DRAMATIC};
 
 
     // 카메라 뷰의 설정
@@ -30,6 +32,8 @@ public class PlayerCamera : MonoBehaviour {
     public void SetCameraModeType(PlayerCamera.EnumCameraMode ECM)
     {
         CameraModeType = ECM;
+        Debug.Log("sadf");
+        Debug.Log((EnumCameraMode)ECM);
     }
 
     // 카메라 보간 사용 여부 결정
@@ -74,10 +78,7 @@ public class PlayerCamera : MonoBehaviour {
     // 바꾸면 ptl에 있는 distance도 같은 값으로 유지시켜주기.
     public float CameraDistanceTriangle = 3.5f;
 
-    // 최대 , 최소 떨어지는 거리
-    public float MinCameraDistanceTriangle = 3.0f;
-    public float MaxCameraDistanceTriangle = 10.0f;
-
+  
 
     // 카메라가 땅에서 떨어져 있는 최소 거리
     public float CameraHeightFromFloor = 1.0f;
@@ -157,7 +158,7 @@ public class PlayerCamera : MonoBehaviour {
 
 
         // 상호작용 도중에는 마우스의 x축 회전도 받습니다.
-        if (CameraModeType == EnumCameraMode.FREE)
+        if (CameraModeType == EnumCameraMode.FREE )
         {
             CameraRadX += -(Input.GetAxis("Mouse X")) * Time.deltaTime * CameraRightLeftSpeed;
         }
@@ -166,6 +167,8 @@ public class PlayerCamera : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+        Debug.Log((EnumCameraMode)CameraModeType);
 
         // 키 입력에 따라 각도를 바꾼다.
         SetCameraRad();
@@ -181,7 +184,6 @@ public class PlayerCamera : MonoBehaviour {
 
             
         }
-
 
     }
 
@@ -206,7 +208,12 @@ public class PlayerCamera : MonoBehaviour {
                 FreeCamera();
             }
 
-            
+            else if (CameraModeType == EnumCameraMode.DRAMATIC)
+            {
+                DramaticCamera();
+            }
+
+
 
         }
 
@@ -218,16 +225,20 @@ public class PlayerCamera : MonoBehaviour {
 
     public void FindSeePlayer()
     {
-        // 추가
-        SeePlayerNumber += 1;
-
-        // 오버됬는지 판단
-        if (OverSeePlayer())
+        if (playerCamera.CameraModeType != EnumCameraMode.DRAMATIC)
         {
-            SeePlayerNumber = 0;
-        }
 
-        PlayerObject = photonManager.AllPlayers[SeePlayerNumber];
+            // 추가
+            SeePlayerNumber += 1;
+
+            // 오버됬는지 판단
+            if (OverSeePlayer())
+            {
+                SeePlayerNumber = 0;
+            }
+
+            PlayerObject = photonManager.AllPlayers[SeePlayerNumber];
+        }
     }
 
     public bool OverSeePlayer()
@@ -305,6 +316,32 @@ public class PlayerCamera : MonoBehaviour {
         
     }
 
+    // 옵저버용 카메라
+    void DramaticCamera()
+    {
+
+
+
+
+        /*ObserverMoe OM = PlayerObject.GetComponent<ObserverMoe>();
+
+        float CameraPlayerDistanceX = Mathf.Cos(Mathf.Deg2Rad * OM.PlayerRotationY) * 5.0f;  
+        float CameraPlayerDistanceY = Mathf.Sin(Mathf.Deg2Rad * OM.PlayerRotationY) * 5.0f;  
+
+        float CameraPlayerDistanceX_X = Mathf.Cos(Mathf.Deg2Rad * OM.PlayerRotationX) * CameraPlayerDistanceX;
+        float CameraPlayerDistanceZ = Mathf.Sin(Mathf.Deg2Rad * OM.PlayerRotationX) * CameraPlayerDistanceX; 
+
+
+        transform.position = PlayerObject.transform.position - (Vector3.forward * CameraPlayerDistanceX_X) + Vector3.right * CameraPlayerDistanceZ + Vector3.up * CameraPlayerDistanceY;
+        */
+
+        transform.position = PlayerObject.transform.position - PlayerObject.transform.forward * 0.1f;
+
+        // 플레이어방향으로 전환
+        transform.LookAt(PlayerObject.transform);
+
+
+    }
 
 
     // follow > free 갈 때 보간  
