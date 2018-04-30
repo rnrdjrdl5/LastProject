@@ -124,7 +124,7 @@ GameObject:
   m_Layer: 0
   m_Name: PlayerLocation
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -245,7 +245,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1794012645815192}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.25, y: 0.959, z: 4.5897307}
+  m_LocalPosition: {x: 3.585, y: 0.662, z: 4.407}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4966078862044890}
@@ -261,7 +261,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1898158555621736}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.088, y: -0.375, z: -0.687}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4875858659863966}
@@ -562,6 +562,6 @@ MonoBehaviour:
   ActionType: 1
   InterObjectScore: 30
   PlayerInterPosition: {fileID: 1898158555621736}
-  InterPosType: 2
+  InterPosType: 0
   InterEffect: {fileID: 1970156358003074}
   isCanFirstCheck: 0

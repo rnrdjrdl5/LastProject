@@ -11,6 +11,7 @@ public class TurnOffPanel : MonoBehaviour
     private RectTransform RTF;
 
     private GameObject TurnOffLighting;
+    private GameObject TurnOffBipIcon;
 
     private float TurnOffTime = 3;
 
@@ -33,7 +34,7 @@ public class TurnOffPanel : MonoBehaviour
     private void Start()
     {
         
-        StartCutScene();
+       // StartCutScene();
         
     }
 
@@ -69,6 +70,8 @@ public class TurnOffPanel : MonoBehaviour
         RTF = CartoonLine.GetComponent<RectTransform>();
 
         TurnOffLighting = RTF.transform.Find("TurnOffLighting").gameObject;
+        TurnOffBipIcon = RTF.transform.Find("TurnOffBipIcon").gameObject;
+        Debug.Log(TurnOffLighting);
 
         CoroCutScene = CutScene();
         StartCoroutine(CoroCutScene);
@@ -168,27 +171,36 @@ public class TurnOffPanel : MonoBehaviour
     IEnumerator WaitTime()
     {
 
+        TurnOffBipIcon.SetActive(true);
         int i = 0;
         while (true)
         {
             if (TurnOffLighting.GetActive() == true)
             {
+                Debug.Log("3333");
                 TurnOffLighting.SetActive(false);
             }
-            else
+            else if(TurnOffLighting.GetActive() == false)
             {
+                Debug.Log("444");
                 TurnOffLighting.SetActive(true);
             }
-                i++;
+
 
             if (i < 4)
-                yield return new WaitForSeconds(0.2f);
+            {
+
+                yield return new WaitForSeconds(0.5f);
+            }
             else
             {
+                TurnOffBipIcon.SetActive(false);
                 CoroCutScene = BackMove();
                 StartCoroutine(CoroCutScene);
                 yield break;
             }
+
+            i++;
         }
 
     }

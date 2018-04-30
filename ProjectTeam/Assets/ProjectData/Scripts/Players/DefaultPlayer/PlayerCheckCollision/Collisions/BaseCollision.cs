@@ -423,11 +423,11 @@ public class BaseCollision : Photon.PunBehaviour{
     void RPCCreateEffect(int EffectType)
     {
         GameObject effect = PoolingManager.GetInstance().CreateEffect((PoolingManager.EffctType)EffectType);
-        effect.transform.position = transform.position + Vector3.up * 0.5f;
+        effect.transform.position = transform.position;//+ Vector3.up * 0.5f;
 
         playerHealth.FlushEffect();
 
-        SoundManager.GetInstance().PlayHitSound();
+        SoundManager.GetInstance().PlayHitSound((PoolingManager.EffctType)EffectType);
     }
 
 

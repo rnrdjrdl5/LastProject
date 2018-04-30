@@ -878,6 +878,7 @@ GameObject:
   - component: {fileID: 4271558520137430}
   - component: {fileID: 135268149051650824}
   - component: {fileID: 114589412291734460}
+  - component: {fileID: 54590111566128154}
   m_Layer: 13
   m_Name: EndInterObject
   m_TagString: Untagged
@@ -1751,7 +1752,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1642347960449070}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.817931, y: 0, z: 6.227387}
+  m_LocalPosition: {x: 0.52538455, y: 0, z: -4.407177}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4172144753789772}
@@ -1890,6 +1891,21 @@ Transform:
   m_Father: {fileID: 4487930986293180}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &54590111566128154
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1931785425758132}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!95 &95323169657933814
 Animator:
   serializedVersion: 3
@@ -2034,7 +2050,7 @@ MonoBehaviour:
   ExitInputKey:
     SkillKeyType: 10
   ManaCost: 0
-  CtnManaCost: 33
+  CtnManaCost: 0
   PlayerSkillDebuffs: []
   PlayerRunSpeed: 5.2
 --- !u!114 &114524800735155352

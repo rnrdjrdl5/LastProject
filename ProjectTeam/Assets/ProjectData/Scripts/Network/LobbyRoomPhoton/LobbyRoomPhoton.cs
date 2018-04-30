@@ -163,12 +163,19 @@ public class LobbyRoomPhoton : Photon.PunBehaviour {
             { "CatScore",0 }
         };
 
+        ExitGames.Client.Photon.Hashtable Round = new ExitGames.Client.Photon.Hashtable
+        {
+            { "Round",1 }
+        };
+
         PhotonNetwork.player.SetCustomProperties(PlayerSceneState);
         PhotonNetwork.player.SetCustomProperties(PlayerLoadingState);
         PhotonNetwork.player.SetCustomProperties(PlayerType);
         PhotonNetwork.player.SetCustomProperties(UseBoss);
         PhotonNetwork.player.SetCustomProperties(MouseScore);
         PhotonNetwork.player.SetCustomProperties(CatScore);
+
+        PhotonNetwork.player.SetCustomProperties(Round);
 
 
     }

@@ -59,6 +59,10 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
 
     public List<GameObject> AllPlayers;            // 플레이어들을 가리키는 변수
 
+
+    public GameObject MouseLocation;
+    public GameObject CatLocation;
+
     /**** Private ****/
     private UIManager uIManager;                // UI 매니저
 
@@ -198,6 +202,10 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
     // 모든 상호작용 엎었는가
     bool CheckAllBreak()
     {
+        if (objectManager.InterObj.Count == 0)
+        {
+            return true;
+        }
         return false;
     }
 
@@ -257,7 +265,6 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
 
 
         // 플레이어 Result UI 설정
-        uIManager.SetTimeWatch(true);
         uIManager.SetEndState(true, (UIManager.ResultType)i);
 
 
@@ -417,8 +424,10 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
 
     bool CheckGameEnd()
     {
-        Debug.Log("막음");
-        return false;
+        if (uIManager.scorePanelScript.IsUseNextButton == true)
+            return true;
+        else
+            return false;
     }
 
 
@@ -669,18 +678,20 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
     {
         Debug.Log("qwe");
         // 기존 Result창 꺼주기
-        uIManager.SetTimeWatch(false);
         uIManager.SetEndState(false, (UIManager.ResultType)0);
 
 
         // 스코어창 보여주기
         uIManager.scorePanelScript.ShowScorePanel(true);
 
-        
 
         // 게임 끝나면.
         if (AllPlayCat())
         {
+            // 스코어창에서 추가로 보여주기
+            uIManager.scorePanelScript.ShowScoreNextPanel(true);
+            uIManager.scorePanelScript.ShowScoreEndBackGround(true);
+
 
             condition = new Condition(CheckGameEnd);
             conditionLoop = new ConditionLoop(NoAction);
@@ -714,6 +725,10 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
     [PunRPC]
     void RPCNextRound()
     {
+        int data = (int)PhotonNetwork.player.CustomProperties["Round"];
+
+
+        PhotonNetwork.player.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "Round", data+1 }  });
         PhotonNetwork.LoadLevel(2);
     }
 
@@ -727,7 +742,7 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
         // 고양이는 추가로 고양이가 될 수 없도록 해쉬값 생성
         if (PlayerType == "Cat")
         {
-            CurrentPlayer = PhotonNetwork.Instantiate("Cat/CatBoss", Vector3.zero, Quaternion.identity, 0);
+            CurrentPlayer = PhotonNetwork.Instantiate("Cat/CatBoss", MouseLocation.transform.position, MouseLocation.transform.rotation, 0);
             PhotonNetwork.player.SetCustomProperties(
                 new ExitGames.Client.Photon.Hashtable { { "UseBoss", true } });
 
@@ -740,7 +755,7 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
         }
 
         else if (PlayerType == "Mouse")
-            CurrentPlayer = PhotonNetwork.Instantiate("Mouse/MouseRunner", Vector3.zero, Quaternion.identity, 0);
+            CurrentPlayer = PhotonNetwork.Instantiate("Mouse/MouseRunner", CatLocation.transform.position,CatLocation.transform.rotation, 0);
 
 
         // 생성했다는 의미로 오프셋 사용

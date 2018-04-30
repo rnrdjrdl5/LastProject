@@ -28,8 +28,8 @@ public class OffObjectPhysics : MonoBehaviour {
         if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Floor") && !isCheck)
         {
             isCheck = true;
-            StartCoroutine(CoroOffPhysics);
-
+            // StartCoroutine(CoroOffPhysics);
+            gameObject.layer = LayerMask.NameToLayer("NoPlayerInterEnd");
 
 
             GameObject go;

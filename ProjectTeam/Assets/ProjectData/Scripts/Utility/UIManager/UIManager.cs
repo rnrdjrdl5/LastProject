@@ -45,7 +45,6 @@ public class UIManager : Photon.PunBehaviour {
     private int ForeStarCondition;
     private int FiveStarCondition;
 
-    private bool isUseNextButton = false;
 
 
 
@@ -359,15 +358,6 @@ public class UIManager : Photon.PunBehaviour {
     public void InitResultUI() { ResultUI = GameObject.Find("ResultUI"); }
 
 
-    /**** TimeWatchPanel ****/
-
-    public GameObject TimeWatchPanel { set; get; }
-    public void InitTimeWatchPanel() { TimeWatchPanel = ResultUI.transform.Find("TimeWatchPanel").gameObject; }
-
-    public void SetTimeWatch(bool isActive)
-    {
-        TimeWatchPanel.SetActive(isActive);
-    }
 
     /**** EndStatePanel ****/
 
@@ -573,7 +563,6 @@ public class UIManager : Photon.PunBehaviour {
 
         InitResultUI();
 
-        InitTimeWatchPanel();
 
         InitEndStatePanel();
         InitAllBreakImage();
@@ -673,24 +662,6 @@ public class UIManager : Photon.PunBehaviour {
     }
 
 
-
-
-
-
-
-    /**** UI 이벤트  ****/
-    public void GameEndButtonClick()
-    {
-        /*if (IsGameEnd)
-            IsGameEnd = false;
-        else
-            IsGameEnd = true;
-
-        Debug.Log("end : " + IsGameEnd);*/
-
-
-    }
-
     enum EnumMoveScore { WAIT, MOVE };
     IEnumerator MoveScoreImage(GameObject go)
     {
@@ -709,7 +680,7 @@ public class UIManager : Photon.PunBehaviour {
         // 1. 머무르는 시간
         // 2. 날라가는 시간
 
-    
+
 
         while (true)
         {
@@ -728,7 +699,7 @@ public class UIManager : Photon.PunBehaviour {
                     yield return null;
                 }
             }
-            
+
 
             if (MoveScoreType == EnumMoveScore.MOVE)
             {
@@ -742,6 +713,14 @@ public class UIManager : Photon.PunBehaviour {
                 // 3. 위치가 1 이상이면 오브젝트 풀에 다시 넣고 끝낸다.
                 if (NowTime >= 1.0f)
                 {
+                    GameObject hit = PoolingManager.GetInstance().CreateEffect(PoolingManager.EffctType.STAR_HIT);
+                    //hit.transform.position = camera.worldto
+
+                    Camera c = Camera.main;
+                    Vector3 v3 = c.WorldToScreenPoint(transform.position);
+
+                    hit.transform.position = v3;
+
                     PoolingManager.GetInstance().PushObject(go);
                     yield break;
                 }
@@ -755,6 +734,17 @@ public class UIManager : Photon.PunBehaviour {
 
         }
 
+    }
+
+
+    /**** UI 이벤트  ****/
+
+
+    // UI 이벤트
+
+    public void ClickScoreNextButton()
+    {
+        scorePanelScript.IsUseNextButton = true;
     }
 
 }

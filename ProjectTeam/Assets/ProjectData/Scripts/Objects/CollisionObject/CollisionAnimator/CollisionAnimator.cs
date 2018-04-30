@@ -7,6 +7,11 @@ public class CollisionAnimator : MonoBehaviour {
     private string ObjectName;
 
     Animator animator;
+
+    SphereCollider[] sc;
+    BoxCollider[] bc;
+    CapsuleCollider[] cc;
+
     public void SetAnimatorMode()
     {
         animator = GetComponent<Animator>();
@@ -16,9 +21,9 @@ public class CollisionAnimator : MonoBehaviour {
 
 
 
-        SphereCollider[] sc = GetComponents<SphereCollider>();
-        BoxCollider[] bc = GetComponents<BoxCollider>();
-        CapsuleCollider[] cc = GetComponents<CapsuleCollider>();
+        sc = GetComponents<SphereCollider>();
+        bc = GetComponents<BoxCollider>();
+        cc = GetComponents<CapsuleCollider>();
 
         if (sc != null)
         {
@@ -63,9 +68,7 @@ public class CollisionAnimator : MonoBehaviour {
     {
         animator.SetBool("isAction", false);
 
-        SphereCollider[] sc = GetComponents<SphereCollider>();
-        BoxCollider[] bc = GetComponents<BoxCollider>();
-        CapsuleCollider[] cc = GetComponents<CapsuleCollider>();
+        Debug.Log("asdf");
 
         if (sc != null)
         {

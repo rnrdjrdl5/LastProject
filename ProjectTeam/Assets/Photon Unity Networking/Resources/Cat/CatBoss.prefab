@@ -2747,8 +2747,8 @@ MonoBehaviour:
     CollisionNumber: 1
     ReCheckTime: 1000
     DestroyTime: 3
-    ObjectSpeed: 3
-    ObjectTorque: 3
+    ObjectSpeed: 5
+    ObjectTorque: 300
 --- !u!114 &114664542892535702
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2850,6 +2850,9 @@ MonoBehaviour:
   - Type: 3
     SynchronizeType: 0
     Name: JumpType
+  - Type: 4
+    SynchronizeType: 0
+    Name: StunOnOff
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0

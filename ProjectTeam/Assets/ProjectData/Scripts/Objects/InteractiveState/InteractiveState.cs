@@ -2,23 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InteractiveState : Photon.MonoBehaviour , IPunObservable {
+public class InteractiveState : Photon.MonoBehaviour, IPunObservable {
 
 
     /**** 열거형 ****/
 
     // 물체의 타입
-    public            enum           EnumInteractiveObject
-    { TABLE  = 1 , MIKE , DRAWE , POT , PIANO , POSMEKA , };
+    public enum EnumInteractiveObject
+    { TABLE = 1, MIKE, DRAWE, POT, PIANO, POSMEKA, };
 
     // 물체의 액션 적용 방식
-    public            enum           EnumAction
-    { PHYSICS, ANIMATION , MIX};
+    public enum EnumAction
+    { PHYSICS, ANIMATION, MIX };
 
     // 물체가 애니메이션 일때, 상호작용 거리 타입 
     // 1. 특정위치    2. 특정 거리 
     public enum EnumInterPos
-    { POSITION, DISTANCE , NONE};
+    { POSITION, DISTANCE, NONE };
 
 
 
@@ -30,20 +30,20 @@ public class InteractiveState : Photon.MonoBehaviour , IPunObservable {
 
     [Header(" - 상호작용 시전시간")]
     [Tooltip(" - 상호작용이 완료되기 까지의 시간입니다.(게이지에 사용)")]
-    public           float                          InteractiveTime             = 0.0f; 
+    public float InteractiveTime = 0.0f;
 
-    
-    public           bool                           CanUseObject;                           // 사용자가 이미한번 뒤집었는지 파악하기 위한 용도.
+
+    public bool CanUseObject;                           // 사용자가 이미한번 뒤집었는지 파악하기 위한 용도.
 
     [Header(" - 오브젝트 타입")]
     [Tooltip(" - 오브젝트가 어떤 오브젝트인지 정한다.")]
 
-    
-    public           EnumInteractiveObject          interactiveObjectType;                  // 상호작용 오브젝트 타입
+
+    public EnumInteractiveObject interactiveObjectType;                  // 상호작용 오브젝트 타입
 
     [Header(" - 액션 타입")]
     [Tooltip(" - 어떤 액션인지 판단한다.")]
-    public           EnumAction                     ActionType;                             // 상호작용 액션 타입
+    public EnumAction ActionType;                             // 상호작용 액션 타입
 
     [Header(" - 점수")]
     [Tooltip(" - 점수 획득량")]
@@ -69,21 +69,20 @@ public class InteractiveState : Photon.MonoBehaviour , IPunObservable {
     /**** private ****/
 
 
-    public          bool           isCanFirstCheck;                                        // 플레이어가 상호작용을 누를 수 있는지 가능성
-    private          int            playerViewID;                                           // 플레이어 스킬을 찾기 위한 id 저장용
+    public bool isCanFirstCheck;                                        // 플레이어가 상호작용을 누를 수 있는지 가능성
+    private int playerViewID;                                           // 플레이어 스킬을 찾기 위한 id 저장용
 
 
-    private          NewInteractionSkill            newInteractionSkill;                    // 플레이어 스킬을 가진 스크립트
+    private NewInteractionSkill newInteractionSkill;                    // 플레이어 스킬을 가진 스크립트
     private ObjectManager objectManager;                // 플레이어 오브젝트 관리  매니저
 
-    private         bool            isPlayerAction = false;                              // 해당 플레이어 액션 했는지 여부
+    private bool isPlayerAction = false;                              // 해당 플레이어 액션 했는지 여부
 
     private Animator animator;
 
-    public Animator Getanimator() { return animator; }
-
     public float InterPositionDis { get; set; }          // 플레이어 상호작용 거리
 
+    public List<Material> InterMaterials; // 메테리얼 저장
 
     /**** 접근자 ****/
 
@@ -98,7 +97,12 @@ public class InteractiveState : Photon.MonoBehaviour , IPunObservable {
     }
 
     public bool GetisCanFirstCheck() { return isCanFirstCheck; }
-    public void SetisCanFirstCheck(bool CFC){isCanFirstCheck = CFC;}
+    public void SetisCanFirstCheck(bool CFC) { isCanFirstCheck = CFC; }
+
+    public List<Material> GetInterMaterials() { return InterMaterials; }
+
+
+
 
 
 
@@ -109,6 +113,8 @@ public class InteractiveState : Photon.MonoBehaviour , IPunObservable {
 
     private void Awake()
     {
+        InterMaterials = new List<Material>();
+
         CanUseObject = true;        // 반투명 아닌 상태
         isCanFirstCheck = true;     // 첫 상호작용 사용 가능
 
@@ -122,7 +128,17 @@ public class InteractiveState : Photon.MonoBehaviour , IPunObservable {
         if (InterPosType != EnumInterPos.NONE)
             InterPositionDis = (PlayerInterPosition.transform.position - transform.position).magnitude;
 
+        MeshRenderer[] mrs = gameObject.GetComponentsInChildren<MeshRenderer>();
+
+        for (int i = 0; i < mrs.Length; i++)
+        {
+            InterMaterials.Add(mrs[i].material);
+        }
+
+
     }
+
+    
 
     void IPunObservable.OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
@@ -181,7 +197,18 @@ public class InteractiveState : Photon.MonoBehaviour , IPunObservable {
         }
     }
 
+    public bool FindnterObjectMaterial(Material m)
+    {
+        
 
+        for (int i = 0; i < InterMaterials.Count; i++)
+        {
+            if (InterMaterials[i].name == m.name)
+                return true;
+
+        }
+        return false;
+    }
 
 
 
@@ -311,8 +338,8 @@ public class InteractiveState : Photon.MonoBehaviour , IPunObservable {
         // 리스트에서 해당 오브젝트 삭제
         objectManager.RemoveObject(photonView.viewID);
 
-            // 충돌체크 변경
-            gameObject.layer = LayerMask.NameToLayer("NoCollisionPlayer");
+        // 플레이어와의 충돌은 없애고, 상호작용탐지도 없앤다.
+        gameObject.layer = LayerMask.NameToLayer("NoPlayerIntering");
 
             // 물리 컴포넌트 받기
             TablePhysics tablePhysics = GetComponent<TablePhysics>();
@@ -332,7 +359,7 @@ public class InteractiveState : Photon.MonoBehaviour , IPunObservable {
         objectManager.RemoveObject(photonView.viewID);
 
         // 충돌체크 삭제
-        Destroy(gameObject.GetComponent<BoxCollider>());
+        //Destroy(gameObject.GetComponent<BoxCollider>());
 
         // 3. 사용했다고 처리
         // ( 애니메이션에서 exit 되어도 물체 돌리지 않음 )  
@@ -350,11 +377,14 @@ public class InteractiveState : Photon.MonoBehaviour , IPunObservable {
     // 모든 대상
     // 상호작용 애니메이션 을 킨다.
     // 층돌 레이어를 변경한다.
+
+        // 사용 초반
     [PunRPC]
     public void RPCActionAnimation()
     {
         // 충돌레이어 변경
-        gameObject.layer = LayerMask.NameToLayer("NoCollisionPlayer");
+        // 플레이어와의 충돌은 없애고, 상호작용탐지도 없앤다.
+        gameObject.layer = LayerMask.NameToLayer("NoPlayerIntering");
 
         animator.SetBool("isAction", true);
 
@@ -397,6 +427,12 @@ public class InteractiveState : Photon.MonoBehaviour , IPunObservable {
     {
         GameObject go = PoolingManager.GetInstance().CreateEffect(PoolingManager.EffctType.SMALL_DUST_SMALL);
         go.transform.position = InterEffect.transform.position;
+    }
+
+    public void InterAniSetLayer()
+    {
+
+        gameObject.layer = LayerMask.NameToLayer("NoPlayerInterEnd");
     }
 
 }

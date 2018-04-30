@@ -117,9 +117,12 @@ public class CatTrap : DefaultNewSkill
             // 최대 갯수랑 같거나 많으면 리스트에서 하나씩 삭제함.
             else
             {
+                Debug.Log("아.");
+
                 Debug.Log("리스트 크기 : " + Traps.Count);
                 Traps[0].GetComponent<Animator>().SetBool("isAction", false);
                 photonView.RPC("RPCEraseTrap", PhotonTargets.All, Traps[0].GetComponent<ObjectIDScript>().ID);
+                break;
             }
         }
     }
@@ -164,9 +167,11 @@ public class CatTrap : DefaultNewSkill
     void RPCEraseTrap(int ID)
     {
 
+        Debug.Log("ID ! : " + ID);
         GameObject go = PoolingManager.GetInstance().FindObjectUseObjectID(ID);
         Debug.Log("go : " + go);
 
+        go.GetComponent<CollisionObject>().ResetSkillOption();
 
         PoolingManager.GetInstance().PushObject(go);
 

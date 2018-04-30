@@ -168,7 +168,6 @@ public class PlayerCamera : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        Debug.Log((EnumCameraMode)CameraModeType);
 
         // 키 입력에 따라 각도를 바꾼다.
         SetCameraRad();

@@ -105,10 +105,10 @@ public class TablePhysics : MonoBehaviour {
         // N초 뒤
         yield return new WaitForSeconds(CreateOffPhysicsObjectTime);
 
-        // 보조 오브젝트 NoCollision으로 변경
+        // 플레이어와의 충돌은 없애고, 상호작용탐지도 없앤다.
         for (int i = 0; i < subObjects.Length; i++)
         {
-            subObjects[i].layer = LayerMask.NameToLayer("NoCollisionPlayer");
+            subObjects[i].layer = LayerMask.NameToLayer("NoPlayerIntering");
         }
 
         // 이 오브젝트에도 물리 제거 스크립트 등록

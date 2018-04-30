@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class NewSpeedRun : DefaultNewSkill {
 
+
+
     
 
     /**** public ****/
@@ -21,6 +23,8 @@ public class NewSpeedRun : DefaultNewSkill {
 
     private PlayerMove playerMove;               // 플레이어 이동 스크립트
     private PlayerCamera playerCamera;          // 플레이어 카메라 스크립트
+
+    IEnumerator CoroEffect;
 
     /**** 접근자 ****/
 
@@ -43,6 +47,7 @@ public class NewSpeedRun : DefaultNewSkill {
 
     protected override void Awake()
     {
+
         // 부모에서 설정
         base.Awake();
 
@@ -77,8 +82,11 @@ public class NewSpeedRun : DefaultNewSkill {
 
     public override void UseSkill()
     {
-        
-        // 1. 플레이어 기존 이동속도 저장
+
+        CoroEffect = CreateMoveEffect();
+        StartCoroutine(CoroEffect);
+
+           // 1. 플레이어 기존 이동속도 저장
         PlayerOriginalSpeed = playerMove.PlayerSpeed;
         PlayerOriginalBackSpeed = playerMove.PlayerBackSpeed;
 
@@ -109,8 +117,12 @@ public class NewSpeedRun : DefaultNewSkill {
         {
             Effect = PoolingManager.GetInstance().CreateEffect(PoolingManager.EffctType.MOUSE_START_DASH);
         }
+
         Effect.transform.position = transform.position;
-        Effect.transform.Rotate(Vector3.up, 90.0f);
+
+
+
+
 
     }
 
@@ -149,11 +161,17 @@ public class NewSpeedRun : DefaultNewSkill {
 
     public override void ExitCtnSkill()
     {
+
+
         Debug.Log("사라짐");
+        StopCoroutine(CoroEffect);
+
 
         // 1. 이동속도 원래대로 돌림
         playerMove.PlayerSpeed = PlayerOriginalSpeed;
         playerMove.PlayerBackSpeed = PlayerOriginalBackSpeed;
+
+
 
         // 2. 애니메이션 일반 상태로 돌림
         animator.SetBool("isSpeedRun", false);
@@ -165,5 +183,16 @@ public class NewSpeedRun : DefaultNewSkill {
         CheckTime = 0.0f;
 
     }
+
+    IEnumerator CreateMoveEffect()
+    {
+        while (true)
+        {
+            GameObject go = PoolingManager.GetInstance().CreateEffect(PoolingManager.EffctType.MOUSE_DASH);
+            go.transform.position = transform.position;
+            yield return new WaitForSeconds(0.33f);
+        }
+    }
+    
 
 }

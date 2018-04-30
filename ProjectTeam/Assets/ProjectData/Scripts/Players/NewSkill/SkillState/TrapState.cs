@@ -53,6 +53,7 @@ public class TrapState{
         {
             CollisionObjectDamageScript.SetObjectDamage(ObjectDamage);
             CollisionObjectDamageScript.SetObjectDamageNumber(ObjectDamageNumber);
+            CollisionObjectDamageScript.EffectType = PoolingManager.EffctType.TRAP_EFFECT;
         }
 
         if (CollisionObjectTimeScript != null)

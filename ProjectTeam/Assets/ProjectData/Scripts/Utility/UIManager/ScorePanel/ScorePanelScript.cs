@@ -18,7 +18,7 @@ public class ScorePanelScript{
 
     public GameObject ScoreDefaultPanel { get; set; }
 
-
+    public Text ScoreRoundText { get; set; }
 
     public GameObject ScorePlayerSlotPanel { get; set; }
     public GameObject[] PlayerSlot { get; set; }
@@ -42,6 +42,18 @@ public class ScorePanelScript{
     public GameObject ScoreTotalPanel { get; set; }
     public Text[] PlayerTotalScore { get; set; }
 
+    public GameObject ScoreNextPanel { get; set; }
+    public GameObject ScoreNextButton { get; set; }
+    public bool IsUseNextButton { get; set; }
+
+
+    public GameObject ScoreEndBackGround { get; set; }
+
+    public GameObject ScoreMeArrowPanel { get; set; }
+    public Image[] PlayerArrow { get; set; }
+
+
+
 
     /***** 추가적으로 본인 플레이어 슬롯 색상 변경을 위해 image 컴포넌트 받아옴. ******/
     public Image[] PlayerSlotImage;
@@ -60,8 +72,10 @@ public class ScorePanelScript{
         GameObject resultUI = GameObject.Find("ResultUI");
         ScorePanel = resultUI.transform.Find("ScorePanel").gameObject;
 
-        ScoreDefaultPanel = ScorePanel.transform.Find("ScoreDefaultPanel").gameObject;
 
+
+        ScoreDefaultPanel = ScorePanel.transform.Find("ScoreDefaultPanel").gameObject;
+        ScoreRoundText = ScoreDefaultPanel.transform.Find("ScoreRoundText").gameObject.GetComponent<Text>();
 
 
 
@@ -135,6 +149,21 @@ public class ScorePanelScript{
 
 
 
+        ScoreNextPanel = ScorePanel.transform.Find("ScoreNextPanel").gameObject;
+
+        ScoreNextButton = ScoreNextPanel.transform.Find("ScoreNextButton").gameObject;
+
+        ScoreEndBackGround = ScorePanel.transform.Find("ScoreEndBackGround").gameObject;
+
+
+        ScoreMeArrowPanel = ScorePanel.transform.Find("ScoreMeArrowPanel").gameObject;
+
+        PlayerArrow = new Image[MaxUISlot];
+        for (int i = 0; i < MaxUISlot; i++)
+        {
+            PlayerArrow[i] = ScoreMeArrowPanel.transform.Find("PlayerArrow" + (i + 1).ToString()).gameObject.GetComponent<Image>();
+        }
+
 
 
         /****** 추가적으로 플레이어 슬롯 색상 변경을 위해 실시. *******/
@@ -152,6 +181,15 @@ public class ScorePanelScript{
         ScorePanel.SetActive(isActive);
     }
 
+    public void ShowScoreNextPanel(bool isActive)
+    {
+        ScoreNextPanel.SetActive(isActive);
+    }
+
+    public void ShowScoreEndBackGround(bool isActive)
+    {
+        ScoreEndBackGround.SetActive(isActive);
+    }
 
 
 
@@ -211,11 +249,6 @@ public class ScorePanelScript{
         UpdatePlayerSlot();
     }
 
-    public void UpdateMineSlot()
-    {
-        // 버그, 색상 변경안됨.
-       
-    }
 
 
 
@@ -294,6 +327,61 @@ public class ScorePanelScript{
     }
 
 
+    public void UpdateMineSlot()
+    {
+        for (int i = 0; i < MaxUISlot; i++)
+        {
+            if (i < PhotonNetwork.playerList.Length)
+            {
+
+                if (UIManager.GetInstance().Players[i].ID == PhotonNetwork.player.ID)
+                {
+
+                    PlayerSlotImage[i].color = new Color(0.99f, 0.17f, 0.0f, 1.0f);
+                }
+                else
+                {
+                    PlayerSlotImage[i].color = Color.white;
+                }
+            }
+
+            else
+            {
+                PlayerSlotImage[i].color = Color.white;
+            }
+        }
+    }
+
+    public void UpdateMeArrow()
+    {
+        for (int i = 0; i < MaxUISlot; i++)
+        {
+            if (i < PhotonNetwork.playerList.Length)
+            {
+                if (UIManager.GetInstance().Players[i].ID == PhotonNetwork.player.ID)
+                {
+                    PlayerArrow[i].enabled = true;
+                }
+                else
+                {
+                    PlayerArrow[i].enabled = false;
+                }
+            }
+
+            else
+            {
+
+                PlayerArrow[i].enabled = false;
+            }
+
+        }
+    }
+
+    public void UpdateScoreRound()
+    {
+        int RoundData = (int)PhotonNetwork.player.CustomProperties["Round"];
+        ScoreRoundText.text = RoundData.ToString();
+    }
 
     public void UpdateScores()
     {
@@ -304,6 +392,9 @@ public class ScorePanelScript{
         UpdateIconSlots();
 
         UpdateMineSlot();
+        UpdateMeArrow();
+        UpdateScoreRound();
     }
+
 
 }

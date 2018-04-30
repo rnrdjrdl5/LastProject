@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EndInterObject : MonoBehaviour
 {
+
+
     private PhotonView pv;
 
 
@@ -28,42 +30,120 @@ public class EndInterObject : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Interaction")
+         if (other.tag == "Interaction")
+         {
+
+
+             // 해당 스크립트를 받아옵니다.
+             InteractiveState IS = other.gameObject.GetComponent<InteractiveState>();
+
+            if (IS != null)
+            {
+                
+                // 사용 불가능하면
+                if (!IS.GetCanUseObject())
+                {
+
+                    // 반투명 키는 부분
+                    for (int i = 0; i < IS.GetInterMaterials().Count; i++)
+                    {
+
+                        Color color = new Color(IS.GetInterMaterials()[i].color.r,
+                            IS.GetInterMaterials()[i].color.g,
+                            IS.GetInterMaterials()[i].color.b,
+                            0.2f);
+
+                        IS.GetInterMaterials()[i].color = color;
+                    }
+
+                    Debug.Log(" 반투명 시작!");
+                }
+            }
+         }
+
+        /*// 해당 스크립트를 받아옵니다.
+        InteractiveState IS = other.gameObject.GetComponent<InteractiveState>();
+
+        if (IS != null)
         {
 
 
-            // 해당 스크립트를 받아옵니다.
-            InteractiveState IS = other.gameObject.GetComponent<InteractiveState>();
-
-            // 사용 불가능하면
-            if (!IS.GetCanUseObject())
+            // 반투명 키는 부분
+            for (int i = 0; i < IS.GetInterMaterials().Count; i++)
             {
 
-                // 반투명 키는 부분
+                Color color = new Color(IS.GetInterMaterials()[i].color.r,
+                    IS.GetInterMaterials()[i].color.g,
+                    IS.GetInterMaterials()[i].color.b,
+                    0.3f);
 
-                Debug.Log(" 반투명 시작!");
+                IS.GetInterMaterials()[i].color = color;
             }
-        }
+
+            Debug.Log(" 반투명 시작!");
+
+        }*/
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (other.tag == "Interaction")
         {
+
             // 해당 스크립트를 받아옵니다.
             InteractiveState IS = other.gameObject.GetComponent<InteractiveState>();
 
-            if (!IS.GetCanUseObject())
+            if (IS != null)
             {
 
-                // 반투명 꺼지는 부분
+                if (!IS.GetCanUseObject())
+                {
 
-                Debug.Log(" 반투명 off");
+                    // 반투명 꺼지는 부분
+                    // 반투명 키는 부분
+                    // 반투명 키는 부분
+                    for (int i = 0; i < IS.GetInterMaterials().Count; i++)
+                    {
+
+                        Color color = new Color(IS.GetInterMaterials()[i].color.r,
+                            IS.GetInterMaterials()[i].color.g,
+                            IS.GetInterMaterials()[i].color.b,
+                            1.0f);
+
+                        IS.GetInterMaterials()[i].color = color;
+                    }
+
+                    Debug.Log(" 반투명 off");
+                }
+
             }
-
         }
+
+        /*
+        // 해당 스크립트를 받아옵니다.
+        InteractiveState IS = other.gameObject.GetComponent<InteractiveState>();
+
+
+        if (IS != null)
+        {
+            // 반투명 키는 부분
+            for (int i = 0; i < IS.GetInterMaterials().Count; i++)
+            {
+
+
+                Color color = new Color(IS.GetInterMaterials()[i].color.r,
+                    IS.GetInterMaterials()[i].color.g,
+                    IS.GetInterMaterials()[i].color.b,
+                    1.0f);
+
+                IS.GetInterMaterials()[i].color = color;
+            }
+        }
+
+
+        Debug.Log(" 반투명 off");*/
     }
-
-
-
 }
+
+
+

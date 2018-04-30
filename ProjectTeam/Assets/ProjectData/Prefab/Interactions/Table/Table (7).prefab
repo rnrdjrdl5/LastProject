@@ -3278,7 +3278,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1253090583157002}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.834, y: 0, z: 1.3}
+  m_LocalPosition: {x: 7.9638205, y: 0, z: 5.154}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4534912571486930}
@@ -4589,7 +4589,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 2b9447083623cbf448695b6b503ce578, type: 2}
+  - {fileID: 2100000, guid: af6ea6bac456d3447bab4cb9a24202d4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7547,7 +7547,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 11f0e9ecd40b0c041a5065e01bc893e1, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9230,6 +9230,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   OffTime: 2
+  PhysicsObjectType: 0
 --- !u!114 &114365401771545376
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -9242,6 +9243,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   OffTime: 2
+  PhysicsObjectType: 0
 --- !u!114 &114507831208348450
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -9257,6 +9259,10 @@ MonoBehaviour:
   CanUseObject: 0
   interactiveObjectType: 1
   ActionType: 0
+  InterObjectScore: 0
+  PlayerInterPosition: {fileID: 0}
+  InterPosType: 2
+  InterEffect: {fileID: 0}
   isCanFirstCheck: 0
 --- !u!114 &114533260789357512
 MonoBehaviour:
@@ -9270,6 +9276,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   OffTime: 2
+  PhysicsObjectType: 0
 --- !u!114 &114763130788513878
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -9308,3 +9315,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   OffTime: 2
+  PhysicsObjectType: 0

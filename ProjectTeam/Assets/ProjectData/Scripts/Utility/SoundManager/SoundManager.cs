@@ -46,9 +46,12 @@ public class SoundManager : MonoBehaviour {
         audioSource[0].Play();
     }
 
-    public void PlayHitSound()
+    public void PlayHitSound(PoolingManager.EffctType effctType)
     {
-        audioSource[1].PlayOneShot(FrypanHit[Random.Range(0, FrypanHit.Length)]);
+        if (PoolingManager.EffctType.ATTACK == effctType)
+        {
+            audioSource[1].PlayOneShot(FrypanHit[Random.Range(0, FrypanHit.Length)]);
+        }
     }
 
 }

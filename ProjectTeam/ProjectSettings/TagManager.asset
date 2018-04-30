@@ -19,8 +19,8 @@ TagManager:
   - 
   - Floor
   - MainObject
-  - 
-  - NoCollisionPlayer
+  - NoPlayerIntering
+  - NoPlayerInterEnd
   - Player
   - EndInterObject
   - 

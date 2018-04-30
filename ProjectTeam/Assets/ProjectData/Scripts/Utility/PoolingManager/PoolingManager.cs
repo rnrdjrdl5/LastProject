@@ -12,7 +12,12 @@ public class PoolingManager : MonoBehaviour {
 
         BIGDUST_BIG, BIGDUST_SMALL, MIDDLEDUST_BIG , MIDDLEDUST_SMALL , SMALL_DUST_SMALL,
 
-        MOUSE_START_DASH
+        STAR_BREAK , STAR_HIT,
+
+        MOUSE_START_DASH , MOUSE_DASH,
+
+        TRAP_EFFECT
+
     }
 
     public GameObject CreateEffect(EffctType effectType)
@@ -52,6 +57,20 @@ public class PoolingManager : MonoBehaviour {
             case EffctType.MOUSE_START_DASH:
                 effect = PopObject("FX_KDH_Prefab_MouseStartDash");
                 break;
+            case EffctType.STAR_HIT:
+                effect = PopObject("UI_Star_Hit_Effect");
+                break;
+            case EffctType.STAR_BREAK:
+                effect = PopObject("UI_Star_Brake_Effect");
+                break;
+            case EffctType.MOUSE_DASH:
+                effect = PopObject("FX_KDH_Prefab_MouseDash");
+                break;
+            case EffctType.TRAP_EFFECT:
+                effect = PopObject("FX_YSK_Trap_Effect");
+                break;
+
+
 
 
 
