@@ -17,7 +17,7 @@ public partial class PlayerMove
         playerCamera = PlayerCamera.GetInstance();
         newInteractionSkill = GetComponent<NewInteractionSkill>();
         findObject = GetComponent<FindObject>();
-        timeBar = GetComponent<TimeBar>();
+      //  timeBar = GetComponent<TimeBar>();
         playerHealth = GetComponent<PlayerHealth>();
 
         if (playerCamera == null)
@@ -553,12 +553,18 @@ public partial class PlayerMove
             {
                 newInteractionSkill.GetinteractiveState().CallRPCCancelActionAnimation();
             }
-
-
             // FIndObject의 활성화 탐지 시작
             findObject.SetisUseFindObject(true);
 
-            timeBar.DestroyObjects();
+
+            //timeBar.DestroyObjects()
+            //      Debug.Log(UIManager.GetInstance().timerBarPanelScript.DestroyTimebar());
+            UIManager.GetInstance().timerBarPanelScript.DestroyTimebar();
+
+
+
+            Debug.Log(UIManager.GetInstance());
+            //.DestroyTimebar();
 
 
             // 1. 카메라를 따라가는 상태로 변경.

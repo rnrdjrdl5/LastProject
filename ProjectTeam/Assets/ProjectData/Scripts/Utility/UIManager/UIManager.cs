@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class UIManager : Photon.PunBehaviour {
 
     public ScorePanelScript scorePanelScript { get; set; }
+    public TimeBarPanelScript timerBarPanelScript { get; set; }
 
 
 
@@ -406,6 +407,7 @@ public class UIManager : Photon.PunBehaviour {
     public GameObject InGameCanvas { get; set; }
     public void InitInGameCanvas() { InGameCanvas = GameObject.Find("InGameCanvas"); }
 
+
     public GameObject GetScorePanel { get; set; }
     public void InitGetScorePanel() { GetScorePanel = InGameCanvas.transform.Find("GetScorePanel").gameObject; }
 
@@ -569,13 +571,22 @@ public class UIManager : Photon.PunBehaviour {
         InitAllKillImage();
         InitTimeOverImage();
 
+
+
+
         InitInGameCanvas();
 
         InitGetScorePanel();
 
+
+
+
         // 스코어 패널 관련 내용 스크립트로 따로 처리
         scorePanelScript = new ScorePanelScript();
         scorePanelScript.InitData(MaxUISlot);
+
+        timerBarPanelScript = new TimeBarPanelScript();
+        timerBarPanelScript.InitData();
 
 
     }
@@ -598,6 +609,10 @@ public class UIManager : Photon.PunBehaviour {
 
         CheckRestUI(ObjectPersent);
         SetNowMouseImage();
+
+
+        /***** TimeBar 갱신 *****/
+        timerBarPanelScript.UpdateTimeBar();
 
     }
 

@@ -19,7 +19,7 @@ public class NewInteractionSkill : Photon.MonoBehaviour, IPunObservable {
     private Animator animator;                           // 애니메이터 컴포넌트
 
     private FindObject findObject;                         // 탐지 정보
-    private TimeBar timeBar;                            // 타임 바 정보
+    //private TimeBar timeBar;                            // 타임 바 정보
     private PlayerCamera playerCamera;                       // 카메라 정보
     private PlayerState playerState;                        // 플레이어 상태 정보
     private InteractiveState interactiveState;                   // 상호작용 물체 정보
@@ -55,7 +55,7 @@ public class NewInteractionSkill : Photon.MonoBehaviour, IPunObservable {
         animator = GetComponent<Animator>();                                      // 애니메이터 설정
 
         findObject = GetComponent<FindObject>();                                    // 탐지 오브젝트 설정
-        timeBar = GetComponent<TimeBar>();                                       // 타임바 설정
+        //timeBar = GetComponent<TimeBar>();                                       // 타임바 설정
         //playerCamera = GameObject.Find("PlayerCamera").GetComponent<PlayerCamera>();  // 카메라 설정
         playerCamera = PlayerCamera.GetInstance();
         playerState = GetComponent<PlayerState>();                                   // 플레이어 상태 설정
@@ -120,10 +120,12 @@ public class NewInteractionSkill : Photon.MonoBehaviour, IPunObservable {
                         findObject.BackDefault();
 
                         // 4. 카메라 설정 변경
-                        
 
-                        // 5. 타임 바 기본으로 설정
-                        BaseTimeBarScript();
+
+                        // 5. 타임 바 보이게하고, 정보 설정함
+                        //                        BaseTimeBarScript();
+                        UIManager.GetInstance().timerBarPanelScript.PreTimeBar(
+                            interactiveState.InteractiveTime);
 
                         // 6. 상태 NONE 으로 변경
                         playerState.SetPlayerCondition(PlayerState.ConditionEnum.NONE);
@@ -303,9 +305,12 @@ public class NewInteractionSkill : Photon.MonoBehaviour, IPunObservable {
         return false;
     }
 
-    // 타임 바 기본 설정
+   /* // 타임 바 기본 설정
     private void BaseTimeBarScript()
     {
+        UIManager.GetInstance().TimeBarPanel.SetActive();
+
+
         // 타임바 패널을 생성합니다.
         timeBar.CreateTimeBarPanel();
 
@@ -315,7 +320,7 @@ public class NewInteractionSkill : Photon.MonoBehaviour, IPunObservable {
 
         // 타임바 카운트를 시작합니다.
         timeBar.SetisCount(true);
-    }
+    }*/
 
     // 스킬 탈출로 인한 첫상태로 복구 , 애니메이션 스테이트 동일내용사용, 이 함수를 쓰지는 않음
     private void ResetSkill()
@@ -324,7 +329,8 @@ public class NewInteractionSkill : Photon.MonoBehaviour, IPunObservable {
         findObject.SetisUseFindObject(true);
 
         // 타임바 파괴
-        timeBar.DestroyObjects();
+        //timeBar.DestroyObjects();
+        UIManager.GetInstance().timerBarPanelScript.DestroyTimebar();
 
         // 카메라 원래대로 복귀
         playerCamera.SetCameraModeType(PlayerCamera.EnumCameraMode.FOLLOW);
@@ -370,7 +376,8 @@ public class NewInteractionSkill : Photon.MonoBehaviour, IPunObservable {
             // FIndObject의 활성화 탐지 시작
             findObject.SetisUseFindObject(true);
 
-            timeBar.DestroyObjects();
+            //timeBar.DestroyObjects();
+            UIManager.GetInstance().timerBarPanelScript.DestroyTimebar();
 
 
             // 1. 카메라를 따라가는 상태로 변경.

@@ -54,7 +54,7 @@ public partial class PlayerMove
     private CharacterController characterController;                // 캐릭터 컨트롤러
     private NewInteractionSkill newInteractionSkill;            // 상호작용
     private FindObject findObject;                      // 탐지
-    private TimeBar timeBar;                // 타임바 , **** 나중에 반드시 바뀔것임.
+    //private TimeBar timeBar;                // 타임바 , **** 나중에 반드시 바뀔것임.
     private PlayerHealth playerHealth;
 
     private Vector3 MoveDir = Vector3.zero;             // 플레이어 이동속도

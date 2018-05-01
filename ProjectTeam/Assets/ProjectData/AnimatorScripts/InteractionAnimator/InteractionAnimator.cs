@@ -6,7 +6,7 @@ public class InteractionAnimator : StateMachineBehaviour {
 
     private PlayerCamera playerCamera;
     private FindObject findObject;
-    private TimeBar timeBar;
+    //private TimeBar timeBar;
     private PlayerState playerState;
     private InteractiveState interactiveState;
     private NewInteractionSkill newInteractionSkill;
@@ -24,7 +24,7 @@ public class InteractionAnimator : StateMachineBehaviour {
 
             findObject = animator.gameObject.GetComponent<FindObject>();
 
-            timeBar = animator.gameObject.GetComponent<TimeBar>();
+         //   timeBar = animator.gameObject.GetComponent<TimeBar>();
 
             playerState = animator.gameObject.GetComponent<PlayerState>();
     }
