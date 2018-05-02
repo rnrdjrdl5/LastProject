@@ -173,6 +173,15 @@ public class ScorePanelScript{
             PlayerSlotImage[i] = PlayerSlot[i].GetComponent<Image>();
         }
 
+
+
+        /***** 이벤트 등록 *****/
+        UIManager.GetInstance().UpdateEvent += CheckShowScorePanel;
+
+        UIManager.GetInstance().UpdateEvent += UpdateScores;
+
+
+
     }
 
     public void ShowScorePanel(bool isActive)
@@ -383,18 +392,47 @@ public class ScorePanelScript{
         ScoreRoundText.text = RoundData.ToString();
     }
 
+
+
+
+
+    // UIManager 이벤트 등록 함수 //
     public void UpdateScores()
     {
-        UpdatePlayerName();
-        UpdateMouseScore();
-        UpdateCatScore();
-        UpdateTotalScore();
-        UpdateIconSlots();
+        if (ScorePanel.GetActive())
+        {
+            UpdatePlayerName();
+            UpdateMouseScore();
+            UpdateCatScore();
+            UpdateTotalScore();
+            UpdateIconSlots();
 
-        UpdateMineSlot();
-        UpdateMeArrow();
-        UpdateScoreRound();
+            UpdateMineSlot();
+            UpdateMeArrow();
+            UpdateScoreRound();
+        }
     }
 
+    public void CheckShowScorePanel()
+    {
+        if (IsUseScoreUI)
+        {
+
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+
+                if (ScorePanel.GetActive() == false)
+                {
+                    ShowScorePanel(true);
+                }
+
+                else
+                {
+                    ShowScorePanel(false);
+                }
+            }
+
+        }
+    }
 
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InteractiveState : Photon.MonoBehaviour, IPunObservable {
 
@@ -172,7 +173,9 @@ public class InteractiveState : Photon.MonoBehaviour, IPunObservable {
 
 
             // 개인 점수 생성 
-            UIManager.GetInstance().CreateScoreImage(InterObjectScore);
+            // UIManager.GetInstance().CreateScoreImage(InterObjectScore);
+
+            CreateScore();
 
             Debug.Log("asd");
        
@@ -435,5 +438,16 @@ public class InteractiveState : Photon.MonoBehaviour, IPunObservable {
         gameObject.layer = LayerMask.NameToLayer("NoPlayerInterEnd");
     }
 
+
+    public void CreateScore()
+    {
+        GameObject getScoreText = PoolingManager.GetInstance().PopObject("GetScoreText");
+
+        //2. 부모 설정
+        getScoreText.transform.SetParent(UIManager.GetInstance().getScoreImageScript.GetScorePanel.transform);
+
+        //3. 함수 실행
+        getScoreText.GetComponent<GetScoreText>().CreateScore(InterObjectScore);
+    }
 }
 

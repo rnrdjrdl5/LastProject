@@ -8,20 +8,13 @@ public partial class PlayerHealth : Photon.PunBehaviour, IPunObservable
     
     private void Awake()
     {
-        SetAwake();
+        if(gameObject.GetPhotonView().isMine)
+            SetAwake();
 
     }
 
     public void Update()
-
     {
-
-        if (photonView.isMine)
-        {
-            
-            NowHPImage.fillAmount = NowHealth / MaxHealth;
-        }
-
         if (isHiting)
         {
             if (NowHiting + Time.deltaTime >= MaxHiting)

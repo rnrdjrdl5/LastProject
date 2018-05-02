@@ -7,7 +7,8 @@ public partial class PlayerManaPoint : MonoBehaviour{
 
     private void Awake()
     {
-        SetAwake();   
+        if(gameObject.GetPhotonView().isMine)
+            SetAwake();   
     }
 
     private void Update()
@@ -17,7 +18,6 @@ public partial class PlayerManaPoint : MonoBehaviour{
         if (gameObject.GetPhotonView().isMine)
         {
             ReTimeMana();
-            NowMPImage.fillAmount = NowManaPoint / MaxManaPoint;
         }
 
     }

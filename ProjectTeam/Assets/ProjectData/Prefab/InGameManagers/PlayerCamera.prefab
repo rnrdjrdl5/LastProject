@@ -127,8 +127,6 @@ MonoBehaviour:
   MinCameraRad: -20
   MaxCameraRad: 45
   CameraDistanceTriangle: 3.5
-  MinCameraDistanceTriangle: 1.5
-  MaxCameraDistanceTriangle: 7.5
   CameraHeightFromFloor: 1
   CameraUpDownSpeed: 15
   CameraRightLeftSpeed: 50

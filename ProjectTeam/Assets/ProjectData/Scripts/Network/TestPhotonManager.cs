@@ -96,8 +96,8 @@ public class TestPhotonManager : Photon.PunBehaviour
                 CurrentPlayer = PhotonNetwork.Instantiate("Cat/CatBoss", PlayerSpawnLocation.transform.position, Quaternion.identity, 0);
 
             uIManager = CurrentPlayer.GetComponent<UIManager>();
-            uIManager.SetManaPoint(true);
-            uIManager.SetHealthPoint(true);
+            uIManager.mPPanelScript.SetManaPoint(true);
+            uIManager.hPPanelScript.SetHealthPoint(true);
             uIManager.SetAim(true);
 
             uIManager.Players.Add(PhotonNetwork.player);
@@ -117,8 +117,8 @@ public class TestPhotonManager : Photon.PunBehaviour
                 CurrentPlayer = PhotonNetwork.Instantiate("Mouse/MouseRunner", PlayerSpawnLocation.transform.position, Quaternion.identity, 0);
 
                 uIManager = CurrentPlayer.GetComponent<UIManager>();
-                uIManager.SetManaPoint(true);
-               uIManager.SetHealthPoint(true);
+                uIManager.mPPanelScript.SetManaPoint(true);
+               uIManager.hPPanelScript.SetHealthPoint(true);
                uIManager.SetAim(true);
 
             uIManager.Players.Add(PhotonNetwork.player);

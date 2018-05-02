@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 224019878568798440}
   - component: {fileID: 222250452647743356}
   - component: {fileID: 114801783398681752}
+  - component: {fileID: 114618469133602026}
   m_Layer: 5
   m_Name: GetScoreText
   m_TagString: Untagged
@@ -28,6 +29,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &114618469133602026
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1567942045237412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08dd9ce95c37800478b9dff7976374c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GetScoreWaitTime: 0.5
+  GetScoreMoveTime: 0.2
 --- !u!114 &114801783398681752
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public partial class PlayerManaPoint
 {
+    public delegate void ManaDele();
+    public event ManaDele ManaEvent;
+
     private GameObject MPPanel;              // MP 패널
 
     private PlayerCamera playerCamera;              // 카메라 오브젝트
@@ -36,6 +39,9 @@ public partial class PlayerManaPoint
         if (NowManaPoint < 0)
             NowManaPoint = 0;
     }
+
+    
+
 
 
     [Header(" - 마나 리젠속도")]

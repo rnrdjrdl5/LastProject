@@ -2020,6 +2020,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cb0fadea2dc7d647b5bd93acf3e956d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShakeTime: 0.5
+  ShakeTick: 0.1
+  ShakePower: 0.3
   PlayerCondition: 2
 --- !u!114 &114304162867643262
 MonoBehaviour:
@@ -2049,8 +2052,8 @@ MonoBehaviour:
     SkillKeyType: 9
   ExitInputKey:
     SkillKeyType: 10
-  ManaCost: 0
-  CtnManaCost: 0
+  ManaCost: 33
+  CtnManaCost: 33
   PlayerSkillDebuffs: []
   PlayerRunSpeed: 5.2
 --- !u!114 &114524800735155352

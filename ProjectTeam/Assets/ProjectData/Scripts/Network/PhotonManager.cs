@@ -46,16 +46,7 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
 
 
     /***** 외부 설정 *****/
-    // 퍼센트
-    public int OneStarCondition;
-    public int TwoStarCondition;
-    public int ThreeStarCondition;
-    public int ForeStarCondition;
-    public int FiveStarCondition;
 
-    // 레스토랑 이미지 최소 설정값
-    public int OneRestState;
-    public int TwoRestState;
 
     public List<GameObject> AllPlayers;            // 플레이어들을 가리키는 변수
 
@@ -237,22 +228,22 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
 
 
         // 플레이어 UICanvas 끄기
-        uIManager.SetHealthPoint(false);
-        uIManager.SetManaPoint(false);
-        uIManager.SetLimitTime(false);
+        uIManager.hPPanelScript.SetHealthPoint(false);
+        uIManager.mPPanelScript.SetManaPoint(false);
+        uIManager.limitTimePanelScript.SetLimitTime(false);
         uIManager.SetAim(false);
         uIManager.BackgroundPanel.SetActive(false);
 
         // 혹시라도 도움말 UI가 켜져있으면 도움말 UI 제거
-        uIManager.isCanUseHelperUI = false;
-        uIManager.SetHelperUI(false);
-        uIManager.SetHelpUI(false);
+        uIManager.helpPanelScript.isCanUseHelperUI = false;
+        uIManager.helpPanelScript.SetHelperUI(false);
+        uIManager.helpPanelScript.SetHelpUI(false);
 
         // 별, 레스토랑 정보 끄기
-        uIManager.SetStarPanel(false);
+        uIManager.starPanelScript.SetStarPanel(false);
         
         // 쥐 남은 수 끄기
-        uIManager.MouseImagePanel.SetActive(false);
+        uIManager.mouseImagePanelScript.MouseImagePanel.SetActive(false);
 
 
 
@@ -265,7 +256,7 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
 
 
         // 플레이어 Result UI 설정
-        uIManager.SetEndState(true, (UIManager.ResultType)i);
+        uIManager.endStatePanelScript.SetEndState(true, (EndStatePanelScript.ResultType)i);
 
 
         // 플레이어 게임 종료 보여주기 
@@ -496,7 +487,7 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
         // 마스터 인 경우에만 실시.
         if (PhotonNetwork.isMasterClient)
         {
-            uIManager.LimitTimeTextText.text = playTimerNumber.ToString();
+            uIManager.limitTimePanelScript.LimitTimeTextText.text = playTimerNumber.ToString();
 
             while (true)
             {
@@ -506,7 +497,7 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
 
                 playTimerNumber -= 1;
 
-                uIManager.LimitTimeTextText.text = playTimerNumber.ToString();
+                uIManager.limitTimePanelScript.LimitTimeTextText.text = playTimerNumber.ToString();
                 if (playTimerNumber <= 0)
                 {
                     yield break;
@@ -520,7 +511,7 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
         {
             while (true) {
 
-                uIManager.LimitTimeTextText.text = playTimerNumber.ToString();
+                uIManager.limitTimePanelScript.LimitTimeTextText.text = playTimerNumber.ToString();
                 if (playTimerNumber <= 0)
                 {
                     yield break;
@@ -615,7 +606,7 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
         }
 
         // 도움말을 띄웁니다.
-        uIManager.SetHelpUI(true);
+        uIManager.helpPanelScript.SetHelpUI(true);
 
         // 플레이어정보 소팅
         uIManager.PlayerSorting();
@@ -625,12 +616,12 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
 
 
         // 1. UI들 보여주기
-        uIManager.SetHealthPoint(true);
-        uIManager.SetManaPoint(true);
-        uIManager.SetLimitTime(true);
+        uIManager.hPPanelScript.SetHealthPoint(true);
+        uIManager.mPPanelScript.SetManaPoint(true);
+        uIManager.limitTimePanelScript.SetLimitTime(true);
         uIManager.SetAim(true);
-        uIManager.MouseImagePanel.SetActive(true);
-        uIManager.StarPanel.SetActive(true);
+        uIManager.mouseImagePanelScript.MouseImagePanel.SetActive(true);
+        uIManager.starPanelScript.StarPanel.SetActive(true);
         uIManager.BackgroundPanel.SetActive(true);
 
 
@@ -678,7 +669,7 @@ public class PhotonManager : Photon.PunBehaviour , IPunObservable
     {
         Debug.Log("qwe");
         // 기존 Result창 꺼주기
-        uIManager.SetEndState(false, (UIManager.ResultType)0);
+        uIManager.endStatePanelScript.SetEndState(false, (EndStatePanelScript.ResultType)0);
 
 
         // 스코어창 보여주기

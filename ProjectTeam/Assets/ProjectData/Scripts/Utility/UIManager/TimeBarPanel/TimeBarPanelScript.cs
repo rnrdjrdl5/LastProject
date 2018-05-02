@@ -62,6 +62,8 @@ public class TimeBarPanelScript {
         InitTimeBarPanel();
         InitMaxTimeBar();
         InitNowTimeBar();
+
+        UIManager.GetInstance().UpdateEvent += UpdateTimeBar;
     }
 
     public void UpdateTimeBar()

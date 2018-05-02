@@ -7,10 +7,18 @@ using UnityEngine;
 // 점수를 확인하기 위해서도 사용
 public class ObjectManager : MonoBehaviour {
 
+    private static ObjectManager objectManager;
+    public static ObjectManager GetInstance() { return objectManager; }
+
     public int MaxInterObj { get; set; }
     public List<GameObject> InterObj;
     public void AddInterObj(GameObject go) { InterObj.Add(go); }
     public PhotonManager photonManager;
+
+    private void Awake()
+    {
+        objectManager = this;
+    }
 
     private void Start()
     {

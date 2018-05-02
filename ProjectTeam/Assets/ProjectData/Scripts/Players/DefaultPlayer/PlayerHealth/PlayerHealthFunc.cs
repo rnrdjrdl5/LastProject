@@ -5,31 +5,23 @@ using UnityEngine.UI;
 
 public partial class PlayerHealth
 {
-    
+
+    public delegate void HealthDele();
+
+    public event HealthDele HealthEvent;
 
     private void SetAwake()
     {
         if (photonView.isMine)
         {
-
-            // UICanvas 받아오기
-            UICanvas = GameObject.Find("UICanvas");
-
-            // 패널 받아오기
-            HPPanel = UICanvas.transform.Find("HPPanel").gameObject;
-
-            // HP이미지 받아오기
-            NowHPImage = HPPanel.transform.Find("NowHpImage").GetComponent<Image>();
-            Debug.Log(NowHPImage);
-
-            // 카메라 설정
-            //playerCamera = GameObject.Find("PlayerCamera").GetComponent<PlayerCamera>();
             playerCamera = PlayerCamera.GetInstance();
 
-            photonManager = GameObject.Find("PhotonManager").GetComponent<PhotonManager>();
+            photonManager = PhotonManager.GetInstance();
 
             isHiting = false;
             NowHiting = 0.0f;
+
+            UIManager.GetInstance().hPPanelScript.SetPlayerHealth(gameObject);
         }
     }
 
@@ -84,6 +76,10 @@ public partial class PlayerHealth
             // 데미지 입음
             NowHealth -= _damage;
 
+
+            // 등록한 스크립트들에게 이벤트 실행
+            HealthEvent();
+
             Debug.Log(NowHealth);
             // 체력 0이하면 죽음 처리
             if (NowHealth <= 0) {
@@ -91,6 +87,8 @@ public partial class PlayerHealth
                 PlayerDead();
                     }
         }
+
+
 
     }
 
@@ -105,6 +103,9 @@ public partial class PlayerHealth
             else
                 NowHealth -= _damage;
         }
+
+        // 등록한 스크립트들에게 이벤트 실행
+        HealthEvent();
     }
 
 
@@ -118,6 +119,7 @@ public partial class PlayerHealth
 
         isHiting = true;
         NowHiting = 0.0f;
+
     }
 
 
