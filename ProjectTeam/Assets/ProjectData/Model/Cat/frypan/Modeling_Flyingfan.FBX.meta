@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: f7a1b1641c7c70a48888e8d5090ba6ae
-timeCreated: 1525016189
+guid: 524fae859c38e92459317cbb90fc8327
+timeCreated: 1525330641
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
@@ -15,12 +15,12 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: _Neko_girl_F19___Default
-    second: {fileID: 2100000, guid: 29b3b654794feb3498ecef07f97f088b, type: 2}
+    second: {fileID: 2100000, guid: 5201350ab52c0dd4581eb616b062f986, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
     materialSearch: 1
-    materialLocation: 1
+    materialLocation: 0
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0

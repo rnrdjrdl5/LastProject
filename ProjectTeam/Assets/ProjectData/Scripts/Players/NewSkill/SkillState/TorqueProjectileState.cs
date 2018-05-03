@@ -79,9 +79,6 @@ public class TorqueProjectileState
             collisionTorqueMove.SetCollisionMoveDirect(Dir);
             collisionTorqueMove.UseTorque();
         }
-
-        // 각도 알기위해서 추가 사용
-        collisionTorqueMove.UsedPlayer = PlayerObject;
     }
 
 }

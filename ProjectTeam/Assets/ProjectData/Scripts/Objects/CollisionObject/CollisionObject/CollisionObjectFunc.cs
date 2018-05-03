@@ -23,7 +23,7 @@ public partial class CollisionObject
         CollisionNotMoveDebuff collisionNotMoveDebuff = GetComponent<CollisionNotMoveDebuff>();
         CollisionDamagedDebuff collisionDamagedDebuff = GetComponent<CollisionDamagedDebuff>();
         CollisionGroggyDebuff collisionGroggyDebuff = GetComponent<CollisionGroggyDebuff>();
-
+        CollisionTorqueMove collisionTorqueMove = GetComponent<CollisionTorqueMove>();
 
         // 정보 초기화 필요
         this.ResetObject();
@@ -33,6 +33,9 @@ public partial class CollisionObject
 
         if (numberOfCollisions != null)
             numberOfCollisions.ResetObject();
+
+        if (collisionTorqueMove != null)
+            collisionTorqueMove.ResetObject();
 
 
 

@@ -45,4 +45,5 @@ public partial class CollisionObject
     public GameObject UsePlayerObject;              // 공격한 플레이어의 GameObject
 
 
+
 }

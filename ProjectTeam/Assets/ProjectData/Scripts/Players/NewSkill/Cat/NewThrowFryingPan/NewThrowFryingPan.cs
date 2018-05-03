@@ -83,12 +83,13 @@ public class NewThrowFryingPan : DefaultNewSkill
 
         Quaternion BulletRotation = transform.rotation;
 
-        Vector3 v3 = transform.rotation.eulerAngles;
-        v3.y += -90;
-        v3.x += 135;
+        Vector3 v3 = Vector3.zero;
+        v3.x = -45;
+        v3.y = 90 + transform.rotation.eulerAngles.y;
+        v3.z = 0;
 
 
-        Debug.Log("사용15124312");
+        Debug.Log("사용15124312"); 
         GameObject FryPan = PoolingManager.GetInstance().PopObject("FryPan");
 
         FryPan.transform.position = transform.position + (BulletDefaultPlace);

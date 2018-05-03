@@ -1333,7 +1333,7 @@ Prefab:
     - target: {fileID: 114659136624723398, guid: 34e006e6d3f812841b5b226b2f4826ad,
         type: 2}
       propertyPath: playTimerNumber
-      value: 95
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 114659136624723398, guid: 34e006e6d3f812841b5b226b2f4826ad,
         type: 2}
@@ -1749,6 +1749,12 @@ Prefab:
       propertyPath: m_RootOrder
       value: 21
       objectReference: {fileID: 0}
+    - target: {fileID: 114715755685136342, guid: 6a9dcc72ab3801340a0849a9db8ec265,
+        type: 2}
+      propertyPath: Prefabs.Array.data[1]
+      value: 
+      objectReference: {fileID: 1483810901689950, guid: 8573b8bbdb7318e4abfd00acab837a54,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6a9dcc72ab3801340a0849a9db8ec265, type: 2}
   m_IsPrefabParent: 0

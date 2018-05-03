@@ -14,10 +14,6 @@ public partial class CollisionMove
     public void SetCollisionMoveDirect(Vector3 CMD) { CollisionMoveDirect = CMD; }
     public Vector3 GetCollisionMoveDirect() { return CollisionMoveDirect; }
 
-
-    // 플레이어 각도값 알기 위해서 사용
-    public GameObject UsedPlayer { get; set; }
-
     
         
 }

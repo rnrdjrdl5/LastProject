@@ -83,7 +83,6 @@ public partial class PlayerHealth
             Debug.Log(NowHealth);
             // 체력 0이하면 죽음 처리
             if (NowHealth <= 0) {
-                NowHPImage.fillAmount = NowHealth / MaxHealth;
                 PlayerDead();
                     }
         }
