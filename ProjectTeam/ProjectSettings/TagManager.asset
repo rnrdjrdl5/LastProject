@@ -7,7 +7,7 @@ TagManager:
   - Floor
   - CheckCollision
   - Interaction
-  - Teams
+  - ItemCollision
   layers:
   - Default
   - TransparentFX

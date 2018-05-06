@@ -21,13 +21,6 @@ public partial class PlayerState : MonoBehaviour {
 
     private void Update()
     {
-        if (gameObject.GetPhotonView().isMine)
-        {
-            if (Input.GetKeyDown(KeyCode.F2))
-            {
-                PlayerCamera.GetInstance().SetCameraShake(ShakeTime, ShakeTick, ShakePower);
-            }
-        }
 
     }
     

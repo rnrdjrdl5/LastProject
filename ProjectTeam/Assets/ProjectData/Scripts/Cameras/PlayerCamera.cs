@@ -4,8 +4,14 @@ using UnityEngine;
 
 public class PlayerCamera : MonoBehaviour {
 
+    // 카메라 쉐이크용 대리자
+    public delegate Vector3 OtherCameraMoveDele();
+    public event OtherCameraMoveDele OtherCameraEvent;
 
-    
+    // 카메라 쉐이크 이전의 값
+    public Vector3 PreCameraEventPos;
+
+
 
     private static PlayerCamera playerCamera;
     public static PlayerCamera GetInstance() { return playerCamera; }
@@ -37,19 +43,6 @@ public class PlayerCamera : MonoBehaviour {
     }
 
 
-
-
-    // 카메라 쉐이크 여부
-    private float CameraShakePower = 0.1f;
-
-    public bool IsCameraShaking { get; set; }
-
-    public float MaxCameraShakingTime { get; set; }
-
-    public float NowCameraShakingTime { get; set; }
-
-    public float NowCameraShakeTick { get; set; }
-    public float MaxCameraShakeTick { get; set; }
 
 
 
@@ -152,7 +145,11 @@ public class PlayerCamera : MonoBehaviour {
         PTL.SetPlayerCamera(gameObject);
         PTL.SetcameraScript(this);
 
-        photonManager = GameObject.Find("PhotonManager").GetComponent<PhotonManager>();
+        if(PhotonManager.GetInstance() != null)
+        {
+            PhotonManager.GetInstance().GetComponent<PhotonManager>();
+        }
+
         SeePlayerNumber = 0;
 
         ISPreUseLerp = false;
@@ -213,7 +210,8 @@ public class PlayerCamera : MonoBehaviour {
         if (PlayerObject)
         {
 
-
+            // 카메라 위치를 셰이더 이전 값으로 이동
+            transform.position = PreCameraEventPos;
 
             // 카메라 상태에 따라 카메라를 이동시킨다.
             if (CameraModeType == PlayerCamera.EnumCameraMode.FOLLOW)
@@ -232,15 +230,28 @@ public class PlayerCamera : MonoBehaviour {
                 DramaticCamera();
             }
 
-            if (IsCameraShaking)
-            {
-                CameraShake();
+            // 카메라 셰이크 이전 값 지정
+            PreCameraEventPos = transform.position;
 
+
+            // 카메라 이벤트 있으면
+            if (OtherCameraEvent != null)
+            {
+
+                // 카메라 이동
+                transform.Translate(OtherCameraEvent(), Space.Self);
             }
 
+            // 없으면
+            else
+            {
+
+                // 제자리 이동
+                transform.Translate(Vector3.zero, Space.Self);
+            }
         }
-         
-        
+
+
 
 
 
@@ -295,6 +306,8 @@ public class PlayerCamera : MonoBehaviour {
 
         // 카메라 위치 설정
         transform.position = PlayerObject.transform.position - (QuatTypeLerpAngle * Vector3.forward * CameraPlayerDistanceX) + (Vector3.up * CameraPlayerDistanceY);
+        
+
 
         // 플레이어방향으로 전환
         transform.LookAt(PlayerObject.transform);
@@ -302,10 +315,8 @@ public class PlayerCamera : MonoBehaviour {
         // y축 오프셋 추가
         transform.position = new Vector3(transform.position.x, transform.position.y + CameraHeightFromFloor, transform.position.z);
 
-        // 오브젝트에 카메라 시야가 가려지면 카메라 위치 재조정
-        // transform.position = PTL.FindWall(PlayerObject);
-
-
+        // 카메라 벽 확인
+        transform.position = PTL.FindWall(PlayerObject);
 
 
     }
@@ -336,7 +347,6 @@ public class PlayerCamera : MonoBehaviour {
         // y축 오프셋 추가
         transform.position = new Vector3(transform.position.x, transform.position.y + CameraHeightFromFloor, transform.position.z);
 
-        
     }
 
     // 옵저버용 카메라
@@ -368,68 +378,6 @@ public class PlayerCamera : MonoBehaviour {
 
 
 
-    // 카메라 쉐이크
-    public void SetCameraShake(float _shakeTime, float _shakeTickTime = 0.016f, float _shakePower = 0.5f)
-    {
-
-        CameraShakePower = _shakePower;
-
-        MaxCameraShakingTime = _shakeTime;
-        NowCameraShakingTime = 0.0f;
-
-        MaxCameraShakeTick = _shakeTickTime;
-        NowCameraShakeTick = 0.0f;
-
-        IsCameraShaking = true;
-    }
-
-    void CameraShake()
-    {
-        
-        // 틱 돌리고 틱당 쉐이크 주기
-        if (NowCameraShakeTick >= MaxCameraShakeTick)
-        {
-            NowCameraShakeTick = 0.0f;
-            CameraRandomPosition();
-
-        }
-
-        else{
-            NowCameraShakeTick += Time.deltaTime;
-        }
-
-
-        // 지속시간 체크
-        if (NowCameraShakingTime  >= MaxCameraShakingTime)
-        {
-            NowCameraShakingTime = 0.0f;
-            MaxCameraShakingTime = 0.0f;
-
-            NowCameraShakeTick = 0.0f;
-            MaxCameraShakeTick = 0.0f;
-
-            CameraShakePower = 1.0f;
-
-            IsCameraShaking = false;
-            
-
-        }
-
-        else
-        {
-            // 3. 카메라 시간 계산
-            NowCameraShakingTime += Time.deltaTime;
-        }
-    }
-
-    public void CameraRandomPosition()
-    {
-        // 1. 카메라 흔들기
-        Vector2 XYCamera = Random.insideUnitCircle * CameraShakePower;
-
-        // 2. 카메라 흔든 뒤에 적용  
-        transform.position += new Vector3(XYCamera.x, XYCamera.y, 0);
-    }
 
 
 
@@ -470,5 +418,9 @@ public class PlayerCamera : MonoBehaviour {
             ISPreUseLerp = false;
         }
     }
+
+
+
+
 
 }

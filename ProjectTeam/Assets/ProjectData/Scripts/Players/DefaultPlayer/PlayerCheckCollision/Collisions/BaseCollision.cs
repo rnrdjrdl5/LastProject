@@ -14,12 +14,6 @@ using UnityEngine;
 // PlayerCheckCollision : 플레이어 충돌체크 컴포넌트.
 
 
- /************************************
-  * 2018.04.04 갱신
-  *  - 리팩토링 실시
-  *  - GetComponent의 호출 수를 줄임
-  ***********************************/
-
 public class BaseCollision : Photon.PunBehaviour{
 
     private MathUtility mathUtility;
@@ -31,6 +25,8 @@ public class BaseCollision : Photon.PunBehaviour{
     private PlayerState playerState;                // 플레이어 상태
 
     private Animator animator;              // 애니메이터 
+
+    private bool isUseItemCollision;            // 아이템 용 충돌체크 확인
 
     private CollisionObject collisionObject;            // 충돌 오브젝트 스크립트
     private CollisionObjectDamage collisionObjectDamage;
@@ -54,6 +50,8 @@ public class BaseCollision : Photon.PunBehaviour{
         
         // 애니메이터 받기
         animator = gameObject.GetComponent<Animator>();
+
+        isUseItemCollision = false;
     }
 
 
@@ -165,24 +163,30 @@ public class BaseCollision : Photon.PunBehaviour{
         // 받았는지 체크
         if (collisionObjectDamage != null)
         {
-
             // 공격한 사람 클라이언트에서 처리함
-           if(collisionObject.PlayerIOwnerID == PhotonNetwork.player.ID)  
+            if (collisionObject.PlayerIOwnerID == PhotonNetwork.player.ID)
             {
 
                 // 데미지 주기
-                playerHealth.CallApplyDamage(collisionObjectDamage.GetObjectDamage()) ;
+                playerHealth.CallApplyDamage(collisionObjectDamage.GetObjectDamage());
                 Debug.Log("데미지 : " + collisionObjectDamage.GetObjectDamage());
 
                 // 이펙트 전송
-                photonView.RPC("RPCCreateEffect", PhotonTargets.All , (int)collisionObjectDamage.EffectType);
-
-               /* Debug.Log(PhotonNetwork.player.ID);
-                Debug.Log(collisionObject.PlayerIOwnerID);*/
+                photonView.RPC("RPCCreateEffect", PhotonTargets.All, (int)collisionObjectDamage.EffectType);
 
 
 
             }
+
+            // 개인 클라이언트에서 처리
+            if (photonView.isMine)
+            {
+
+                // 아이템을 가지고 있는 사람에게 알려준다.
+            }
+
+            
+
 
 
            // 아래는 개인이 처리합니다.
@@ -266,50 +270,25 @@ public class BaseCollision : Photon.PunBehaviour{
         }
     }
 
-    //private void ResetSkillOption(GameObject go)
-    //{
-    //    정보 초기화 필요
-    //    if (collisionObject != null)
-    //        collisionObject.ResetObject();
-
-    //    if (collisionObjectDamage != null)
-    //        collisionObjectDamage.ResetObject();
-
-    //    if (numberOfCollisions != null)
-    //        numberOfCollisions.ResetObject();
 
 
+    public void UseItemCollision(Collider other)
+    {
+        if (collisionObject == null)
+            return;
 
-    //    if (collisionStunDebuff != null)
-    //        Destroy(collisionStunDebuff);
+        if (isUseItemCollision)
+            return;
 
-    //    if (collisionNotMoveDebuff != null)
-    //        Destroy(collisionNotMoveDebuff);
+        isUseItemCollision = true;
 
-    //    if (collisionDamagedDebuff != null)
-    //        Destroy(collisionDamagedDebuff);
+        // 1. 오브젝트에서 RPC 전송, 각 오브젝트에게.
+        // 2. 각 오브젝트의 주인을 찾기
+        // 3. 주인 에서 오브젝트 삭제 , 다른 오브젝트들에게 RPC 전송
+        // 4. 각 오브젝트들은 RPC에서 각자 삭제처리함. 
+        // 5. 충돌처리했던 BaseCollision 소유자 플레이어의 ID를 찾아서, BaseCollision에서 막아뒀던 거 풀기, 액션작용
 
-    //    if (collisionGroggyDebuff != null)
-    //        Destroy(collisionGroggyDebuff);
-
-    //    ReCheck 스크립트 받아옴
-    //   CollisionReCheck[] CRCs = go.GetComponents<CollisionReCheck>();
-
-    //    for (int i = CRCs.Length - 1; i >= 0; i--)
-    //    {
-    //        Destroy(CRCs[i]);
-    //    }
-
-
-    //    CollisionObjectTime collisionObjectTime = go.GetComponent<CollisionObjectTime>();
-
-    //    if (collisionObjectTime != null)
-    //        collisionObjectTime.ResetObject();
-
-    //}
-
-
-
+    }
 
 
 

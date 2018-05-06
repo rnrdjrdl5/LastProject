@@ -29,6 +29,8 @@ public partial class PlayerMove
 
         // 애니메이션 뷰 설정
         PhotonAnimatorView pav = gameObject.GetComponent<PhotonAnimatorView>();
+        if (pav == null)
+            return;
         pav.SetParameterSynchronized("DirectionX", PhotonAnimatorView.ParameterType.Float, PhotonAnimatorView.SynchronizeType.Continuous);
         pav.SetParameterSynchronized("DirectionY", PhotonAnimatorView.ParameterType.Float, PhotonAnimatorView.SynchronizeType.Continuous);
         pav.SetParameterSynchronized("JumpType", PhotonAnimatorView.ParameterType.Int, PhotonAnimatorView.SynchronizeType.Discrete);

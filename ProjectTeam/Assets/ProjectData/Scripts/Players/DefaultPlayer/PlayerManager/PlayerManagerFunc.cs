@@ -12,14 +12,29 @@ public partial class PlayerManager
 
     void SetFallowCamera()
     {
-        if (gameObject.GetComponent<PhotonView>().isMine)
-        {
-            // playerCamera = GameObject.Find("PlayerCamera").GetComponent<PlayerCamera>();
-            playerCamera = PlayerCamera.GetInstance();
-            playerCamera.PlayerObject = gameObject;
-            playerCamera.SetPlayerMove(gameObject.GetComponent<PlayerMove>());
+        // 연속적인 코드보다, if의 효율성을 생각
+        // 모든 조건을 판단해서 if로 넣는게 아닌 느낌
+        // 조건문 간결화신경쓰고
+        // if else가 많아지면 팩토리로 빼버리기
+        
+        PhotonView pv = gameObject.GetComponent<PhotonView>();
 
-        }        
+        if (pv == null)
+            return;
+
+        if (!gameObject.GetComponent<PhotonView>().isMine)
+            return;
+
+
+        
+        playerCamera = PlayerCamera.GetInstance();
+
+        if (playerCamera == null)
+            return;
+
+        playerCamera.PlayerObject = gameObject;
+        playerCamera.SetPlayerMove(gameObject.GetComponent<PlayerMove>());
+
 
     }
 

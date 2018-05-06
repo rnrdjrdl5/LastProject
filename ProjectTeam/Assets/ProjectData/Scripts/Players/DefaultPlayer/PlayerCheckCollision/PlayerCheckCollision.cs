@@ -54,14 +54,20 @@ public class PlayerCheckCollision : Photon.PunBehaviour , IPunObservable {
     void CheckCollision(GameObject go , Collider other)
     {
         //Debug.Log("충돌체크`" + go.name);
-          if (other.tag == "CheckCollision")
+        if (other.tag == "CheckCollision")
         {
             // other : 충돌체크용 오브젝트, 
             // other에 있는 변수를 보고, 상태이상에 대해 판단한다.
             // ex) if other.getcomponent<Bullet>().getType() == "슬로우"
             //      bullet : 
             baseCollision.UseCollision(other);
-             
-          }
+
+        }
+
+        else if (other.tag == "ItemCollision")
+        {
+
+            baseCollision.UseItemCollision(other);
+        }
     }
 }

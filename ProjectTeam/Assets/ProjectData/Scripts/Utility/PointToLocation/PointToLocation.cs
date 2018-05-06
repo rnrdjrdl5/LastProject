@@ -119,9 +119,14 @@ MouseVector3 * MaxLocationDistance, Color.red, 1.0f);*/
         // -Vector3.up * 0.2f 이유 : 바닥과 너무 달라붙어있어서 바닥이 투명하게 보이는 걸 방지함.
         // 플레이어의 위치부터 카메라까지 레이를 사용합니다.
 
-        // 플레이어 를 무시한 레이를 발사
-        int layerMask = 1 << LayerMask.NameToLayer("Player");
-        layerMask = ~layerMask;
+
+        //int layerMask = 1 << LayerMask.NameToLayer("Player");
+        //layerMask = ~layerMask;
+
+
+        //바닥, 겉면만 레이 사용
+        int layerMask = 1 << LayerMask.NameToLayer("Floor");
+
         if (Physics.Raycast(
 
             UseObject.transform.position,
